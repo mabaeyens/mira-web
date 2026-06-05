@@ -120,3 +120,36 @@ body {
 .icon-moon { display: none;  }
 [data-theme="light"] .icon-sun  { display: none;  }
 [data-theme="light"] .icon-moon { display: block; }
+
+/* ── Scroll-snap ────────────────────────────────────────────── */
+html, body { height: 100dvh; overflow: hidden; }
+
+.scroll-container {
+  height: 100dvh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+}
+
+.snap-section {
+  scroll-snap-align: start;
+  height: 100dvh;
+}
+
+/* ── Dot navigation ─────────────────────────────────────────── */
+.dot-btn {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1.5px solid var(--b50);
+  background: transparent;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+}
+.dot-btn:hover  { border-color: var(--muted); }
+.dot-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: scale(1.3);
+}
