@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mira — AI that stays home</title>
+  <meta name="description" content="Private, local AI assistant for macOS, iPhone, and iPad. No cloud. No subscriptions. Powered by Apple Silicon." />
+  <meta property="og:title" content="Mira — AI that stays home" />
+  <meta property="og:description" content="Private, local AI assistant for macOS, iPhone, and iPad. Powered by Apple Silicon." />
+  <meta property="og:type" content="website" />
+
+  <!-- Anti-flash: restore saved theme before first paint -->
+  <script>
+    (function(){
+      var t = localStorage.getItem('mira-theme');
+      if (t) document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Instrument Serif"', 'Georgia', 'serif'],
+            mono:  ['"IBM Plex Mono"', '"Courier New"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-[var(--bg)] text-[var(--text)] font-mono antialiased leading-relaxed">
+
+  <!-- ── Nav ──────────────────────────────────────────────────── -->
+  <nav class="fixed top-0 left-0 right-0 z-50 border-b border-[var(--b30)] backdrop-blur-md bg-[var(--bg-nav)]">
+    <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
+
+      <a href="/" class="flex items-center gap-2.5 group">
+        <img src="assets/icon.png" class="w-7 h-7 rounded-md shrink-0" alt="Mira" />
+        <span class="text-sm tracking-wide text-[var(--text-90)] group-hover:text-[var(--text)] transition-colors">
+          Mira
+        </span>
+      </a>
+
+      <div class="flex items-center gap-2.5">
+        <a href="https://github.com/mabaeyens"
+           target="_blank" rel="noopener"
+           class="inline-flex items-center gap-1.5 text-xs text-[var(--muted)] hover:text-[var(--text)] transition-colors px-3 py-1.5 border border-[var(--b50)] hover:border-[var(--b80)] rounded-md">
+          <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
+          GitHub
+        </a>
+
+        <!-- Dark / light toggle -->
+        <button id="theme-toggle"
+          class="p-1.5 rounded-md border border-[var(--b50)] hover:border-[var(--b80)] text-[var(--muted)] hover:text-[var(--text)] transition-colors"
+          aria-label="Toggle theme">
+          <!-- Sun — visible in dark mode, click to go light -->
+          <svg class="icon-sun w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <!-- Moon — visible in light mode, click to go dark -->
+          <svg class="icon-moon w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+          </svg>
+        </button>
+
+        <a href="#"
+           class="inline-flex items-center gap-1.5 text-xs bg-[var(--accent)] hover:bg-[var(--accent-hov)] text-[#1C1917] font-medium px-3 py-1.5 rounded-md transition-colors">
+          TestFlight
+        </a>
+      </div>
+    </div>
+  </nav>
+
+
+  <main>
+
+    <!-- ── Hero ─────────────────────────────────────────────────── -->
+    <section class="min-h-screen flex flex-col justify-center pt-14">
+      <div class="max-w-5xl mx-auto px-6 py-28">
+        <div class="max-w-2xl">
+
+          <p class="hero-eyebrow text-[10px] tracking-[0.22em] uppercase text-[var(--muted)] mb-10">
+            Local AI &nbsp;·&nbsp; macOS &nbsp;·&nbsp; iOS &nbsp;·&nbsp; iPadOS
+          </p>
+
+          <h1 class="hero-title font-serif text-[clamp(3rem,8vw,5.5rem)] leading-[0.93] tracking-tight text-[var(--text)] mb-7">
+            AI that<br/>
+            <em class="not-italic text-[var(--accent)]">stays home.</em>
+          </h1>
+
+          <p class="hero-copy text-sm text-[var(--muted)] leading-[1.75] max-w-md mb-11">
+            Mira runs entirely on your Mac, iPhone, and iPad — powered by Apple Silicon,
+            no API keys, no subscriptions. Your conversations stay on your devices.
+          </p>
+
+          <div class="hero-cta flex flex-wrap items-center gap-3">
+            <a href="https://github.com/mabaeyens/mira-core"
+               target="_blank" rel="noopener"
+               class="inline-flex items-center gap-2 text-xs border border-[var(--b50)] hover:border-[var(--muted)] text-[var(--text)] px-5 py-2.5 rounded-md transition-colors">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+              </svg>
+              View source
+            </a>
+            <a href="#"
+               class="inline-flex items-center gap-2 text-xs bg-[var(--accent)] hover:bg-[var(--accent-hov)] text-[#1C1917] font-medium px-5 py-2.5 rounded-md transition-colors">
+              Get on TestFlight
+              <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                <path d="M7 17L17 7M7 7h10v10"/>
+              </svg>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ── Screenshots ───────────────────────────────────────────── -->
+    <section class="section-rule py-20 overflow-visible">
+      <div class="max-w-5xl mx-auto px-6">
+
+        <p class="text-[10px] tracking-[0.22em] uppercase text-[var(--dim)] mb-10">
+          Native on every device
+        </p>
+
+        <!-- 3-device composite -->
+        <div class="relative" style="padding-bottom: 10%;">
+
+          <!-- macOS — screenshot includes native window chrome -->
+          <div class="w-[72%] relative z-10">
+            <img src="assets/macOS.png"
+                 class="w-full block drop-shadow-[0_32px_80px_rgba(0,0,0,0.55)]"
+                 alt="Mira on macOS — code analysis conversation" />
+          </div>
+
+          <!-- iPad — landscape, partially overlapping Mac -->
+          <div class="absolute right-0 top-6 w-[36%] z-20 rounded-2xl overflow-hidden border border-[var(--b30)] shadow-[0_24px_60px_rgba(0,0,0,0.65)]">
+            <img src="assets/iPadOS_2.jpeg"
+                 class="w-full block"
+                 alt="Mira on iPad — model selection" />
+          </div>
+
+          <!-- iPhone — floats at the Mac/iPad boundary -->
+          <div class="absolute bottom-0 left-[62%] -translate-x-1/2 translate-y-6 w-[13%] z-30">
+            <div class="relative bg-[var(--phone)] rounded-[18%/10%] border border-[var(--b50)] shadow-[0_24px_60px_rgba(0,0,0,0.8)] overflow-hidden" style="aspect-ratio: 9/19.5">
+              <div class="absolute top-[3%] left-1/2 -translate-x-1/2 w-[40%] h-[3.5%] bg-[var(--bg)] rounded-full z-10"></div>
+              <div class="absolute inset-0">
+                <img src="assets/iOS.png"
+                     class="w-full h-full object-cover object-top"
+                     alt="Mira on iPhone" />
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ── Features ──────────────────────────────────────────────── -->
+    <section class="section-rule pt-32 pb-24">
+      <div class="max-w-5xl mx-auto px-6">
+
+        <p class="text-[10px] tracking-[0.22em] uppercase text-[var(--dim)] mb-16">
+          How it works
+        </p>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-[var(--b20)] rounded-xl overflow-hidden border border-[var(--b20)]">
+
+          <!-- 1 · Local inference -->
+          <div class="group bg-[var(--bg)] hover:bg-[var(--hover)] transition-colors p-7">
+            <div class="w-7 h-7 rounded-lg bg-[var(--surface)] border border-[var(--b40)] group-hover:border-[var(--a30)] transition-colors flex items-center justify-center mb-5">
+              <svg class="w-3.5 h-3.5 text-[var(--dim)] group-hover:text-[var(--accent)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <rect x="4" y="4" width="16" height="16" rx="2" stroke-linecap="round"/>
+                <rect x="9" y="9" width="6" height="6" stroke-linecap="round"/>
+                <line x1="9" y1="2" x2="9" y2="4"/><line x1="15" y1="2" x2="15" y2="4"/>
+                <line x1="9" y1="20" x2="9" y2="22"/><line x1="15" y1="20" x2="15" y2="22"/>
+                <line x1="20" y1="9" x2="22" y2="9"/><line x1="20" y1="15" x2="22" y2="15"/>
+                <line x1="2" y1="9" x2="4" y2="9"/><line x1="2" y1="15" x2="4" y2="15"/>
+              </svg>
+            </div>
+            <p class="text-xs font-medium text-[var(--text)] mb-2">Local inference</p>
+            <p class="text-xs text-[var(--muted)] leading-[1.65]">
+              Powered by Apple Silicon's Neural Engine via mlx-lm. Run Llama, Gemma, Qwen, and other open models — fully offline, zero API keys, no metered costs.
+            </p>
+          </div>
+
+          <!-- 2 · No cloud -->
+          <div class="group bg-[var(--bg)] hover:bg-[var(--hover)] transition-colors p-7">
+            <div class="w-7 h-7 rounded-lg bg-[var(--surface)] border border-[var(--b40)] group-hover:border-[var(--a30)] transition-colors flex items-center justify-center mb-5">
+              <svg class="w-3.5 h-3.5 text-[var(--dim)] group-hover:text-[var(--accent)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <rect x="5" y="11" width="14" height="10" rx="2" stroke-linecap="round"/>
+                <path d="M8 11V7a4 4 0 018 0v4" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p class="text-xs font-medium text-[var(--text)] mb-2">No cloud</p>
+            <p class="text-xs text-[var(--muted)] leading-[1.65]">
+              Your conversations stay on your Apple devices. Sync between Mac and iPhone uses your personal iCloud — no Mira servers, no third-party data handling, ever.
+            </p>
+          </div>
+
+          <!-- 3 · macOS + iOS + iPadOS -->
+          <div class="group bg-[var(--bg)] hover:bg-[var(--hover)] transition-colors p-7">
+            <div class="w-7 h-7 rounded-lg bg-[var(--surface)] border border-[var(--b40)] group-hover:border-[var(--a30)] transition-colors flex items-center justify-center mb-5">
+              <svg class="w-3.5 h-3.5 text-[var(--dim)] group-hover:text-[var(--accent)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <rect x="2" y="3" width="13" height="10" rx="1.5" stroke-linecap="round"/>
+                <path d="M2 17h13M7.5 13v4" stroke-linecap="round"/>
+                <rect x="16" y="7" width="6" height="12" rx="1.5" stroke-linecap="round"/>
+                <line x1="19" y1="17" x2="19" y2="17.5" stroke-linecap="round" stroke-width="2"/>
+              </svg>
+            </div>
+            <p class="text-xs font-medium text-[var(--text)] mb-2">macOS + iOS + iPadOS</p>
+            <p class="text-xs text-[var(--muted)] leading-[1.65]">
+              Native SwiftUI apps sharing one backend. The Mac runs the model; your iPhone and iPad connect over your home network for a seamless multi-screen experience.
+            </p>
+          </div>
+
+          <!-- 4 · Open source -->
+          <div class="group bg-[var(--bg)] hover:bg-[var(--hover)] transition-colors p-7">
+            <div class="w-7 h-7 rounded-lg bg-[var(--surface)] border border-[var(--b40)] group-hover:border-[var(--a30)] transition-colors flex items-center justify-center mb-5">
+              <svg class="w-3.5 h-3.5 text-[var(--dim)] group-hover:text-[var(--accent)] transition-colors" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+              </svg>
+            </div>
+            <p class="text-xs font-medium text-[var(--text)] mb-2">Open source</p>
+            <p class="text-xs text-[var(--muted)] leading-[1.65]">
+              The inference backend (mira-core) is MIT licensed — inspect it, modify it, self-host it. Full transparency into what runs on your machine.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ── Ecosystem ─────────────────────────────────────────────── -->
+    <section class="section-rule pb-28">
+      <div class="max-w-5xl mx-auto px-6 pt-24">
+
+        <div class="flex items-end justify-between mb-12">
+          <div>
+            <p class="text-[10px] tracking-[0.22em] uppercase text-[var(--dim)] mb-3">Ecosystem</p>
+            <h2 class="font-serif text-3xl md:text-4xl text-[var(--text)] leading-tight">
+              Three repos,<br/>one system.
+            </h2>
+          </div>
+          <a href="https://github.com/mabaeyens"
+             target="_blank" rel="noopener"
+             class="hidden md:inline-flex items-center gap-1.5 text-xs text-[var(--muted)] hover:text-[var(--text)] transition-colors mb-1">
+            All repos
+            <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M7 17L17 7M7 7h10v10"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-3">
+
+          <!-- mira-core — public repo, linked -->
+          <a href="https://github.com/mabaeyens/mira-core"
+             target="_blank" rel="noopener"
+             class="group block bg-[var(--surface)] border border-[var(--b35)] rounded-xl p-6 hover:border-[var(--b80)] hover:bg-[var(--surface-2)] transition-all">
+            <div class="flex items-start justify-between mb-5">
+              <div class="w-8 h-8 rounded-lg bg-[var(--a12)] border border-[var(--a20)] group-hover:bg-[var(--a18)] transition-colors flex items-center justify-center">
+                <svg class="w-3.5 h-3.5 text-[var(--accent)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                  <polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>
+                </svg>
+              </div>
+              <svg class="w-3 h-3 text-[var(--dim)] group-hover:text-[var(--muted)] transition-colors mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M7 17L17 7M7 7h10v10"/>
+              </svg>
+            </div>
+            <p class="text-sm font-medium text-[var(--text)] mb-1.5">mira-core</p>
+            <p class="text-xs text-[var(--muted)] leading-[1.65] mb-5">
+              FastAPI backend with mlx-lm inference, RAG engine, web search, and SSE streaming. Runs on any Apple Silicon Mac.
+            </p>
+            <p class="text-[10px] text-[var(--dim)] tracking-wide">Python · FastAPI · mlx-lm</p>
+          </a>
+
+          <!-- mira-apps — private -->
+          <div class="bg-[var(--surface)] border border-[var(--b35)] rounded-xl p-6">
+            <div class="flex items-start justify-between mb-5">
+              <div class="w-8 h-8 rounded-lg bg-[var(--a12)] border border-[var(--a20)] flex items-center justify-center">
+                <svg class="w-3.5 h-3.5 text-[var(--accent)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                  <rect x="5" y="2" width="14" height="20" rx="3" stroke-linecap="round"/>
+                  <line x1="12" y1="18" x2="12" y2="18.5" stroke-linecap="round" stroke-width="2"/>
+                </svg>
+              </div>
+              <span class="inline-flex items-center gap-1 text-[9px] text-[var(--dim)] tracking-wide mt-1.5">
+                <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>
+                </svg>
+                Private
+              </span>
+            </div>
+            <p class="text-sm font-medium text-[var(--text)] mb-1.5">mira-apps</p>
+            <p class="text-xs text-[var(--muted)] leading-[1.65] mb-5">
+              Native SwiftUI client for macOS, iOS, and iPadOS. One codebase, three platforms.
+            </p>
+            <p class="text-[10px] text-[var(--dim)] tracking-wide">Swift · SwiftUI · iOS · macOS</p>
+          </div>
+
+          <!-- Vera — private -->
+          <div class="bg-[var(--surface)] border border-[var(--b35)] rounded-xl p-6">
+            <div class="flex items-start justify-between mb-5">
+              <div class="w-8 h-8 rounded-lg bg-[var(--a12)] border border-[var(--a20)] flex items-center justify-center">
+                <svg class="w-3.5 h-3.5 text-[var(--accent)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                  <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <span class="inline-flex items-center gap-1 text-[9px] text-[var(--dim)] tracking-wide mt-1.5">
+                <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>
+                </svg>
+                Private
+              </span>
+            </div>
+            <p class="text-sm font-medium text-[var(--text)] mb-1.5">Vera</p>
+            <p class="text-xs text-[var(--muted)] leading-[1.65] mb-5">
+              Companion iOS app in the Mira ecosystem, focused on document intelligence and code assistance.
+            </p>
+            <p class="text-[10px] text-[var(--dim)] tracking-wide">Swift · SwiftUI · iOS</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ── Footer ────────────────────────────────────────────────── -->
+  <footer class="section-rule py-7">
+    <div class="max-w-5xl mx-auto px-6 flex items-center justify-between">
+      <p class="text-xs text-[var(--dim)]">
+        Built by Miguel &nbsp;·&nbsp; askmira.es
+      </p>
+      <a href="https://github.com/mabaeyens"
+         target="_blank" rel="noopener"
+         class="inline-flex items-center gap-1.5 text-xs text-[var(--dim)] hover:text-[var(--muted)] transition-colors">
+        <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+        </svg>
+        GitHub
+      </a>
+    </div>
+  </footer>
+
+  <!-- ── Theme toggle ───────────────────────────────────────────── -->
+  <script>
+    document.getElementById('theme-toggle').addEventListener('click', function () {
+      var html = document.documentElement;
+      var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('mira-theme', next);
+    });
+  </script>
+
+</body>
+</html>
