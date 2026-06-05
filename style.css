@@ -135,6 +135,10 @@ html, body { height: 100dvh; overflow: hidden; }
   height: 100dvh;
 }
 
+/* ── Screenshot shadow — theme-sensitive ────────────────────── */
+.mac-shadow { filter: drop-shadow(0 24px 60px rgba(0,0,0,0.45)); }
+[data-theme="light"] .mac-shadow { filter: drop-shadow(0 12px 30px rgba(0,0,0,0.12)); }
+
 /* ── Dot navigation ─────────────────────────────────────────── */
 .dot-btn {
   width: 8px;
