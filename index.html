@@ -510,20 +510,21 @@
       addSwipe(document.getElementById('frame-mac'),    'mac');
       addSwipe(document.getElementById('frame-ipad'),   'ipad');
 
-      // Mouse wheel / trackpad scroll — accumulate delta, advance per 60px threshold
+      // Mouse wheel / trackpad scroll
+      // Direction change fires immediately; same direction needs 200ms gap (blocks momentum)
       function addWheel(el, device) {
-        var accum = 0;
+        var lastTime = 0;
+        var lastDir  = 0;
         el.addEventListener('wheel', function (e) {
           e.preventDefault();
           var delta = Math.abs(e.deltaX) >= Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-          if ((delta > 0 && accum < 0) || (delta < 0 && accum > 0)) accum = 0;
-          accum += delta;
-          if (accum > 60) {
-            goTo(device, state[device] + 1);
-            accum = 0;
-          } else if (accum < -60) {
-            goTo(device, state[device] - 1);
-            accum = 0;
+          var dir = delta > 0 ? 1 : delta < 0 ? -1 : 0;
+          if (!dir) return;
+          var now = Date.now();
+          if (dir !== lastDir || now - lastTime > 200) {
+            goTo(device, state[device] + dir);
+            lastTime = now;
+            lastDir  = dir;
           }
         }, { passive: false });
       }
