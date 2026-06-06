@@ -157,3 +157,152 @@ html, body { height: 100dvh; overflow: hidden; }
   border-color: var(--accent);
   transform: scale(1.3);
 }
+
+/* ── Device tabs ────────────────────────────────────────────── */
+.device-tab {
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dim);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  transition: color 0.2s;
+}
+.device-tab:hover  { color: var(--muted); }
+.device-tab.active { color: var(--accent); }
+
+/* ── Device shells (one visible at a time) ──────────────────── */
+.device-shell {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+.device-shell.active { display: flex; }
+
+/* ── Inner image slider (translates behind the device frame) ── */
+.inner-slider {
+  display: flex;
+  width: 400%;
+  height: 100%;
+  will-change: transform;
+  transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* ── iPhone mockup ──────────────────────────────────────────── */
+.iphone-frame {
+  position: relative;
+  background: var(--phone);
+  border-radius: 11% / 5.5%;
+  border: 1.5px solid var(--b50);
+  box-shadow: 0 36px 90px rgba(0,0,0,0.75);
+  overflow: hidden;
+  aspect-ratio: 9 / 19.5;
+  height: min(60dvh, 460px);
+  flex-shrink: 0;
+  touch-action: pan-y;
+  user-select: none;
+  cursor: grab;
+}
+.iphone-frame:active { cursor: grabbing; }
+[data-theme="light"] .iphone-frame {
+  box-shadow: 0 16px 48px rgba(0,0,0,0.15);
+}
+.iphone-island {
+  position: absolute;
+  top: 3%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 38%;
+  height: 3.5%;
+  background: var(--bg);
+  border-radius: 100px;
+  z-index: 10;
+  pointer-events: none;
+}
+.iphone-frame .inner-slider img {
+  width: 25%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  flex-shrink: 0;
+  display: block;
+}
+
+/* ── iPad mockup ────────────────────────────────────────────── */
+.ipad-frame {
+  position: relative;
+  background: var(--phone);
+  border-radius: 2.5%;
+  border: 1.5px solid var(--b50);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.65);
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  width: min(70vw, 660px);
+  flex-shrink: 0;
+  touch-action: pan-y;
+  user-select: none;
+  cursor: grab;
+}
+.ipad-frame:active { cursor: grabbing; }
+[data-theme="light"] .ipad-frame {
+  box-shadow: 0 14px 44px rgba(0,0,0,0.13);
+}
+.ipad-frame .inner-slider img {
+  width: 25%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top left;
+  flex-shrink: 0;
+  display: block;
+}
+
+/* ── Mac viewport ───────────────────────────────────────────── */
+.mac-viewport {
+  width: min(76vw, 820px);
+  overflow: hidden;
+  flex-shrink: 0;
+  border-radius: 10px;
+  touch-action: pan-y;
+  user-select: none;
+  cursor: grab;
+}
+.mac-viewport:active { cursor: grabbing; }
+.mac-viewport .inner-slider {
+  height: auto;
+}
+.mac-viewport .inner-slider img {
+  width: 25%;
+  height: auto;
+  display: block;
+  flex-shrink: 0;
+  border-radius: 10px;
+}
+
+/* ── Screenshot caption & dots ──────────────────────────────── */
+.ss-caption {
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--dim);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.ss-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: 1.5px solid var(--b50);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+.ss-dot:hover  { border-color: var(--muted); }
+.ss-dot.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: scale(1.3);
+}
