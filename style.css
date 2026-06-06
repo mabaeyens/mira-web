@@ -182,13 +182,12 @@ html, body { height: 100dvh; overflow: hidden; }
 }
 .device-shell.active { display: flex; }
 
-/* ── Inner image slider (translates behind the device frame) ── */
+/* ── Inner image slider ─────────────────────────────────────── */
 .inner-slider {
-  display: flex;
-  width: 400%;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
   height: 100%;
-  will-change: transform;
-  transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 /* ── iPhone mockup ──────────────────────────────────────────── */
@@ -198,15 +197,17 @@ html, body { height: 100dvh; overflow: hidden; }
   border-radius: 11% / 5.5%;
   border: 1.5px solid var(--b50);
   box-shadow: 0 36px 90px rgba(0,0,0,0.75);
-  overflow: hidden;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
   aspect-ratio: 9 / 19.5;
   height: min(60dvh, 460px);
   flex-shrink: 0;
-  touch-action: pan-y;
+  touch-action: pan-x;
   user-select: none;
-  cursor: grab;
 }
-.iphone-frame:active { cursor: grabbing; }
+.iphone-frame::-webkit-scrollbar { display: none; }
 [data-theme="light"] .iphone-frame {
   box-shadow: 0 16px 48px rgba(0,0,0,0.15);
 }
@@ -223,12 +224,12 @@ html, body { height: 100dvh; overflow: hidden; }
   pointer-events: none;
 }
 .iphone-frame .inner-slider img {
-  width: 25%;
+  width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: top;
-  flex-shrink: 0;
   display: block;
+  scroll-snap-align: start;
 }
 
 /* ── iPad mockup ────────────────────────────────────────────── */
@@ -238,47 +239,51 @@ html, body { height: 100dvh; overflow: hidden; }
   border-radius: 2.5%;
   border: 1.5px solid var(--b50);
   box-shadow: 0 30px 80px rgba(0,0,0,0.65);
-  overflow: hidden;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
   aspect-ratio: 605 / 417;
   width: min(70vw, 660px);
   flex-shrink: 0;
-  touch-action: pan-y;
+  touch-action: pan-x;
   user-select: none;
-  cursor: grab;
 }
-.ipad-frame:active { cursor: grabbing; }
+.ipad-frame::-webkit-scrollbar { display: none; }
 [data-theme="light"] .ipad-frame {
   box-shadow: 0 14px 44px rgba(0,0,0,0.13);
 }
 .ipad-frame .inner-slider img {
-  width: 25%;
+  width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: top;
-  flex-shrink: 0;
   display: block;
+  scroll-snap-align: start;
 }
 
 /* ── Mac viewport ───────────────────────────────────────────── */
 .mac-viewport {
   width: min(76vw, 820px);
-  overflow: hidden;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
   flex-shrink: 0;
   border-radius: 10px;
-  touch-action: pan-y;
+  touch-action: pan-x;
   user-select: none;
-  cursor: grab;
 }
-.mac-viewport:active { cursor: grabbing; }
+.mac-viewport::-webkit-scrollbar { display: none; }
 .mac-viewport .inner-slider {
   height: auto;
 }
 .mac-viewport .inner-slider img {
-  width: 25%;
+  width: 100%;
   height: auto;
   display: block;
-  flex-shrink: 0;
   border-radius: 10px;
+  scroll-snap-align: start;
 }
 
 /* ── Screenshot caption & dots ──────────────────────────────── */
@@ -306,3 +311,35 @@ html, body { height: 100dvh; overflow: hidden; }
   border-color: var(--accent);
   transform: scale(1.3);
 }
+
+/* Lightbox */
+#lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.85);
+  align-items: center;
+  justify-content: center;
+}
+#lightbox.open { display: flex; }
+#lightbox-img {
+  max-width: 92vw;
+  max-height: 92vh;
+  object-fit: contain;
+  border-radius: 12px;
+  touch-action: pinch-zoom;
+}
+#lightbox-close {
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  font-size: 2rem;
+  line-height: 1;
+  color: #fff;
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.7;
+}
+#lightbox-close:hover { opacity: 1; }

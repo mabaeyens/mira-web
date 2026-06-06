@@ -415,6 +415,10 @@
 
   </div><!-- /scroll-container -->
 
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Screenshot preview">
+    <button id="lightbox-close" aria-label="Close">&times;</button>
+    <img id="lightbox-img" alt="" />
+  </div>
 
   <!-- ── Scripts ───────────────────────────────────────────────── -->
   <script>
@@ -467,12 +471,27 @@
       function goTo(device, idx) {
         idx = Math.max(0, Math.min(3, idx));
         state[device] = idx;
-        document.getElementById('slider-' + device).style.transform = 'translateX(-' + (idx * 25) + '%)';
+        var frame = document.getElementById('frame-' + device);
+        frame.scrollTo({ left: idx * frame.clientWidth, behavior: 'smooth' });
         document.getElementById('cap-' + device).textContent = CAPTIONS[device][idx];
         if (device === activeDevice) {
           posDots.forEach(function (d, i) { d.classList.toggle('active', i === idx); });
         }
       }
+
+      // Sync dots/captions when browser scrolls natively (Magic Mouse, trackpad, touch)
+      ['iphone', 'mac', 'ipad'].forEach(function (device) {
+        document.getElementById('frame-' + device).addEventListener('scroll', function () {
+          var frame = document.getElementById('frame-' + device);
+          var idx = Math.round(frame.scrollLeft / frame.clientWidth);
+          if (idx === state[device]) return;
+          state[device] = idx;
+          document.getElementById('cap-' + device).textContent = CAPTIONS[device][idx];
+          if (device === activeDevice) {
+            posDots.forEach(function (d, i) { d.classList.toggle('active', i === idx); });
+          }
+        });
+      });
 
       function switchDevice(device) {
         activeDevice = device;
@@ -489,93 +508,47 @@
         dot.addEventListener('click', function () { goTo(activeDevice, i); });
       });
 
-      // Touch swipe — reliable on iOS Safari inside scroll-snap containers
-      // Detects horizontal vs vertical intent; preventDefault blocks page snap on horizontal
-      function addSwipe(el, device) {
-        var startX = null, startY = null;
-
-        el.addEventListener('touchstart', function (e) {
-          startX = e.touches[0].clientX;
-          startY = e.touches[0].clientY;
-        }, { passive: true });
-
-        el.addEventListener('touchmove', function (e) {
-          if (startX === null) return;
-          var dx = e.touches[0].clientX - startX;
-          var dy = e.touches[0].clientY - startY;
-          if (Math.abs(dx) > Math.abs(dy)) e.preventDefault();
-        }, { passive: false });
-
-        el.addEventListener('touchend', function (e) {
-          if (startX === null) return;
-          var dx = e.changedTouches[0].clientX - startX;
-          var dy = e.changedTouches[0].clientY - startY;
-          if (Math.abs(dx) > Math.abs(dy) + 10 && Math.abs(dx) > 30) {
-            goTo(device, dx < 0 ? state[device] + 1 : state[device] - 1);
-          }
-          startX = null; startY = null;
-        }, { passive: true });
-
-        // Pointer events for mouse drag on desktop only
-        var dragX = null;
-        el.addEventListener('pointerdown', function (e) {
-          if (e.pointerType === 'touch') return;
-          dragX = e.clientX;
-          el.setPointerCapture(e.pointerId);
-        });
-        el.addEventListener('pointerup', function (e) {
-          if (e.pointerType === 'touch' || dragX === null) return;
-          var dx = e.clientX - dragX;
-          if      (dx < -40) goTo(device, state[device] + 1);
-          else if (dx >  40) goTo(device, state[device] - 1);
-          dragX = null;
-        });
-        el.addEventListener('pointercancel', function (e) {
-          if (e.pointerType !== 'touch') dragX = null;
-        });
-      }
-
-      addSwipe(document.getElementById('frame-iphone'), 'iphone');
-      addSwipe(document.getElementById('frame-mac'),    'mac');
-      addSwipe(document.getElementById('frame-ipad'),   'ipad');
-
-      // Mouse wheel / trackpad — one advance per gesture
-      // Locked after first event; unlocks 100ms after events stop (gesture end)
-      // Direction change allowed after 200ms to absorb interleaved momentum tail
-      function addWheel(el, device) {
-        var locked = false;
-        var lockedDir = 0;
-        var lockedAt = 0;
-        var endTimer = null;
-
-        el.addEventListener('wheel', function (e) {
-          e.preventDefault();
-          var raw = Math.abs(e.deltaX) >= Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-          var dir = raw > 0 ? 1 : raw < 0 ? -1 : 0;
-          if (!dir) return;
-
-          clearTimeout(endTimer);
-          endTimer = setTimeout(function () { locked = false; lockedDir = 0; }, 100);
-
-          var now = Date.now();
-          if (!locked) {
-            goTo(device, state[device] + dir);
-            locked = true; lockedDir = dir; lockedAt = now;
-          } else if (dir !== lockedDir && now - lockedAt > 200) {
-            goTo(device, state[device] + dir);
-            lockedDir = dir; lockedAt = now;
-          }
-        }, { passive: false });
-      }
-
-      addWheel(document.getElementById('frame-iphone'), 'iphone');
-      addWheel(document.getElementById('frame-mac'),    'mac');
-      addWheel(document.getElementById('frame-ipad'),   'ipad');
 
       // Keyboard arrow keys
       document.addEventListener('keydown', function (e) {
         if (e.key === 'ArrowRight') goTo(activeDevice, state[activeDevice] + 1);
         if (e.key === 'ArrowLeft')  goTo(activeDevice, state[activeDevice] - 1);
+      });
+
+      // Lightbox — tap/click a device frame to see the current slide enlarged
+      var lightbox    = document.getElementById('lightbox');
+      var lightboxImg = document.getElementById('lightbox-img');
+
+      function openLightbox(device) {
+        var imgs = document.getElementById('slider-' + device).querySelectorAll('img');
+        var img  = imgs[state[device]];
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeLightbox() {
+        lightbox.classList.remove('open');
+        lightboxImg.src = '';
+        document.body.style.overflow = '';
+      }
+
+      ['iphone', 'mac', 'ipad'].forEach(function (device) {
+        var el = document.getElementById('frame-' + device);
+        var downX = null;
+        el.addEventListener('pointerdown', function (e) { downX = e.clientX; });
+        el.addEventListener('click', function (e) {
+          if (downX !== null && Math.abs(e.clientX - downX) > 8) return;
+          openLightbox(device);
+        });
+      });
+
+      document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', function (e) {
+        if (e.target === lightbox) closeLightbox();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeLightbox();
       });
     }());
   </script>
