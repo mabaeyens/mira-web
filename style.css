@@ -239,7 +239,7 @@ html, body { height: 100dvh; overflow: hidden; }
   border: 1.5px solid var(--b50);
   box-shadow: 0 30px 80px rgba(0,0,0,0.65);
   overflow: hidden;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 605 / 417;
   width: min(70vw, 660px);
   flex-shrink: 0;
   touch-action: pan-y;
@@ -254,7 +254,7 @@ html, body { height: 100dvh; overflow: hidden; }
   width: 25%;
   height: 100%;
   object-fit: cover;
-  object-position: top left;
+  object-position: top;
   flex-shrink: 0;
   display: block;
 }
