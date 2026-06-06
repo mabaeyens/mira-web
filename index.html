@@ -521,7 +521,7 @@
           var dir = delta > 0 ? 1 : delta < 0 ? -1 : 0;
           if (!dir) return;
           var now = Date.now();
-          if (dir !== lastDir || now - lastTime > 200) {
+          if (dir !== lastDir || now - lastTime > 600) {
             goTo(device, state[device] + dir);
             lastTime = now;
             lastDir  = dir;
