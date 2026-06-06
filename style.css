@@ -163,14 +163,14 @@ html, body { height: 100dvh; overflow: hidden; }
   font-size: 0.6rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--dim);
+  color: var(--muted);
   background: none;
   border: none;
   cursor: pointer;
   padding: 0.25rem 0.5rem;
   transition: color 0.2s;
 }
-.device-tab:hover  { color: var(--muted); }
+.device-tab:hover  { color: var(--text-90); }
 .device-tab.active { color: var(--accent); }
 
 /* ── Device shells (one visible at a time) ──────────────────── */
@@ -285,7 +285,7 @@ html, body { height: 100dvh; overflow: hidden; }
 .ss-caption {
   font-size: 0.6rem;
   letter-spacing: 0.1em;
-  color: var(--dim);
+  color: var(--muted);
   text-align: center;
   text-transform: uppercase;
 }

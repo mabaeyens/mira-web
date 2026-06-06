@@ -510,21 +510,21 @@
       addSwipe(document.getElementById('frame-mac'),    'mac');
       addSwipe(document.getElementById('frame-ipad'),   'ipad');
 
-      // Mouse wheel / trackpad scroll
-      // "triggered" locks after first advance; resets only after events stop for 800ms
-      // This prevents macOS trackpad momentum from auto-cycling all slides
+      // Mouse wheel / trackpad scroll — accumulate delta, advance per 60px threshold
       function addWheel(el, device) {
-        var triggered = false;
-        var resetTimer = null;
+        var accum = 0;
         el.addEventListener('wheel', function (e) {
           e.preventDefault();
-          clearTimeout(resetTimer);
-          resetTimer = setTimeout(function () { triggered = false; }, 800);
-          if (triggered) return;
           var delta = Math.abs(e.deltaX) >= Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-          if      (delta > 0) goTo(device, state[device] + 1);
-          else if (delta < 0) goTo(device, state[device] - 1);
-          triggered = true;
+          if ((delta > 0 && accum < 0) || (delta < 0 && accum > 0)) accum = 0;
+          accum += delta;
+          if (accum > 60) {
+            goTo(device, state[device] + 1);
+            accum = 0;
+          } else if (accum < -60) {
+            goTo(device, state[device] - 1);
+            accum = 0;
+          }
         }, { passive: false });
       }
 
