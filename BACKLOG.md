@@ -8,7 +8,6 @@
 - 2026-06-06 Screenshots section: fixed-frame slider with 12 new screenshots (4 per device), device tabs (iPhone / Mac / iPad), inner image strip slides inside static frame, captions per slide, position dots, keyboard arrow key support
 
 ## Pending
-- Verify Magic Mouse wheel and iOS swipe fixes in production (user was testing; session ended before confirmation)
 - Consider adding a visible swipe affordance / hint animation on mobile (first-visit only)
 
 ## Notes
