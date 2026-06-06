@@ -489,42 +489,81 @@
         dot.addEventListener('click', function () { goTo(activeDevice, i); });
       });
 
-      // Drag-to-swipe on each device frame
+      // Touch swipe — reliable on iOS Safari inside scroll-snap containers
+      // Detects horizontal vs vertical intent; preventDefault blocks page snap on horizontal
       function addSwipe(el, device) {
-        var startX = null;
+        var startX = null, startY = null;
+
+        el.addEventListener('touchstart', function (e) {
+          startX = e.touches[0].clientX;
+          startY = e.touches[0].clientY;
+        }, { passive: true });
+
+        el.addEventListener('touchmove', function (e) {
+          if (startX === null) return;
+          var dx = e.touches[0].clientX - startX;
+          var dy = e.touches[0].clientY - startY;
+          if (Math.abs(dx) > Math.abs(dy)) e.preventDefault();
+        }, { passive: false });
+
+        el.addEventListener('touchend', function (e) {
+          if (startX === null) return;
+          var dx = e.changedTouches[0].clientX - startX;
+          var dy = e.changedTouches[0].clientY - startY;
+          if (Math.abs(dx) > Math.abs(dy) + 10 && Math.abs(dx) > 30) {
+            goTo(device, dx < 0 ? state[device] + 1 : state[device] - 1);
+          }
+          startX = null; startY = null;
+        }, { passive: true });
+
+        // Pointer events for mouse drag on desktop only
+        var dragX = null;
         el.addEventListener('pointerdown', function (e) {
-          startX = e.clientX;
+          if (e.pointerType === 'touch') return;
+          dragX = e.clientX;
           el.setPointerCapture(e.pointerId);
         });
         el.addEventListener('pointerup', function (e) {
-          if (startX === null) return;
-          var dx = e.clientX - startX;
+          if (e.pointerType === 'touch' || dragX === null) return;
+          var dx = e.clientX - dragX;
           if      (dx < -40) goTo(device, state[device] + 1);
           else if (dx >  40) goTo(device, state[device] - 1);
-          startX = null;
+          dragX = null;
         });
-        el.addEventListener('pointercancel', function () { startX = null; });
+        el.addEventListener('pointercancel', function (e) {
+          if (e.pointerType !== 'touch') dragX = null;
+        });
       }
 
       addSwipe(document.getElementById('frame-iphone'), 'iphone');
       addSwipe(document.getElementById('frame-mac'),    'mac');
       addSwipe(document.getElementById('frame-ipad'),   'ipad');
 
-      // Mouse wheel / trackpad scroll
-      // Direction change fires immediately; same direction needs 200ms gap (blocks momentum)
+      // Mouse wheel / trackpad — one advance per gesture
+      // Locked after first event; unlocks 100ms after events stop (gesture end)
+      // Direction change allowed after 200ms to absorb interleaved momentum tail
       function addWheel(el, device) {
-        var lastTime = 0;
-        var lastDir  = 0;
+        var locked = false;
+        var lockedDir = 0;
+        var lockedAt = 0;
+        var endTimer = null;
+
         el.addEventListener('wheel', function (e) {
           e.preventDefault();
-          var delta = Math.abs(e.deltaX) >= Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-          var dir = delta > 0 ? 1 : delta < 0 ? -1 : 0;
+          var raw = Math.abs(e.deltaX) >= Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+          var dir = raw > 0 ? 1 : raw < 0 ? -1 : 0;
           if (!dir) return;
+
+          clearTimeout(endTimer);
+          endTimer = setTimeout(function () { locked = false; lockedDir = 0; }, 100);
+
           var now = Date.now();
-          if (dir !== lastDir || now - lastTime > 600) {
+          if (!locked) {
             goTo(device, state[device] + dir);
-            lastTime = now;
-            lastDir  = dir;
+            locked = true; lockedDir = dir; lockedAt = now;
+          } else if (dir !== lockedDir && now - lockedAt > 200) {
+            goTo(device, state[device] + dir);
+            lockedDir = dir; lockedAt = now;
           }
         }, { passive: false });
       }
