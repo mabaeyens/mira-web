@@ -8,6 +8,14 @@
   <meta property="og:title" content="Mira — AI that stays home" />
   <meta property="og:description" content="Private, local AI assistant for macOS, iPhone, and iPad. Powered by Apple Silicon." />
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://askmira.es" />
+  <meta property="og:image" content="https://askmira.es/assets/og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#1C1917" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#F7F5F3" media="(prefers-color-scheme: light)" />
+
+  <link rel="icon" href="assets/icon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="assets/icon.png" />
 
   <!-- Anti-flash: restore saved theme before first paint -->
   <script>
@@ -109,9 +117,13 @@
             <em class="not-italic text-[var(--accent)]">stays home.</em>
           </h1>
 
-          <p class="hero-copy text-sm text-[var(--muted)] leading-[1.75] max-w-md mb-11">
+          <p class="hero-copy text-sm text-[var(--muted)] leading-[1.75] max-w-md mb-6">
             Mira runs entirely on your Mac, iPhone, and iPad — powered by Apple Silicon,
             no API keys, no subscriptions. Your conversations stay on your devices.
+          </p>
+
+          <p class="hero-eyebrow text-[10px] tracking-[0.22em] uppercase text-[var(--dim)] mb-11">
+            ~50 tok/s &nbsp;·&nbsp; 35 B model &nbsp;·&nbsp; M5 &nbsp;·&nbsp; 32 GB RAM
           </p>
 
           <div class="hero-cta flex flex-wrap items-center gap-3">
@@ -157,9 +169,9 @@
           <div class="iphone-frame" id="frame-iphone">
             <div class="inner-slider" id="slider-iphone">
               <img src="assets/ios_haiku.PNG"  alt="Mira on iPhone — haiku" />
-              <img src="assets/ios_python.PNG" alt="Mira on iPhone — Python code" />
-              <img src="assets/ios_cherry.PNG" alt="Mira on iPhone — Kyoto itinerary" />
-              <img src="assets/ios_sleep.PNG"  alt="Mira on iPhone — sleep tips" />
+              <img src="assets/ios_python.PNG" alt="Mira on iPhone — Python code" loading="lazy" />
+              <img src="assets/ios_cherry.PNG" alt="Mira on iPhone — Kyoto itinerary" loading="lazy" />
+              <img src="assets/ios_sleep.PNG"  alt="Mira on iPhone — sleep tips" loading="lazy" />
             </div>
           </div>
           <p class="ss-caption" id="cap-iphone">Short, elegant conversation</p>
@@ -169,10 +181,10 @@
         <div class="device-shell" data-device="mac">
           <div class="mac-viewport mac-shadow" id="frame-mac">
             <div class="inner-slider" id="slider-mac">
-              <img src="assets/macos_weather.png"  alt="Mira on Mac — Madrid weather" />
-              <img src="assets/macos_sleep.png"    alt="Mira on Mac — educational explanation" />
-              <img src="assets/macos_tip.png"      alt="Mira on Mac — tip calculator" />
-              <img src="assets/macos_stoicism.png" alt="Mira on Mac — stoicism" />
+              <img src="assets/macos_weather.png"  alt="Mira on Mac — Madrid weather" loading="lazy" />
+              <img src="assets/macos_sleep.png"    alt="Mira on Mac — educational explanation" loading="lazy" />
+              <img src="assets/macos_tip.png"      alt="Mira on Mac — tip calculator" loading="lazy" />
+              <img src="assets/macos_stoicism.png" alt="Mira on Mac — stoicism" loading="lazy" />
             </div>
           </div>
           <p class="ss-caption" id="cap-mac">Everyday conversational query</p>
@@ -182,10 +194,10 @@
         <div class="device-shell" data-device="ipad">
           <div class="ipad-frame" id="frame-ipad">
             <div class="inner-slider" id="slider-ipad">
-              <img src="assets/ipados_dinner.PNG"      alt="Mira on iPad — dinner recipe" />
-              <img src="assets/ipados_translation.PNG" alt="Mira on iPad — quote translation" />
-              <img src="assets/ipados_tcpudp.PNG"      alt="Mira on iPad — TCP vs UDP" />
-              <img src="assets/ipados_2008.PNG"        alt="Mira on iPad — 2008 crisis" />
+              <img src="assets/ipados_dinner.PNG"      alt="Mira on iPad — dinner recipe" loading="lazy" />
+              <img src="assets/ipados_translation.PNG" alt="Mira on iPad — quote translation" loading="lazy" />
+              <img src="assets/ipados_tcpudp.PNG"      alt="Mira on iPad — TCP vs UDP" loading="lazy" />
+              <img src="assets/ipados_2008.PNG"        alt="Mira on iPad — 2008 crisis" loading="lazy" />
             </div>
           </div>
           <p class="ss-caption" id="cap-ipad">Lifestyle content, practical steps</p>
@@ -250,7 +262,7 @@
             </div>
             <div>
               <p class="text-sm font-medium text-[var(--text)] mb-0.5">Switch models on the fly</p>
-              <p class="text-sm text-[var(--muted)] leading-[1.65]">Move between Llama, Qwen, Gemma, and others without restarting the app.</p>
+              <p class="text-sm text-[var(--muted)] leading-[1.65]">Qwen3.6, Gemma4, Llama, and more — models sized to fit any Apple Silicon Mac.</p>
             </div>
           </div>
 
@@ -321,7 +333,7 @@
             </div>
             <p class="text-xs font-medium text-[var(--text)] mb-2">Local inference</p>
             <p class="text-xs text-[var(--muted)] leading-[1.65]">
-              Powered by Apple Silicon's Neural Engine via mlx-lm. Run Llama, Gemma, Qwen, and other open models — fully offline, zero API keys, no metered costs.
+              Powered by Apple Silicon's Neural Engine. Run Qwen3.6, Gemma4, Llama, and other open models fully offline — zero API keys, no metered costs. Works on any M-series Mac with 16 GB or more.
             </p>
           </div>
 
@@ -387,14 +399,22 @@
         <p class="font-serif text-3xl text-[var(--text)] mb-2">Mira</p>
         <p class="text-xs text-[var(--muted)] mb-14">AI that stays home.</p>
 
-        <div class="flex items-center gap-3 justify-center mb-16">
+        <div class="flex flex-wrap items-center gap-3 justify-center mb-16">
           <a href="https://github.com/mabaeyens/mira-core"
              target="_blank" rel="noopener"
              class="inline-flex items-center gap-2 text-xs border border-[var(--b50)] hover:border-[var(--muted)] text-[var(--text)] px-4 py-2.5 rounded-md transition-colors">
             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
             </svg>
-            View source
+            mira-core
+          </a>
+          <a href="https://github.com/mabaeyens/mira-apps"
+             target="_blank" rel="noopener"
+             class="inline-flex items-center gap-2 text-xs border border-[var(--b50)] hover:border-[var(--muted)] text-[var(--text)] px-4 py-2.5 rounded-md transition-colors">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+            mira-apps
           </a>
           <a href="#"
              class="inline-flex items-center gap-2 text-xs bg-[var(--accent)] hover:bg-[var(--accent-hov)] text-[#1C1917] font-medium px-4 py-2.5 rounded-md transition-colors">

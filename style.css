@@ -148,7 +148,10 @@ html, body { height: 100dvh; overflow: hidden; }
   background: transparent;
   transition: background 0.2s, border-color 0.2s, transform 0.2s;
   cursor: pointer;
-  padding: 0;
+  /* Invisible tap zone: expands hit area to ~44px without changing visual size */
+  padding: 18px;
+  margin: -18px;
+  box-sizing: content-box;
   flex-shrink: 0;
 }
 .dot-btn:hover  { border-color: var(--muted); }
@@ -167,7 +170,8 @@ html, body { height: 100dvh; overflow: hidden; }
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0.25rem 0.5rem;
+  /* Min 44px tall touch target per Apple HIG */
+  padding: 0.75rem 0.75rem;
   transition: color 0.2s;
 }
 .device-tab:hover  { color: var(--text-90); }
@@ -290,7 +294,9 @@ html, body { height: 100dvh; overflow: hidden; }
   border: 1.5px solid var(--b50);
   background: transparent;
   cursor: pointer;
-  padding: 0;
+  padding: 19px;
+  margin: -19px;
+  box-sizing: content-box;
   transition: background 0.2s, border-color 0.2s, transform 0.2s;
 }
 .ss-dot:hover  { border-color: var(--muted); }
