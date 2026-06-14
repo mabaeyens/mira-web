@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mira — AI that stays home</title>
+  <meta name="description" content="Private, local AI assistant for macOS, iPhone, and iPad. No cloud. No subscriptions. Powered by Apple Silicon." />
+  <meta property="og:title" content="Mira — AI that stays home" />
+  <meta property="og:description" content="Private, local AI assistant for macOS, iPhone, and iPad. Powered by Apple Silicon." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://askmira.es" />
+  <meta property="og:image" content="https://askmira.es/assets/og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#1C1917" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#F7F5F3" media="(prefers-color-scheme: light)" />
+
+  <link rel="icon" href="assets/icon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="assets/icon.png" />
+
+  <!-- Anti-flash: restore saved theme before first paint -->
+  <script>
+    (function(){
+      var t = localStorage.getItem('mira-theme');
+      if (t) document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Instrument Serif"', 'Georgia', 'serif'],
+            mono:  ['"IBM Plex Mono"', '"Courier New"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- ── index2 field-manual components (reuses :root tokens from style.css) ── -->
+  <style>
+    /* Containment frame — "nothing crosses this line" / stays home */
+    .frame-inset {
+      position: fixed;
+      inset: 10px;
+      border: 1px solid var(--b25);
+      border-radius: 6px;
+      pointer-events: none;
+      z-index: 30;
+    }
+    @media (max-width: 640px) {
+      .frame-inset { inset: 6px; border-radius: 4px; }
+    }
+
+    /* Numbered field-manual section labels */
+    .sec-num   { color: var(--accent); }
+    .sec-slash { color: var(--b80); }
+
+    /* Hero live-generation panel */
+    .hero-demo { animation: fade-up 0.65s 0.36s cubic-bezier(.22,.68,0,1) both; }
+
+    .live-panel {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--b40);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+    }
+    [data-theme="light"] .live-panel { box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
+
+    .live-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 0.85rem;
+      border-bottom: 1px solid var(--b25);
+      font-size: 0.625rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--dim);
+    }
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      animation: live-pulse 2.4s ease-out infinite;
+    }
+    @keyframes live-pulse {
+      0%   { box-shadow: 0 0 0 0 var(--a30); }
+      70%  { box-shadow: 0 0 0 6px rgba(208,146,104,0); }
+      100% { box-shadow: 0 0 0 0 rgba(208,146,104,0); }
+    }
+    .live-readout {
+      margin-left: auto;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    /* Enlarged chat viewport that auto-scrolls as scenes stream */
+    .live-body {
+      height: clamp(15rem, 42vh, 21rem);
+      overflow: hidden;
+      padding: 0.85rem 0.95rem;
+      font-size: 0.76rem;
+      line-height: 1.55;
+    }
+    .live-thread { display: flex; flex-direction: column; gap: 0.65rem; }
+
+    /* User message bubble (right-aligned, like Mira) */
+    .msg-user {
+      align-self: flex-end;
+      max-width: 88%;
+      background: var(--surface-2);
+      border: 1px solid var(--b30);
+      border-radius: 10px;
+      padding: 0.45rem 0.65rem;
+      color: var(--text);
+    }
+
+    /* Assistant prose (full width) */
+    .msg-assistant { color: var(--text); }
+    .msg-assistant p { margin: 0 0 0.4rem; white-space: pre-wrap; }
+    .msg-assistant p:last-child { margin-bottom: 0; }
+    .msg-assistant strong { color: var(--text); font-weight: 500; }
+
+    /* Streaming caret */
+    .live-thread .streaming::after {
+      content: '▋';
+      color: var(--accent);
+      margin-left: 1px;
+      animation: live-caret 1s steps(1) infinite;
+    }
+    @keyframes live-caret { 50% { opacity: 0; } }
+
+    /* Thinking disclosure */
+    .think { display: flex; flex-direction: column; gap: 0.3rem; }
+    .think-head {
+      display: flex; align-items: center; gap: 0.35rem;
+      color: var(--muted); font-size: 0.7rem; cursor: pointer; user-select: none;
+    }
+    .think-chevron { width: 0.6rem; height: 0.6rem; flex-shrink: 0; opacity: 0.7; transition: transform 0.2s; }
+    .think.collapsed .think-chevron { transform: rotate(-90deg); }
+    .think-ic { display: inline-flex; width: 0.8rem; justify-content: center; flex-shrink: 0; }
+    .think-ic svg { width: 0.8rem; height: 0.8rem; opacity: 0.6; }
+    .think-spinner {
+      width: 0.7rem; height: 0.7rem; border-radius: 50%;
+      border: 1.5px solid var(--b50); border-top-color: var(--accent);
+      animation: think-spin 0.7s linear infinite;
+    }
+    @keyframes think-spin { to { transform: rotate(360deg); } }
+    .think-body {
+      margin-left: 0.32rem; padding: 0.4rem 0.6rem;
+      border-left: 1px solid var(--b25);
+      color: var(--muted); font-size: 0.7rem; line-height: 1.5;
+      white-space: pre-wrap; max-height: 7.5rem; overflow: hidden;
+    }
+    .think.collapsed .think-body { display: none; }
+
+    /* Streaming activity rows */
+    .activity-row {
+      display: flex; align-items: center; gap: 0.4rem;
+      color: var(--dim); font-size: 0.68rem;
+    }
+    .activity-row svg { width: 0.8rem; height: 0.8rem; flex-shrink: 0; }
+
+    /* Sources / RAG disclosure panel */
+    .src-panel {
+      border: 1px solid var(--b25); border-radius: 8px;
+      background: var(--surface-2); overflow: hidden;
+    }
+    .src-head {
+      display: flex; align-items: center; gap: 0.4rem;
+      padding: 0.4rem 0.55rem; color: var(--muted); font-size: 0.67rem;
+    }
+    .src-head svg { width: 0.8rem; height: 0.8rem; opacity: 0.8; flex-shrink: 0; }
+    .src-item {
+      padding: 0.35rem 0.55rem; border-top: 1px solid var(--b20);
+      display: flex; flex-direction: column; gap: 0.12rem; min-width: 0;
+    }
+    .src-rowtop { display: flex; align-items: baseline; justify-content: space-between; gap: 0.5rem; min-width: 0; }
+    .src-name {
+      color: var(--accent); font-size: 0.69rem; font-weight: 500;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
+    }
+    .rag-score { color: var(--dim); font-size: 0.64rem; font-variant-numeric: tabular-nums; flex-shrink: 0; }
+    .src-preview {
+      color: var(--dim); font-size: 0.64rem; line-height: 1.4;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+
+    /* Code block */
+    .code-block {
+      border: 1px solid var(--b50); border-radius: 8px;
+      background: var(--surface); overflow: hidden; margin: 0.1rem 0 0.4rem;
+    }
+    .code-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.28rem 0.5rem; border-bottom: 1px solid var(--b25);
+      color: var(--muted); font-size: 0.62rem;
+    }
+    .code-copy {
+      display: inline-flex; align-items: center; gap: 0.25rem;
+      padding: 0.08rem 0.45rem; border-radius: 999px; border: none;
+      background: var(--b25); color: var(--muted); cursor: pointer;
+      font-size: 0.6rem; font-family: inherit;
+    }
+    .code-copy svg { width: 0.7rem; height: 0.7rem; }
+    .code-copy.copied { background: var(--a20); color: var(--accent); }
+    .code-body {
+      margin: 0; padding: 0.55rem 0.7rem; font-size: 0.7rem; line-height: 1.5;
+      color: var(--text); white-space: pre; overflow-x: auto;
+      font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    }
+    .code-body::-webkit-scrollbar { display: none; }
+
+    /* Capability row index numbers (field-manual margin numerals) */
+    .cap-index {
+      flex-shrink: 0;
+      width: 1.4rem;
+      padding-top: 0.4rem;
+      font-size: 0.625rem;
+      color: var(--dim);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.08em;
+    }
+  </style>
+</head>
+
+<body class="bg-[var(--bg)] text-[var(--text)] font-mono antialiased">
+
+  <!-- ── Containment frame ─────────────────────────────────────── -->
+  <div class="frame-inset" aria-hidden="true"></div>
+
+  <!-- ── Nav (fixed) ───────────────────────────────────────────── -->
+  <nav class="fixed top-0 left-0 right-0 z-50 border-b border-[var(--b30)] backdrop-blur-md bg-[var(--bg-nav)]">
+    <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
+
+      <a href="/" class="flex items-center gap-2.5 group">
+        <img src="assets/icon.png" class="w-7 h-7 rounded-md shrink-0" alt="Mira" />
+        <span class="font-serif text-sm tracking-wide text-[var(--text-90)] group-hover:text-[var(--text)] transition-colors">
+          Mira
+        </span>
+      </a>
+
+      <div class="flex items-center gap-2.5">
+        <a href="https://testflight.apple.com/join/Q2gC5amE"
+           target="_blank" rel="noopener"
+           class="inline-flex items-center gap-1.5 text-xs bg-[var(--text)] text-[var(--bg)] px-3 py-1.5 rounded-md transition-opacity hover:opacity-80">
+          <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+          </svg>
+          Join beta
+        </a>
+
+        <a href="https://github.com/mabaeyens"
+           target="_blank" rel="noopener"
+           class="inline-flex items-center gap-1.5 text-xs text-[var(--muted)] hover:text-[var(--text)] transition-colors px-3 py-1.5 border border-[var(--b50)] hover:border-[var(--b80)] rounded-md">
+          <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
+          GitHub
+        </a>
+
+        <a href="https://linkedin.com/in/mabaeyens"
+           target="_blank" rel="noopener" aria-label="LinkedIn"
+           class="inline-flex items-center text-xs text-[var(--muted)] hover:text-[var(--text)] transition-colors p-1.5 border border-[var(--b50)] hover:border-[var(--b80)] rounded-md">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 110-4.14 2.07 2.07 0 010 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/>
+          </svg>
+        </a>
+
+        <button id="theme-toggle"
+          class="p-1.5 rounded-md border border-[var(--b50)] hover:border-[var(--b80)] text-[var(--muted)] hover:text-[var(--text)] transition-colors"
+          aria-label="Toggle theme">
+          <svg class="icon-sun w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg class="icon-moon w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Dot nav (fixed right) ─────────────────────────────────── -->
+  <nav id="dot-nav" aria-label="Page sections"
+       class="fixed right-5 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-3">
+    <button class="dot-btn" data-target="hero"         aria-label="Intro"></button>
+    <button class="dot-btn" data-target="performance"  aria-label="Performance"></button>
+    <button class="dot-btn" data-target="screenshots"  aria-label="Screenshots"></button>
+    <button class="dot-btn" data-target="capabilities" aria-label="What you can do"></button>
+    <button class="dot-btn" data-target="features"     aria-label="How it works"></button>
+    <button class="dot-btn" data-target="credits"      aria-label="Credits"></button>
+  </nav>
+
+
+  <!-- ── Scroll container ──────────────────────────────────────── -->
+  <div class="scroll-container">
+
+    <!-- ── 1 · Hero ───────────────────────────────────────────── -->
+    <section id="hero" class="snap-section flex flex-col justify-center pt-14">
+      <div class="max-w-5xl mx-auto px-6 w-full">
+        <div class="grid md:grid-cols-2 gap-10 md:gap-12 items-center">
+
+          <!-- Left: text -->
+          <div class="max-w-xl">
+            <p class="hero-eyebrow text-[10px] tracking-[0.22em] uppercase text-[var(--muted)] mb-8">
+              Local AI &nbsp;·&nbsp; macOS &nbsp;·&nbsp; iOS &nbsp;·&nbsp; iPadOS
+            </p>
+
+            <h1 class="hero-title font-serif text-[clamp(2.75rem,7vw,5rem)] leading-[0.93] tracking-tight text-[var(--text)] mb-6">
+              AI that<br/>
+              <em class="not-italic text-[var(--accent)]">stays home.</em>
+            </h1>
+
+            <p class="hero-copy text-sm text-[var(--muted)] leading-[1.75] max-w-md mb-5">
+              Mira runs entirely on your Mac, iPhone, and iPad — powered by Apple Silicon,
+              no API keys, no subscriptions. Your conversations stay on your devices.
+            </p>
+
+            <p class="hero-eyebrow text-[10px] tracking-[0.22em] uppercase text-[var(--dim)] mb-8">
+              ~60 tok/s gen &nbsp;·&nbsp; ~848 tok/s prefill &nbsp;·&nbsp; 35 B model &nbsp;·&nbsp; M5 &nbsp;·&nbsp; 32 GB RAM
+            </p>
+
+            <div class="hero-cta flex flex-wrap items-center gap-3">
+              <a href="https://testflight.apple.com/join/Q2gC5amE"
+                 target="_blank" rel="noopener"
+                 class="inline-flex items-center gap-2 text-xs bg-[var(--text)] text-[var(--bg)] px-5 py-2.5 rounded-md transition-opacity hover:opacity-80">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                </svg>
+                Join beta
+              </a>
+              <a href="https://github.com/mabaeyens/mira-core"
+                 target="_blank" rel="noopener"
+                 class="inline-flex items-center gap-2 text-xs border border-[var(--b50)] hover:border-[var(--muted)] text-[var(--text)] px-5 py-2.5 rounded-md transition-colors">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                </svg>
+                View source
+              </a>
+            </div>
+          </div>
+
+          <!-- Right: live local-generation demo -->
+          <div class="hero-demo">
+            <div class="live-panel" aria-hidden="true">
+              <div class="live-header">
+                <span class="live-dot"></span>
+                <span>mira · local</span>
+                <span class="live-readout" id="live-readout">▸ on-device · M5 · 0 tok/s</span>
+              </div>
+              <div class="live-body" id="live-body">
+                <div class="live-thread" id="live-thread"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ── 2 · Performance ──────────────────────────────────────── -->
+    <section id="performance" class="snap-section section-rule flex flex-col justify-center pt-14">
+      <div class="max-w-5xl mx-auto px-6 w-full">
+        <div class="max-w-xl">
+
+          <div class="bench-header">
+            <p class="text-[10px] tracking-[0.22em] uppercase text-[var(--dim)] mb-3">
+              <span class="sec-num">01</span><span class="sec-slash"> / </span>Performance
+            </p>
+            <p class="text-[0.7rem] text-[var(--dim)]">M5 MacBook Pro &nbsp;·&nbsp; 32 GB &nbsp;·&nbsp; June 2026</p>
+          </div>
+
+          <!-- Generation speed -->
+          <div class="bench-group">
+            <p class="bench-metric-label">Generation speed &nbsp;·&nbsp; tok / s</p>
+            <div class="bench-chart">
+              <div class="bench-row winner">
+                <span class="bench-label">omlx &nbsp;·&nbsp; Qwen3.6-35B</span>
+                <div class="bench-bar-wrap">
+                  <div class="bench-bar-track"><div class="bench-bar" data-pct="100"></div></div>
+                  <span class="bench-val">58.3</span>
+                </div>
+              </div>
+              <div class="bench-row">
+                <span class="bench-label">omlx &nbsp;·&nbsp; Gemma4-26B</span>
+                <div class="bench-bar-wrap">
+                  <div class="bench-bar-track"><div class="bench-bar" data-pct="77"></div></div>
+                  <span class="bench-val">44.6</span>
+                </div>
+              </div>
+              <div class="bench-row">
+                <span class="bench-label">ollama &nbsp;·&nbsp; Qwen3.6-35B</span>
+                <div class="bench-bar-wrap">
+                  <div class="bench-bar-track"><div class="bench-bar" data-pct="73"></div></div>
+                  <span class="bench-val">42.3</span>
+                </div>
+              </div>
+              <div class="bench-row">
+                <span class="bench-label">ollama &nbsp;·&nbsp; Gemma4-26B</span>
+                <div class="bench-bar-wrap">
+                  <div class="bench-bar-track"><div class="bench-bar" data-pct="69"></div></div>
+                  <span class="bench-val">40.1</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Prefill speed -->
+          <div class="bench-group">
+            <p class="bench-metric-label">Prefill speed &nbsp;·&nbsp; tok / s &nbsp;·&nbsp; pp1024</p>
+            <div class="bench-chart">
+              <div class="bench-row winner">
+                <span class="bench-label">ollama &nbsp;·&nbsp; Qwen3.6-35B</span>
+                <div class="bench-bar-wrap">
+                  <div class="bench-bar-track"><div class="bench-bar" data-pct="100"></div></div>
+                  <span class="bench-val">8,754</span>
+                </div>
+              </div>
+              <div class="bench-row">
+                <span class="bench-label">ollama &nbsp;·&nbsp; Gemma4-26B</span>
+                <div class="bench-bar-wrap">
+                  <div class="bench-bar-track"><div class="bench-bar" data-pct="68"></div></div>
+                  <span class="bench-val">5,981</span>
+                </div>
+              </div>
+              <div class="bench-row">
+                <span class="bench-label">omlx &nbsp;·&nbsp; Gemma4-26B</span>
+                <div class="bench-bar-wrap">
+                  <div class="bench-bar-track"><div class="bench-bar" data-pct="10"></div></div>
+                  <span class="bench-val">856</span>
+                </div>
+              </div>
+              <div class="bench-row">
+                <span class="bench-label">omlx &nbsp;·&nbsp; Qwen3.6-35B</span>
+                <div class="bench-bar-wrap">
+                  <div class="bench-bar-track"><div class="bench-bar" data-pct="10"></div></div>
+                  <span class="bench-val">848</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p class="bench-footnote">
+            llama-bench tg512 / pp1024 &nbsp;·&nbsp;
+            <a href="https://github.com/mabaeyens/mira-core/blob/main/docs/bench-results-2026-06-13.md" target="_blank" rel="noopener">Full results ↗</a>
+          </p>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ── 3 · Screenshots ────────────────────────────────────── -->
+    <section id="screenshots" class="snap-section section-rule flex flex-col pt-14 overflow-hidden">
+
+      <!-- Section label -->
+      <div class="flex-shrink-0 text-center mt-7">
+        <p class="text-[10px] tracking-[0.22em] uppercase text-[var(--dim)]">
+          <span class="sec-num">02</span><span class="sec-slash"> / </span>Screenshots
+        </p>
+      </div>
+
+      <!-- Device tabs -->
+      <div class="flex-shrink-0 flex justify-center items-center gap-6 mt-3 mb-4">
+        <button class="device-tab active" data-device="iphone">iPhone</button>
+        <span class="text-[var(--b40)] text-xs select-none">·</span>
+        <button class="device-tab" data-device="mac">Mac</button>
+        <span class="text-[var(--b40)] text-xs select-none">·</span>
+        <button class="device-tab" data-device="ipad">iPad</button>
+      </div>
+
+      <!-- Device stage: one shell visible at a time, frame never moves -->
+      <div class="flex-1 min-h-0 flex items-center justify-center">
+
+        <!-- iPhone shell -->
+        <div class="device-shell active" data-device="iphone">
+          <div class="iphone-frame" id="frame-iphone">
+            <div class="inner-slider" id="slider-iphone">
+              <img src="assets/ios_haiku.PNG"  alt="Mira on iPhone — haiku" />
+              <img src="assets/ios_python.PNG" alt="Mira on iPhone — Python code" loading="lazy" />
+              <img src="assets/ios_cherry.PNG" alt="Mira on iPhone — Kyoto itinerary" loading="lazy" />
+              <img src="assets/ios_sleep.PNG"  alt="Mira on iPhone — sleep tips" loading="lazy" />
+            </div>
+          </div>
+          <p class="ss-caption" id="cap-iphone">Short, elegant conversation</p>
+        </div>
+
+        <!-- Mac shell -->
+        <div class="device-shell" data-device="mac">
+          <div class="mac-viewport mac-shadow" id="frame-mac">
+            <div class="inner-slider" id="slider-mac">
+              <img src="assets/macos_weather.png"  alt="Mira on Mac — Madrid weather" loading="lazy" />
+              <img src="assets/macos_sleep.png"    alt="Mira on Mac — educational explanation" loading="lazy" />
+              <img src="assets/macos_tip.png"      alt="Mira on Mac — tip calculator" loading="lazy" />
+              <img src="assets/macos_stoicism.png" alt="Mira on Mac — stoicism" loading="lazy" />
+            </div>
+          </div>
+          <p class="ss-caption" id="cap-mac">Everyday conversational query</p>
+        </div>
+
+        <!-- iPad shell -->
+        <div class="device-shell" data-device="ipad">
+          <div class="ipad-frame" id="frame-ipad">
+            <div class="inner-slider" id="slider-ipad">
+              <img src="assets/ipados_dinner.PNG"      alt="Mira on iPad — dinner recipe" loading="lazy" />
+              <img src="assets/ipados_translation.PNG" alt="Mira on iPad — quote translation" loading="lazy" />
+              <img src="assets/ipados_tcpudp.PNG"      alt="Mira on iPad — TCP vs UDP" loading="lazy" />
+              <img src="assets/ipados_2008.PNG"        alt="Mira on iPad — 2008 crisis" loading="lazy" />
+            </div>
+          </div>
+          <p class="ss-caption" id="cap-ipad">Lifestyle content, practical steps</p>
+        </div>
+
+      </div>
+
+      <!-- Position dots (1–4 within the active device) -->
+      <div class="flex justify-center gap-2.5 py-5 flex-shrink-0">
+        <button class="ss-dot active" data-pos="0" aria-label="Screenshot 1"></button>
+        <button class="ss-dot" data-pos="1" aria-label="Screenshot 2"></button>
+        <button class="ss-dot" data-pos="2" aria-label="Screenshot 3"></button>
+        <button class="ss-dot" data-pos="3" aria-label="Screenshot 4"></button>
+      </div>
+
+    </section>
+
+
+    <!-- ── 4 · What you can do ────────────────────────────────── -->
+    <section id="capabilities" class="snap-section section-rule flex flex-col justify-center pt-14" style="overflow-y: auto;">
+      <div class="max-w-5xl mx-auto px-6 w-full py-10">
+
+        <p class="text-[10px] tracking-[0.22em] uppercase text-[var(--dim)] mb-8">
+          <span class="sec-num">03</span><span class="sec-slash"> / </span>What you can do
+        </p>
+
+        <div class="divide-y divide-[var(--b20)]">
+
+          <div class="flex items-start gap-6 py-4 group">
+            <span class="cap-index">01</span>
+            <div class="w-7 h-7 shrink-0 rounded-lg bg-[var(--surface)] border border-[var(--b40)] group-hover:border-[var(--a30)] transition-colors flex items-center justify-center mt-0.5">
+              <svg class="w-3.5 h-3.5 text-[var(--dim)] group-hover:text-[var(--accent)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-sm font-medium text-[var(--text)] mb-0.5">Chat with your codebase</p>
+              <p class="text-sm text-[var(--muted)] leading-[1.65]">Open a project folder and ask questions about structure, logic, or specific files.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-6 py-4 group">
+            <span class="cap-index">02</span>
+            <div class="w-7 h-7 shrink-0 rounded-lg bg-[var(--surface)] border border-[var(--b40)] group-hover:border-[var(--a30)] transition-colors flex items-center justify-center mt-0.5">
+              <svg class="w-3.5 h-3.5 text-[var(--dim)] group-hover:text-[var(--accent)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke-linecap="round"/>
+                <polyline points="14 2 14 8 20 8" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-sm font-medium text-[var(--text)] mb-0.5">Summarize any document</p>
+              <p class="text-sm text-[var(--muted)] leading-[1.65]">Drop a PDF, article, or note — Mira reads it locally, nothing leaves the device.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-6 py-4 group">
+            <span class="cap-index">03</span>
+            <div class="w-7 h-7 shrink-0 rounded-lg bg-[var(--surface)] border border-[var(--b40)] group-hover:border-[var(--a30)] transition-colors flex items-center justify-center mt-0.5">
+              <svg class="w-3.5 h-3.5 text-[var(--dim)] group-hover:text-[var(--accent)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <polyline points="17 1 21 5 17 9" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M3 11V9a4 4 0 014-4h14" stroke-linecap="round"/>
+                <polyline points="7 23 3 19 7 15" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M21 13v2a4 4 0 01-4 4H3" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-sm font-medium text-[var(--text)] mb-0.5">Switch models on the fly</p>
+              <p class="text-sm text-[var(--muted)] leading-[1.65]">Qwen3.6, Gemma4, Llama, and more — models sized to fit any Apple Silicon Mac.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-6 py-4 group">
+            <span class="cap-index">04</span>
+            <div class="w-7 h-7 shrink-0 rounded-lg bg-[var(--surface)] border border-[var(--b40)] group-hover:border-[var(--a30)] transition-colors flex items-center justify-center mt-0.5">
+              <svg class="w-3.5 h-3.5 text-[var(--dim)] group-hover:text-[var(--accent)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-sm font-medium text-[var(--text)] mb-0.5">Search the web with context</p>
+              <p class="text-sm text-[var(--muted)] leading-[1.65]">Opt-in grounded answers when you need current information.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-6 py-4 group">
+            <span class="cap-index">05</span>
+            <div class="w-7 h-7 shrink-0 rounded-lg bg-[var(--surface)] border border-[var(--b40)] group-hover:border-[var(--a30)] transition-colors flex items-center justify-center mt-0.5">
+              <svg class="w-3.5 h-3.5 text-[var(--dim)] group-hover:text-[var(--accent)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <rect x="7" y="2" width="10" height="20" rx="2" stroke-linecap="round"/>
+                <line x1="12" y1="18" x2="12" y2="18.5" stroke-linecap="round" stroke-width="2"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-sm font-medium text-[var(--text)] mb-0.5">Pick up on your iPhone</p>
+              <p class="text-sm text-[var(--muted)] leading-[1.65]">Conversations sync to your iPhone via iCloud — start on Mac, continue on the go.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-6 py-4 group">
+            <span class="cap-index">06</span>
+            <div class="w-7 h-7 shrink-0 rounded-lg bg-[var(--surface)] border border-[var(--b40)] group-hover:border-[var(--a30)] transition-colors flex items-center justify-center mt-0.5">
+              <svg class="w-3.5 h-3.5 text-[var(--dim)] group-hover:text-[var(--accent)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-sm font-medium text-[var(--text)] mb-0.5">Run without internet</p>
+              <p class="text-sm text-[var(--muted)] leading-[1.65]">Full inference offline, zero API keys, no metered costs.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ── 5 · How it works ───────────────────────────────────── -->
+    <section id="features" class="snap-section section-rule flex flex-col justify-center pt-14">
+      <div class="max-w-5xl mx-auto px-6 w-full">
+
+        <p class="text-[10px] tracking-[0.22em] uppercase text-[var(--dim)] mb-10">
+          <span class="sec-num">04</span><span class="sec-slash"> / </span>Under the hood
+        </p>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-[var(--b20)] rounded-xl overflow-hidden border border-[var(--b20)]">
+
+          <div class="group bg-[var(--bg)] hover:bg-[var(--hover)] transition-colors p-7">
+            <div class="w-7 h-7 rounded-lg bg-[var(--surface)] border border-[var(--b40)] group-hover:border-[var(--a30)] transition-colors flex items-center justify-center mb-5">
+              <svg class="w-3.5 h-3.5 text-[var(--dim)] group-hover:text-[var(--accent)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <rect x="4" y="4" width="16" height="16" rx="2" stroke-linecap="round"/>
+                <rect x="9" y="9" width="6" height="6" stroke-linecap="round"/>
+                <line x1="9" y1="2" x2="9" y2="4"/><line x1="15" y1="2" x2="15" y2="4"/>
+                <line x1="9" y1="20" x2="9" y2="22"/><line x1="15" y1="20" x2="15" y2="22"/>
+                <line x1="20" y1="9" x2="22" y2="9"/><line x1="20" y1="15" x2="22" y2="15"/>
+                <line x1="2" y1="9" x2="4" y2="9"/><line x1="2" y1="15" x2="4" y2="15"/>
+              </svg>
+            </div>
+            <p class="text-xs font-medium text-[var(--text)] mb-2">Local inference</p>
+            <p class="text-xs text-[var(--muted)] leading-[1.65]">
+              Powered by Apple Silicon's Neural Engine. Run Qwen3.6, Gemma4, Llama, and other open models fully offline — zero API keys, no metered costs. Works on any M-series Mac with 16 GB or more.
+            </p>
+          </div>
+
+          <div class="group bg-[var(--bg)] hover:bg-[var(--hover)] transition-colors p-7">
+            <div class="w-7 h-7 rounded-lg bg-[var(--surface)] border border-[var(--b40)] group-hover:border-[var(--a30)] transition-colors flex items-center justify-center mb-5">
+              <svg class="w-3.5 h-3.5 text-[var(--dim)] group-hover:text-[var(--accent)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <rect x="5" y="11" width="14" height="10" rx="2" stroke-linecap="round"/>
+                <path d="M8 11V7a4 4 0 018 0v4" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p class="text-xs font-medium text-[var(--text)] mb-2">No cloud</p>
+            <p class="text-xs text-[var(--muted)] leading-[1.65]">
+              Your conversations stay on your Apple devices. Sync between Mac and iPhone uses your personal iCloud — no Mira servers, no third-party data handling, ever.
+            </p>
+          </div>
+
+          <div class="group bg-[var(--bg)] hover:bg-[var(--hover)] transition-colors p-7">
+            <div class="w-7 h-7 rounded-lg bg-[var(--surface)] border border-[var(--b40)] group-hover:border-[var(--a30)] transition-colors flex items-center justify-center mb-5">
+              <svg class="w-3.5 h-3.5 text-[var(--dim)] group-hover:text-[var(--accent)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <rect x="2" y="3" width="13" height="10" rx="1.5" stroke-linecap="round"/>
+                <path d="M2 17h13M7.5 13v4" stroke-linecap="round"/>
+                <rect x="16" y="7" width="6" height="12" rx="1.5" stroke-linecap="round"/>
+                <line x1="19" y1="17" x2="19" y2="17.5" stroke-linecap="round" stroke-width="2"/>
+              </svg>
+            </div>
+            <p class="text-xs font-medium text-[var(--text)] mb-2">macOS + iOS + iPadOS</p>
+            <p class="text-xs text-[var(--muted)] leading-[1.65]">
+              Native SwiftUI apps sharing one backend. The Mac runs the model; your iPhone and iPad connect over your home network for a seamless multi-screen experience.
+            </p>
+            <a href="https://github.com/mabaeyens/mira-apps" target="_blank" rel="noopener"
+               class="inline-flex items-center gap-1 text-[10px] text-[var(--accent)] hover:text-[var(--accent-hov)] transition-colors mt-3">
+              mira-apps on GitHub
+              <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M7 17L17 7M7 7h10v10"/>
+              </svg>
+            </a>
+          </div>
+
+          <div class="group bg-[var(--bg)] hover:bg-[var(--hover)] transition-colors p-7">
+            <div class="w-7 h-7 rounded-lg bg-[var(--surface)] border border-[var(--b40)] group-hover:border-[var(--a30)] transition-colors flex items-center justify-center mb-5">
+              <svg class="w-3.5 h-3.5 text-[var(--dim)] group-hover:text-[var(--accent)] transition-colors" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+              </svg>
+            </div>
+            <p class="text-xs font-medium text-[var(--text)] mb-2">Open source</p>
+            <p class="text-xs text-[var(--muted)] leading-[1.65]">
+              The inference backend (mira-core) is MIT licensed — inspect it, modify it, self-host it. Full transparency into what runs on your machine.
+            </p>
+            <a href="https://github.com/mabaeyens/mira-core" target="_blank" rel="noopener"
+               class="inline-flex items-center gap-1 text-[10px] text-[var(--accent)] hover:text-[var(--accent-hov)] transition-colors mt-3">
+              mira-core on GitHub
+              <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M7 17L17 7M7 7h10v10"/>
+              </svg>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ── 6 · Credits ────────────────────────────────────────── -->
+    <section id="credits" class="snap-section section-rule flex flex-col items-center justify-between pt-28 pb-16">
+
+      <!-- Branding -->
+      <div class="text-center">
+        <img src="assets/icon.png"
+             class="w-14 h-14 rounded-2xl mx-auto mb-6 shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
+             alt="Mira" />
+        <p class="font-serif text-3xl text-[var(--text)] mb-2">Mira</p>
+        <p class="text-xs text-[var(--muted)]">AI that stays home.</p>
+      </div>
+
+      <!-- CTAs -->
+      <div class="flex items-center gap-4 justify-center">
+        <a href="https://testflight.apple.com/join/Q2gC5amE"
+           target="_blank" rel="noopener"
+           class="inline-flex items-center gap-2.5 text-sm bg-[var(--text)] text-[var(--bg)] px-6 py-3 rounded-md transition-opacity hover:opacity-80">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+          </svg>
+          Join beta
+        </a>
+        <a href="https://github.com/mabaeyens/mira-core"
+           target="_blank" rel="noopener"
+           class="inline-flex items-center gap-2.5 text-sm border border-[var(--b50)] hover:border-[var(--muted)] text-[var(--text)] px-6 py-3 rounded-md transition-colors">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
+          mira-core
+        </a>
+        <a href="https://github.com/mabaeyens/mira-apps"
+           target="_blank" rel="noopener"
+           class="inline-flex items-center gap-2.5 text-sm border border-[var(--b50)] hover:border-[var(--muted)] text-[var(--text)] px-6 py-3 rounded-md transition-colors">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
+          mira-apps
+        </a>
+      </div>
+
+      <!-- Credits -->
+      <div class="flex items-center gap-3 text-xs text-[var(--dim)]">
+        <span>Built by Miguel A. Baeyens, with Claude Code &nbsp;·&nbsp; MIT &nbsp;·&nbsp; askmira.es</span>
+        <a href="https://linkedin.com/in/mabaeyens" target="_blank" rel="noopener" aria-label="LinkedIn"
+           class="text-[var(--dim)] hover:text-[var(--accent)] transition-colors">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 110-4.14 2.07 2.07 0 010 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/>
+          </svg>
+        </a>
+      </div>
+
+    </section>
+
+  </div><!-- /scroll-container -->
+
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Screenshot preview">
+    <button id="lightbox-close" aria-label="Close">&times;</button>
+    <img id="lightbox-img" alt="" />
+  </div>
+
+  <!-- ── Scripts ───────────────────────────────────────────────── -->
+  <script>
+    // Theme toggle
+    document.getElementById('theme-toggle').addEventListener('click', function () {
+      var html = document.documentElement;
+      var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('mira-theme', next);
+    });
+
+    // Vertical dot nav — highlight active section
+    var container = document.querySelector('.scroll-container');
+    var dots      = document.querySelectorAll('.dot-btn');
+    var sections  = document.querySelectorAll('.snap-section');
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          dots.forEach(function (d) { d.classList.remove('active'); });
+          var dot = document.querySelector('.dot-btn[data-target="' + entry.target.id + '"]');
+          if (dot) dot.classList.add('active');
+        }
+      });
+    }, { threshold: 0.5, root: container });
+
+    sections.forEach(function (s) { observer.observe(s); });
+
+    dots.forEach(function (dot) {
+      dot.addEventListener('click', function () {
+        var target = document.getElementById(dot.dataset.target);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // Hero — replay real Mira conversations (thinking · web · RAG · code)
+    (function () {
+      var thread = document.getElementById('live-thread');
+      var bodyEl = document.getElementById('live-body');
+      var readEl = document.getElementById('live-readout');
+      var heroEl = document.getElementById('hero');
+      if (!thread || !bodyEl || !readEl) return;
+
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      var SVG = {
+        chevron: '<svg class="think-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"/></svg>',
+        brain:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3a3 3 0 00-3 3 3 3 0 00-2 5 3 3 0 001 5 3 3 0 005 2V5a2 2 0 00-2-2zM15 3a3 3 0 013 3 3 3 0 012 5 3 3 0 01-1 5 3 3 0 01-5 2V5a2 2 0 012-2z"/></svg>',
+        fetch:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 8v6M9 11l3 3 3-3"/></svg>',
+        search:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>',
+        pages:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="6"/><path d="M21 21l-5-5"/></svg>',
+        layers:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l9 5-9 5-9-5 9-5zM3 14l9 5 9-5"/></svg>',
+        copy:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>',
+        check:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>'
+      };
+
+      var SCENES = [
+        { // A — extended thinking (real: "How Black Holes Form")
+          prompt: 'Explain how a black hole forms, in plain language I can share with a curious 10-year-old',
+          tps: 56,
+          thinking: 'Analyze the request: topic — how a black hole forms; audience — a curious 10-year-old. Keep it plain, concise, no jargon.\n\nKey concepts: a star balances gravity (pulling in) against fusion pressure (pushing out); when a massive star runs out of fuel, gravity wins and the core collapses; if it is massive enough, not even light escapes — a black hole. Use one simple analogy (a cosmic drain).\n\nDraft ~150 words, then check: plain language? yes. Age-appropriate? yes. Accurate? massive star -> fuel runs out -> gravity wins -> core collapses -> black hole. Correct. No tools needed.',
+          answer: [
+            { type: 'p', text: 'Imagine a star much bigger than our Sun — maybe 20 times heavier. Stars are like giant cosmic furnaces: gas is squeezed so tightly it constantly fuses together, releasing energy that pushes outward. That push fights gravity pulling inward, and for millions of years they stay perfectly balanced.' },
+            { type: 'p', text: "But eventually the star runs out of fuel. The outward push stops, gravity suddenly wins, and the core is crushed into something unimaginably small and dense — until not even light can escape. That's a black hole." },
+            { type: 'p', text: "**Fun fact:** if you could shrink Earth to the size of a marble, it would become a black hole! (Please don't try this at home.)" }
+          ]
+        },
+        { // B — web sources (real: Madrid weather fetched from aemet.es)
+          prompt: "Fetch today's Madrid weather from aemet.es and summarise it — conditions, temperature, wind, and rain.",
+          tps: 58,
+          activity: ['Fetching www.aemet.es…', 'Reading forecast XML…'],
+          sources: {
+            kind: 'web',
+            title: 'Pages read (1)',
+            items: [
+              { name: 'www.aemet.es/xml/municipios/localidad_28079.xml', preview: 'AEMET · Madrid (28079) · hourly municipal forecast' }
+            ]
+          },
+          answer: [
+            { type: 'p', text: "Here's the AEMET forecast for **Madrid** (issued 12:25):" },
+            { type: 'p', text: '**Today** — clearing skies, partly cloudy then clear. 18–31 °C. Light winds 5–10 km/h (NE → SW). Rain 0 %. UV 8 (very high).' },
+            { type: 'p', text: '**Right now** — about 27 °C, partly cloudy, SE wind ~5 km/h, humidity ~25 %, 0 % rain. Warm, dry, and bright.' }
+          ]
+        },
+        { // C — RAG over a local document (real: "Summarize Document in 5 Bullets")
+          prompt: 'Summarize the attached brief in 5 bullet points',
+          tps: 54,
+          sources: {
+            kind: 'rag',
+            title: 'Document sections used (3)',
+            items: [
+              { name: 'apple_silicon_llm_brief.pdf', score: '0.86', preview: 'Unified memory removes the VRAM bottleneck of discrete GPUs…' },
+              { name: 'apple_silicon_llm_brief.pdf', score: '0.79', preview: 'mlx-lm runs 15–30% ahead of llama.cpp on Apple Silicon…' },
+              { name: 'apple_silicon_llm_brief.pdf', score: '0.71', preview: 'Q4_K_M 4-bit is the recommended default for 36–64 GB…' }
+            ]
+          },
+          answer: [
+            { type: 'p', text: "Here's a 5-point summary:" },
+            { type: 'p', text: '• **Unified memory** removes the VRAM bottleneck — large models (e.g. 70B 4-bit) run on one device, impossible on 24 GB consumer GPUs.' },
+            { type: 'p', text: '• **mlx-lm is fastest** on Apple Silicon (15–30% over llama.cpp), though model availability trails the GGUF ecosystem.' },
+            { type: 'p', text: '• **4-bit (Q4_K_M)** is the default sweet spot for 36–64 GB; 8-bit suits 128 GB long-context work.' },
+            { type: 'p', text: '• **llama.cpp / Ollama** stay the portable, model-diverse fallback — Ollama adds a REST API.' },
+            { type: 'p', text: '• **Open questions:** M4 Ultra bandwidth, speculative decoding (2–3× throughput), MoE memory, KV-cache at 128k.' }
+          ]
+        },
+        { // D — code generation (real: "Python Palindrome Checker Function")
+          prompt: 'Write a Python function that checks if a string is a palindrome, ignoring spaces and punctuation',
+          tps: 60,
+          answer: [
+            { type: 'code', lang: 'python', text: 'import re\n\ndef is_palindrome(s: str) -> bool:\n    """True if s reads the same forwards and backwards."""\n    cleaned = re.sub(r\'[^a-z0-9]\', \'\', s.lower())\n    return cleaned == cleaned[::-1]' },
+            { type: 'p', text: "Lower-cases the text, strips anything that isn't a letter or digit, then compares it to its reverse." },
+            { type: 'code', lang: 'python', text: '>>> is_palindrome("A man, a plan, a canal: Panama")\nTrue\n>>> is_palindrome("race a car")\nFalse' }
+          ]
+        }
+      ];
+
+      var gen = 0, running = false, tokens = 0, t0 = 0;
+
+      function sleep(ms, g) {
+        return new Promise(function (res, rej) {
+          setTimeout(function () { g !== gen ? rej('x') : res(); }, ms);
+        });
+      }
+      function down() { bodyEl.scrollTop = bodyEl.scrollHeight; }
+      function setReadout(v) { readEl.textContent = '▸ on-device · M5 · ' + Math.round(v) + ' tok/s'; }
+      function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+      function inline(s) { return esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>'); }
+      function el(tag, cls) { var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+      function bump(n) {
+        tokens += n / 4;
+        var e = (performance.now() - t0) / 1000;
+        if (e > 0.1) setReadout(Math.min(63, tokens / e));
+      }
+
+      async function stream(node, text, tps, g, pre) {
+        node.classList.add('streaming');
+        var chunks = text.match(/\s+|\S+/g) || [];
+        var acc = '';
+        for (var i = 0; i < chunks.length; i++) {
+          if (g !== gen) throw 'x';
+          acc += chunks[i];
+          node.textContent = acc;
+          bump(chunks[i].length);
+          down();
+          await sleep(Math.max(14, (chunks[i].length / 4) * (1000 / tps)), g);
+        }
+        node.classList.remove('streaming');
+        if (!pre) node.innerHTML = inline(text);   // settle markdown once complete
+      }
+
+      function thinkHead(state) {
+        return state === 'active'
+          ? SVG.chevron + '<span class="think-ic"><span class="think-spinner"></span></span><span class="think-label">Thinking…</span>'
+          : SVG.chevron + '<span class="think-ic">' + SVG.brain + '</span><span class="think-label">Thought</span>';
+      }
+
+      function buildSources(src) {
+        var p = el('div', 'src-panel');
+        var head = src.kind === 'rag' ? SVG.layers : SVG.pages;
+        var html = '<div class="src-head">' + head + '<span>' + esc(src.title) + '</span></div>';
+        src.items.forEach(function (it) {
+          if (src.kind === 'rag') {
+            html += '<div class="src-item"><div class="src-rowtop"><span class="src-name">' +
+                    esc(it.name) + '</span><span class="rag-score">' + esc(it.score) +
+                    '</span></div><span class="src-preview">' + esc(it.preview) + '</span></div>';
+          } else {
+            html += '<div class="src-item"><span class="src-name">' + esc(it.name) +
+                    '</span><span class="src-preview">' + esc(it.preview) + '</span></div>';
+          }
+        });
+        p.innerHTML = html;
+        return p;
+      }
+
+      function buildCode(lang, code) {
+        var wrap = el('div', 'code-block');
+        var head = el('div', 'code-head');
+        head.innerHTML = '<span>' + esc(lang || 'code') + '</span>';
+        var btn = el('button', 'code-copy');
+        btn.type = 'button';
+        btn.innerHTML = SVG.copy + '<span>Copy</span>';
+        btn.addEventListener('click', function () {
+          if (navigator.clipboard) navigator.clipboard.writeText(code);
+          btn.classList.add('copied');
+          btn.innerHTML = SVG.check + '<span>Copied</span>';
+          setTimeout(function () {
+            btn.classList.remove('copied');
+            btn.innerHTML = SVG.copy + '<span>Copy</span>';
+          }, 1400);
+        });
+        head.appendChild(btn);
+        var pre = el('pre', 'code-body');
+        var codeEl = document.createElement('code');
+        pre.appendChild(codeEl);
+        wrap.appendChild(head);
+        wrap.appendChild(pre);
+        return { wrap: wrap, body: codeEl };
+      }
+
+      async function renderAnswer(scene, g) {
+        var ans = el('div', 'msg-assistant');
+        thread.appendChild(ans);
+        for (var i = 0; i < scene.answer.length; i++) {
+          if (g !== gen) throw 'x';
+          var b = scene.answer[i];
+          if (b.type === 'code') {
+            var c = buildCode(b.lang, b.text);
+            ans.appendChild(c.wrap);
+            await stream(c.body, b.text, scene.tps + 22, g, true);
+          } else {
+            var p = el('p');
+            ans.appendChild(p);
+            await stream(p, b.text, scene.tps, g, false);
+          }
+          down();
+        }
+      }
+
+      async function playScene(scene, g) {
+        thread.innerHTML = '';
+        tokens = 0; t0 = performance.now();
+
+        var u = el('div', 'msg-user');
+        u.textContent = scene.prompt;
+        thread.appendChild(u); down();
+        await sleep(650, g);
+
+        if (scene.thinking) {
+          var think = el('div', 'think');
+          var head = el('div', 'think-head');
+          head.innerHTML = thinkHead('active');
+          head.addEventListener('click', function () { think.classList.toggle('collapsed'); });
+          var tb = el('div', 'think-body');
+          think.appendChild(head); think.appendChild(tb);
+          thread.appendChild(think); down();
+          await stream(tb, scene.thinking, scene.tps + 10, g, true);
+          head.innerHTML = thinkHead('done');
+          think.classList.add('collapsed');
+          await sleep(450, g);
+        }
+
+        var acts = [];
+        if (scene.activity) {
+          for (var i = 0; i < scene.activity.length; i++) {
+            if (g !== gen) throw 'x';
+            var label = scene.activity[i];
+            var ar = el('div', 'activity-row');
+            ar.innerHTML = (/fetch/i.test(label) ? SVG.fetch : SVG.search) + '<span>' + esc(label) + '</span>';
+            thread.appendChild(ar); acts.push(ar); down();
+            await sleep(850, g);
+          }
+        }
+
+        if (scene.sources) {
+          acts.forEach(function (n) { n.remove(); });
+          thread.appendChild(buildSources(scene.sources)); down();
+          await sleep(500, g);
+        }
+
+        await renderAnswer(scene, g);
+        setReadout(scene.tps);
+        await sleep(2600, g);
+      }
+
+      async function loop(g) {
+        var i = 0;
+        while (g === gen && running) {
+          try { await playScene(SCENES[i % SCENES.length], g); }
+          catch (e) { return; }
+          i++;
+        }
+      }
+
+      function start() { if (running) return; running = true; gen++; loop(gen); }
+      function stop() { running = false; gen++; }
+
+      function renderStatic(scene) {
+        thread.innerHTML = '';
+        var u = el('div', 'msg-user'); u.textContent = scene.prompt; thread.appendChild(u);
+        var ans = el('div', 'msg-assistant');
+        scene.answer.forEach(function (b) {
+          if (b.type === 'code') {
+            var c = buildCode(b.lang, b.text); c.body.textContent = b.text; ans.appendChild(c.wrap);
+          } else {
+            var p = el('p'); p.innerHTML = inline(b.text); ans.appendChild(p);
+          }
+        });
+        thread.appendChild(ans);
+        setReadout(scene.tps);
+      }
+
+      if (reduce) { renderStatic(SCENES[SCENES.length - 1]); return; }
+
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { e.isIntersecting ? start() : stop(); });
+      }, { threshold: 0.4, root: container });
+      io.observe(heroEl);
+    })();
+
+    // Bench bar animation — fires once when #performance enters view
+    (function () {
+      var bars = document.querySelectorAll('#performance .bench-bar');
+      var animated = false;
+      var perfObserver = new IntersectionObserver(function (entries) {
+        if (animated || !entries[0].isIntersecting) return;
+        animated = true;
+        bars.forEach(function (bar) {
+          var pct = bar.dataset.pct || '0';
+          bar.style.width = pct + '%';
+        });
+        perfObserver.disconnect();
+      }, { threshold: 0.4, root: container });
+      var perfSection = document.getElementById('performance');
+      if (perfSection) perfObserver.observe(perfSection);
+    })();
+
+    // Screenshot device slider
+    (function () {
+      var CAPTIONS = {
+        iphone: ['Short, elegant conversation', 'Code block formatting', 'Structured travel itinerary', 'Clean numbered list'],
+        mac:    ['Everyday conversational query', 'Long educational explanation', 'Quick practical answer', 'Philosophical summary with actionable habit'],
+        ipad:   ['Lifestyle content, practical steps', 'Multilingual output', 'Technical side-by-side comparison', 'Bullet-point historical breakdown']
+      };
+
+      var state       = { iphone: 0, mac: 0, ipad: 0 };
+      var activeDevice = 'iphone';
+      var posDots     = document.querySelectorAll('.ss-dot[data-pos]');
+      var tabs        = document.querySelectorAll('.device-tab');
+      var shells      = document.querySelectorAll('.device-shell');
+
+      function goTo(device, idx) {
+        idx = Math.max(0, Math.min(3, idx));
+        state[device] = idx;
+        var frame = document.getElementById('frame-' + device);
+        frame.scrollTo({ left: idx * frame.clientWidth, behavior: 'smooth' });
+        document.getElementById('cap-' + device).textContent = CAPTIONS[device][idx];
+        if (device === activeDevice) {
+          posDots.forEach(function (d, i) { d.classList.toggle('active', i === idx); });
+        }
+      }
+
+      // Sync dots/captions when browser scrolls natively (Magic Mouse, trackpad, touch)
+      ['iphone', 'mac', 'ipad'].forEach(function (device) {
+        document.getElementById('frame-' + device).addEventListener('scroll', function () {
+          var frame = document.getElementById('frame-' + device);
+          var idx = Math.round(frame.scrollLeft / frame.clientWidth);
+          if (idx === state[device]) return;
+          state[device] = idx;
+          document.getElementById('cap-' + device).textContent = CAPTIONS[device][idx];
+          if (device === activeDevice) {
+            posDots.forEach(function (d, i) { d.classList.toggle('active', i === idx); });
+          }
+        });
+      });
+
+      function switchDevice(device) {
+        activeDevice = device;
+        shells.forEach(function (s) { s.classList.toggle('active', s.dataset.device === device); });
+        tabs.forEach(function (t)   { t.classList.toggle('active', t.dataset.device === device); });
+        posDots.forEach(function (d, i) { d.classList.toggle('active', i === state[device]); });
+      }
+
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () { switchDevice(tab.dataset.device); });
+      });
+
+      posDots.forEach(function (dot, i) {
+        dot.addEventListener('click', function () { goTo(activeDevice, i); });
+      });
+
+
+      // Keyboard arrow keys
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight') goTo(activeDevice, state[activeDevice] + 1);
+        if (e.key === 'ArrowLeft')  goTo(activeDevice, state[activeDevice] - 1);
+      });
+
+      // Lightbox — tap/click a device frame to see the current slide enlarged
+      var lightbox    = document.getElementById('lightbox');
+      var lightboxImg = document.getElementById('lightbox-img');
+
+      function openLightbox(device) {
+        var imgs = document.getElementById('slider-' + device).querySelectorAll('img');
+        var img  = imgs[state[device]];
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeLightbox() {
+        lightbox.classList.remove('open');
+        lightboxImg.src = '';
+        document.body.style.overflow = '';
+      }
+
+      ['iphone', 'mac', 'ipad'].forEach(function (device) {
+        var el = document.getElementById('frame-' + device);
+        var downX = null;
+        el.addEventListener('pointerdown', function (e) { downX = e.clientX; });
+        el.addEventListener('click', function (e) {
+          if (downX !== null && Math.abs(e.clientX - downX) > 8) return;
+          openLightbox(device);
+        });
+      });
+
+      document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', function (e) {
+        if (e.target === lightbox) closeLightbox();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeLightbox();
+      });
+    }());
+  </script>
+
+</body>
+</html>
