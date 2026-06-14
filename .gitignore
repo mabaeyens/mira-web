@@ -1,0 +1,6 @@
+# macOS
+.DS_Store
+
+# Local working files (not part of the site)
+apple_silicon_llm_brief.pdf
+assets/.gitkeep
