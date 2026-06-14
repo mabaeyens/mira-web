@@ -264,7 +264,9 @@ img { max-width: 100%; }
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   aspect-ratio: 605 / 417;
-  width: min(70vw, 660px);
+  height: min(50dvh, 440px);
+  width: auto;
+  max-width: 88vw;
   flex-shrink: 0;
   touch-action: pan-x;
   user-select: none;
@@ -284,7 +286,10 @@ img { max-width: 100%; }
 
 /* ── Mac viewport ───────────────────────────────────────────── */
 .mac-viewport {
-  width: min(76vw, 820px);
+  aspect-ratio: 1667 / 1067;
+  height: min(50dvh, 440px);
+  width: auto;
+  max-width: 84vw;
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
@@ -296,11 +301,12 @@ img { max-width: 100%; }
 }
 .mac-viewport::-webkit-scrollbar { display: none; }
 .mac-viewport .inner-slider {
-  height: auto;
+  height: 100%;
 }
 .mac-viewport .inner-slider img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   display: block;
   border-radius: 10px;
   scroll-snap-align: start;
