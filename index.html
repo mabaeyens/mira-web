@@ -25,22 +25,10 @@
     })();
   </script>
 
+  <!-- Compiled Tailwind (vendored, purged) — no runtime CDN, so layout survives
+       content blockers / Lockdown Mode / offline. Rebuild: see BACKLOG.md. -->
+  <link rel="stylesheet" href="assets/tailwind.css" />
   <link rel="stylesheet" href="style.css" />
-
-  <!-- Tailwind CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            serif: ['Lora', 'Georgia', 'serif'],
-            mono:  ['"IBM Plex Mono"', '"Courier New"', 'monospace'],
-          }
-        }
-      }
-    }
-  </script>
 
   <!-- ── Field-manual components (reuses :root tokens from style.css) ── -->
   <style>
@@ -253,21 +241,21 @@
 
       <div class="flex items-center gap-2.5">
         <a href="https://testflight.apple.com/join/Q2gC5amE"
-           target="_blank" rel="noopener"
+           target="_blank" rel="noopener" aria-label="Join beta"
            class="inline-flex items-center gap-1.5 text-xs bg-[var(--text)] text-[var(--bg)] px-3 py-1.5 rounded-md transition-opacity hover:opacity-80">
           <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
           </svg>
-          Join beta
+          <span class="hidden sm:inline">Join beta</span>
         </a>
 
         <a href="https://github.com/mabaeyens"
-           target="_blank" rel="noopener"
+           target="_blank" rel="noopener" aria-label="GitHub"
            class="inline-flex items-center gap-1.5 text-xs text-[var(--muted)] hover:text-[var(--text)] transition-colors px-3 py-1.5 border border-[var(--b50)] hover:border-[var(--b80)] rounded-md">
           <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
           </svg>
-          GitHub
+          <span class="hidden sm:inline">GitHub</span>
         </a>
 
         <a href="https://linkedin.com/in/mabaeyens"
@@ -315,12 +303,12 @@
     <!-- ── 1 · Hero ───────────────────────────────────────────── -->
     <section id="hero" class="snap-section flex flex-col justify-center pt-14">
       <div class="max-w-5xl mx-auto px-6 w-full">
-        <div class="grid md:grid-cols-2 gap-10 md:gap-12 items-center">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center">
 
           <!-- Left: text -->
-          <div class="max-w-xl">
+          <div class="max-w-xl min-w-0">
             <p class="hero-eyebrow text-[10px] tracking-[0.22em] uppercase text-[var(--muted)] mb-8">
-              Local AI &nbsp;·&nbsp; macOS &nbsp;·&nbsp; iOS &nbsp;·&nbsp; iPadOS
+              Local AI&nbsp;· macOS&nbsp;· iOS&nbsp;· iPadOS
             </p>
 
             <h1 class="hero-title font-serif text-[clamp(2.75rem,7vw,5rem)] leading-[0.93] tracking-tight text-[var(--text)] mb-6">
@@ -334,7 +322,7 @@
             </p>
 
             <p class="hero-eyebrow text-[10px] tracking-[0.22em] uppercase text-[var(--dim)] mb-8">
-              ~60 tok/s gen &nbsp;·&nbsp; ~848 tok/s prefill &nbsp;·&nbsp; 35 B model &nbsp;·&nbsp; M5 &nbsp;·&nbsp; 32 GB RAM
+              ~60 tok/s gen&nbsp;· ~848 tok/s prefill&nbsp;· 35 B model&nbsp;· M5&nbsp;· 32 GB RAM
             </p>
 
             <div class="hero-cta flex flex-wrap items-center gap-3">
@@ -358,7 +346,7 @@
           </div>
 
           <!-- Right: live local-generation demo -->
-          <div class="hero-demo">
+          <div class="hero-demo min-w-0">
             <div class="live-panel" aria-hidden="true">
               <div class="live-header">
                 <span class="live-dot"></span>
@@ -770,7 +758,7 @@
 
       <!-- Credits -->
       <div class="flex items-center gap-3 text-xs text-[var(--dim)]">
-        <span>Built by Miguel A. Baeyens, with Claude Code &nbsp;·&nbsp; MIT &nbsp;·&nbsp; askmira.es</span>
+        <span>Built by Miguel A. Baeyens, with Claude Code&nbsp;· MIT&nbsp;· askmira.es</span>
         <a href="https://linkedin.com/in/mabaeyens" target="_blank" rel="noopener" aria-label="LinkedIn"
            class="text-[var(--dim)] hover:text-[var(--accent)] transition-colors">
           <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -799,7 +787,6 @@
     });
 
     // Vertical dot nav — highlight active section
-    var container = document.querySelector('.scroll-container');
     var dots      = document.querySelectorAll('.dot-btn');
     var sections  = document.querySelectorAll('.snap-section');
 
@@ -811,7 +798,7 @@
           if (dot) dot.classList.add('active');
         }
       });
-    }, { threshold: 0.5, root: container });
+    }, { threshold: 0.5 });
 
     sections.forEach(function (s) { observer.observe(s); });
 
@@ -1057,32 +1044,24 @@
           try { await playScene(SCENES[i % SCENES.length], g); }
           catch (e) { return; }
           i++;
+          // Respect reduced-motion: stream through the scenes once, then settle.
+          if (reduce && i >= SCENES.length) { running = false; return; }
         }
       }
 
       function start() { if (running) return; running = true; gen++; loop(gen); }
       function stop() { running = false; gen++; }
 
-      function renderStatic(scene) {
-        thread.innerHTML = '';
-        var u = el('div', 'msg-user'); u.textContent = scene.prompt; thread.appendChild(u);
-        var ans = el('div', 'msg-assistant');
-        scene.answer.forEach(function (b) {
-          if (b.type === 'code') {
-            var c = buildCode(b.lang, b.text); c.body.textContent = b.text; ans.appendChild(c.wrap);
-          } else {
-            var p = el('p'); p.innerHTML = inline(b.text); ans.appendChild(p);
-          }
-        });
-        thread.appendChild(ans);
-        setReadout(scene.tps);
-      }
+      // Reduced-motion is handled inside loop(): the demo still streams (it's the
+      // page's centerpiece, and many default Windows setups report reduce), but it
+      // plays through the scenes once instead of looping forever.
 
-      if (reduce) { renderStatic(SCENES[SCENES.length - 1]); return; }
-
+      // Observe against the viewport (root:null). A custom `root` that the
+      // target fully fills doesn't fire the initial callback in Firefox, so the
+      // demo never started there — leaving the panel blank.
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (e) { e.isIntersecting ? start() : stop(); });
-      }, { threshold: 0.4, root: container });
+      }, { threshold: 0.4 });
       io.observe(heroEl);
     })();
 
@@ -1098,7 +1077,7 @@
           bar.style.width = pct + '%';
         });
         perfObserver.disconnect();
-      }, { threshold: 0.4, root: container });
+      }, { threshold: 0.4 });
       var perfSection = document.getElementById('performance');
       if (perfSection) perfObserver.observe(perfSection);
     })();

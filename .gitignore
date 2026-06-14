@@ -4,3 +4,6 @@
 # Local working files (not part of the site)
 apple_silicon_llm_brief.pdf
 assets/.gitkeep
+
+# Tooling (Tailwind build) — assets/tailwind.css IS committed; node_modules is not
+node_modules/

@@ -121,18 +121,38 @@ body {
 [data-theme="light"] .icon-sun  { display: none;  }
 [data-theme="light"] .icon-moon { display: block; }
 
-/* ── Scroll-snap ────────────────────────────────────────────── */
-html, body { height: 100dvh; overflow: hidden; }
+/* ── Layout: natural scroll on mobile, scroll-snap on desktop ──── */
+html, body { overflow-x: hidden; }
 
-.scroll-container {
-  height: 100dvh;
-  overflow-y: scroll;
-  scroll-snap-type: y mandatory;
+/* Defensive: an unconstrained image can never blow past its container
+   (this is what made the logo fill the screen when Tailwind didn't load). */
+img { max-width: 100%; }
+
+/* Mobile (default): each section grows to its content and never clips,
+   while staying at least one screen tall. The document scrolls normally. */
+.snap-section { min-height: 100dvh; }
+
+/* Desktop: one full-screen section per vertical scroll-snap step. */
+@media (min-width: 768px) {
+  html, body { height: 100dvh; overflow: hidden; }
+
+  .scroll-container {
+    height: 100dvh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+  }
+
+  .snap-section {
+    scroll-snap-align: start;
+    height: 100dvh;
+    min-height: 0;
+  }
 }
 
-.snap-section {
-  scroll-snap-align: start;
-  height: 100dvh;
+/* Mobile: hide the fixed dot-nav — natural scroll makes it redundant and
+   it otherwise overlaps the hero text. */
+@media (max-width: 767px) {
+  #dot-nav { display: none; }
 }
 
 /* ── Screenshot shadow — theme-sensitive ────────────────────── */
