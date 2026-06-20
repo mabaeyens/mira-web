@@ -4,7 +4,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        serif: ['Lora', 'Georgia', 'serif'],
+        serif: ['"Instrument Serif"', 'Georgia', 'serif'],
+        sans:  ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
         mono:  ['"IBM Plex Mono"', '"Courier New"', 'monospace'],
       },
     },

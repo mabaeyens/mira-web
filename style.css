@@ -1,68 +1,68 @@
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
 
 /* ── Colour tokens ───────────────────────────────────────────── */
 :root {
-  --bg:         #1C1917;
-  --bg-nav:     rgba(28,25,23,.85);
-  --surface:    #232120;
-  --surface-2:  #272422;
-  --hover:      #1F1D1B;
-  --phone:      #2A2826;
+  --bg:         #15171A;
+  --bg-nav:     rgba(21,23,26,.85);
+  --surface:    #1D2024;
+  --surface-2:  #22262B;
+  --hover:      #191C1F;
+  --phone:      #272B30;
 
-  --text:       #FAFAF9;
-  --text-90:    rgba(250,250,249,.90);
-  --muted:      #A8A29E;
-  --dim:        #57534E;
+  --text:       #F4F6F5;
+  --text-90:    rgba(244,246,245,.90);
+  --muted:      #9AA3A0;
+  --dim:        #5A6360;
 
-  --accent:     #D09268;
-  --accent-hov: #C07A4F;
+  --accent:     #E8BD6E;
+  --accent-hov: #F4D08C;
 
-  --b20: rgba(87,83,78,.20);
-  --b25: rgba(87,83,78,.25);
-  --b30: rgba(87,83,78,.30);
-  --b35: rgba(87,83,78,.35);
-  --b40: rgba(87,83,78,.40);
-  --b50: rgba(87,83,78,.50);
-  --b80: rgba(87,83,78,.80);
+  --b20: rgba(120,128,125,.20);
+  --b25: rgba(120,128,125,.25);
+  --b30: rgba(120,128,125,.30);
+  --b35: rgba(120,128,125,.35);
+  --b40: rgba(120,128,125,.40);
+  --b50: rgba(120,128,125,.50);
+  --b80: rgba(120,128,125,.80);
 
-  --a12: rgba(208,146,104,.12);
-  --a15: rgba(208,146,104,.15);
-  --a18: rgba(208,146,104,.18);
-  --a20: rgba(208,146,104,.20);
-  --a25: rgba(208,146,104,.25);
-  --a30: rgba(208,146,104,.30);
+  --a12: rgba(232,189,110,.12);
+  --a15: rgba(232,189,110,.15);
+  --a18: rgba(232,189,110,.18);
+  --a20: rgba(232,189,110,.20);
+  --a25: rgba(232,189,110,.25);
+  --a30: rgba(232,189,110,.30);
 }
 
 [data-theme="light"] {
-  --bg:         #F7F5F3;
-  --bg-nav:     rgba(247,245,243,.92);
-  --surface:    #EDECEA;
-  --surface-2:  #E5E3E0;
-  --hover:      #F0EEED;
-  --phone:      #D8D4CE;
+  --bg:         #F6F4EF;
+  --bg-nav:     rgba(246,244,239,.92);
+  --surface:    #ECEAE3;
+  --surface-2:  #E4E1D9;
+  --hover:      #EFEDE7;
+  --phone:      #D7D3CA;
 
-  --text:       #1C1917;
-  --text-90:    rgba(28,25,23,.90);
-  --muted:      #57534E;
-  --dim:        #A8A29E;
+  --text:       #1A1C1B;
+  --text-90:    rgba(26,28,27,.90);
+  --muted:      #4F5552;
+  --dim:        #A6A39C;
 
-  --accent:     #B8693A;
-  --accent-hov: #9F5830;
+  --accent:     #9A6A1C;
+  --accent-hov: #7C5413;
 
-  --b20: rgba(87,83,78,.12);
-  --b25: rgba(87,83,78,.16);
-  --b30: rgba(87,83,78,.22);
-  --b35: rgba(87,83,78,.28);
-  --b40: rgba(87,83,78,.32);
-  --b50: rgba(87,83,78,.42);
-  --b80: rgba(87,83,78,.65);
+  --b20: rgba(92,88,82,.12);
+  --b25: rgba(92,88,82,.16);
+  --b30: rgba(92,88,82,.22);
+  --b35: rgba(92,88,82,.28);
+  --b40: rgba(92,88,82,.32);
+  --b50: rgba(92,88,82,.42);
+  --b80: rgba(92,88,82,.65);
 
-  --a12: rgba(184,105,58,.10);
-  --a15: rgba(184,105,58,.12);
-  --a18: rgba(184,105,58,.15);
-  --a20: rgba(184,105,58,.17);
-  --a25: rgba(184,105,58,.22);
-  --a30: rgba(184,105,58,.27);
+  --a12: rgba(154,106,28,.10);
+  --a15: rgba(154,106,28,.12);
+  --a18: rgba(154,106,28,.15);
+  --a20: rgba(154,106,28,.17);
+  --a25: rgba(154,106,28,.22);
+  --a30: rgba(154,106,28,.27);
 }
 
 /* ── Grain overlay ──────────────────────────────────────────── */
@@ -92,12 +92,17 @@ body {
 }
 
 .hero-eyebrow { animation: fade-up 0.55s cubic-bezier(.22,.68,0,1) both; }
-.hero-title   { animation: fade-up 0.65s 0.08s cubic-bezier(.22,.68,0,1) both; }
+.hero-title   {
+  animation: fade-up 0.65s 0.08s cubic-bezier(.22,.68,0,1) both;
+  font-size: clamp(3.25rem, 7vw, 5.5rem);
+  line-height: 0.96;
+}
 .hero-copy    { animation: fade-up 0.65s 0.18s cubic-bezier(.22,.68,0,1) both; }
 .hero-cta     { animation: fade-up 0.65s 0.28s cubic-bezier(.22,.68,0,1) both; }
 
 /* ── Typography ─────────────────────────────────────────────── */
-.font-serif { font-family: 'Lora', Georgia, serif; }
+.font-serif { font-family: 'Instrument Serif', Georgia, serif; letter-spacing: 0.01em; }
+.font-sans  { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
 .font-mono  { font-family: 'IBM Plex Mono', 'Courier New', monospace; }
 
 /* ── Amber link underline ───────────────────────────────────── */
@@ -109,6 +114,79 @@ body {
 
 /* ── Section dividers ───────────────────────────────────────── */
 .section-rule { border-top: 1px solid var(--b30); }
+
+/* ── Home mark (recurring "stays home" motif) ───────────────── */
+.home-mark {
+  width: 1.05em;
+  height: 1.05em;
+  display: inline-block;
+  vertical-align: -0.18em;
+  color: var(--accent);
+  margin-right: 0.6em;
+}
+
+.sec-eyebrow { display: inline-flex; align-items: center; }
+
+/* ── Hero device family (Mac live-panel + iPhone/iPad minis) ── */
+.hero-demo { position: relative; }
+.hero-mini {
+  position: absolute;
+  z-index: 3;
+  overflow: hidden;
+  background: var(--phone);
+  border: 1.5px solid var(--b50);
+  box-shadow: 0 18px 44px rgba(0,0,0,0.6);
+}
+[data-theme="light"] .hero-mini { box-shadow: 0 12px 30px rgba(0,0,0,0.16); }
+.hero-mini img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
+.hero-mini-iphone {
+  width: 132px;
+  aspect-ratio: 9 / 19.5;
+  border-radius: 24px;
+  left: -32px;
+  bottom: -44px;
+}
+.hero-mini-ipad {
+  width: 256px;
+  aspect-ratio: 605 / 417;
+  border-radius: 14px;
+  right: -22px;
+  bottom: -30px;
+}
+@media (max-width: 767px) {
+  .hero-mini { display: none; }
+}
+
+/* ── About / maker note ─────────────────────────────────────── */
+.about-title {
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  line-height: 1.02;
+}
+.about-quote {
+  border-left: 2px solid var(--accent);
+  padding-left: 1.3rem;
+}
+.about-quote p {
+  font-size: 1.2rem;
+  line-height: 1.55;
+  font-style: italic;
+  color: var(--text-90);
+}
+.about-cite {
+  display: block;
+  margin-top: 0.9rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--dim);
+  font-style: normal;
+}
 
 /* ── macOS traffic-light dots ───────────────────────────────── */
 .dot-red    { background: #FF5F57; }
@@ -310,6 +388,43 @@ img { max-width: 100%; }
   display: block;
   border-radius: 10px;
   scroll-snap-align: start;
+}
+
+/* ── Continuous device carousel (iPhone → Mac → iPad) ───────── */
+.ss-track {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  width: 100%;
+  align-items: center;
+  touch-action: pan-x;
+}
+.ss-track::-webkit-scrollbar { display: none; }
+.ss-panel {
+  flex: 0 0 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  scroll-snap-align: center;
+  cursor: zoom-in;
+}
+/* Reuse the device-frame visuals, but hold one static screenshot
+   (overrides the frames' own scroll / touch / snap behaviour) */
+.ss-frame {
+  overflow: hidden;
+  scroll-snap-type: none;
+  touch-action: auto;
+}
+.ss-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
 }
 
 /* ── Screenshot caption & dots ──────────────────────────────── */

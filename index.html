@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mira — AI that stays home</title>
-  <meta name="description" content="Private, local AI assistant for macOS, iPhone, and iPad. No cloud. No subscriptions. Powered by Apple Silicon." />
-  <meta property="og:title" content="Mira — AI that stays home" />
-  <meta property="og:description" content="Private, local AI assistant for macOS, iPhone, and iPad. Powered by Apple Silicon." />
+  <title>Mira — a local AI assistant for Mac, iPhone & iPad</title>
+  <meta name="description" content="Not another inference server. Mira is a finished AI assistant for Mac, iPhone, and iPad — synced over your own iCloud. No cloud, no accounts, no subscriptions." />
+  <meta property="og:title" content="Mira — a local AI assistant for Mac, iPhone & iPad" />
+  <meta property="og:description" content="A finished AI assistant across your Apple devices, private by default. Built in the open by a non-coder, with Claude Code." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://askmira.es" />
   <meta property="og:image" content="https://askmira.es/assets/og.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="theme-color" content="#1C1917" media="(prefers-color-scheme: dark)" />
-  <meta name="theme-color" content="#F7F5F3" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#15171A" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#F6F4EF" media="(prefers-color-scheme: light)" />
 
   <link rel="icon" href="assets/icon.png" type="image/png" />
   <link rel="apple-touch-icon" href="assets/icon.png" />
@@ -44,10 +44,6 @@
     @media (max-width: 640px) {
       .frame-inset { inset: 6px; border-radius: 4px; }
     }
-
-    /* Numbered field-manual section labels */
-    .sec-num   { color: var(--accent); }
-    .sec-slash { color: var(--b80); }
 
     /* Hero live-generation panel */
     .hero-demo { animation: fade-up 0.65s 0.36s cubic-bezier(.22,.68,0,1) both; }
@@ -83,8 +79,8 @@
     }
     @keyframes live-pulse {
       0%   { box-shadow: 0 0 0 0 var(--a30); }
-      70%  { box-shadow: 0 0 0 6px rgba(208,146,104,0); }
-      100% { box-shadow: 0 0 0 0 rgba(208,146,104,0); }
+      70%  { box-shadow: 0 0 0 6px rgba(232,189,110,0); }
+      100% { box-shadow: 0 0 0 0 rgba(232,189,110,0); }
     }
     .live-readout {
       margin-left: auto;
@@ -95,7 +91,7 @@
 
     /* Enlarged chat viewport that auto-scrolls as scenes stream */
     .live-body {
-      height: clamp(15rem, 42vh, 21rem);
+      height: clamp(16.5rem, 47vh, 24rem);
       overflow: hidden;
       padding: 0.85rem 0.95rem;
       font-size: 0.76rem;
@@ -209,24 +205,22 @@
       font-family: 'IBM Plex Mono', 'Courier New', monospace;
     }
     .code-body::-webkit-scrollbar { display: none; }
-
-    /* Capability row index numbers (field-manual margin numerals) */
-    .cap-index {
-      flex-shrink: 0;
-      width: 1.4rem;
-      padding-top: 0.4rem;
-      font-size: 0.625rem;
-      color: var(--dim);
-      font-variant-numeric: tabular-nums;
-      letter-spacing: 0.08em;
-    }
   </style>
 </head>
 
-<body class="bg-[var(--bg)] text-[var(--text)] font-mono antialiased">
+<body class="bg-[var(--bg)] text-[var(--text)] font-sans antialiased">
 
   <!-- ── Containment frame ─────────────────────────────────────── -->
   <div class="frame-inset" aria-hidden="true"></div>
+
+  <!-- ── Home mark (recurring motif: "stays home") ─────────────── -->
+  <svg width="0" height="0" class="absolute" aria-hidden="true" focusable="false">
+    <symbol id="ico-home" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3.5 11.5 12 4l8.5 7.5"/>
+      <path d="M5.5 10v9.5h13V10"/>
+    </symbol>
+  </svg>
 
   <!-- ── Nav (fixed) ───────────────────────────────────────────── -->
   <nav class="fixed top-0 left-0 right-0 z-50 border-b border-[var(--b30)] backdrop-blur-md bg-[var(--bg-nav)]">
@@ -293,6 +287,7 @@
     <button class="dot-btn" data-target="screenshots"  aria-label="Screenshots"></button>
     <button class="dot-btn" data-target="capabilities" aria-label="What you can do"></button>
     <button class="dot-btn" data-target="features"     aria-label="How it works"></button>
+    <button class="dot-btn" data-target="about"        aria-label="About"></button>
     <button class="dot-btn" data-target="credits"      aria-label="Credits"></button>
   </nav>
 
@@ -303,26 +298,24 @@
     <!-- ── 1 · Hero ───────────────────────────────────────────── -->
     <section id="hero" class="snap-section flex flex-col justify-center pt-14">
       <div class="max-w-5xl mx-auto px-6 w-full">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center">
+        <div class="grid grid-cols-1 md:grid-cols-[1fr_1.15fr] gap-10 md:gap-12 items-center">
 
           <!-- Left: text -->
           <div class="max-w-xl min-w-0">
             <p class="hero-eyebrow text-[10px] tracking-[0.22em] uppercase text-[var(--muted)] mb-8">
-              Local AI&nbsp;· macOS&nbsp;· iOS&nbsp;· iPadOS
+              Local AI, honestly&nbsp;· Mac&nbsp;· iPhone&nbsp;· iPad
             </p>
 
-            <h1 class="hero-title font-serif text-[clamp(2.75rem,7vw,5rem)] leading-[0.93] tracking-tight text-[var(--text)] mb-6">
-              AI that<br/>
-              <em class="not-italic text-[var(--accent)]">stays home.</em>
+            <h1 class="hero-title font-serif text-[var(--text)] mb-6">
+              A real assistant.<br/>
+              All on your<br/>
+              <em class="not-italic text-[var(--accent)]">own devices.</em>
             </h1>
 
-            <p class="hero-copy text-sm text-[var(--muted)] leading-[1.75] max-w-md mb-5">
-              Mira runs entirely on your Mac, iPhone, and iPad — powered by Apple Silicon,
-              no API keys, no subscriptions. Your conversations stay on your devices.
-            </p>
-
-            <p class="hero-eyebrow text-[10px] tracking-[0.22em] uppercase text-[var(--dim)] mb-8">
-              ~60 tok/s gen&nbsp;· ~848 tok/s prefill&nbsp;· 35 B model&nbsp;· M5&nbsp;· 32 GB RAM
+            <p class="hero-copy text-sm text-[var(--muted)] leading-[1.75] max-w-md mb-6">
+              Not another inference server. Mira is a finished app for Mac, iPhone,
+              and iPad — synced over your own iCloud. No cloud, no accounts, nothing
+              to wire up. Your conversations never leave the devices you own.
             </p>
 
             <div class="hero-cta flex flex-wrap items-center gap-3">
@@ -343,9 +336,15 @@
                 View source
               </a>
             </div>
+
+            <p class="hero-cta text-xs text-[var(--dim)] mt-7 leading-[1.65]">
+              Applied AI, no hype — built in the open with
+              <a href="https://claude.com/claude-code" target="_blank" rel="noopener"
+                 class="text-[var(--muted)] hover:text-[var(--accent)] transition-colors">Claude&nbsp;Code</a>.
+            </p>
           </div>
 
-          <!-- Right: live local-generation demo -->
+          <!-- Right: device family — Mac (live demo) + iPhone + iPad -->
           <div class="hero-demo min-w-0">
             <div class="live-panel" aria-hidden="true">
               <div class="live-header">
@@ -356,6 +355,14 @@
               <div class="live-body" id="live-body">
                 <div class="live-thread" id="live-thread"></div>
               </div>
+            </div>
+            <!-- iPad peeking from the lower-right -->
+            <div class="hero-mini hero-mini-ipad" aria-hidden="true">
+              <img src="assets/ipados_translation.PNG" alt="" />
+            </div>
+            <!-- iPhone peeking from the lower-left -->
+            <div class="hero-mini hero-mini-iphone" aria-hidden="true">
+              <img src="assets/ios_haiku.PNG" alt="" />
             </div>
           </div>
 
@@ -370,85 +377,53 @@
         <div class="max-w-xl">
 
           <div class="bench-header">
-            <p class="text-[10px] tracking-[0.22em] uppercase text-[var(--dim)] mb-3">
-              <span class="sec-num">01</span><span class="sec-slash"> / </span>Performance
+            <p class="sec-eyebrow text-[10px] tracking-[0.22em] uppercase text-[var(--dim)] mb-3">
+              <svg class="home-mark" aria-hidden="true"><use href="#ico-home"/></svg>What runs on your Mac
             </p>
-            <p class="text-[0.7rem] text-[var(--dim)]">M5 MacBook Pro &nbsp;·&nbsp; 32 GB &nbsp;·&nbsp; June 2026</p>
+            <p class="text-sm text-[var(--muted)] leading-[1.65] max-w-md">
+              No leaderboard, no comparison charts. Local AI is mostly about memory:
+              bigger models need more of it. Here's what realistically fits — and how
+              it actually feels — on Apple Silicon.
+            </p>
           </div>
 
-          <!-- Generation speed -->
           <div class="bench-group">
-            <p class="bench-metric-label">Generation speed &nbsp;·&nbsp; tok / s</p>
+            <p class="bench-metric-label">Unified memory &nbsp;·&nbsp; model that fits &nbsp;·&nbsp; how it feels</p>
             <div class="bench-chart">
+              <div class="bench-row">
+                <span class="bench-label">16 GB &nbsp;·&nbsp; up to 8B</span>
+                <div class="bench-bar-wrap">
+                  <div class="bench-bar-track"><div class="bench-bar" data-pct="24"></div></div>
+                  <span class="bench-val">snappy</span>
+                </div>
+              </div>
+              <div class="bench-row">
+                <span class="bench-label">24 GB &nbsp;·&nbsp; up to 14B</span>
+                <div class="bench-bar-wrap">
+                  <div class="bench-bar-track"><div class="bench-bar" data-pct="44"></div></div>
+                  <span class="bench-val">comfortable</span>
+                </div>
+              </div>
               <div class="bench-row winner">
-                <span class="bench-label">omlx &nbsp;·&nbsp; Qwen3.6-35B</span>
+                <span class="bench-label">32 GB &nbsp;·&nbsp; 35B (4-bit)</span>
+                <div class="bench-bar-wrap">
+                  <div class="bench-bar-track"><div class="bench-bar" data-pct="70"></div></div>
+                  <span class="bench-val">~58 tok/s</span>
+                </div>
+              </div>
+              <div class="bench-row">
+                <span class="bench-label">64 GB+ &nbsp;·&nbsp; 70B</span>
                 <div class="bench-bar-wrap">
                   <div class="bench-bar-track"><div class="bench-bar" data-pct="100"></div></div>
-                  <span class="bench-val">58.3</span>
-                </div>
-              </div>
-              <div class="bench-row">
-                <span class="bench-label">omlx &nbsp;·&nbsp; Gemma4-26B</span>
-                <div class="bench-bar-wrap">
-                  <div class="bench-bar-track"><div class="bench-bar" data-pct="77"></div></div>
-                  <span class="bench-val">44.6</span>
-                </div>
-              </div>
-              <div class="bench-row">
-                <span class="bench-label">ollama &nbsp;·&nbsp; Qwen3.6-35B</span>
-                <div class="bench-bar-wrap">
-                  <div class="bench-bar-track"><div class="bench-bar" data-pct="73"></div></div>
-                  <span class="bench-val">42.3</span>
-                </div>
-              </div>
-              <div class="bench-row">
-                <span class="bench-label">ollama &nbsp;·&nbsp; Gemma4-26B</span>
-                <div class="bench-bar-wrap">
-                  <div class="bench-bar-track"><div class="bench-bar" data-pct="69"></div></div>
-                  <span class="bench-val">40.1</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Prefill speed -->
-          <div class="bench-group">
-            <p class="bench-metric-label">Prefill speed &nbsp;·&nbsp; tok / s &nbsp;·&nbsp; pp1024</p>
-            <div class="bench-chart">
-              <div class="bench-row winner">
-                <span class="bench-label">ollama &nbsp;·&nbsp; Qwen3.6-35B</span>
-                <div class="bench-bar-wrap">
-                  <div class="bench-bar-track"><div class="bench-bar" data-pct="100"></div></div>
-                  <span class="bench-val">8,754</span>
-                </div>
-              </div>
-              <div class="bench-row">
-                <span class="bench-label">ollama &nbsp;·&nbsp; Gemma4-26B</span>
-                <div class="bench-bar-wrap">
-                  <div class="bench-bar-track"><div class="bench-bar" data-pct="68"></div></div>
-                  <span class="bench-val">5,981</span>
-                </div>
-              </div>
-              <div class="bench-row">
-                <span class="bench-label">omlx &nbsp;·&nbsp; Gemma4-26B</span>
-                <div class="bench-bar-wrap">
-                  <div class="bench-bar-track"><div class="bench-bar" data-pct="10"></div></div>
-                  <span class="bench-val">856</span>
-                </div>
-              </div>
-              <div class="bench-row">
-                <span class="bench-label">omlx &nbsp;·&nbsp; Qwen3.6-35B</span>
-                <div class="bench-bar-wrap">
-                  <div class="bench-bar-track"><div class="bench-bar" data-pct="10"></div></div>
-                  <span class="bench-val">848</span>
+                  <span class="bench-val">slower, still fine</span>
                 </div>
               </div>
             </div>
           </div>
 
           <p class="bench-footnote">
-            llama-bench tg512 / pp1024 &nbsp;·&nbsp;
-            <a href="https://github.com/mabaeyens/mira-core/blob/main/docs/bench-results-2026-06-13.md" target="_blank" rel="noopener">Full results ↗</a>
+            Measured, not marketed — 35B at 4-bit on an M5 MacBook Pro, 32 GB, June 2026. &nbsp;·&nbsp;
+            <a href="https://github.com/mabaeyens/mira-core/blob/main/docs/bench-results-2026-06-13.md" target="_blank" rel="noopener">Full numbers ↗</a>
           </p>
 
         </div>
@@ -461,8 +436,8 @@
 
       <!-- Section label -->
       <div class="flex-shrink-0 text-center mt-7">
-        <p class="text-[10px] tracking-[0.22em] uppercase text-[var(--dim)]">
-          <span class="sec-num">02</span><span class="sec-slash"> / </span>Screenshots
+        <p class="sec-eyebrow text-[10px] tracking-[0.22em] uppercase text-[var(--dim)]">
+          <svg class="home-mark" aria-hidden="true"><use href="#ico-home"/></svg>See it running
         </p>
       </div>
 
@@ -475,51 +450,57 @@
         <button class="device-tab" data-device="ipad">iPad</button>
       </div>
 
-      <!-- Device stage: one shell visible at a time, frame never moves -->
-      <div class="flex-1 min-h-0 flex items-center justify-center">
+      <!-- Device stage: one continuous swipe across iPhone → Mac → iPad -->
+      <div class="ss-track flex-1 min-h-0" id="ss-track">
 
-        <!-- iPhone shell -->
-        <div class="device-shell active" data-device="iphone">
-          <div class="iphone-frame" id="frame-iphone">
-            <div class="inner-slider" id="slider-iphone">
-              <img src="assets/ios_haiku.PNG"  alt="Mira on iPhone — haiku" />
-              <img src="assets/ios_python.PNG" alt="Mira on iPhone — Python code" loading="lazy" />
-              <img src="assets/ios_cherry.PNG" alt="Mira on iPhone — Kyoto itinerary" loading="lazy" />
-              <img src="assets/ios_sleep.PNG"  alt="Mira on iPhone — sleep tips" loading="lazy" />
-            </div>
-          </div>
-          <p class="ss-caption" id="cap-iphone">Short, elegant conversation</p>
+        <!-- iPhone -->
+        <div class="ss-panel" data-device="iphone" data-pos="0">
+          <div class="iphone-frame ss-frame"><img src="assets/ios_haiku.PNG"  alt="Mira on iPhone — haiku" /></div>
+        </div>
+        <div class="ss-panel" data-device="iphone" data-pos="1">
+          <div class="iphone-frame ss-frame"><img src="assets/ios_python.PNG" alt="Mira on iPhone — Python code" loading="lazy" /></div>
+        </div>
+        <div class="ss-panel" data-device="iphone" data-pos="2">
+          <div class="iphone-frame ss-frame"><img src="assets/ios_cherry.PNG" alt="Mira on iPhone — Kyoto itinerary" loading="lazy" /></div>
+        </div>
+        <div class="ss-panel" data-device="iphone" data-pos="3">
+          <div class="iphone-frame ss-frame"><img src="assets/ios_sleep.PNG"  alt="Mira on iPhone — sleep tips" loading="lazy" /></div>
         </div>
 
-        <!-- Mac shell -->
-        <div class="device-shell" data-device="mac">
-          <div class="mac-viewport mac-shadow" id="frame-mac">
-            <div class="inner-slider" id="slider-mac">
-              <img src="assets/macos_weather.png"  alt="Mira on Mac — Madrid weather" loading="lazy" />
-              <img src="assets/macos_sleep.png"    alt="Mira on Mac — educational explanation" loading="lazy" />
-              <img src="assets/macos_tip.png"      alt="Mira on Mac — tip calculator" loading="lazy" />
-              <img src="assets/macos_stoicism.png" alt="Mira on Mac — stoicism" loading="lazy" />
-            </div>
-          </div>
-          <p class="ss-caption" id="cap-mac">Everyday conversational query</p>
+        <!-- Mac -->
+        <div class="ss-panel" data-device="mac" data-pos="0">
+          <div class="mac-viewport mac-shadow ss-frame"><img src="assets/macos_weather.png"  alt="Mira on Mac — Madrid weather" loading="lazy" /></div>
+        </div>
+        <div class="ss-panel" data-device="mac" data-pos="1">
+          <div class="mac-viewport mac-shadow ss-frame"><img src="assets/macos_sleep.png"    alt="Mira on Mac — educational explanation" loading="lazy" /></div>
+        </div>
+        <div class="ss-panel" data-device="mac" data-pos="2">
+          <div class="mac-viewport mac-shadow ss-frame"><img src="assets/macos_tip.png"      alt="Mira on Mac — tip calculator" loading="lazy" /></div>
+        </div>
+        <div class="ss-panel" data-device="mac" data-pos="3">
+          <div class="mac-viewport mac-shadow ss-frame"><img src="assets/macos_stoicism.png" alt="Mira on Mac — stoicism" loading="lazy" /></div>
         </div>
 
-        <!-- iPad shell -->
-        <div class="device-shell" data-device="ipad">
-          <div class="ipad-frame" id="frame-ipad">
-            <div class="inner-slider" id="slider-ipad">
-              <img src="assets/ipados_dinner.PNG"      alt="Mira on iPad — dinner recipe" loading="lazy" />
-              <img src="assets/ipados_translation.PNG" alt="Mira on iPad — quote translation" loading="lazy" />
-              <img src="assets/ipados_tcpudp.PNG"      alt="Mira on iPad — TCP vs UDP" loading="lazy" />
-              <img src="assets/ipados_2008.PNG"        alt="Mira on iPad — 2008 crisis" loading="lazy" />
-            </div>
-          </div>
-          <p class="ss-caption" id="cap-ipad">Lifestyle content, practical steps</p>
+        <!-- iPad -->
+        <div class="ss-panel" data-device="ipad" data-pos="0">
+          <div class="ipad-frame ss-frame"><img src="assets/ipados_dinner.PNG"      alt="Mira on iPad — dinner recipe" loading="lazy" /></div>
+        </div>
+        <div class="ss-panel" data-device="ipad" data-pos="1">
+          <div class="ipad-frame ss-frame"><img src="assets/ipados_translation.PNG" alt="Mira on iPad — quote translation" loading="lazy" /></div>
+        </div>
+        <div class="ss-panel" data-device="ipad" data-pos="2">
+          <div class="ipad-frame ss-frame"><img src="assets/ipados_tcpudp.PNG"      alt="Mira on iPad — TCP vs UDP" loading="lazy" /></div>
+        </div>
+        <div class="ss-panel" data-device="ipad" data-pos="3">
+          <div class="ipad-frame ss-frame"><img src="assets/ipados_2008.PNG"        alt="Mira on iPad — 2008 crisis" loading="lazy" /></div>
         </div>
 
       </div>
 
-      <!-- Position dots (1–4 within the active device) -->
+      <!-- Caption for the current screenshot -->
+      <p class="ss-caption flex-shrink-0 mt-4" id="ss-cap">Short, elegant conversation</p>
+
+      <!-- Position dots (1–4 within the current device) -->
       <div class="flex justify-center gap-2.5 py-5 flex-shrink-0">
         <button class="ss-dot active" data-pos="0" aria-label="Screenshot 1"></button>
         <button class="ss-dot" data-pos="1" aria-label="Screenshot 2"></button>
@@ -534,14 +515,13 @@
     <section id="capabilities" class="snap-section section-rule flex flex-col justify-center pt-14" style="overflow-y: auto;">
       <div class="max-w-5xl mx-auto px-6 w-full py-10">
 
-        <p class="text-[10px] tracking-[0.22em] uppercase text-[var(--dim)] mb-8">
-          <span class="sec-num">03</span><span class="sec-slash"> / </span>What you can do
+        <p class="sec-eyebrow text-[10px] tracking-[0.22em] uppercase text-[var(--dim)] mb-8">
+          <svg class="home-mark" aria-hidden="true"><use href="#ico-home"/></svg>What you can do
         </p>
 
         <div class="divide-y divide-[var(--b20)]">
 
           <div class="flex items-start gap-6 py-4 group">
-            <span class="cap-index">01</span>
             <div class="w-7 h-7 shrink-0 rounded-lg bg-[var(--surface)] border border-[var(--b40)] group-hover:border-[var(--a30)] transition-colors flex items-center justify-center mt-0.5">
               <svg class="w-3.5 h-3.5 text-[var(--dim)] group-hover:text-[var(--accent)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                 <polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>
@@ -554,7 +534,6 @@
           </div>
 
           <div class="flex items-start gap-6 py-4 group">
-            <span class="cap-index">02</span>
             <div class="w-7 h-7 shrink-0 rounded-lg bg-[var(--surface)] border border-[var(--b40)] group-hover:border-[var(--a30)] transition-colors flex items-center justify-center mt-0.5">
               <svg class="w-3.5 h-3.5 text-[var(--dim)] group-hover:text-[var(--accent)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                 <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke-linecap="round"/>
@@ -568,7 +547,6 @@
           </div>
 
           <div class="flex items-start gap-6 py-4 group">
-            <span class="cap-index">03</span>
             <div class="w-7 h-7 shrink-0 rounded-lg bg-[var(--surface)] border border-[var(--b40)] group-hover:border-[var(--a30)] transition-colors flex items-center justify-center mt-0.5">
               <svg class="w-3.5 h-3.5 text-[var(--dim)] group-hover:text-[var(--accent)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                 <polyline points="17 1 21 5 17 9" stroke-linecap="round" stroke-linejoin="round"/>
@@ -584,7 +562,6 @@
           </div>
 
           <div class="flex items-start gap-6 py-4 group">
-            <span class="cap-index">04</span>
             <div class="w-7 h-7 shrink-0 rounded-lg bg-[var(--surface)] border border-[var(--b40)] group-hover:border-[var(--a30)] transition-colors flex items-center justify-center mt-0.5">
               <svg class="w-3.5 h-3.5 text-[var(--dim)] group-hover:text-[var(--accent)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                 <circle cx="12" cy="12" r="10"/>
@@ -599,7 +576,6 @@
           </div>
 
           <div class="flex items-start gap-6 py-4 group">
-            <span class="cap-index">05</span>
             <div class="w-7 h-7 shrink-0 rounded-lg bg-[var(--surface)] border border-[var(--b40)] group-hover:border-[var(--a30)] transition-colors flex items-center justify-center mt-0.5">
               <svg class="w-3.5 h-3.5 text-[var(--dim)] group-hover:text-[var(--accent)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                 <rect x="7" y="2" width="10" height="20" rx="2" stroke-linecap="round"/>
@@ -613,7 +589,6 @@
           </div>
 
           <div class="flex items-start gap-6 py-4 group">
-            <span class="cap-index">06</span>
             <div class="w-7 h-7 shrink-0 rounded-lg bg-[var(--surface)] border border-[var(--b40)] group-hover:border-[var(--a30)] transition-colors flex items-center justify-center mt-0.5">
               <svg class="w-3.5 h-3.5 text-[var(--dim)] group-hover:text-[var(--accent)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-linecap="round" stroke-linejoin="round"/>
@@ -634,8 +609,8 @@
     <section id="features" class="snap-section section-rule flex flex-col justify-center pt-14">
       <div class="max-w-5xl mx-auto px-6 w-full">
 
-        <p class="text-[10px] tracking-[0.22em] uppercase text-[var(--dim)] mb-10">
-          <span class="sec-num">04</span><span class="sec-slash"> / </span>Under the hood
+        <p class="sec-eyebrow text-[10px] tracking-[0.22em] uppercase text-[var(--dim)] mb-10">
+          <svg class="home-mark" aria-hidden="true"><use href="#ico-home"/></svg>Under the hood
         </p>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-[var(--b20)] rounded-xl overflow-hidden border border-[var(--b20)]">
@@ -716,8 +691,50 @@
     </section>
 
 
-    <!-- ── 6 · Credits ────────────────────────────────────────── -->
-    <section id="credits" class="snap-section section-rule flex flex-col items-center justify-between pt-28 pb-16">
+    <!-- ── 6 · About ──────────────────────────────────────────── -->
+    <section id="about" class="snap-section section-rule flex flex-col justify-center pt-14">
+      <div class="max-w-5xl mx-auto px-6 w-full">
+        <div class="max-w-2xl">
+
+          <p class="sec-eyebrow text-[10px] tracking-[0.22em] uppercase text-[var(--dim)] mb-6">
+            <svg class="home-mark" aria-hidden="true"><use href="#ico-home"/></svg>About
+          </p>
+
+          <h2 class="about-title font-serif text-[var(--text)] mb-7">Learning by building.</h2>
+
+          <p class="text-sm text-[var(--muted)] leading-[1.75] mb-5">
+            Mira started in early 2024 as a do-it-yourself question — how far can
+            today's AI actually be pushed to do real work? It's made by a Solutions
+            Architect who spends his days separating what AI can do from what it's
+            hyped to do, and who would rather understand a technology by building with
+            it than reading about it.
+          </p>
+
+          <p class="text-sm text-[var(--muted)] leading-[1.75] mb-8">
+            Mira isn't a model, a runtime, or a quantization trick. It's
+            <span class="text-[var(--text)]">applied AI</span> — open models assembled
+            into something private and genuinely useful on a Mac you already own,
+            built with Claude Code by a techie — not a software engineer, but someone
+            happy to go deep into the weeds. The point isn't the benchmark; it's that
+            the distance between “I should try this” and “I built this” is shorter than
+            it looks.
+            And if it runs on one laptop, it's worth asking what it could do at scale.
+          </p>
+
+          <blockquote class="about-quote">
+            <p class="font-serif">“AI is here, and it's genuinely useful — but you still
+              need to know what it's good for. It won't replace your judgment. Do your
+              own research.”</p>
+            <cite class="about-cite">Miguel A. Baeyens — applied AI &amp; analytics</cite>
+          </blockquote>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ── 7 · Credits ────────────────────────────────────────── -->
+    <section id="credits" class="snap-section section-rule flex flex-col items-center justify-center gap-10">
 
       <!-- Branding -->
       <div class="text-center">
@@ -725,7 +742,9 @@
              class="w-14 h-14 rounded-2xl mx-auto mb-6 shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
              alt="Mira" />
         <p class="font-serif text-3xl text-[var(--text)] mb-2">Mira</p>
-        <p class="text-xs text-[var(--muted)]">AI that stays home.</p>
+        <p class="sec-eyebrow text-xs text-[var(--muted)]">
+          <svg class="home-mark" aria-hidden="true"><use href="#ico-home"/></svg>AI that stays home.
+        </p>
       </div>
 
       <!-- CTAs -->
@@ -1082,74 +1101,74 @@
       if (perfSection) perfObserver.observe(perfSection);
     })();
 
-    // Screenshot device slider
+    // Screenshot device carousel — one continuous swipe across iPhone → Mac → iPad
     (function () {
+      var track = document.getElementById('ss-track');
+      if (!track) return;
+      var panels  = Array.prototype.slice.call(track.querySelectorAll('.ss-panel'));
+      var tabs    = document.querySelectorAll('.device-tab');
+      var posDots = document.querySelectorAll('.ss-dot[data-pos]');
+      var cap     = document.getElementById('ss-cap');
+      var order   = ['iphone', 'mac', 'ipad'];
+
       var CAPTIONS = {
         iphone: ['Short, elegant conversation', 'Code block formatting', 'Structured travel itinerary', 'Clean numbered list'],
         mac:    ['Everyday conversational query', 'Long educational explanation', 'Quick practical answer', 'Philosophical summary with actionable habit'],
         ipad:   ['Lifestyle content, practical steps', 'Multilingual output', 'Technical side-by-side comparison', 'Bullet-point historical breakdown']
       };
 
-      var state       = { iphone: 0, mac: 0, ipad: 0 };
-      var activeDevice = 'iphone';
-      var posDots     = document.querySelectorAll('.ss-dot[data-pos]');
-      var tabs        = document.querySelectorAll('.device-tab');
-      var shells      = document.querySelectorAll('.device-shell');
+      var current = -1;
 
-      function goTo(device, idx) {
-        idx = Math.max(0, Math.min(3, idx));
-        state[device] = idx;
-        var frame = document.getElementById('frame-' + device);
-        frame.scrollTo({ left: idx * frame.clientWidth, behavior: 'smooth' });
-        document.getElementById('cap-' + device).textContent = CAPTIONS[device][idx];
-        if (device === activeDevice) {
-          posDots.forEach(function (d, i) { d.classList.toggle('active', i === idx); });
-        }
+      function indexFromScroll() {
+        return track.clientWidth ? Math.round(track.scrollLeft / track.clientWidth) : 0;
+      }
+      function scrollToIndex(i, smooth) {
+        i = Math.max(0, Math.min(panels.length - 1, i));
+        track.scrollTo({ left: i * track.clientWidth, behavior: smooth ? 'smooth' : 'auto' });
+      }
+      function sync() {
+        var i = indexFromScroll();
+        if (i === current) return;
+        current = i;
+        var device = panels[i].dataset.device;
+        var pos    = parseInt(panels[i].dataset.pos, 10);
+        tabs.forEach(function (t) { t.classList.toggle('active', t.dataset.device === device); });
+        posDots.forEach(function (d, k) { d.classList.toggle('active', k === pos); });
+        if (cap) cap.textContent = CAPTIONS[device][pos];
       }
 
-      // Sync dots/captions when browser scrolls natively (Magic Mouse, trackpad, touch)
-      ['iphone', 'mac', 'ipad'].forEach(function (device) {
-        document.getElementById('frame-' + device).addEventListener('scroll', function () {
-          var frame = document.getElementById('frame-' + device);
-          var idx = Math.round(frame.scrollLeft / frame.clientWidth);
-          if (idx === state[device]) return;
-          state[device] = idx;
-          document.getElementById('cap-' + device).textContent = CAPTIONS[device][idx];
-          if (device === activeDevice) {
-            posDots.forEach(function (d, i) { d.classList.toggle('active', i === idx); });
-          }
+      var raf = null;
+      track.addEventListener('scroll', function () {
+        if (raf) return;
+        raf = requestAnimationFrame(function () { raf = null; sync(); });
+      });
+
+      // Tabs jump to the first screenshot of that device
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          var di = order.indexOf(tab.dataset.device);
+          if (di >= 0) scrollToIndex(di * 4, true);
         });
       });
 
-      function switchDevice(device) {
-        activeDevice = device;
-        shells.forEach(function (s) { s.classList.toggle('active', s.dataset.device === device); });
-        tabs.forEach(function (t)   { t.classList.toggle('active', t.dataset.device === device); });
-        posDots.forEach(function (d, i) { d.classList.toggle('active', i === state[device]); });
-      }
-
-      tabs.forEach(function (tab) {
-        tab.addEventListener('click', function () { switchDevice(tab.dataset.device); });
+      // Dots jump within the current device
+      posDots.forEach(function (dot, k) {
+        dot.addEventListener('click', function () {
+          var di = Math.floor((current < 0 ? 0 : current) / 4);
+          scrollToIndex(di * 4 + k, true);
+        });
       });
 
-      posDots.forEach(function (dot, i) {
-        dot.addEventListener('click', function () { goTo(activeDevice, i); });
-      });
-
-
-      // Keyboard arrow keys
+      // Keyboard arrows step one screenshot at a time
       document.addEventListener('keydown', function (e) {
-        if (e.key === 'ArrowRight') goTo(activeDevice, state[activeDevice] + 1);
-        if (e.key === 'ArrowLeft')  goTo(activeDevice, state[activeDevice] - 1);
+        if (e.key === 'ArrowRight') scrollToIndex(indexFromScroll() + 1, true);
+        if (e.key === 'ArrowLeft')  scrollToIndex(indexFromScroll() - 1, true);
       });
 
-      // Lightbox — tap/click a device frame to see the current slide enlarged
+      // Lightbox — tap/click a screenshot to see it enlarged
       var lightbox    = document.getElementById('lightbox');
       var lightboxImg = document.getElementById('lightbox-img');
-
-      function openLightbox(device) {
-        var imgs = document.getElementById('slider-' + device).querySelectorAll('img');
-        var img  = imgs[state[device]];
+      function openLightbox(img) {
         lightboxImg.src = img.src;
         lightboxImg.alt = img.alt;
         lightbox.classList.add('open');
@@ -1160,24 +1179,23 @@
         lightboxImg.src = '';
         document.body.style.overflow = '';
       }
-
-      ['iphone', 'mac', 'ipad'].forEach(function (device) {
-        var el = document.getElementById('frame-' + device);
+      panels.forEach(function (panel) {
+        var img = panel.querySelector('img');
         var downX = null;
-        el.addEventListener('pointerdown', function (e) { downX = e.clientX; });
-        el.addEventListener('click', function (e) {
+        panel.addEventListener('pointerdown', function (e) { downX = e.clientX; });
+        panel.addEventListener('click', function (e) {
           if (downX !== null && Math.abs(e.clientX - downX) > 8) return;
-          openLightbox(device);
+          openLightbox(img);
         });
       });
+      if (lightbox) {
+        document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', function (e) { if (e.target === lightbox) closeLightbox(); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeLightbox(); });
+      }
 
-      document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
-      lightbox.addEventListener('click', function (e) {
-        if (e.target === lightbox) closeLightbox();
-      });
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') closeLightbox();
-      });
+      window.addEventListener('resize', function () { current = -1; sync(); });
+      sync();
     }());
   </script>
 
