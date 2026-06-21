@@ -94,8 +94,8 @@ body {
 .hero-eyebrow { animation: fade-up 0.55s cubic-bezier(.22,.68,0,1) both; }
 .hero-title   {
   animation: fade-up 0.65s 0.08s cubic-bezier(.22,.68,0,1) both;
-  font-size: clamp(3.25rem, 7vw, 5.5rem);
-  line-height: 0.96;
+  font-size: clamp(2.5rem, 4.5vw, 4rem);
+  line-height: 1.0;
 }
 .hero-copy    { animation: fade-up 0.65s 0.18s cubic-bezier(.22,.68,0,1) both; }
 .hero-cta     { animation: fade-up 0.65s 0.28s cubic-bezier(.22,.68,0,1) both; }
@@ -177,15 +177,6 @@ body {
   line-height: 1.55;
   font-style: italic;
   color: var(--text-90);
-}
-.about-cite {
-  display: block;
-  margin-top: 0.9rem;
-  font-size: 0.7rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--dim);
-  font-style: normal;
 }
 
 /* ── macOS traffic-light dots ───────────────────────────────── */
