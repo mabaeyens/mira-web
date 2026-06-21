@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital@0;1&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+
+/* ── Colour tokens — Vera teal (shares Mira's neutral ramp, swaps the accent) ── */
+:root {
+  --bg:         #15171A;
+  --bg-nav:     rgba(21,23,26,.85);
+  --surface:    #1D2024;
+  --surface-2:  #22262B;
+  --hover:      #191C1F;
+
+  --text:       #F4F6F5;
+  --text-90:    rgba(244,246,245,.90);
+  --muted:      #9AA3A0;
+  --dim:        #5A6360;
+
+  /* Vera brand teal — DESIGN.md dark cyan */
+  --accent:     #4FC9CE;
+  --accent-hov: #74D6DA;
+
+  --b20: rgba(120,128,125,.20);
+  --b25: rgba(120,128,125,.25);
+  --b30: rgba(120,128,125,.30);
+  --b40: rgba(120,128,125,.40);
+  --b50: rgba(120,128,125,.50);
+  --b80: rgba(120,128,125,.80);
+
+  --a18: rgba(79,201,206,.18);
+  --a20: rgba(79,201,206,.20);
+  --a30: rgba(79,201,206,.30);
+}
+
+[data-theme="light"] {
+  --bg:         #F6F4EF;
+  --bg-nav:     rgba(246,244,239,.92);
+  --surface:    #ECEAE3;
+  --surface-2:  #E4E1D9;
+  --hover:      #EFEDE7;
+
+  --text:       #1A1C1B;
+  --text-90:    rgba(26,28,27,.90);
+  --muted:      #4F5552;
+  --dim:        #A6A39C;
+
+  /* Vera brand teal — DESIGN.md deep teal */
+  --accent:     #0B7C7E;
+  --accent-hov: #096567;
+
+  --b20: rgba(92,88,82,.12);
+  --b25: rgba(92,88,82,.16);
+  --b30: rgba(92,88,82,.22);
+  --b40: rgba(92,88,82,.32);
+  --b50: rgba(92,88,82,.42);
+  --b80: rgba(92,88,82,.65);
+
+  --a18: rgba(11,124,126,.14);
+  --a20: rgba(11,124,126,.17);
+  --a30: rgba(11,124,126,.24);
+}
+
+/* ── Grain overlay ──────────────────────────────────────────── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.028;
+  pointer-events: none;
+  z-index: 9999;
+}
+[data-theme="light"] body::after { opacity: 0.015; }
+
+/* ── Body base ──────────────────────────────────────────────── */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+html, body { overflow-x: hidden; }
+img { max-width: 100%; }
+
+/* ── Entrance ───────────────────────────────────────────────── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-eyebrow { animation: fade-up 0.55s cubic-bezier(.22,.68,0,1) both; }
+.hero-title   {
+  animation: fade-up 0.65s 0.08s cubic-bezier(.22,.68,0,1) both;
+  font-size: clamp(2.5rem, 4.5vw, 3.75rem);
+  line-height: 1.04;
+}
+.hero-copy { animation: fade-up 0.65s 0.18s cubic-bezier(.22,.68,0,1) both; }
+.hero-cta  { animation: fade-up 0.65s 0.28s cubic-bezier(.22,.68,0,1) both; }
+
+/* ── Typography ─────────────────────────────────────────────── */
+.font-serif { font-family: 'Lora', Georgia, serif; }
+.font-sans  { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+.font-mono  { font-family: 'IBM Plex Mono', 'Courier New', monospace; }
+
+.sec-eyebrow { display: inline-flex; align-items: center; }
+.section-rule { border-top: 1px solid var(--b30); }
+
+/* ── Theme toggle — sun in dark mode, moon in light mode ─────── */
+.icon-sun  { display: block; }
+.icon-moon { display: none;  }
+[data-theme="light"] .icon-sun  { display: none;  }
+[data-theme="light"] .icon-moon { display: block; }
+
+/* ── Code chip used in the hero (the markdown-in-repos motif) ── */
+.repo-chip {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--accent);
+  background: var(--a18);
+  border: 1px solid var(--a30);
+  border-radius: 6px;
+  padding: 0.15em 0.5em;
+  white-space: nowrap;
+}
+
+/* ── Screenshot shadow (for when shots land) ────────────────── */
+.mac-shadow { filter: drop-shadow(0 24px 60px rgba(0,0,0,0.45)); }
+[data-theme="light"] .mac-shadow { filter: drop-shadow(0 12px 30px rgba(0,0,0,0.12)); }
