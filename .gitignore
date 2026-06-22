@@ -7,3 +7,6 @@ assets/.gitkeep
 
 # Tooling (Tailwind build) — assets/tailwind.css IS committed; node_modules is not
 node_modules/
+
+# Local working specs (planning notes, not part of the site)
+specs/
