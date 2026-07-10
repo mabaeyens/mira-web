@@ -10,3 +10,6 @@ node_modules/
 
 # Local working specs (planning notes, not part of the site)
 specs/
+
+# Local Claude Code session settings
+.claude/
