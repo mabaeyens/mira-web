@@ -1,0 +1,119 @@
+/* ════════════════════════════════════════════════════════════════
+   Aura — askmira.es/aura
+   Shares the Mira design system (../style.css); this file only swaps
+   the accent to Aura's sky blue and adds Aura-specific components.
+   Must be linked AFTER ../style.css.
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── Aura brand sky blue (from the app icon's gradient) ───────── */
+:root {
+  --accent:     #4FA3F0;
+  --accent-hov: #74B8F4;
+
+  --a12: rgba(79,163,240,.12);
+  --a15: rgba(79,163,240,.15);
+  --a18: rgba(79,163,240,.18);
+  --a20: rgba(79,163,240,.20);
+  --a25: rgba(79,163,240,.25);
+  --a30: rgba(79,163,240,.30);
+
+  /* warm sun glow, echoing the icon's top-left corner */
+  --sun: #F0B24F;
+}
+
+[data-theme="light"] {
+  --accent:     #1466C4;
+  --accent-hov: #0F52A0;
+
+  --a12: rgba(20,102,196,.10);
+  --a15: rgba(20,102,196,.12);
+  --a18: rgba(20,102,196,.14);
+  --a20: rgba(20,102,196,.17);
+  --a25: rgba(20,102,196,.22);
+  --a30: rgba(20,102,196,.24);
+
+  --sun: #B87A14;
+}
+
+/* ── Weather chip used in the hero (the AEMET-data motif) ─────── */
+.wx-chip {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--accent);
+  background: var(--a18);
+  border: 1px solid var(--a30);
+  border-radius: 6px;
+  padding: 0.15em 0.5em;
+  white-space: nowrap;
+}
+.wx-chip.sun {
+  color: var(--sun);
+  background: color-mix(in srgb, var(--sun) 15%, transparent);
+  border-color: color-mix(in srgb, var(--sun) 32%, transparent);
+}
+
+/* Aura's hero has no demo panel; tighten the bottom rhythm a bit. */
+.hero-sub {
+  font-size: 0.74rem;
+  color: var(--dim);
+  margin: 1.4rem 0 0;
+}
+
+/* ── Screenshot placeholders (real shots land here later) ─────── */
+.shot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+.shot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  aspect-ratio: 3 / 4;
+  border: 1px dashed var(--a30);
+  border-radius: 16px;
+  background:
+    radial-gradient(120% 90% at 15% 0%, color-mix(in srgb, var(--sun) 10%, transparent), transparent 55%),
+    var(--a12);
+  color: var(--dim);
+  text-align: center;
+  padding: 1rem;
+}
+
+.shot-ico {
+  width: 44px;
+  height: 44px;
+  border-radius: 11px;
+  opacity: 0.55;
+  filter: saturate(0.85);
+}
+
+.shot-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+.shot-note {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+/* Watch tile is squarer than the phone/widget tiles. */
+.shot.shot-watch { aspect-ratio: 1 / 1; }
+
+/* ── App icon follows the theme ───────────────────────────────────
+   Aura ships two distinct app icons. The markup points at the light
+   icon (assets/icon.png); under the dark theme, swap in the dark one.
+   data-theme is set before first paint (anti-flash), so no flicker. */
+[data-theme="dark"] img[src$="assets/icon.png"] {
+  content: url("assets/icon-dark.png");
+}

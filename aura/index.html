@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aura — a personal, private weather app for Spain</title>
+  <meta name="description" content="Aura is a personal weather app for iPhone, iPad, Mac, and Apple Watch, powered by AEMET OpenData and your own free API key. Widgets, Lock Screen, and Watch complications the official app never shipped. No backend — the device is the hub." />
+  <meta property="og:title" content="Aura — a personal, private weather app for Spain" />
+  <meta property="og:description" content="AEMET's data, on every Apple surface. Home-screen and Lock Screen widgets, Apple Watch complications, real observed temperatures, and CAP warnings — all from your own OpenData key. No backend." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://askmira.es/aura" />
+  <meta property="og:image" content="https://askmira.es/aura/assets/og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#15171A" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#F6F4EF" media="(prefers-color-scheme: light)" />
+
+  <link rel="icon" href="assets/icon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="assets/icon.png" />
+
+  <!-- Anti-flash: restore saved theme before first paint (shared key with askmira.es) -->
+  <script>
+    (function(){
+      var t = localStorage.getItem('mira-theme');
+      if (t) document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+
+  <!-- Shared Mira design system + Aura sky-blue overrides. No Tailwind. -->
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ── Shared SVG symbols ─────────────────────────────────────── -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="ico-linkedin" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 110-4.14 2.07 2.07 0 010 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/>
+    </symbol>
+    <symbol id="ico-github" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+    </symbol>
+    <symbol id="ico-key" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12.65 10A5.99 5.99 0 006.999 6 6 6 0 006 18a5.99 5.99 0 005.65-4H17v4h4v-4h1v-4H12.65zM7 15a3 3 0 110-6 3 3 0 010 6z"/>
+    </symbol>
+  </svg>
+
+  <!-- ── Header ─────────────────────────────────────────────────── -->
+  <header class="site-header">
+    <div class="wrap">
+      <a href="#top" class="brand">
+        <img src="assets/icon.png" alt="Aura" />
+        <span>Aura</span>
+      </a>
+
+      <div class="header-actions">
+        <a href="/" class="btn btn-ghost btn-sm" aria-label="Back to Mira">
+          <span aria-hidden="true">←</span><span class="btn-label">Mira</span>
+        </a>
+        <a href="https://opendata.aemet.es/centrodedescargas/altaUsuario" target="_blank" rel="noopener"
+           class="btn btn-primary btn-sm" aria-label="Get an AEMET key">
+          <svg><use href="#ico-key"/></svg><span class="btn-label">AEMET key</span>
+        </a>
+        <a href="https://github.com/mabaeyens/aura-apps" target="_blank" rel="noopener"
+           class="icon-btn" aria-label="GitHub">
+          <svg><use href="#ico-github"/></svg>
+        </a>
+        <button id="theme-toggle" class="icon-btn" aria-label="Toggle theme">
+          <svg class="icon-sun" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg class="icon-moon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ── Hero ─────────────────────────────────────────────────── -->
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow hero-eyebrow">
+          A personal weather app&nbsp;· iPhone&nbsp;· iPad&nbsp;· Mac&nbsp;· Apple&nbsp;Watch
+        </p>
+
+        <h1 class="hero-title">Spain's weather, <em>on every Apple surface.</em></h1>
+
+        <p class="hero-copy">
+          Aura reads <span class="wx-chip">AEMET</span> — Spain's national weather service — through
+          the <span class="wx-chip">OpenData</span> API and your own free key, then puts it where the
+          official app never did: home-screen and Lock Screen widgets, Apple&nbsp;Watch complications,
+          real observed temperatures, and <span class="wx-chip">avisos</span> matched to your town.
+          No backend, no account, no telemetry — the device is the hub.
+        </p>
+
+        <div class="hero-cta">
+          <a href="https://github.com/mabaeyens/aura-apps" target="_blank" rel="noopener" class="btn btn-primary">
+            <svg><use href="#ico-github"/></svg>View source
+          </a>
+          <a href="https://opendata.aemet.es/centrodedescargas/altaUsuario" target="_blank" rel="noopener" class="btn btn-ghost">
+            <svg><use href="#ico-key"/></svg>Get an AEMET key
+          </a>
+        </div>
+
+        <p class="hero-sub hero-note">Free &amp; open source (MIT) · iPhone, widgets &amp; Watch working today · Mac in the works · Elaborado con datos de AEMET</p>
+
+        <!-- ── Screenshot placeholders (real shots land later) ──── -->
+        <div class="shot-grid" data-reveal>
+          <div class="shot">
+            <img src="assets/icon.png" class="shot-ico" alt="" aria-hidden="true" />
+            <span class="shot-label">iPhone — Hoy</span>
+            <span class="shot-note">Screenshot soon</span>
+          </div>
+          <div class="shot">
+            <img src="assets/icon.png" class="shot-ico" alt="" aria-hidden="true" />
+            <span class="shot-label">Widgets</span>
+            <span class="shot-note">Screenshot soon</span>
+          </div>
+          <div class="shot shot-watch">
+            <img src="assets/icon.png" class="shot-ico" alt="" aria-hidden="true" />
+            <span class="shot-label">Apple Watch</span>
+            <span class="shot-note">Screenshot soon</span>
+          </div>
+          <div class="shot">
+            <img src="assets/icon.png" class="shot-ico" alt="" aria-hidden="true" />
+            <span class="shot-label">Lock Screen</span>
+            <span class="shot-note">Screenshot soon</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Features ─────────────────────────────────────────────── -->
+    <section class="section">
+      <div class="wrap">
+        <div class="sec-head" data-reveal>
+          <p class="eyebrow">What it does</p>
+          <h2 class="sec-title">The official data, on the surfaces the official app forgot.</h2>
+        </div>
+
+        <div class="hood-grid" data-reveal>
+
+          <div class="hood-card">
+            <div class="cap-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M12 3v2M12 19v2M5 12H3M21 12h-2M6.3 6.3 4.9 4.9M19.1 19.1l-1.4-1.4" stroke-linecap="round"/>
+                <circle cx="12" cy="12" r="4"/>
+              </svg>
+            </div>
+            <h3>Two views, straight from AEMET</h3>
+            <p><strong>Hoy</strong> is the numeric daily forecast — min/max temperature, humidity, on-device sunrise and sunset — for your municipality. <strong>Predicción</strong> is the official, human-written narrative bulletin AEMET issues for your autonomous community, resolved to the one that covers today.</p>
+          </div>
+
+          <div class="hood-card">
+            <div class="cap-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+                <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+                <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+                <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+              </svg>
+            </div>
+            <h3>Widgets &amp; Lock Screen</h3>
+            <p>Home-screen (small / medium / large) and Lock Screen (circular / rectangular / inline) families, each <strong>configurable to a specific saved location</strong> via App Intents. Every card renders from the same shared code as the app, so nothing drifts.</p>
+          </div>
+
+          <div class="hood-card">
+            <div class="cap-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <rect x="7" y="6" width="10" height="12" rx="3"/>
+                <path d="M9 6l.5-3h5l.5 3M9 18l.5 3h5l.5-3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Apple Watch, live</h3>
+            <p>A watch app and a face complication (corner / circular / rectangular / inline), fed from the phone over WatchConnectivity. The screen and the complication both update in place as the phone syncs — no separate fetch, no separate key.</p>
+          </div>
+
+          <div class="hood-card">
+            <div class="cap-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M10.29 3.86 1.82 18a1 1 0 00.86 1.5h18.64a1 1 0 00.86-1.5L13.71 3.86a1 1 0 00-1.72 0z" stroke-linejoin="round"/>
+                <path d="M12 9v4M12 17h.01" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>Real readings &amp; warnings</h3>
+            <p>The <strong>observed temperature</strong> from the nearest AEMET station, not just the forecast. And <strong>avisos</strong> — the official CAP weather warnings — fetched, unpacked on-device, and matched to each saved location by province.</p>
+          </div>
+
+          <div class="hood-card">
+            <div class="cap-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M12 21s-7-4.35-7-10a7 7 0 0114 0c0 5.65-7 10-7 10z" stroke-linejoin="round"/>
+                <circle cx="12" cy="11" r="2.5"/>
+              </svg>
+            </div>
+            <h3>Your places, your order</h3>
+            <p>Favourites from a bundled list of every provincial capital, or the nearest city to your current GPS location. Reorder, delete, pick the active one. The favourites list is mirrored to the widgets, so their picker lists exactly the places you saved.</p>
+          </div>
+
+          <div class="hood-card">
+            <div class="cap-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <rect x="5" y="11" width="14" height="10" rx="2" stroke-linecap="round"/>
+                <path d="M8 11V7a4 4 0 018 0v4" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>Private by design</h3>
+            <p>Your AEMET key lives in the device Keychain — never in the binary, the repo, or a server. There is no backend: the app caches each location's snapshot to an App Group that the widgets and Watch read. Nothing leaves your devices. Adaptive dark and light.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Footer ─────────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <img src="assets/icon.png" class="footer-icon" alt="Aura" />
+      <p class="footer-name">Aura</p>
+      <p class="footer-tag">A personal, private weather app for Spain — on every Apple surface.</p>
+
+      <div class="footer-cta">
+        <a href="https://github.com/mabaeyens/aura-apps" target="_blank" rel="noopener" class="btn btn-primary">
+          <svg><use href="#ico-github"/></svg>View source
+        </a>
+        <a href="https://opendata.aemet.es/centrodedescargas/altaUsuario" target="_blank" rel="noopener" class="btn btn-ghost">
+          <svg><use href="#ico-key"/></svg>Get an AEMET key
+        </a>
+      </div>
+
+      <div class="footer-credit">
+        <span>Weather data: Elaborado con datos de AEMET · Built by Miguel A. Baeyens, with Claude Code · <a href="/aura" class="strong">askmira.es/aura</a></span>
+        <a href="https://linkedin.com/in/mabaeyens" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-linkedin"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Keep the browser-tab favicon on the theme-matched app icon.
+    // (On-page icons are swapped in CSS via `content`; the favicon can't be.)
+    function syncFavicon(theme) {
+      var href = theme === 'dark' ? 'assets/icon-dark.png' : 'assets/icon.png';
+      document.querySelectorAll('link[rel="icon"], link[rel="apple-touch-icon"]')
+        .forEach(function (l) { l.href = href; });
+    }
+    syncFavicon(document.documentElement.getAttribute('data-theme'));
+
+    // Theme toggle — shares the 'mira-theme' key across the askmira.es ecosystem
+    document.getElementById('theme-toggle').addEventListener('click', function () {
+      var html = document.documentElement;
+      var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('mira-theme', next);
+      syncFavicon(next);
+    });
+
+    // Reveal-on-scroll (same pattern as the main page)
+    (function () {
+      var els = document.querySelectorAll('[data-reveal]');
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(function (e) { e.classList.add('in'); });
+        return;
+      }
+      var ro = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            ro.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      els.forEach(function (e) { ro.observe(e); });
+    })();
+  </script>
+
+</body>
+</html>
