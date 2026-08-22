@@ -78,7 +78,7 @@
   flex: 0 0 auto;
   scroll-snap-align: center;
 }
-.hero-shots .shot-phone img { width: clamp(178px, 42vw, 236px); }
+.hero-shots .shot-phone img { width: clamp(178px, 42vw, 236px); height: auto; }
 
 .shots-hint {
   text-align: center;
