@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aura — a personal, private weather app for Spain</title>
-  <meta name="description" content="Aura is a personal weather app for iPhone, iPad, Mac, and Apple Watch, powered by AEMET OpenData and your own free API key. Widgets, Lock Screen, and Watch complications the official app never shipped. No backend — the device is the hub." />
+  <meta name="description" content="Aura is a personal weather app for iPhone, iPad, and Apple Watch, powered by AEMET OpenData and your own free API key. A living sun-tracking sky, Home & Lock Screen widgets, Watch complications, air quality, UV, radar and avisos the official app never shipped. No backend — the device is the hub." />
   <meta property="og:title" content="Aura — a personal, private weather app for Spain" />
   <meta property="og:description" content="AEMET's data, on every Apple surface. Home-screen and Lock Screen widgets, Apple Watch complications, real observed temperatures, and CAP warnings — all from your own OpenData key. No backend." />
   <meta property="og:type" content="website" />
@@ -87,7 +87,7 @@
     <section class="hero">
       <div class="wrap">
         <p class="eyebrow hero-eyebrow">
-          A personal weather app&nbsp;· iPhone&nbsp;· iPad&nbsp;· Mac&nbsp;· Apple&nbsp;Watch
+          A personal weather app&nbsp;· iPhone&nbsp;· iPad&nbsp;· Apple&nbsp;Watch
         </p>
 
         <h1 class="hero-title">Spain's weather, <em>on every Apple surface.</em></h1>
@@ -109,31 +109,27 @@
           </a>
         </div>
 
-        <p class="hero-sub hero-note">Free &amp; open source (MIT) · iPhone, widgets &amp; Watch working today · Mac in the works · Elaborado con datos de AEMET</p>
+        <p class="hero-sub hero-note">Free &amp; open source (MIT) · iPhone, iPad, widgets &amp; Apple&nbsp;Watch · Elaborado con datos de AEMET</p>
 
-        <!-- ── Screenshot placeholders (real shots land later) ──── -->
-        <div class="shot-grid" data-reveal>
-          <div class="shot">
-            <img src="assets/icon.png" class="shot-ico" alt="" aria-hidden="true" />
-            <span class="shot-label">iPhone — Hoy</span>
-            <span class="shot-note">Screenshot soon</span>
-          </div>
-          <div class="shot">
-            <img src="assets/icon.png" class="shot-ico" alt="" aria-hidden="true" />
-            <span class="shot-label">Widgets</span>
-            <span class="shot-note">Screenshot soon</span>
-          </div>
-          <div class="shot shot-watch">
-            <img src="assets/icon.png" class="shot-ico" alt="" aria-hidden="true" />
-            <span class="shot-label">Apple Watch</span>
-            <span class="shot-note">Screenshot soon</span>
-          </div>
-          <div class="shot">
-            <img src="assets/icon.png" class="shot-ico" alt="" aria-hidden="true" />
-            <span class="shot-label">Lock Screen</span>
-            <span class="shot-note">Screenshot soon</span>
-          </div>
+        <!-- ── Hero teaser: the living sky, three conditions ─────── -->
+        <div class="hero-shots" data-reveal>
+          <figure class="shot-phone">
+            <img src="assets/shots/iphone/01_hero_clear.webp" width="620" height="1347"
+                 loading="eager" decoding="async"
+                 alt="Aura's Hoy screen on iPhone: 26° in A Coruña at midday, with a natural-language Spanish summary over a clear sun-tracking sky." />
+          </figure>
+          <figure class="shot-phone">
+            <img src="assets/shots/iphone/02_hero_storm.webp" width="620" height="1347"
+                 loading="lazy" decoding="async"
+                 alt="Aura's Hoy screen on iPhone during a storm: the sky darkens and the summary changes with the weather." />
+          </figure>
+          <figure class="shot-phone">
+            <img src="assets/shots/iphone/03_hero_night.webp" width="620" height="1347"
+                 loading="lazy" decoding="async"
+                 alt="Aura's Hoy screen on iPhone at night: the sky turns dark and the sun disc becomes the moon." />
+          </figure>
         </div>
+        <p class="shots-hint">The same screen, dawn to storm to night — the sky follows the real sun.</p>
       </div>
     </section>
 
@@ -154,8 +150,8 @@
                 <circle cx="12" cy="12" r="4"/>
               </svg>
             </div>
-            <h3>Two views, straight from AEMET</h3>
-            <p><strong>Hoy</strong> is the numeric daily forecast — min/max temperature, humidity, on-device sunrise and sunset — for your municipality. <strong>Predicción</strong> is the official, human-written narrative bulletin AEMET issues for your autonomous community, resolved to the one that covers today.</p>
+            <h3>An editorial Hoy screen</h3>
+            <p><strong>Hoy</strong> opens on a hero written on-device in plain Spanish, then a full card stack: current conditions, the hourly strip, a seven-day outlook, a sunrise→sunset arc, wind, <strong>air quality</strong> (MITECO ICA), the <strong>UV index</strong>, the nearest radar, and the official AEMET bulletin — all over a live sun-tracking sky. <strong>Predicción</strong> keeps AEMET's human-written narrative for your community, resolved to the one that covers today.</p>
           </div>
 
           <div class="hood-card">
@@ -168,7 +164,7 @@
               </svg>
             </div>
             <h3>Widgets &amp; Lock Screen</h3>
-            <p>Home-screen (small / medium / large) and Lock Screen (circular / rectangular / inline) families, each <strong>configurable to a specific saved location</strong> via App Intents. Every card renders from the same shared code as the app, so nothing drifts.</p>
+            <p>Home Screen (small / medium / large, plus the iPad extra-large) over the same living sky, and Lock Screen (circular / rectangular / inline) families — each <strong>configurable to a specific saved location</strong> via App Intents. Every card renders from the same shared code as the app, so nothing drifts.</p>
           </div>
 
           <div class="hood-card">
@@ -216,6 +212,87 @@
           </div>
 
         </div>
+      </div>
+    </section>
+
+    <!-- ── Gallery ──────────────────────────────────────────────── -->
+    <section class="section gallery">
+      <div class="wrap">
+        <div class="sec-head" data-reveal>
+          <p class="eyebrow">See it</p>
+          <h2 class="sec-title">Every surface, the same living sky.</h2>
+          <p class="sec-sub">Real screenshots — iPhone, iPad, Apple&nbsp;Watch, and the widgets. Swipe each row.</p>
+        </div>
+
+        <!-- iPhone -->
+        <div class="gallery-group" data-reveal>
+          <h3 class="group-label">iPhone</h3>
+          <div class="rail rail-phone">
+            <figure class="shot-phone"><img loading="lazy" decoding="async" src="assets/shots/iphone/01_hero_clear.webp" alt="iPhone — Hoy on a clear day" /><figcaption>Hoy · despejado</figcaption></figure>
+            <figure class="shot-phone"><img loading="lazy" decoding="async" src="assets/shots/iphone/02_hero_storm.webp" alt="iPhone — Hoy during a storm" /><figcaption>Hoy · tormenta</figcaption></figure>
+            <figure class="shot-phone"><img loading="lazy" decoding="async" src="assets/shots/iphone/03_hero_night.webp" alt="iPhone — Hoy at night" /><figcaption>Hoy · de noche</figcaption></figure>
+            <figure class="shot-phone"><img loading="lazy" decoding="async" src="assets/shots/iphone/04_prediccion.webp" alt="iPhone — hourly strip and seven-day outlook" /><figcaption>Horas y días</figcaption></figure>
+            <figure class="shot-phone"><img loading="lazy" decoding="async" src="assets/shots/iphone/05_aviso.webp" alt="iPhone — an active AEMET aviso" /><figcaption>Aviso activo</figcaption></figure>
+            <figure class="shot-phone"><img loading="lazy" decoding="async" src="assets/shots/iphone/06_sol_luna.webp" alt="iPhone — the sunrise to sunset arc" /><figcaption>Sol y luna</figcaption></figure>
+            <figure class="shot-phone"><img loading="lazy" decoding="async" src="assets/shots/iphone/07_aire_expanded.webp" alt="iPhone — air quality by pollutant" /><figcaption>Calidad del aire</figcaption></figure>
+            <figure class="shot-phone"><img loading="lazy" decoding="async" src="assets/shots/iphone/08_widgets.webp" alt="iPhone Home Screen with Aura widgets" /><figcaption>Widgets en casa</figcaption></figure>
+          </div>
+        </div>
+
+        <!-- iPad -->
+        <div class="gallery-group" data-reveal>
+          <h3 class="group-label">iPad <span class="group-note">· also runs on Apple&nbsp;Silicon Macs as “Designed for iPad”</span></h3>
+          <div class="rail rail-pad">
+            <figure class="shot-pad"><img loading="lazy" decoding="async" src="assets/shots/ipad/01_hero_clear.webp" alt="iPad — Hoy on a clear day" /><figcaption>Hoy · despejado</figcaption></figure>
+            <figure class="shot-pad"><img loading="lazy" decoding="async" src="assets/shots/ipad/02_hero_dusk.webp" alt="iPad — Hoy at dusk" /><figcaption>Hoy · atardecer</figcaption></figure>
+            <figure class="shot-pad"><img loading="lazy" decoding="async" src="assets/shots/ipad/03_hero_night.webp" alt="iPad — Hoy at night" /><figcaption>Hoy · de noche</figcaption></figure>
+            <figure class="shot-pad"><img loading="lazy" decoding="async" src="assets/shots/ipad/04_prediccion.webp" alt="iPad — the forecast detail" /><figcaption>Predicción</figcaption></figure>
+            <figure class="shot-pad"><img loading="lazy" decoding="async" src="assets/shots/ipad/05_aviso.webp" alt="iPad — an active aviso" /><figcaption>Aviso activo</figcaption></figure>
+            <figure class="shot-pad"><img loading="lazy" decoding="async" src="assets/shots/ipad/06_sol_luna.webp" alt="iPad — the sun and moon arc" /><figcaption>Sol y luna</figcaption></figure>
+            <figure class="shot-pad"><img loading="lazy" decoding="async" src="assets/shots/ipad/07_widgets.webp" alt="iPad Home Screen with Aura widgets" /><figcaption>Widgets en casa</figcaption></figure>
+          </div>
+        </div>
+
+        <!-- Apple Watch -->
+        <div class="gallery-group" data-reveal>
+          <h3 class="group-label">Apple Watch <span class="group-note">· the app, and complications on two faces</span></h3>
+          <div class="rail rail-watch">
+            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/watch/app_noon_clear.webp" alt="Apple Watch app — clear midday" /><figcaption>App · mediodía</figcaption></figure>
+            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/watch/app_dawn_rain.webp" alt="Apple Watch app — rain at dawn" /><figcaption>App · amanecer</figcaption></figure>
+            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/watch/app_dusk_storm.webp" alt="Apple Watch app — storm at dusk" /><figcaption>App · tormenta</figcaption></figure>
+            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/watch/app_night_snow.webp" alt="Apple Watch app — snow at night" /><figcaption>App · nieve</figcaption></figure>
+            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/faces/face_wf1_hot_clear.webp" alt="Watch face with Aura complications — hot and clear" /><figcaption>Cara 1 · calor</figcaption></figure>
+            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/faces/face_wf1_mild_cloud.webp" alt="Watch face with Aura complications — mild and cloudy" /><figcaption>Cara 1 · nubes</figcaption></figure>
+            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/faces/face_wf1_cold_rain.webp" alt="Watch face with Aura complications — cold and rainy" /><figcaption>Cara 1 · lluvia</figcaption></figure>
+            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/faces/face_wf1_snow_night.webp" alt="Watch face with Aura complications — snow at night" /><figcaption>Cara 1 · nieve</figcaption></figure>
+            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/faces/face_wf1_storm_aviso.webp" alt="Watch face with Aura complications — storm and aviso" /><figcaption>Cara 1 · aviso</figcaption></figure>
+            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/faces/face_wf2_hot_clear.webp" alt="Second watch face — hot and clear" /><figcaption>Cara 2 · calor</figcaption></figure>
+            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/faces/face_wf2_mild_cloud.webp" alt="Second watch face — mild and cloudy" /><figcaption>Cara 2 · nubes</figcaption></figure>
+            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/faces/face_wf2_cold_rain.webp" alt="Second watch face — cold and rainy" /><figcaption>Cara 2 · lluvia</figcaption></figure>
+            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/faces/face_wf2_snow_night.webp" alt="Second watch face — snow at night" /><figcaption>Cara 2 · nieve</figcaption></figure>
+            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/faces/face_wf2_storm_aviso.webp" alt="Second watch face — storm and aviso" /><figcaption>Cara 2 · aviso</figcaption></figure>
+          </div>
+        </div>
+
+        <!-- Widgets -->
+        <div class="gallery-group" data-reveal>
+          <h3 class="group-label">Widgets <span class="group-note">· Home &amp; Lock Screen families</span></h3>
+          <div class="widget-grid">
+            <figure class="shot-widget"><img loading="lazy" decoding="async" src="assets/shots/widgets/rectangular-colour.webp" alt="Rectangular Home Screen widget" /><figcaption>Rectangular</figcaption></figure>
+            <figure class="shot-widget"><img loading="lazy" decoding="async" src="assets/shots/widgets/rectangular-lockscreen.webp" alt="Rectangular Lock Screen widget" /><figcaption>Rectangular · Lock Screen</figcaption></figure>
+            <figure class="shot-widget"><img loading="lazy" decoding="async" src="assets/shots/widgets/humidity-colour.webp" alt="Humidity widget" /><figcaption>Humedad</figcaption></figure>
+            <figure class="shot-widget"><img loading="lazy" decoding="async" src="assets/shots/widgets/humidity-lockscreen.webp" alt="Humidity Lock Screen widget" /><figcaption>Humedad · Lock Screen</figcaption></figure>
+            <figure class="shot-widget"><img loading="lazy" decoding="async" src="assets/shots/widgets/summary-inline-colour.webp" alt="Inline summary widget" /><figcaption>En línea</figcaption></figure>
+            <figure class="shot-widget"><img loading="lazy" decoding="async" src="assets/shots/widgets/summary-inline-lockscreen.webp" alt="Inline summary Lock Screen widget" /><figcaption>En línea · Lock Screen</figcaption></figure>
+            <figure class="shot-widget"><img loading="lazy" decoding="async" src="assets/shots/widgets/aviso-circular-colour.webp" alt="Circular aviso widget" /><figcaption>Aviso · circular</figcaption></figure>
+            <figure class="shot-widget"><img loading="lazy" decoding="async" src="assets/shots/widgets/aviso-circular-lockscreen.webp" alt="Circular aviso Lock Screen widget" /><figcaption>Aviso · circular · Lock Screen</figcaption></figure>
+            <figure class="shot-widget"><img loading="lazy" decoding="async" src="assets/shots/widgets/aviso-inline-colour.webp" alt="Inline aviso widget" /><figcaption>Aviso · en línea</figcaption></figure>
+            <figure class="shot-widget"><img loading="lazy" decoding="async" src="assets/shots/widgets/aviso-inline-lockscreen.webp" alt="Inline aviso Lock Screen widget" /><figcaption>Aviso · en línea · Lock Screen</figcaption></figure>
+            <figure class="shot-widget"><img loading="lazy" decoding="async" src="assets/shots/widgets/rectangular-ipad-colour.webp" alt="Rectangular iPad widget" /><figcaption>Rectangular · iPad</figcaption></figure>
+            <figure class="shot-widget"><img loading="lazy" decoding="async" src="assets/shots/widgets/rectangular-ipad-lockscreen.webp" alt="Rectangular iPad Lock Screen widget" /><figcaption>Rectangular · iPad · Lock Screen</figcaption></figure>
+          </div>
+        </div>
+
       </div>
     </section>
 
