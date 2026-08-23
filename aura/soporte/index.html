@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="dark" data-lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Support · Aura</title>
-  <meta name="description" content="Help and support for Aura, the personal weather app for Spain. Contact by email at dears-respect.8u@icloud.com, report an issue on GitHub, or read the FAQ." />
+  <meta name="description" content="Help and support for Aura, the personal weather app for Spain. Contact by email at dears-respect.8u@icloud.com, report an issue on GitHub, or read the FAQ. Available in English and Spanish." />
   <meta property="og:title" content="Support · Aura" />
   <meta property="og:description" content="Help and support for Aura, the personal weather app for Spain. Email, issue reporting, and a short FAQ." />
   <meta property="og:type" content="website" />
@@ -17,11 +17,17 @@
   <link rel="icon" href="../assets/icon.png" type="image/png" />
   <link rel="apple-touch-icon" href="../assets/icon.png" />
 
-  <!-- Anti-flash: restore saved theme before first paint (shared key with askmira.es) -->
+  <!-- Anti-flash: restore saved theme and language before first paint (shared keys with askmira.es). -->
   <script>
     (function(){
       var t = localStorage.getItem('mira-theme');
       if (t) document.documentElement.setAttribute('data-theme', t);
+      var l = localStorage.getItem('aura-lang');
+      if (l !== 'en' && l !== 'es') {
+        l = (navigator.language || 'en').toLowerCase().indexOf('es') === 0 ? 'es' : 'en';
+      }
+      document.documentElement.setAttribute('data-lang', l);
+      document.documentElement.lang = l;
     })();
   </script>
 
@@ -30,6 +36,10 @@
   <link rel="stylesheet" href="../style.css" />
 
   <style>
+    /* Bilingual: show only the active language. */
+    [data-lang="en"] .lang-es { display: none !important; }
+    [data-lang="es"] .lang-en { display: none !important; }
+
     /* Support-page specifics, on top of the shared design tokens. */
     .support-lead { max-width: 44rem; color: var(--muted); line-height: 1.75; margin: 0 0 2.5rem; }
     .support-grid { display: grid; gap: 1.25rem; grid-template-columns: 1fr; max-width: 44rem; }
@@ -81,6 +91,11 @@
       <rect x="3" y="5" width="18" height="14" rx="2"/>
       <path d="M3 7l9 6 9-6"/>
     </symbol>
+    <symbol id="ico-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="9"/>
+      <path d="M3 12h18"/>
+      <path d="M12 3c2.5 2.5 3.8 5.7 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.7-3.8-9S9.5 5.5 12 3z"/>
+    </symbol>
   </svg>
 
   <!-- ── Header ─────────────────────────────────────────────────── -->
@@ -95,6 +110,9 @@
         <a href="/aura" class="btn btn-ghost btn-sm" aria-label="Back to Aura">
           <span aria-hidden="true">←</span><span class="btn-label">Aura</span>
         </a>
+        <button id="lang-toggle" class="btn btn-ghost btn-sm" aria-label="Cambiar idioma / Change language">
+          <svg><use href="#ico-globe"/></svg><span class="btn-label">Español</span>
+        </button>
         <a href="https://github.com/mabaeyens/aura-apps" target="_blank" rel="noopener"
            class="icon-btn" aria-label="GitHub">
           <svg><use href="#ico-github"/></svg>
@@ -121,31 +139,40 @@
     <section class="section">
       <div class="wrap">
         <div class="sec-head" data-reveal>
-          <p class="eyebrow">Aura · Support</p>
-          <h2 class="sec-title">Help and support</h2>
+          <p class="eyebrow"><span class="lang-en">Aura · Support</span><span class="lang-es">Aura · Soporte</span></p>
+          <h2 class="sec-title"><span class="lang-en">Help and support</span><span class="lang-es">Ayuda y soporte</span></h2>
         </div>
-        <p class="support-lead" data-reveal>
+
+        <p class="support-lead lang-en" data-reveal>
           Aura is a personal weather app for Spain: free, with no ads and no accounts.
           If something is not working, or you just have a question, here is how to reach me
           and the answers to the questions I get most often.
         </p>
+        <p class="support-lead lang-es" data-reveal>
+          Aura es una app del tiempo para España: gratuita, sin anuncios y sin cuentas.
+          Si algo no funciona, o simplemente tienes una duda, aquí tienes cómo contactar conmigo
+          y las respuestas a las preguntas más habituales.
+        </p>
 
         <div class="support-grid two" data-reveal>
           <div class="support-card">
-            <h2>Email me</h2>
-            <p>The most direct way. I read and answer it myself, usually within a day or two.</p>
+            <h2><span class="lang-en">Email me</span><span class="lang-es">Escríbeme</span></h2>
+            <p class="lang-en">The most direct way. I read and answer it myself, usually within a day or two.</p>
+            <p class="lang-es">La forma más directa. Lo leo y respondo yo, normalmente en uno o dos días.</p>
             <a class="support-mail" href="mailto:dears-respect.8u@icloud.com">
               <svg><use href="#ico-mail"/></svg>dears-respect.8u@icloud.com
             </a>
-            <p class="support-muted">Tell me your device and your iOS or iPadOS version, and what you expected to see. That gets it solved much faster.</p>
+            <p class="support-muted lang-en">Tell me your device and your iOS or iPadOS version, and what you expected to see. That gets it solved much faster.</p>
+            <p class="support-muted lang-es">Cuéntame tu dispositivo y tu versión de iOS o iPadOS, y qué esperabas ver. Así se resuelve mucho antes.</p>
           </div>
 
           <div class="support-card">
-            <h2>Report a bug or suggest a feature</h2>
-            <p>If you have a GitHub account, you can also open a public issue. This is optional: for help, the email above is enough.</p>
+            <h2><span class="lang-en">Report a bug or suggest a feature</span><span class="lang-es">Informar de un fallo o sugerir una mejora</span></h2>
+            <p class="lang-en">If you have a GitHub account, you can also open a public issue. This is optional: for help, the email above is enough.</p>
+            <p class="lang-es">Si tienes cuenta de GitHub, también puedes abrir una incidencia pública. Es opcional: para pedir ayuda basta con el correo de arriba.</p>
             <p>
               <a href="https://github.com/mabaeyens/aura-apps/issues" target="_blank" rel="noopener">
-                Open an issue on GitHub
+                <span class="lang-en">Open an issue on GitHub</span><span class="lang-es">Abrir una incidencia en GitHub</span>
               </a>
             </p>
           </div>
@@ -157,42 +184,50 @@
     <section class="section">
       <div class="wrap">
         <div class="sec-head" data-reveal>
-          <p class="eyebrow">Questions</p>
-          <h2 class="sec-title">Frequently asked</h2>
+          <p class="eyebrow"><span class="lang-en">Questions</span><span class="lang-es">Preguntas</span></p>
+          <h2 class="sec-title"><span class="lang-en">Frequently asked</span><span class="lang-es">Preguntas frecuentes</span></h2>
         </div>
 
         <div class="faq" data-reveal>
           <div class="faq-item">
-            <h3>Where does the data come from?</h3>
-            <p>From official sources: AEMET, Spain's national weather service, for the forecast, the warnings (avisos) and the UV index, and MITECO for air quality.</p>
+            <h3><span class="lang-en">Where does the data come from?</span><span class="lang-es">¿De dónde vienen los datos?</span></h3>
+            <p class="lang-en">From official sources: AEMET, Spain's national weather service, for the forecast, the warnings (avisos) and the UV index, and MITECO for air quality.</p>
+            <p class="lang-es">De fuentes oficiales: AEMET, la agencia estatal de meteorología, para la predicción, los avisos y el índice UV, y MITECO para la calidad del aire.</p>
           </div>
           <div class="faq-item">
-            <h3>Do I need an account or a sign-up?</h3>
-            <p>No. Aura works with no account, no sign-up and no ads. It collects no personal data.</p>
+            <h3><span class="lang-en">Do I need an account or a sign-up?</span><span class="lang-es">¿Necesito una cuenta o registrarme?</span></h3>
+            <p class="lang-en">No. Aura works with no account, no sign-up and no ads. It collects no personal data.</p>
+            <p class="lang-es">No. Aura funciona sin cuenta, sin registro y sin anuncios. No recopila datos personales.</p>
           </div>
           <div class="faq-item">
-            <h3>Do I need an AEMET key?</h3>
-            <p>No. Aura ships with its own key and works the moment you install it. If you prefer to use your own free key, you can add it in Settings.</p>
+            <h3><span class="lang-en">Do I need an AEMET key?</span><span class="lang-es">¿Necesito una clave de AEMET?</span></h3>
+            <p class="lang-en">No. Aura ships with its own key and works the moment you install it. If you prefer to use your own free key, you can add it in Settings.</p>
+            <p class="lang-es">No. Aura trae su propia clave y funciona nada más instalarla. Si prefieres usar tu propia clave gratuita, puedes añadirla en Ajustes.</p>
           </div>
           <div class="faq-item">
-            <h3>Can I use Aura without sharing my location?</h3>
-            <p>Yes. You can choose your municipality by hand. If you grant location access, the place is matched on your device and only the municipality's public code ever leaves it.</p>
+            <h3><span class="lang-en">Can I use Aura without sharing my location?</span><span class="lang-es">¿Puedo usar Aura sin compartir mi ubicación?</span></h3>
+            <p class="lang-en">Yes. You can choose your municipality by hand. If you grant location access, the place is matched on your device and only the municipality's public code ever leaves it.</p>
+            <p class="lang-es">Sí. Puedes elegir el municipio a mano. Si concedes el acceso a la ubicación, la localidad se calcula en tu dispositivo y solo sale de él el código público del municipio.</p>
           </div>
           <div class="faq-item">
-            <h3>Why does the UV index say "daily max"?</h3>
-            <p>AEMET publishes UV as a clear-sky daily maximum, not hour by hour. That is why Aura labels it as the day's maximum rather than the value right now.</p>
+            <h3><span class="lang-en">Why does the UV index say "daily max"?</span><span class="lang-es">¿Por qué el índice UV dice «máx. hoy»?</span></h3>
+            <p class="lang-en">AEMET publishes UV as a clear-sky daily maximum, not hour by hour. That is why Aura labels it as the day's maximum rather than the value right now.</p>
+            <p class="lang-es">AEMET publica el UV como máximo diario con cielo despejado, no hora a hora. Por eso Aura lo etiqueta como el máximo del día y no como el valor de ahora mismo.</p>
           </div>
           <div class="faq-item">
-            <h3>Does it work on iPad and Apple Watch?</h3>
-            <p>Yes, with widgets on the Home Screen and Lock Screen, and a complication on the Apple Watch.</p>
+            <h3><span class="lang-en">Does it work on iPad and Apple Watch?</span><span class="lang-es">¿Funciona en iPad y Apple Watch?</span></h3>
+            <p class="lang-en">Yes, with widgets on the Home Screen and Lock Screen, and a complication on the Apple Watch.</p>
+            <p class="lang-es">Sí, con widgets en la pantalla de inicio y en la de bloqueo, y una complicación en el Apple Watch.</p>
           </div>
           <div class="faq-item">
-            <h3>Do tips unlock anything?</h3>
-            <p>No. Tips are an optional way to say thank you and unlock no features. Aura is just as complete without them.</p>
+            <h3><span class="lang-en">Do tips unlock anything?</span><span class="lang-es">¿Las propinas desbloquean algo?</span></h3>
+            <p class="lang-en">No. Tips are an optional way to say thank you and unlock no features. Aura is just as complete without them.</p>
+            <p class="lang-es">No. Las propinas son una forma opcional de dar las gracias y no desbloquean ninguna función. Aura es igual de completa sin ellas.</p>
           </div>
           <div class="faq-item">
-            <h3>How is my privacy handled?</h3>
-            <p>Aura has no servers of mine and collects no personal data. You can read the full <a href="https://github.com/mabaeyens/aura-apps/blob/main/PRIVACY.md" target="_blank" rel="noopener">privacy policy</a>.</p>
+            <h3><span class="lang-en">How is my privacy handled?</span><span class="lang-es">¿Cómo se gestiona mi privacidad?</span></h3>
+            <p class="lang-en">Aura has no servers of mine and collects no personal data. You can read the full <a href="https://github.com/mabaeyens/aura-apps/blob/main/PRIVACY.md" target="_blank" rel="noopener">privacy policy</a>.</p>
+            <p class="lang-es">Aura no tiene servidores míos y no recopila datos personales. Puedes leer la <a href="https://github.com/mabaeyens/aura-apps/blob/main/PRIVACY.md" target="_blank" rel="noopener">política de privacidad</a> completa.</p>
           </div>
         </div>
       </div>
@@ -205,14 +240,15 @@
     <div class="wrap">
       <img src="../assets/icon.png" class="footer-icon" alt="Aura" />
       <p class="footer-name">Aura</p>
-      <p class="footer-tag">A personal, private weather app for Spain, on every Apple surface.</p>
+      <p class="footer-tag lang-en">A personal, private weather app for Spain, on every Apple surface.</p>
+      <p class="footer-tag lang-es">Una app del tiempo personal y privada para España, en cada dispositivo Apple.</p>
 
       <div class="footer-cta">
         <a href="mailto:dears-respect.8u@icloud.com" class="btn btn-primary">
-          <svg><use href="#ico-mail"/></svg>Email support
+          <svg><use href="#ico-mail"/></svg><span class="lang-en">Email support</span><span class="lang-es">Soporte por correo</span>
         </a>
         <a href="/aura" class="btn btn-ghost">
-          <span aria-hidden="true">←</span>Back to Aura
+          <span aria-hidden="true">←</span><span class="lang-en">Back to Aura</span><span class="lang-es">Volver a Aura</span>
         </a>
       </div>
 
@@ -241,6 +277,21 @@
       html.setAttribute('data-theme', next);
       localStorage.setItem('mira-theme', next);
       syncFavicon(next);
+    });
+
+    // Language toggle: English / Spanish, remembered under 'aura-lang'.
+    function applyLang(l) {
+      document.documentElement.setAttribute('data-lang', l);
+      document.documentElement.lang = l;
+      document.title = (l === 'es') ? 'Soporte · Aura' : 'Support · Aura';
+      var lbl = document.querySelector('#lang-toggle .btn-label');
+      if (lbl) lbl.textContent = (l === 'es') ? 'English' : 'Español';
+    }
+    applyLang(document.documentElement.getAttribute('data-lang') || 'en');
+    document.getElementById('lang-toggle').addEventListener('click', function () {
+      var next = document.documentElement.getAttribute('data-lang') === 'es' ? 'en' : 'es';
+      localStorage.setItem('aura-lang', next);
+      applyLang(next);
     });
 
     // Reveal-on-scroll (same pattern as the main page)
