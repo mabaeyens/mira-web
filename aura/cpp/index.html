@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aura — Custom Product Page (mockup)</title>
+  <meta name="description" content="Working mockup of Aura's App Store Connect custom product pages — the living-sky marketing panels, the coloured Home Screen widgets, and the Apple Watch complications, built from real screenshots." />
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#15171A" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#F6F4EF" media="(prefers-color-scheme: light)" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
+
+  <script>
+    (function(){
+      var t = localStorage.getItem('mira-theme');
+      if (t) document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../../style.css" />
+  <link rel="stylesheet" href="../style.css" />
+
+  <style>
+    /* ══════════ CPP mockup — self-contained on top of the Aura system ══════════ */
+    .cpp-main { padding-bottom: 4rem; }
+    .cpp-intro { max-width: 720px; margin: 2.5rem auto 0; text-align: center; }
+    .cpp-intro h1 { font-size: clamp(1.7rem, 4.5vw, 2.6rem); line-height: 1.1; margin: 0.6rem 0 0; letter-spacing: -0.02em; }
+    .cpp-intro h1 em { color: var(--accent); font-style: normal; }
+    .cpp-intro .dek { color: var(--muted); font-size: 0.95rem; line-height: 1.6; margin: 1rem auto 0; max-width: 620px; }
+    .cpp-note {
+      display: inline-block; margin-top: 1.2rem; padding: 0.4rem 0.85rem;
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; letter-spacing: 0.02em;
+      color: var(--accent); background: var(--a15); border: 1px solid var(--a30); border-radius: 999px;
+    }
+
+    .sec-block { margin-top: 4.5rem; }
+    .sec-block > .wrap > .block-head { max-width: 680px; }
+    .block-head .eyebrow { color: var(--accent); }
+    .block-head h2 { font-size: clamp(1.4rem, 3.2vw, 2rem); line-height: 1.15; margin: 0.4rem 0 0; letter-spacing: -0.01em; }
+    .block-head p { color: var(--muted); font-size: 0.92rem; line-height: 1.6; margin: 0.7rem 0 0; }
+
+    /* ── iPhone frame holding the App Store product page ─────────── */
+    .device-stage { display: flex; justify-content: center; margin-top: 2.5rem; }
+    .phone {
+      position: relative; width: min(372px, 92vw); aspect-ratio: 372 / 806;
+      background: #0b0c0e; border-radius: 54px; padding: 12px;
+      box-shadow: var(--shadow-lg), 0 0 0 2px rgba(255,255,255,.05);
+    }
+    .phone .island {
+      position: absolute; top: 22px; left: 50%; transform: translateX(-50%);
+      width: 108px; height: 30px; background: #000; border-radius: 16px; z-index: 6;
+    }
+    .pscreen {
+      position: relative; height: 100%; border-radius: 43px; overflow: hidden;
+      background: #f4f4f6; color: #16181c; display: flex; flex-direction: column;
+    }
+    .statusbar {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 14px 30px 6px; font-size: 12px; font-weight: 700; color: #16181c; flex: 0 0 auto;
+    }
+    .statusbar .glyphs { font-size: 11px; letter-spacing: 1px; }
+    .as-scroll { flex: 1 1 auto; overflow-y: auto; padding: 6px 16px 22px; scrollbar-width: none; }
+    .as-scroll::-webkit-scrollbar { display: none; }
+
+    .app-head { display: flex; gap: 13px; align-items: center; padding: 8px 2px 2px; }
+    .app-icon {
+      width: 66px; height: 66px; border-radius: 15px; flex: 0 0 auto;
+      background-image: url("../assets/icon.png"); background-size: cover;
+      box-shadow: 0 2px 8px rgba(0,0,0,.18);
+    }
+    .app-id { min-width: 0; flex: 1 1 auto; }
+    .app-name { font-size: 19px; font-weight: 700; line-height: 1.1; }
+    .app-sub { font-size: 12px; color: #6b7078; margin-top: 2px; }
+    .app-actions { display: flex; align-items: center; gap: 9px; margin-top: 8px; }
+    .get {
+      border: none; background: #2a7de1; color: #fff; font-weight: 700; font-size: 12px;
+      padding: 5px 18px; border-radius: 999px; letter-spacing: 0.04em; cursor: default;
+    }
+    .get-note { font-size: 10px; color: #8b9098; }
+
+    .meta {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin: 16px 2px;
+      padding: 12px 4px; border-top: 1px solid #e4e4e8; border-bottom: 1px solid #e4e4e8;
+    }
+    .meta div { text-align: center; }
+    .meta .k { font-size: 8.5px; color: #9096a0; text-transform: uppercase; letter-spacing: 0.06em; }
+    .meta .v { font-size: 14px; font-weight: 700; color: #3a3f47; margin-top: 3px; }
+
+    .as-sec { display: flex; align-items: baseline; justify-content: space-between; margin: 4px 2px 10px; }
+    .as-sec h4 { font-size: 15px; font-weight: 700; margin: 0; }
+    .cust-tag {
+      font-size: 9px; font-weight: 700; color: #2a7de1; background: rgba(42,125,225,.12);
+      border-radius: 999px; padding: 3px 8px; letter-spacing: 0.02em;
+    }
+
+    /* ── The preview rail: the CPP marketing screenshots ─────────── */
+    .prail { display: flex; gap: 10px; overflow-x: auto; padding: 2px 2px 10px; scroll-snap-type: x mandatory; scrollbar-width: none; }
+    .prail::-webkit-scrollbar { display: none; }
+    .panel {
+      position: relative; flex: 0 0 auto; width: 156px; aspect-ratio: 9 / 19.5;
+      border-radius: 20px; overflow: hidden; scroll-snap-align: start;
+      box-shadow: inset 0 0 0 .5px rgba(0,0,0,.12); color: #fff; margin: 0;
+    }
+    .p-copy { position: relative; z-index: 2; padding: 15px 14px 0; }
+    .p-copy h3 { font-size: 15px; line-height: 1.12; margin: 0; font-weight: 800; text-shadow: 0 1px 8px rgba(0,0,0,.28); }
+    .p-copy h3 span { color: #ffd98a; }
+    .p-copy p { font-size: 9.5px; line-height: 1.3; margin: 5px 0 0; opacity: .92; text-shadow: 0 1px 6px rgba(0,0,0,.3); }
+    .p-foot {
+      position: absolute; z-index: 2; bottom: 9px; left: 0; right: 0; text-align: center;
+      font-size: 7.5px; letter-spacing: 0.02em; opacity: .9; text-shadow: 0 1px 5px rgba(0,0,0,.4);
+    }
+    /* phone screenshot bleeding off the bottom, CARROT-style */
+    .p-shot {
+      position: absolute; z-index: 1; left: 50%; bottom: -8%; transform: translateX(-50%);
+      width: 76%; border-radius: 16px 16px 0 0;
+      box-shadow: 0 -6px 22px rgba(0,0,0,.28), 0 0 0 3px rgba(20,22,26,.85);
+    }
+    .panel.p-watch .p-shot {
+      width: 52%; bottom: 12%; border-radius: 22px;
+      box-shadow: 0 8px 22px rgba(0,0,0,.4), 0 0 0 3px rgba(20,22,26,.9);
+    }
+
+    .sky-clear  { background: linear-gradient(180deg, #1E6FD0 0%, #5AA0E6 52%, #EAF2F6 100%); }
+    .sky-golden { background: linear-gradient(180deg, #2A3A6B 0%, #E8A15C 60%, #FBE3B0 100%); }
+    .sky-storm  { background: linear-gradient(180deg, #2C3A42 0%, #3C4C55 52%, #C9A15A 100%); }
+    .sky-dawn   { background: linear-gradient(180deg, #23305C 0%, #C98BA0 54%, #F6D9BE 100%); }
+    .sky-night  { background: linear-gradient(180deg, #0B1026 0%, #16204A 52%, #6A5A7E 100%); }
+
+    .promo { font-size: 11.5px; line-height: 1.45; color: #2f343c; margin: 12px 2px 0; }
+    .as-desc { font-size: 11.5px; line-height: 1.5; color: #6b7078; margin: 8px 2px 0; }
+    .as-desc .more { color: #2a7de1; font-weight: 600; }
+
+    /* ── Showcase boards (widgets + complications) ───────────────── */
+    .wgrid { display: flex; flex-wrap: wrap; gap: 1.5rem 1.4rem; align-items: flex-end; justify-content: center; margin-top: 2.5rem; }
+    .wgrid figure { margin: 0; display: flex; flex-direction: column; align-items: center; }
+    .wgrid img {
+      height: 208px; width: auto; border-radius: 20px; display: block;
+      border: 1px solid rgba(255,255,255,.06); box-shadow: var(--shadow-md);
+    }
+    .board-cap { margin-top: 0.7rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.66rem; letter-spacing: 0.02em; color: var(--dim); }
+
+    .cgrid { display: flex; flex-wrap: wrap; gap: 1.4rem 1.3rem; align-items: center; justify-content: center; margin-top: 2.5rem; }
+    .cgrid figure { margin: 0; display: flex; flex-direction: column; align-items: center; }
+    .cgrid img {
+      height: 92px; width: auto; border-radius: 16px; display: block;
+      box-shadow: 0 8px 22px -8px rgba(0,0,0,.55);
+    }
+    .cgrid figcaption { margin-top: 0.55rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.02em; color: var(--dim); }
+
+    @media (max-width: 640px) {
+      .wgrid img { height: 148px; }
+      .cgrid img { height: 66px; }
+      .wgrid, .cgrid { gap: 1.1rem 1rem; }
+    }
+
+    /* ── How-it's-built strip ────────────────────────────────────── */
+    .build { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1rem; margin-top: 2.5rem; }
+    .build .card { background: var(--surface); border: 1px solid var(--b20); border-radius: 16px; padding: 18px 20px; }
+    .build .badge {
+      display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; font-weight: 700;
+      padding: 3px 8px; border-radius: 999px; letter-spacing: 0.04em; margin-bottom: 10px;
+    }
+    .badge.art { color: #c98be0; background: rgba(201,139,224,.14); }
+    .badge.app { color: var(--accent); background: var(--a15); }
+    .badge.code { color: #6bb2e0; background: rgba(107,178,224,.14); }
+    .build .card h3 { font-size: 0.92rem; margin: 0 0 6px; }
+    .build .card p { font-size: 0.8rem; line-height: 1.55; color: var(--muted); margin: 0; }
+  </style>
+</head>
+
+<body>
+
+  <!-- shared icons -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="ico-github" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></symbol>
+  </svg>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a href="/aura" class="brand"><img src="../assets/icon.png" alt="Aura" /><span>Aura</span></a>
+      <div class="header-actions">
+        <a href="/aura" class="btn btn-ghost btn-sm"><span aria-hidden="true">←</span><span class="btn-label">Aura</span></a>
+        <button id="theme-toggle" class="icon-btn" aria-label="Toggle theme">
+          <svg class="icon-sun" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg class="icon-moon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="cpp-main">
+
+    <!-- ── Intro ─────────────────────────────────────────────────── -->
+    <section class="section">
+      <div class="wrap">
+        <div class="cpp-intro">
+          <p class="eyebrow">App Store Connect · Custom Product Page</p>
+          <h1>Aura's store pitch, <em>angle by angle</em>.</h1>
+          <p class="dek">A custom product page keeps the same app, price and icon, and swaps only the screenshots and the promotional line for a specific audience. Below: the marketing panels as they'd sit in the App Store, then the coloured Home&nbsp;Screen widgets and the Apple&nbsp;Watch complications the widgets/watch angles draw on — every shot real, no art generated yet.</p>
+          <span class="cpp-note">Internal mockup · not linked from the site · screenshots from ../aura-apps/screenshots</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── The App Store product-page mock ───────────────────────── -->
+    <section class="sec-block">
+      <div class="wrap">
+        <div class="block-head" style="text-align:center;margin:0 auto;">
+          <p class="eyebrow" style="justify-content:center;">The page</p>
+          <h2>The “Widgets” angle, in the store</h2>
+          <p style="margin-left:auto;margin-right:auto;">The preview leads with the feature, not the hero sky. Each panel is a generated living-sky background (CSS stand-ins here) with a real screenshot composited in and a headline burned on by the compositor.</p>
+        </div>
+
+        <div class="device-stage">
+          <div class="phone">
+            <div class="island"></div>
+            <div class="pscreen">
+              <div class="statusbar"><span>9:41</span><span class="glyphs">5G ▮▮▮ 100%</span></div>
+              <div class="as-scroll">
+                <div class="app-head">
+                  <div class="app-icon"></div>
+                  <div class="app-id">
+                    <div class="app-name">Aura</div>
+                    <div class="app-sub">El tiempo oficial de España</div>
+                    <div class="app-actions"><button class="get">OBTENER</button><span class="get-note">Gratis · Sin compras</span></div>
+                  </div>
+                </div>
+
+                <div class="meta">
+                  <div><div class="k">Valoración</div><div class="v">4,8★</div></div>
+                  <div><div class="k">Edad</div><div class="v">4+</div></div>
+                  <div><div class="k">Ranking</div><div class="v" style="font-size:11px">#12 Tiempo</div></div>
+                  <div><div class="k">Autor</div><div class="v" style="font-size:11px">Baeyens</div></div>
+                </div>
+
+                <div class="as-sec"><h4>Vista previa</h4><span class="cust-tag">Custom · esta página</span></div>
+
+                <div class="prail">
+                  <figure class="panel sky-golden">
+                    <div class="p-copy"><h3>Widgets a todo <span>color</span></h3><p>Inicio y bloqueo, todos los tamaños</p></div>
+                    <img class="p-shot" src="assets/shots/08_widgets.webp" alt="Home Screen with Aura widgets" />
+                    <div class="p-foot">Configurables por lugar guardado</div>
+                  </figure>
+                  <figure class="panel sky-clear">
+                    <div class="p-copy"><h3>Un cielo que sigue al <span>sol</span></h3><p>Del amanecer a la noche, en directo</p></div>
+                    <img class="p-shot" src="assets/shots/01_hero_clear.webp" alt="Aura Hoy screen, clear day" />
+                    <div class="p-foot">Elaborado con datos de AEMET</div>
+                  </figure>
+                  <figure class="panel sky-storm">
+                    <div class="p-copy"><h3>Avisos oficiales</h3><p>Alertas CAP de AEMET, por provincia</p></div>
+                    <img class="p-shot" src="assets/shots/05_aviso.webp" alt="Aura active aviso screen" />
+                    <div class="p-foot">Procesados en el dispositivo</div>
+                  </figure>
+                  <figure class="panel p-watch sky-dawn">
+                    <div class="p-copy"><h3>En tu <span>muñeca</span></h3><p>App y complicaciones de Apple Watch</p></div>
+                    <img class="p-shot" src="../assets/shots/watch/app_dusk_storm.webp" alt="Aura on Apple Watch" />
+                    <div class="p-foot">Sincroniza desde el iPhone</div>
+                  </figure>
+                  <figure class="panel sky-night">
+                    <div class="p-copy"><h3>La temperatura real</h3><p>De la estación de AEMET más cercana</p></div>
+                    <img class="p-shot" src="assets/shots/06_sol_luna.webp" alt="Aura sun and moon arc" />
+                    <div class="p-foot">Sin servidores · tu clave, en el dispositivo</div>
+                  </figure>
+                </div>
+
+                <div class="as-sec" style="margin-top:16px;"><h4>Descripción</h4><span class="cust-tag">Custom · promo</span></div>
+                <p class="promo">Widgets de inicio y pantalla de bloqueo con los datos oficiales de AEMET, configurables por lugar guardado. Sin servidores, sin cuenta: tu clave vive en el dispositivo.</p>
+                <p class="as-desc">Aura lleva los datos de AEMET a cada superficie de Apple —iPhone, iPad y Apple&nbsp;Watch— sobre un cielo vivo que sigue al sol real… <span class="more">más</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Screen 1: the coloured widgets (ASC-widgets) ──────────── -->
+    <section class="sec-block">
+      <div class="wrap">
+        <div class="block-head">
+          <p class="eyebrow">Screen · ASC-widgets</p>
+          <h2>The same widget, every colour of the sky</h2>
+          <p>The Home Screen widgets render the living sky behind the data, so a single size shifts palette with the hour and the weather — clear blue, a townscape teal, rainy slate, golden dusk. This is the art the “Widgets” CPP angle leads with.</p>
+        </div>
+        <div class="wgrid">
+          <figure><img loading="lazy" src="assets/widgets/widget-iphone-m.webp" alt="Medium widget, clear day" /><figcaption class="board-cap">Mediano · despejado</figcaption></figure>
+          <figure><img loading="lazy" src="assets/widgets/widget-iphone-m-city.webp" alt="Medium widget, townscape" /><figcaption class="board-cap">Mediano · ciudad</figcaption></figure>
+          <figure><img loading="lazy" src="assets/widgets/widget-iphone-m-rain.webp" alt="Medium widget, rain" /><figcaption class="board-cap">Mediano · lluvia</figcaption></figure>
+          <figure><img loading="lazy" src="assets/widgets/widget-iphone-m-sunset.webp" alt="Medium widget, sunset" /><figcaption class="board-cap">Mediano · atardecer</figcaption></figure>
+          <figure><img loading="lazy" src="assets/widgets/widget-iphone-s-city.webp" alt="Small widget, townscape" /><figcaption class="board-cap">Pequeño · ciudad</figcaption></figure>
+          <figure><img loading="lazy" src="assets/widgets/widget-iphone-s-sunset.webp" alt="Small widget, sunset" /><figcaption class="board-cap">Pequeño · atardecer</figcaption></figure>
+          <figure><img loading="lazy" src="assets/widgets/widget-iphone-l-rain.webp" alt="Large widget, rain" /><figcaption class="board-cap">Grande · lluvia</figcaption></figure>
+          <figure><img loading="lazy" src="assets/widgets/widget-iphone-l-sunset.webp" alt="Large widget, sunset" /><figcaption class="board-cap">Grande · atardecer</figcaption></figure>
+          <figure><img loading="lazy" src="assets/widgets/widget-ipad-l-city.webp" alt="iPad large widget, townscape" /><figcaption class="board-cap">iPad · grande</figcaption></figure>
+          <figure><img loading="lazy" src="assets/widgets/widget-ipad-xl-sunset.webp" alt="iPad extra-large widget, sunset" /><figcaption class="board-cap">iPad · extragrande</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Screen 2: the complications (ASC-complications) ───────── -->
+    <section class="sec-block">
+      <div class="wrap">
+        <div class="block-head">
+          <p class="eyebrow">Screen · ASC-complications</p>
+          <h2>Complications, in full colour</h2>
+          <p>The Apple&nbsp;Watch angle draws on the complication set — corner, circular, rectangular and inline families, each themed to what it shows: UV, rain chance, wind, sun &amp; moon, the day strip, avisos. Colour renders only.</p>
+        </div>
+        <div class="cgrid">
+          <figure><img loading="lazy" src="assets/comps/rectangular-colour.webp" alt="Rectangular complication" /><figcaption>Rectangular</figcaption></figure>
+          <figure><img loading="lazy" src="assets/comps/days-colour.webp" alt="Seven-day strip complication" /><figcaption>Días</figcaption></figure>
+          <figure><img loading="lazy" src="assets/comps/hours-colour.webp" alt="Hourly strip complication" /><figcaption>Horas</figcaption></figure>
+          <figure><img loading="lazy" src="assets/comps/circular-colour.webp" alt="Circular temperature gauge" /><figcaption>Circular</figcaption></figure>
+          <figure><img loading="lazy" src="assets/comps/uv-7-colour.webp" alt="UV index gauge" /><figcaption>UV</figcaption></figure>
+          <figure><img loading="lazy" src="assets/comps/rain-70-colour.webp" alt="Rain probability gauge" /><figcaption>Lluvia</figcaption></figure>
+          <figure><img loading="lazy" src="assets/comps/wind-colour.webp" alt="Wind gauge" /><figcaption>Viento</figcaption></figure>
+          <figure><img loading="lazy" src="assets/comps/humidity-colour.webp" alt="Humidity gauge" /><figcaption>Humedad</figcaption></figure>
+          <figure><img loading="lazy" src="assets/comps/air-circular-colour.webp" alt="Air quality gauge" /><figcaption>Aire</figcaption></figure>
+          <figure><img loading="lazy" src="assets/comps/minmax-circular-colour.webp" alt="Min-max temperature gauge" /><figcaption>Mín/Máx</figcaption></figure>
+          <figure><img loading="lazy" src="assets/comps/sunmoon-circular-colour.webp" alt="Sun and moon complication" /><figcaption>Sol/Luna</figcaption></figure>
+          <figure><img loading="lazy" src="assets/comps/sun-colour.webp" alt="Sunset time complication" /><figcaption>Ocaso</figcaption></figure>
+          <figure><img loading="lazy" src="assets/comps/temp-ramp.webp" alt="Temperature ramp complication" /><figcaption>Rampa térmica</figcaption></figure>
+          <figure><img loading="lazy" src="assets/comps/summary-inline-colour.webp" alt="Inline summary complication" /><figcaption>Resumen · en línea</figcaption></figure>
+          <figure><img loading="lazy" src="assets/comps/aviso-inline-colour.webp" alt="Inline aviso complication" /><figcaption>Aviso · en línea</figcaption></figure>
+          <figure><img loading="lazy" src="assets/comps/sun-rect-colour.webp" alt="Sunrise-sunset rectangular complication" /><figcaption>Sol · rectangular</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── How each panel is built ───────────────────────────────── -->
+    <section class="sec-block">
+      <div class="wrap">
+        <div class="block-head">
+          <p class="eyebrow">The recipe</p>
+          <h2>Three layers, cleanly separated</h2>
+          <p>The sky is the art layer, the UI is always the real screenshot, and every word is set by the compositor — so accents, kerning and the exact screen come out right on every run.</p>
+        </div>
+        <div class="build">
+          <div class="card"><span class="badge art">Art</span><h3>The sky background</h3><p>The atmosphere behind each panel — one sky per time of day, reused across the set. The only layer that's painted rather than captured.</p></div>
+          <div class="card"><span class="badge app">App</span><h3>The app screenshot</h3><p>The genuine Aura capture, dropped into the device frame. The store shows the real UI — never a mock-up of it.</p></div>
+          <div class="card"><span class="badge code">Code</span><h3>Headline &amp; fine print</h3><p>Every word set by the compositor: perfect Spanish accents, exact kerning, and the same result on every run.</p></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p class="footer-tag">Aura — Custom Product Page mockup · <a href="/aura" class="strong">askmira.es/aura</a></p>
+      <div class="footer-cta">
+        <a href="/aura" class="btn btn-ghost">← Aura</a>
+        <a href="https://github.com/mabaeyens/aura-apps" target="_blank" rel="noopener" class="btn btn-ghost"><svg><use href="#ico-github"/></svg> Source</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function syncFavicon(theme) {
+      var href = theme === 'dark' ? '../assets/favicon-32-dark.png' : '../assets/favicon-32.png';
+      document.querySelectorAll('link[rel="icon"]').forEach(function (l) { l.href = href; });
+    }
+    syncFavicon(document.documentElement.getAttribute('data-theme'));
+    document.getElementById('theme-toggle').addEventListener('click', function () {
+      var html = document.documentElement;
+      var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('mira-theme', next);
+      syncFavicon(next);
+    });
+  </script>
+
+</body>
+</html>
