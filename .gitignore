@@ -11,5 +11,8 @@ node_modules/
 # Local working specs (planning notes, not part of the site)
 specs/
 
+# Internal discussion documents — not meant to be public
+notes/
+
 # Local Claude Code session settings
 .claude/
