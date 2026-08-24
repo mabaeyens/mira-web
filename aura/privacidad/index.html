@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark" data-lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacidad · Aura</title>
+  <meta name="description" content="Aura's privacy policy. Aura is a personal weather app for Spain that collects almost nothing: no account, no tracking, no analytics, no ads, and no servers of mine. Available in English and Spanish." />
+  <meta property="og:title" content="Privacy · Aura" />
+  <meta property="og:description" content="Aura collects almost nothing and none of it reaches me: no account, no tracking, no analytics, no backend. Read the full policy." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://askmira.es/aura/privacidad" />
+  <meta property="og:image" content="https://askmira.es/aura/assets/og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#15171A" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#F6F4EF" media="(prefers-color-scheme: light)" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
+
+  <!-- Anti-flash: restore saved theme and language before first paint (shared keys with askmira.es). -->
+  <script>
+    (function(){
+      var t = localStorage.getItem('mira-theme');
+      if (t) document.documentElement.setAttribute('data-theme', t);
+      var l = localStorage.getItem('aura-lang');
+      if (l !== 'en' && l !== 'es') l = 'es';  // Spanish is the default
+      document.documentElement.setAttribute('data-lang', l);
+      document.documentElement.lang = l;
+    })();
+  </script>
+
+  <!-- Shared Mira design system + Aura sky-blue overrides. No Tailwind. -->
+  <link rel="stylesheet" href="../../style.css" />
+  <link rel="stylesheet" href="../style.css" />
+
+  <style>
+    /* Privacy-page prose, on top of the shared design tokens. */
+    .policy { max-width: 44rem; }
+    .policy-updated { color: var(--dim); font-size: 0.92rem; margin: 0 0 2rem; }
+    .policy-lead { color: var(--muted); line-height: 1.75; margin: 0 0 2.5rem; font-size: 1.05rem; }
+    .policy-card {
+      background: var(--surface);
+      border: 1px solid var(--b30);
+      border-radius: 18px;
+      padding: 1.4rem 1.6rem;
+      box-shadow: var(--shadow-md);
+      margin: 0 0 2.5rem;
+    }
+    .policy-card ul { margin: 0; padding-left: 1.15rem; }
+    .policy-card li { color: var(--muted); line-height: 1.7; margin: 0 0 0.6rem; }
+    .policy-card li:last-child { margin-bottom: 0; }
+    .policy h3 { font-size: 1.15rem; margin: 2rem 0 0.5rem; color: var(--text); }
+    .policy p { color: var(--muted); line-height: 1.75; margin: 0 0 1rem; }
+    .policy p:last-child { margin-bottom: 0; }
+    .policy ul.svc { list-style: none; margin: 0 0 1rem; padding: 0; }
+    .policy ul.svc li { color: var(--muted); line-height: 1.7; margin: 0 0 0.7rem; padding-left: 1.1rem; position: relative; }
+    .policy ul.svc li::before { content: "·"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+    .policy a { color: var(--accent); text-decoration: none; }
+    .policy a:hover { color: var(--accent-hov); text-decoration: underline; }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── Shared SVG symbols ─────────────────────────────────────── -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="ico-linkedin" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 110-4.14 2.07 2.07 0 010 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/>
+    </symbol>
+    <symbol id="ico-github" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.04-.02-2.05-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.21.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 016 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.62-5.49 5.92.43.37.81 1.1.81 2.22 0 1.6-.01 2.9-.01 3.29 0 .32.22.7.83.58A12.01 12.01 0 0024 12.5C24 5.87 18.63.5 12 .5z"/>
+    </symbol>
+    <symbol id="ico-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="5" width="18" height="14" rx="2"/>
+      <path d="M3 7l9 6 9-6"/>
+    </symbol>
+    <symbol id="ico-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="9"/>
+      <path d="M3 12h18"/>
+      <path d="M12 3c2.5 2.5 3.8 5.7 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.7-3.8-9S9.5 5.5 12 3z"/>
+    </symbol>
+  </svg>
+
+  <!-- ── Header ─────────────────────────────────────────────────── -->
+  <header class="site-header">
+    <div class="wrap">
+      <a href="/aura" class="brand">
+        <img src="../assets/icon.png" alt="Aura" />
+        <span>Aura</span>
+      </a>
+
+      <div class="header-actions">
+        <a href="/aura" class="btn btn-ghost btn-sm" aria-label="Back to Aura">
+          <span aria-hidden="true">←</span><span class="btn-label">Aura</span>
+        </a>
+        <button id="lang-toggle" class="btn btn-ghost btn-sm" aria-label="Cambiar idioma / Change language">
+          <svg><use href="#ico-globe"/></svg><span class="btn-label">English</span>
+        </button>
+        <a href="https://github.com/mabaeyens/aura-apps" target="_blank" rel="noopener"
+           class="icon-btn" aria-label="GitHub">
+          <svg><use href="#ico-github"/></svg>
+        </a>
+        <button id="theme-toggle" class="icon-btn" aria-label="Toggle theme">
+          <svg class="icon-sun" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg class="icon-moon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ── Policy ───────────────────────────────────────────────── -->
+    <section class="section">
+      <div class="wrap">
+        <div class="sec-head" data-reveal>
+          <p class="eyebrow"><span class="lang-en">Aura · Privacy</span><span class="lang-es">Aura · Privacidad</span></p>
+          <h2 class="sec-title"><span class="lang-en">Privacy policy</span><span class="lang-es">Política de privacidad</span></h2>
+        </div>
+
+        <div class="policy" data-reveal>
+          <p class="policy-updated">
+            <span class="lang-en">Last updated: 22 August 2026</span>
+            <span class="lang-es">Última actualización: 22 de agosto de 2026</span>
+          </p>
+
+          <p class="policy-lead lang-en">
+            Aura is a personal weather app for Spain. This policy is short because Aura collects almost
+            nothing, and none of it reaches me.
+          </p>
+          <p class="policy-lead lang-es">
+            Aura es una app del tiempo para España. Esta política es breve porque Aura no recopila casi
+            nada, y nada de ello llega hasta mí.
+          </p>
+
+          <!-- The short version -->
+          <div class="policy-card">
+            <ul class="lang-en">
+              <li>No account. No sign-up. No tracking. No analytics. No ads.</li>
+              <li>No servers of mine. Aura talks only to Spain's official public data services. It never
+                phones home to me, because there is no “Aura cloud”.</li>
+              <li>Your location is matched to your municipality entirely on your device. Only that
+                municipality's public code (never your actual position) is sent to the official services to
+                fetch its forecast. It is never linked to your identity, because there is no identity: Aura
+                has no accounts.</li>
+              <li>It's open source, so you can check every word of this for yourself:
+                <a href="https://github.com/mabaeyens/aura-apps" target="_blank" rel="noopener">github.com/mabaeyens/aura-apps</a>.</li>
+            </ul>
+            <ul class="lang-es">
+              <li>Sin cuenta. Sin registro. Sin seguimiento. Sin analíticas. Sin anuncios.</li>
+              <li>Sin servidores míos. Aura solo se comunica con los servicios públicos oficiales de datos
+                de España. Nunca me llama a casa, porque no existe ninguna «nube de Aura».</li>
+              <li>Tu ubicación se asocia a tu municipio íntegramente en tu dispositivo. A los servicios
+                oficiales solo se envía el código público de ese municipio (nunca tu posición real) para
+                obtener su previsión. Nunca se vincula a tu identidad, porque no hay identidad: Aura no
+                tiene cuentas.</li>
+              <li>Es de código abierto, así que puedes comprobar cada palabra por ti mismo:
+                <a href="https://github.com/mabaeyens/aura-apps" target="_blank" rel="noopener">github.com/mabaeyens/aura-apps</a>.</li>
+            </ul>
+          </div>
+
+          <!-- What data Aura collects -->
+          <h3><span class="lang-en">What data Aura collects</span><span class="lang-es">Qué datos recopila Aura</span></h3>
+          <p class="lang-en">
+            None that comes to me. Aura has no backend of mine, no analytics SDK, and no advertising. I
+            don't receive, store, or sell any of your data. I couldn't if I wanted to.
+          </p>
+          <p class="lang-es">
+            Ninguno que llegue a mí. Aura no tiene ningún servidor mío, ni SDK de analítica, ni publicidad.
+            No recibo, guardo ni vendo ninguno de tus datos. No podría aunque quisiera.
+          </p>
+
+          <!-- Your location -->
+          <h3><span class="lang-en">Your location</span><span class="lang-es">Tu ubicación</span></h3>
+          <p class="lang-en">
+            If you grant location access (“While Using the App”), Aura takes a rough, kilometre-level fix
+            and, on your device, matches it to the nearest Spanish municipality from a list bundled in the
+            app, the same list you can pick from by hand. Only public identifiers then leave your device:
+            that municipality's official code (its INE code) is sent to AEMET, and the code of the nearest
+            air-quality station to MITECO, to fetch the forecast and the air reading. Your actual
+            coordinates never leave your device, the request carries no name, account, or device identifier
+            that ties it to you, and Aura keeps no history of where you've been.
+          </p>
+          <p class="lang-en">
+            You can decline location access and Aura still works; you just choose the place yourself.
+          </p>
+          <p class="lang-es">
+            Si concedes el acceso a la ubicación («Mientras se usa la app»), Aura toma una posición
+            aproximada, a nivel de kilómetro, y, en tu dispositivo, la asocia al municipio español más
+            cercano de una lista incluida en la app, la misma que puedes elegir a mano. Solo salen entonces
+            de tu dispositivo identificadores públicos: el código oficial de ese municipio (su código INE)
+            se envía a AEMET, y el código de la estación de calidad del aire más cercana, a MITECO, para
+            obtener la previsión y la lectura del aire. Tus coordenadas reales nunca salen de tu
+            dispositivo, la petición no lleva ningún nombre, cuenta ni identificador de dispositivo que te
+            relacione con ella, y Aura no guarda ningún historial de por dónde has estado.
+          </p>
+          <p class="lang-es">
+            Puedes rechazar el acceso a la ubicación y Aura sigue funcionando; solo tendrás que elegir el
+            lugar tú mismo.
+          </p>
+
+          <!-- The services Aura talks to -->
+          <h3><span class="lang-en">The services Aura talks to</span><span class="lang-es">Los servicios con los que habla Aura</span></h3>
+          <ul class="svc lang-en">
+            <li><strong>AEMET OpenData</strong>, the Spanish State Meteorological Agency (Agencia Estatal de
+              Meteorología), for forecasts, warnings, and UV.
+              <a href="https://opendata.aemet.es" target="_blank" rel="noopener">opendata.aemet.es</a></li>
+            <li><strong>MITECO</strong>, the Ministry for the Ecological Transition, for air-quality (ICA)
+              readings. <a href="https://www.miteco.gob.es" target="_blank" rel="noopener">miteco.gob.es</a></li>
+          </ul>
+          <ul class="svc lang-es">
+            <li><strong>AEMET OpenData</strong>, la Agencia Estatal de Meteorología, para las previsiones,
+              los avisos y el UV.
+              <a href="https://opendata.aemet.es" target="_blank" rel="noopener">opendata.aemet.es</a></li>
+            <li><strong>MITECO</strong>, el Ministerio para la Transición Ecológica, para las lecturas de
+              calidad del aire (ICA).
+              <a href="https://www.miteco.gob.es" target="_blank" rel="noopener">miteco.gob.es</a></li>
+          </ul>
+          <p class="lang-en">
+            Your use of the data those agencies provide is governed by their own terms. Aura sends them
+            only what's needed to answer “what's the weather where I am” and reads the answer back.
+          </p>
+          <p class="lang-es">
+            El uso de los datos que facilitan esas agencias se rige por sus propios términos. Aura solo les
+            envía lo necesario para responder a «qué tiempo hace donde estoy» y lee la respuesta.
+          </p>
+
+          <!-- Data that stays on your device -->
+          <h3><span class="lang-en">Data that stays on your device</span><span class="lang-es">Datos que se quedan en tu dispositivo</span></h3>
+          <p class="lang-en">
+            Cached forecasts, your chosen background theme, and last-used settings live on your device. If
+            iCloud is available they may sync across your own devices under your Apple ID, and nowhere
+            else, never to me.
+          </p>
+          <p class="lang-es">
+            Las previsiones en caché, el tema de fondo que elijas y los últimos ajustes usados viven en tu
+            dispositivo. Si iCloud está disponible, pueden sincronizarse entre tus propios dispositivos con
+            tu Apple ID, y en ningún otro sitio, nunca hasta mí.
+          </p>
+
+          <!-- Children's privacy -->
+          <h3><span class="lang-en">Children's privacy</span><span class="lang-es">Privacidad de los menores</span></h3>
+          <p class="lang-en">
+            Aura is a general-audience weather app. It does not knowingly collect any data from anyone,
+            children included.
+          </p>
+          <p class="lang-es">
+            Aura es una app del tiempo para el público general. No recopila conscientemente ningún dato de
+            nadie, tampoco de menores.
+          </p>
+
+          <!-- Changes -->
+          <h3><span class="lang-en">Changes</span><span class="lang-es">Cambios</span></h3>
+          <p class="lang-en">
+            If this policy ever changes, the update lands here with a new date at the top.
+          </p>
+          <p class="lang-es">
+            Si esta política cambia alguna vez, la actualización aparecerá aquí con una nueva fecha en la
+            parte superior.
+          </p>
+
+          <!-- Contact -->
+          <h3><span class="lang-en">Contact</span><span class="lang-es">Contacto</span></h3>
+          <p class="lang-en">
+            Questions about privacy? Email me at
+            <a href="mailto:dears-respect.8u@icloud.com">dears-respect.8u@icloud.com</a> or open an issue at
+            <a href="https://github.com/mabaeyens/aura-apps/issues" target="_blank" rel="noopener">github.com/mabaeyens/aura-apps/issues</a>.
+          </p>
+          <p class="lang-es">
+            ¿Dudas sobre privacidad? Escríbeme a
+            <a href="mailto:dears-respect.8u@icloud.com">dears-respect.8u@icloud.com</a> o abre una incidencia en
+            <a href="https://github.com/mabaeyens/aura-apps/issues" target="_blank" rel="noopener">github.com/mabaeyens/aura-apps/issues</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Footer ─────────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <img src="../assets/icon.png" class="footer-icon" alt="Aura" />
+      <p class="footer-name">Aura</p>
+      <p class="footer-tag lang-en">A personal, private weather app for Spain, on every Apple surface.</p>
+      <p class="footer-tag lang-es">Una app del tiempo personal y privada para España, en cada dispositivo Apple.</p>
+
+      <div class="footer-cta">
+        <a href="/aura/soporte" class="btn btn-primary">
+          <svg><use href="#ico-mail"/></svg><span class="lang-en">Support</span><span class="lang-es">Soporte</span>
+        </a>
+        <a href="/aura" class="btn btn-ghost">
+          <span aria-hidden="true">←</span><span class="lang-en">Back to Aura</span><span class="lang-es">Volver a Aura</span>
+        </a>
+      </div>
+
+      <div class="footer-credit">
+        <span>Weather data: Elaborado con datos de AEMET · Built by Miguel A. Baeyens, with Claude Code · <a href="/aura" class="strong">askmira.es/aura</a></span>
+        <a href="https://linkedin.com/in/mabaeyens" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-linkedin"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Keep the browser-tab favicon on the theme-matched app icon.
+    function syncFavicon(theme) {
+      var href = theme === 'dark' ? '../assets/favicon-32-dark.png' : '../assets/favicon-32.png';
+      document.querySelectorAll('link[rel="icon"]')
+        .forEach(function (l) { l.href = href; });
+    }
+    syncFavicon(document.documentElement.getAttribute('data-theme'));
+
+    // Theme toggle: shares the 'mira-theme' key across the askmira.es ecosystem
+    document.getElementById('theme-toggle').addEventListener('click', function () {
+      var html = document.documentElement;
+      var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('mira-theme', next);
+      syncFavicon(next);
+    });
+
+    // Language toggle: English / Spanish, remembered under 'aura-lang'.
+    function applyLang(l) {
+      document.documentElement.setAttribute('data-lang', l);
+      document.documentElement.lang = l;
+      document.title = (l === 'es') ? 'Privacidad · Aura' : 'Privacy · Aura';
+      var lbl = document.querySelector('#lang-toggle .btn-label');
+      if (lbl) lbl.textContent = (l === 'es') ? 'English' : 'Español';
+    }
+    applyLang(document.documentElement.getAttribute('data-lang') || 'es');
+    document.getElementById('lang-toggle').addEventListener('click', function () {
+      var next = document.documentElement.getAttribute('data-lang') === 'es' ? 'en' : 'es';
+      localStorage.setItem('aura-lang', next);
+      applyLang(next);
+    });
+
+    // Reveal-on-scroll (same pattern as the main page)
+    (function () {
+      var els = document.querySelectorAll('[data-reveal]');
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(function (e) { e.classList.add('in'); });
+        return;
+      }
+      var ro = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            ro.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      els.forEach(function (e) { ro.observe(e); });
+    })();
+  </script>
+
+</body>
+</html>

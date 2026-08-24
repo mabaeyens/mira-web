@@ -5,6 +5,10 @@
    Must be linked AFTER ../style.css.
    ════════════════════════════════════════════════════════════════ */
 
+/* ── Bilingual: show only the active language ─────────────────── */
+[data-lang="en"] .lang-es { display: none !important; }
+[data-lang="es"] .lang-en { display: none !important; }
+
 /* ── Aura brand sky blue (from the app icon's gradient) ───────── */
 :root {
   --accent:     #4FA3F0;

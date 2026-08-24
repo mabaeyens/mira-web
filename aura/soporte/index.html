@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark" data-lang="en">
+<html lang="es" data-theme="dark" data-lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Support · Aura</title>
+  <title>Soporte · Aura</title>
   <meta name="description" content="Help and support for Aura, the personal weather app for Spain. Contact by email at dears-respect.8u@icloud.com, report an issue on GitHub, or read the FAQ. Available in English and Spanish." />
   <meta property="og:title" content="Support · Aura" />
   <meta property="og:description" content="Help and support for Aura, the personal weather app for Spain. Email, issue reporting, and a short FAQ." />
@@ -14,8 +14,8 @@
   <meta name="theme-color" content="#15171A" media="(prefers-color-scheme: dark)" />
   <meta name="theme-color" content="#F6F4EF" media="(prefers-color-scheme: light)" />
 
-  <link rel="icon" href="../assets/icon.png" type="image/png" />
-  <link rel="apple-touch-icon" href="../assets/icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
 
   <!-- Anti-flash: restore saved theme and language before first paint (shared keys with askmira.es). -->
   <script>
@@ -23,9 +23,7 @@
       var t = localStorage.getItem('mira-theme');
       if (t) document.documentElement.setAttribute('data-theme', t);
       var l = localStorage.getItem('aura-lang');
-      if (l !== 'en' && l !== 'es') {
-        l = (navigator.language || 'en').toLowerCase().indexOf('es') === 0 ? 'es' : 'en';
-      }
+      if (l !== 'en' && l !== 'es') l = 'es';  // Spanish is the default
       document.documentElement.setAttribute('data-lang', l);
       document.documentElement.lang = l;
     })();
@@ -74,6 +72,31 @@
     .faq-item p { margin: 0; color: var(--muted); line-height: 1.7; }
     .faq-item a { color: var(--accent); text-decoration: none; }
     .faq-item a:hover { color: var(--accent-hov); text-decoration: underline; }
+
+    /* Contact form — composes a pre-filled email, no backend, no third party. */
+    .support-form { max-width: 44rem; display: grid; gap: 1.1rem; }
+    .form-row { display: grid; gap: 1.1rem; grid-template-columns: 1fr; }
+    @media (min-width: 560px) { .form-row.two { grid-template-columns: 1fr 1fr; } }
+    .field { display: flex; flex-direction: column; gap: 0.4rem; }
+    .field label { font-size: 0.9rem; font-weight: 600; color: var(--text); }
+    .field input,
+    .field textarea {
+      font: inherit;
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--b30);
+      border-radius: 12px;
+      padding: 0.7rem 0.85rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .field textarea { resize: vertical; min-height: 8rem; line-height: 1.6; }
+    .field input:focus,
+    .field textarea:focus { outline: none; border-color: var(--a30); box-shadow: 0 0 0 3px var(--a15); }
+    .field input::placeholder,
+    .field textarea::placeholder { color: var(--dim); }
+    .form-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .form-note { color: var(--dim); font-size: 0.9rem; margin: 0; }
   </style>
 </head>
 
@@ -111,7 +134,7 @@
           <span aria-hidden="true">←</span><span class="btn-label">Aura</span>
         </a>
         <button id="lang-toggle" class="btn btn-ghost btn-sm" aria-label="Cambiar idioma / Change language">
-          <svg><use href="#ico-globe"/></svg><span class="btn-label">Español</span>
+          <svg><use href="#ico-globe"/></svg><span class="btn-label">English</span>
         </button>
         <a href="https://github.com/mabaeyens/aura-apps" target="_blank" rel="noopener"
            class="icon-btn" aria-label="GitHub">
@@ -180,6 +203,55 @@
       </div>
     </section>
 
+    <!-- ── Contact form ─────────────────────────────────────────── -->
+    <section class="section">
+      <div class="wrap">
+        <div class="sec-head" data-reveal>
+          <p class="eyebrow"><span class="lang-en">Write to me</span><span class="lang-es">Escríbeme</span></p>
+          <h2 class="sec-title"><span class="lang-en">Send a message</span><span class="lang-es">Envía un mensaje</span></h2>
+        </div>
+
+        <p class="support-lead lang-en" data-reveal>
+          Fill this in and it opens your email app with everything ready to send to me — nothing is
+          submitted from this page, and there is no server in between. Just press send.
+        </p>
+        <p class="support-lead lang-es" data-reveal>
+          Rellénalo y se abrirá tu app de correo con todo listo para enviármelo: nada se envía desde esta
+          página, y no hay ningún servidor por medio. Solo tienes que darle a enviar.
+        </p>
+
+        <form id="support-form" class="support-form" data-reveal novalidate>
+          <div class="form-row two">
+            <div class="field">
+              <label for="f-device"><span class="lang-en">Your device</span><span class="lang-es">Tu dispositivo</span></label>
+              <input id="f-device" type="text" autocomplete="off"
+                     data-ph-en="e.g. iPhone 15, iPad Air" data-ph-es="p. ej. iPhone 15, iPad Air" />
+            </div>
+            <div class="field">
+              <label for="f-version"><span class="lang-en">iOS / iPadOS version</span><span class="lang-es">Versión de iOS / iPadOS</span></label>
+              <input id="f-version" type="text" autocomplete="off"
+                     data-ph-en="e.g. 18.1" data-ph-es="p. ej. 18.1" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-message"><span class="lang-en">What happened, or what you'd like</span><span class="lang-es">Qué ha pasado, o qué te gustaría</span></label>
+            <textarea id="f-message" rows="6"
+                      data-ph-en="What you expected to see, and what happened instead."
+                      data-ph-es="Qué esperabas ver y qué ocurrió en su lugar."></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+              <svg><use href="#ico-mail"/></svg><span class="lang-en">Open email</span><span class="lang-es">Abrir el correo</span>
+            </button>
+            <p class="form-note">
+              <span class="lang-en">Opens your mail app, pre-filled to dears-respect.8u@icloud.com.</span>
+              <span class="lang-es">Abre tu app de correo, ya rellenada a dears-respect.8u@icloud.com.</span>
+            </p>
+          </div>
+        </form>
+      </div>
+    </section>
+
     <!-- ── FAQ ──────────────────────────────────────────────────── -->
     <section class="section">
       <div class="wrap">
@@ -226,8 +298,8 @@
           </div>
           <div class="faq-item">
             <h3><span class="lang-en">How is my privacy handled?</span><span class="lang-es">¿Cómo se gestiona mi privacidad?</span></h3>
-            <p class="lang-en">Aura has no servers of mine and collects no personal data. You can read the full <a href="https://github.com/mabaeyens/aura-apps/blob/main/PRIVACY.md" target="_blank" rel="noopener">privacy policy</a>.</p>
-            <p class="lang-es">Aura no tiene servidores míos y no recopila datos personales. Puedes leer la <a href="https://github.com/mabaeyens/aura-apps/blob/main/PRIVACY.md" target="_blank" rel="noopener">política de privacidad</a> completa.</p>
+            <p class="lang-en">Aura has no servers of mine and collects no personal data. You can read the full <a href="/aura/privacidad">privacy policy</a>.</p>
+            <p class="lang-es">Aura no tiene servidores míos y no recopila datos personales. Puedes leer la <a href="/aura/privacidad">política de privacidad</a> completa.</p>
           </div>
         </div>
       </div>
@@ -247,6 +319,9 @@
         <a href="mailto:dears-respect.8u@icloud.com" class="btn btn-primary">
           <svg><use href="#ico-mail"/></svg><span class="lang-en">Email support</span><span class="lang-es">Soporte por correo</span>
         </a>
+        <a href="/aura/privacidad" class="btn btn-ghost">
+          <span class="lang-en">Privacy</span><span class="lang-es">Privacidad</span>
+        </a>
         <a href="/aura" class="btn btn-ghost">
           <span aria-hidden="true">←</span><span class="lang-en">Back to Aura</span><span class="lang-es">Volver a Aura</span>
         </a>
@@ -264,8 +339,8 @@
   <script>
     // Keep the browser-tab favicon on the theme-matched app icon.
     function syncFavicon(theme) {
-      var href = theme === 'dark' ? '../assets/icon-dark.png' : '../assets/icon.png';
-      document.querySelectorAll('link[rel="icon"], link[rel="apple-touch-icon"]')
+      var href = theme === 'dark' ? '../assets/favicon-32-dark.png' : '../assets/favicon-32.png';
+      document.querySelectorAll('link[rel="icon"]')
         .forEach(function (l) { l.href = href; });
     }
     syncFavicon(document.documentElement.getAttribute('data-theme'));
@@ -286,13 +361,43 @@
       document.title = (l === 'es') ? 'Soporte · Aura' : 'Support · Aura';
       var lbl = document.querySelector('#lang-toggle .btn-label');
       if (lbl) lbl.textContent = (l === 'es') ? 'English' : 'Español';
+      // Localize form placeholders (can't be done with lang spans).
+      document.querySelectorAll('[data-ph-en]').forEach(function (el) {
+        el.placeholder = (l === 'es') ? el.getAttribute('data-ph-es') : el.getAttribute('data-ph-en');
+      });
     }
-    applyLang(document.documentElement.getAttribute('data-lang') || 'en');
+    applyLang(document.documentElement.getAttribute('data-lang') || 'es');
     document.getElementById('lang-toggle').addEventListener('click', function () {
       var next = document.documentElement.getAttribute('data-lang') === 'es' ? 'en' : 'es';
       localStorage.setItem('aura-lang', next);
       applyLang(next);
     });
+
+    // Contact form: compose a pre-filled email. No backend — the visitor's own
+    // mail app opens with everything filled in, addressed to support.
+    (function () {
+      var form = document.getElementById('support-form');
+      if (!form) return;
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var es = document.documentElement.getAttribute('data-lang') === 'es';
+        var device  = document.getElementById('f-device').value.trim();
+        var version = document.getElementById('f-version').value.trim();
+        var message = document.getElementById('f-message').value.trim();
+
+        var subject = es ? 'Soporte de Aura' : 'Aura support';
+        var lines = [];
+        lines.push((es ? 'Dispositivo: ' : 'Device: ') + (device || (es ? '(sin indicar)' : '(not given)')));
+        lines.push((es ? 'iOS / iPadOS: ' : 'iOS / iPadOS: ') + (version || (es ? '(sin indicar)' : '(not given)')));
+        lines.push('');
+        lines.push(message);
+
+        var href = 'mailto:dears-respect.8u@icloud.com'
+          + '?subject=' + encodeURIComponent(subject)
+          + '&body=' + encodeURIComponent(lines.join('\n'));
+        window.location.href = href;
+      });
+    })();
 
     // Reveal-on-scroll (same pattern as the main page)
     (function () {
