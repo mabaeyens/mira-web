@@ -34,6 +34,11 @@
   <link rel="stylesheet" href="../style.css" />
 
   <style>
+    /* Critical, inlined so it can't be defeated by a cache-stale style.css:
+       show only the active language, with no flash-of-both before CSS loads. */
+    [data-lang="en"] .lang-es { display: none !important; }
+    [data-lang="es"] .lang-en { display: none !important; }
+
     /* Privacy-page prose, on top of the shared design tokens. */
     .policy { max-width: 44rem; }
     .policy-updated { color: var(--dim); font-size: 0.92rem; margin: 0 0 2rem; }

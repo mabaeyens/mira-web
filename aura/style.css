@@ -70,10 +70,12 @@
   display: flex;
   justify-content: center;
   gap: 1.1rem;
-  margin-top: 2.75rem;
+  margin-top: 2.5rem;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  padding-bottom: 0.4rem;
+  /* overflow-x makes overflow-y clip too, so pad enough for the drop
+     shadow (~36px below, ~8px above/sides) to fade instead of being cut. */
+  padding: 10px 8px 40px;
   scrollbar-width: none;
 }
 .hero-shots::-webkit-scrollbar { display: none; }
@@ -90,7 +92,7 @@
   font-size: 0.7rem;
   letter-spacing: 0.02em;
   color: var(--dim);
-  margin: 0.85rem 0 0;
+  margin: -0.35rem 0 0;
 }
 
 /* ── Section sub-heading ─────────────────────────────────────── */

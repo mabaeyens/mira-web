@@ -32,6 +32,13 @@
   <!-- Shared Mira design system + Aura sky-blue overrides. No Tailwind. -->
   <link rel="stylesheet" href="../style.css" />
   <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* Critical, inlined so it can't be defeated by a cache-stale style.css:
+       show only the active language, with no flash-of-both before CSS loads. */
+    [data-lang="en"] .lang-es { display: none !important; }
+    [data-lang="es"] .lang-en { display: none !important; }
+  </style>
 </head>
 
 <body>
