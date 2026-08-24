@@ -62,6 +62,26 @@
     .policy ul.svc li::before { content: "·"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
     .policy a { color: var(--accent); text-decoration: none; }
     .policy a:hover { color: var(--accent-hov); text-decoration: underline; }
+
+    /* Payload snippet: the exact user data each request carries. */
+    .policy pre.payload {
+      background: var(--surface);
+      border: 1px solid var(--b30);
+      border-radius: 14px;
+      padding: 1.1rem 1.2rem;
+      margin: 0 0 1.5rem;
+      overflow-x: auto;
+      box-shadow: var(--shadow-md);
+    }
+    .policy pre.payload code {
+      display: block;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.82rem;
+      line-height: 1.65;
+      color: var(--text);
+      white-space: pre;
+    }
+    .policy pre.payload .c { color: var(--dim); }
   </style>
 </head>
 
@@ -150,7 +170,8 @@
           <div class="policy-card">
             <ul class="lang-en">
               <li>No account. No sign-up. No tracking. No analytics. No ads.</li>
-              <li>No servers of mine. Aura talks only to Spain's official public data services. It never
+              <li>No servers of mine. Aura talks only to Spain's official public data services for the
+                weather, and to public open-data sources<sup><a href="#svc-cams-en">*</a></sup>. It never
                 phones home to me, because there is no “Aura cloud”.</li>
               <li>Your location is matched to your municipality entirely on your device. Only that
                 municipality's public code (never your actual position) is sent to the official services to
@@ -161,8 +182,9 @@
             </ul>
             <ul class="lang-es">
               <li>Sin cuenta. Sin registro. Sin seguimiento. Sin analíticas. Sin anuncios.</li>
-              <li>Sin servidores míos. Aura solo se comunica con los servicios públicos oficiales de datos
-                de España. Nunca me llama a casa, porque no existe ninguna «nube de Aura».</li>
+              <li>Sin servidores propios. Aura solo se comunica con los servicios públicos oficiales de datos
+                de España para el tiempo, y con fuentes públicas de datos abiertos<sup><a href="#svc-cams-es">*</a></sup>.
+                Nunca llama a casa, porque no existe ninguna «nube de Aura».</li>
               <li>Tu ubicación se asocia a tu municipio íntegramente en tu dispositivo. A los servicios
                 oficiales solo se envía el código público de ese municipio (nunca tu posición real) para
                 obtener su previsión. Nunca se vincula a tu identidad, porque no hay identidad: Aura no
@@ -189,8 +211,9 @@
             If you grant location access (“While Using the App”), Aura takes a rough, kilometre-level fix
             and, on your device, matches it to the nearest Spanish municipality from a list bundled in the
             app, the same list you can pick from by hand. Only public identifiers then leave your device:
-            that municipality's official code (its INE code) is sent to AEMET, and the code of the nearest
-            air-quality station to MITECO, to fetch the forecast and the air reading. Your actual
+            that municipality's official code (its INE code) is sent to AEMET, the code of the nearest
+            air-quality station to MITECO, and that municipality's centroid coordinates to Open-Meteo for
+            the hourly UV index, to fetch the forecast, the air reading, and the UV. Your actual
             coordinates never leave your device, the request carries no name, account, or device identifier
             that ties it to you, and Aura keeps no history of where you've been.
           </p>
@@ -198,12 +221,13 @@
             You can decline location access and Aura still works; you just choose the place yourself.
           </p>
           <p class="lang-es">
-            Si concedes el acceso a la ubicación («Mientras se usa la app»), Aura toma una posición
+            Si permites el acceso a la ubicación («Mientras se usa la app»), Aura toma una posición
             aproximada, a nivel de kilómetro, y, en tu dispositivo, la asocia al municipio español más
             cercano de una lista incluida en la app, la misma que puedes elegir a mano. Solo salen entonces
             de tu dispositivo identificadores públicos: el código oficial de ese municipio (su código INE)
-            se envía a AEMET, y el código de la estación de calidad del aire más cercana, a MITECO, para
-            obtener la previsión y la lectura del aire. Tus coordenadas reales nunca salen de tu
+            se envía a AEMET, el código de la estación de calidad del aire más cercana, a MITECO, y las
+            coordenadas del centro de ese municipio, a Open-Meteo para el índice UV horario, para obtener
+            la previsión, la lectura del aire y el UV. Tus coordenadas reales nunca salen de tu
             dispositivo, la petición no lleva ningún nombre, cuenta ni identificador de dispositivo que te
             relacione con ella, y Aura no guarda ningún historial de por dónde has estado.
           </p>
@@ -220,6 +244,11 @@
               <a href="https://opendata.aemet.es" target="_blank" rel="noopener">opendata.aemet.es</a></li>
             <li><strong>MITECO</strong>, the Ministry for the Ecological Transition, for air-quality (ICA)
               readings. <a href="https://www.miteco.gob.es" target="_blank" rel="noopener">miteco.gob.es</a></li>
+            <li id="svc-cams-en"><strong>Open-Meteo</strong>, an open European weather API that serves the
+              EU's Copernicus Atmosphere Monitoring Service (CAMS) data, for the hourly UV-index forecast.
+              Only the selected municipality's centroid coordinates are sent — never your device's actual
+              position — and the request carries no key, account, or identifier.
+              <a href="https://open-meteo.com" target="_blank" rel="noopener">open-meteo.com</a></li>
           </ul>
           <ul class="svc lang-es">
             <li><strong>AEMET OpenData</strong>, la Agencia Estatal de Meteorología, para las previsiones,
@@ -228,6 +257,12 @@
             <li><strong>MITECO</strong>, el Ministerio para la Transición Ecológica, para las lecturas de
               calidad del aire (ICA).
               <a href="https://www.miteco.gob.es" target="_blank" rel="noopener">miteco.gob.es</a></li>
+            <li id="svc-cams-es"><strong>Open-Meteo</strong>, una API meteorológica europea y abierta que
+              sirve los datos del Servicio de Vigilancia Atmosférica de Copernicus de la UE (CAMS), para la
+              predicción horaria del índice UV. Solo se envían las coordenadas del centro del municipio
+              elegido —nunca la posición real de tu dispositivo— y la petición no lleva clave, cuenta ni
+              identificador.
+              <a href="https://open-meteo.com" target="_blank" rel="noopener">open-meteo.com</a></li>
           </ul>
           <p class="lang-en">
             Your use of the data those agencies provide is governed by their own terms. Aura sends them
@@ -237,6 +272,35 @@
             El uso de los datos que facilitan esas agencias se rige por sus propios términos. Aura solo les
             envía lo necesario para responder a «qué tiempo hace donde estoy» y lee la respuesta.
           </p>
+
+          <!-- What actually leaves your device -->
+          <h3><span class="lang-en">What actually leaves your device</span><span class="lang-es">Qué sale realmente de tu dispositivo</span></h3>
+          <p class="lang-en">
+            Because the match happens on your device, each outbound request carries only an identifier or a
+            town centroid — never your GPS position. Here is the exact user data each one sends, with Madrid
+            as the example:
+          </p>
+          <p class="lang-es">
+            Como la asociación ocurre en tu dispositivo, cada petición saliente solo lleva un identificador o
+            el centroide de un municipio, nunca tu posición GPS. Estos son los datos exactos que envía cada
+            una, con Madrid como ejemplo:
+          </p>
+<pre class="payload lang-en" aria-label="User data sent in each request"><code><span class="c">// AEMET — a municipality ID, not a zip code: the ID AEMET keys its forecasts by.</span>
+28079
+
+<span class="c">// MITECO — the nearest air-quality station's ID (plus the day). No coordinates.</span>
+28079004#…
+
+<span class="c">// CAMS / Copernicus (via Open-Meteo) — a point near you, not your real position.</span>
+latitude=XX&amp;longitude=YY</code></pre>
+<pre class="payload lang-es" aria-label="Datos de usuario que se envían en cada petición"><code><span class="c">// AEMET — un ID de municipio, no un código postal: el ID con el que AEMET indexa las predicciones.</span>
+28079
+
+<span class="c">// MITECO — el ID de la estación de calidad del aire más cercana (más el día). Sin coordenadas.</span>
+28079004#…
+
+<span class="c">// CAMS / Copernicus (vía Open-Meteo) — un punto cerca de ti, no tu posición real.</span>
+latitude=XX&amp;longitude=YY</code></pre>
 
           <!-- Data that stays on your device -->
           <h3><span class="lang-en">Data that stays on your device</span><span class="lang-es">Datos que se quedan en tu dispositivo</span></h3>
@@ -248,7 +312,7 @@
           <p class="lang-es">
             Las previsiones en caché, el tema de fondo que elijas y los últimos ajustes usados viven en tu
             dispositivo. Si iCloud está disponible, pueden sincronizarse entre tus propios dispositivos con
-            tu Apple ID, y en ningún otro sitio, nunca hasta mí.
+            tu Apple ID, y en ningún otro sitio.
           </p>
 
           <!-- Children's privacy -->
@@ -278,11 +342,13 @@
             Questions about privacy? Email me at
             <a href="mailto:dears-respect.8u@icloud.com">dears-respect.8u@icloud.com</a> or open an issue at
             <a href="https://github.com/mabaeyens/aura-apps/issues" target="_blank" rel="noopener">github.com/mabaeyens/aura-apps/issues</a>.
+            You can also visit the <a href="/aura/soporte">support page</a>.
           </p>
           <p class="lang-es">
             ¿Dudas sobre privacidad? Escríbeme a
             <a href="mailto:dears-respect.8u@icloud.com">dears-respect.8u@icloud.com</a> o abre una incidencia en
             <a href="https://github.com/mabaeyens/aura-apps/issues" target="_blank" rel="noopener">github.com/mabaeyens/aura-apps/issues</a>.
+            También puedes visitar la <a href="/aura/soporte">página de soporte</a>.
           </p>
         </div>
       </div>
