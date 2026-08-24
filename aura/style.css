@@ -185,28 +185,19 @@
   border: 1px solid rgba(255, 255, 255, .08);
 }
 
-/* ── Widgets — variable aspect, height-normalised on a grid ──── */
-.widget-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1.25rem 1.1rem;
-  align-items: end;
-  margin-top: 0.25rem;
-}
-.shot-widget {
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-}
-.shot-widget img {
-  max-width: 100%;
-  max-height: 168px;
+/* ── Widgets — real Home Screen renders, height-normalised in a rail
+      so each size keeps its true proportions side by side ────────── */
+.rail-widget { align-items: flex-end; }
+.rail-widget .shot-widget { margin: 0; }
+.rail-widget .shot-widget img {
+  height: 224px;
   width: auto;
-  height: auto;
-  border-radius: 16px;
+  max-width: none;
+  border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, .06);
+}
+@media (max-width: 640px) {
+  .rail-widget .shot-widget img { height: 156px; border-radius: 15px; }
 }
 
 /* ── App icon follows the theme ───────────────────────────────────
