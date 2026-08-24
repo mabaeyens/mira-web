@@ -133,12 +133,20 @@
     .as-desc .more { color: #2a7de1; font-weight: 600; }
 
     /* ── Showcase boards (widgets + complications) ───────────────── */
-    .wgrid { display: flex; flex-wrap: wrap; gap: 1.5rem 1.4rem; align-items: flex-end; justify-content: center; margin-top: 2.5rem; }
+    /* Widgets are sized by their real Home-Screen grid footprint (unit = --u):
+       Small 2×2, Medium 4×2, Large 4×4, iPad XL 8×4. Width is set per size;
+       height follows the source aspect ratio, so Large stands taller than
+       Medium and XL reads widest — the true iOS size hierarchy. */
+    .wgrid { --u: 58px; display: flex; flex-wrap: wrap; gap: 1.5rem 1.4rem; align-items: flex-end; justify-content: center; margin-top: 2.5rem; }
     .wgrid figure { margin: 0; display: flex; flex-direction: column; align-items: center; }
     .wgrid img {
-      height: 208px; width: auto; border-radius: 20px; display: block;
+      width: auto; height: auto; border-radius: 20px; display: block;
       border: 1px solid rgba(255,255,255,.06); box-shadow: var(--shadow-md);
     }
+    .wg-s  img { width: calc(var(--u) * 2); }
+    .wg-m  img { width: calc(var(--u) * 4); }
+    .wg-l  img { width: calc(var(--u) * 4); }
+    .wg-xl img { width: calc(var(--u) * 8); }
     .board-cap { margin-top: 0.7rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.66rem; letter-spacing: 0.02em; color: var(--dim); }
 
     .cgrid { display: flex; flex-wrap: wrap; gap: 1.4rem 1.3rem; align-items: center; justify-content: center; margin-top: 2.5rem; }
@@ -150,7 +158,7 @@
     .cgrid figcaption { margin-top: 0.55rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.02em; color: var(--dim); }
 
     @media (max-width: 640px) {
-      .wgrid img { height: 148px; }
+      .wgrid { --u: 33px; }
       .cgrid img { height: 66px; }
       .wgrid, .cgrid { gap: 1.1rem 1rem; }
     }
@@ -289,16 +297,16 @@
           <p>The Home Screen widgets render the living sky behind the data, so a single size shifts palette with the hour and the weather — clear blue, a townscape teal, rainy slate, golden dusk. This is the art the “Widgets” CPP angle leads with.</p>
         </div>
         <div class="wgrid">
-          <figure><img loading="lazy" src="assets/widgets/widget-iphone-m.webp" alt="Medium widget, clear day" /><figcaption class="board-cap">Mediano · despejado</figcaption></figure>
-          <figure><img loading="lazy" src="assets/widgets/widget-iphone-m-city.webp" alt="Medium widget, townscape" /><figcaption class="board-cap">Mediano · ciudad</figcaption></figure>
-          <figure><img loading="lazy" src="assets/widgets/widget-iphone-m-rain.webp" alt="Medium widget, rain" /><figcaption class="board-cap">Mediano · lluvia</figcaption></figure>
-          <figure><img loading="lazy" src="assets/widgets/widget-iphone-m-sunset.webp" alt="Medium widget, sunset" /><figcaption class="board-cap">Mediano · atardecer</figcaption></figure>
-          <figure><img loading="lazy" src="assets/widgets/widget-iphone-s-city.webp" alt="Small widget, townscape" /><figcaption class="board-cap">Pequeño · ciudad</figcaption></figure>
-          <figure><img loading="lazy" src="assets/widgets/widget-iphone-s-sunset.webp" alt="Small widget, sunset" /><figcaption class="board-cap">Pequeño · atardecer</figcaption></figure>
-          <figure><img loading="lazy" src="assets/widgets/widget-iphone-l-rain.webp" alt="Large widget, rain" /><figcaption class="board-cap">Grande · lluvia</figcaption></figure>
-          <figure><img loading="lazy" src="assets/widgets/widget-iphone-l-sunset.webp" alt="Large widget, sunset" /><figcaption class="board-cap">Grande · atardecer</figcaption></figure>
-          <figure><img loading="lazy" src="assets/widgets/widget-ipad-l-city.webp" alt="iPad large widget, townscape" /><figcaption class="board-cap">iPad · grande</figcaption></figure>
-          <figure><img loading="lazy" src="assets/widgets/widget-ipad-xl-sunset.webp" alt="iPad extra-large widget, sunset" /><figcaption class="board-cap">iPad · extragrande</figcaption></figure>
+          <figure class="wg-m"><img loading="lazy" src="assets/widgets/widget-iphone-m.webp" alt="Medium widget, clear day" /><figcaption class="board-cap">Mediano · despejado</figcaption></figure>
+          <figure class="wg-m"><img loading="lazy" src="assets/widgets/widget-iphone-m-city.webp" alt="Medium widget, townscape" /><figcaption class="board-cap">Mediano · ciudad</figcaption></figure>
+          <figure class="wg-m"><img loading="lazy" src="assets/widgets/widget-iphone-m-rain.webp" alt="Medium widget, rain" /><figcaption class="board-cap">Mediano · lluvia</figcaption></figure>
+          <figure class="wg-m"><img loading="lazy" src="assets/widgets/widget-iphone-m-sunset.webp" alt="Medium widget, sunset" /><figcaption class="board-cap">Mediano · atardecer</figcaption></figure>
+          <figure class="wg-s"><img loading="lazy" src="assets/widgets/widget-iphone-s-city.webp" alt="Small widget, townscape" /><figcaption class="board-cap">Pequeño · ciudad</figcaption></figure>
+          <figure class="wg-s"><img loading="lazy" src="assets/widgets/widget-iphone-s-sunset.webp" alt="Small widget, sunset" /><figcaption class="board-cap">Pequeño · atardecer</figcaption></figure>
+          <figure class="wg-l"><img loading="lazy" src="assets/widgets/widget-iphone-l-rain.webp" alt="Large widget, rain" /><figcaption class="board-cap">Grande · lluvia</figcaption></figure>
+          <figure class="wg-l"><img loading="lazy" src="assets/widgets/widget-iphone-l-sunset.webp" alt="Large widget, sunset" /><figcaption class="board-cap">Grande · atardecer</figcaption></figure>
+          <figure class="wg-l"><img loading="lazy" src="assets/widgets/widget-ipad-l-city.webp" alt="iPad large widget, townscape" /><figcaption class="board-cap">iPad · grande</figcaption></figure>
+          <figure class="wg-xl"><img loading="lazy" src="assets/widgets/widget-ipad-xl-sunset.webp" alt="iPad extra-large widget, sunset" /><figcaption class="board-cap">iPad · extragrande</figcaption></figure>
         </div>
       </div>
     </section>
