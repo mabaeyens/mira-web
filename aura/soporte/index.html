@@ -73,6 +73,59 @@
     .faq-item a { color: var(--accent); text-decoration: none; }
     .faq-item a:hover { color: var(--accent-hov); text-decoration: underline; }
 
+    /* Step-by-step guide — screenshots with tap markers over the real UI. */
+    .guide-lead { max-width: 44rem; color: var(--muted); line-height: 1.75; margin: 0 0 1.6rem; }
+    .guide-path {
+      display: flex; align-items: center; gap: 0.6rem;
+      max-width: 60rem; margin: 2.4rem 0 1.2rem;
+      font-size: 1.05rem; font-weight: 700; color: var(--text);
+    }
+    .guide-path::before { content: ""; width: 22px; height: 2px; border-radius: 2px; background: var(--a30); }
+    .guide-step {
+      display: grid; gap: 1.3rem 2.2rem; align-items: center;
+      grid-template-columns: 1fr; max-width: 60rem; margin-bottom: 1.6rem;
+    }
+    @media (min-width: 720px) {
+      .guide-step { grid-template-columns: 236px 1fr; }
+      .guide-step.flip { grid-template-columns: 1fr 236px; }
+      .guide-step.flip .guide-shot { order: 2; }
+    }
+    .guide-shot { position: relative; width: 230px; margin: 0 auto; }
+    .guide-shot img {
+      display: block; width: 230px; height: auto; aspect-ratio: 360 / 782;
+      border-radius: 30px; border: 1px solid var(--a15);
+      box-shadow: 0 14px 36px -14px rgba(0, 0, 0, .5); background: var(--a12);
+    }
+    /* Tap marker: a numbered dot with a pulsing ring, placed over the target. */
+    .tap { position: absolute; transform: translate(-50%, -50%); width: 30px; height: 30px; pointer-events: none; }
+    .tap b {
+      position: absolute; inset: 0; display: grid; place-items: center;
+      border-radius: 50%; font-size: 0.9rem; font-weight: 800; color: #fff;
+      background: var(--accent); border: 2px solid rgba(255, 255, 255, .92);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .5);
+    }
+    .tap i {
+      position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--accent);
+      animation: tap-pulse 2s cubic-bezier(.22, .61, .36, 1) infinite;
+    }
+    @keyframes tap-pulse {
+      0%   { transform: scale(.7); opacity: .85; }
+      70%, 100% { transform: scale(2.2); opacity: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .tap i { animation: none; opacity: .55; transform: scale(1.6); }
+    }
+    .guide-list { list-style: none; margin: 0; padding: 0; max-width: 30rem; display: grid; gap: 1rem; }
+    .guide-list li { display: grid; grid-template-columns: 1.7rem 1fr; gap: 0.75rem; color: var(--muted); line-height: 1.65; }
+    .guide-list li > span:first-child {
+      display: grid; place-items: center; width: 1.7rem; height: 1.7rem;
+      border-radius: 50%; background: var(--a20); border: 1px solid var(--a30);
+      color: var(--text); font-weight: 700; font-size: 0.85rem;
+    }
+    .guide-list strong { color: var(--text); font-weight: 600; }
+    .guide-list a { color: var(--accent); text-decoration: none; }
+    .guide-list a:hover { color: var(--accent-hov); text-decoration: underline; }
+
     /* Contact form — composes a pre-filled email, no backend, no third party. */
     .support-form { max-width: 44rem; display: grid; gap: 1.1rem; }
     .form-row { display: grid; gap: 1.1rem; grid-template-columns: 1fr; }
@@ -215,6 +268,91 @@
             <p class="support-muted lang-en">Free and it only takes a minute. The key is stored only on your device.</p>
             <p class="support-muted lang-es">Es gratis y solo lleva un minuto. La clave se guarda solo en tu dispositivo.</p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Step-by-step: adding the AEMET key ───────────────────── -->
+    <section class="section">
+      <div class="wrap">
+        <div class="sec-head" data-reveal>
+          <p class="eyebrow"><span class="lang-en">Step by step</span><span class="lang-es">Paso a paso</span></p>
+          <h2 class="sec-title"><span class="lang-en">Adding your AEMET key</span><span class="lang-es">Añadir tu clave de AEMET</span></h2>
+        </div>
+
+        <p class="guide-lead lang-en" data-reveal>
+          There are two moments to do this: the first time you open Aura (the onboarding shows you the
+          screen automatically), or any time afterwards from Settings. The numbers on each screenshot
+          mark exactly where to tap.
+        </p>
+        <p class="guide-lead lang-es" data-reveal>
+          Hay dos momentos para hacerlo: la primera vez que abres Aura (la bienvenida te muestra la
+          pantalla automáticamente) o en cualquier momento después, desde Ajustes. Los números de cada
+          captura marcan exactamente dónde tocar.
+        </p>
+
+        <!-- Path A: onboarding (first launch only) -->
+        <h3 class="guide-path" data-reveal>
+          <span class="lang-en">The first time you open Aura</span><span class="lang-es">La primera vez que abres Aura</span>
+        </h3>
+
+        <div class="guide-step" data-reveal>
+          <div class="guide-shot">
+            <img loading="lazy" decoding="async" src="../assets/shots/guide/onboarding_aemet.webp"
+                 alt="Aura onboarding — the AEMET key screen with the request button and the paste field" />
+            <span class="tap" style="left:50%; top:65%"><i></i><b>1</b></span>
+            <span class="tap" style="left:80%; top:71%"><i></i><b>2</b></span>
+          </div>
+          <ol class="guide-list">
+            <li class="lang-en"><span>1</span><span>Tap <strong>Solicitar mi clave gratis</strong>. AEMET's site opens; sign up and they email you a free key. (Prefer to do it later? <strong>Pasar</strong>, top right, skips this — you can always come back from Settings.)</span></li>
+            <li class="lang-es"><span>1</span><span>Toca <strong>Solicitar mi clave gratis</strong>. Se abre la web de AEMET; te registras y te envían por correo una clave gratuita. (¿Prefieres hacerlo luego? <strong>Pasar</strong>, arriba a la derecha, lo omite: siempre puedes volver desde Ajustes.)</span></li>
+            <li class="lang-en"><span>2</span><span>Copy the key from AEMET's email, come back to Aura, paste it in <strong>Pega aquí tu clave</strong> and tap <strong>Guardar</strong>. That's it.</span></li>
+            <li class="lang-es"><span>2</span><span>Copia la clave del correo de AEMET, vuelve a Aura, pégala en <strong>Pega aquí tu clave</strong> y toca <strong>Guardar</strong>. Ya está.</span></li>
+          </ol>
+        </div>
+
+        <!-- Path B: any time, from Settings -->
+        <h3 class="guide-path" data-reveal>
+          <span class="lang-en">Any time, from Settings</span><span class="lang-es">En cualquier momento, desde Ajustes</span>
+        </h3>
+
+        <div class="guide-step" data-reveal>
+          <div class="guide-shot">
+            <img loading="lazy" decoding="async" src="../assets/shots/guide/home_menu.webp"
+                 alt="Aura home screen — the menu button in the top-right corner" />
+            <span class="tap" style="left:91%; top:8.7%"><i></i><b>1</b></span>
+          </div>
+          <ol class="guide-list">
+            <li class="lang-en"><span>1</span><span>On the main screen, tap the <strong>menu button</strong> (☰) in the top-right corner, just below the status icons.</span></li>
+            <li class="lang-es"><span>1</span><span>En la pantalla principal, toca el <strong>botón de menú</strong> (☰) de la esquina superior derecha, justo debajo de los iconos de estado.</span></li>
+          </ol>
+        </div>
+
+        <div class="guide-step flip" data-reveal>
+          <div class="guide-shot">
+            <img loading="lazy" decoding="async" src="../assets/shots/guide/menu_ajustes.webp"
+                 alt="Aura menu open, with Ajustes highlighted" />
+            <span class="tap" style="left:68%; top:34%"><i></i><b>2</b></span>
+          </div>
+          <ol class="guide-list">
+            <li class="lang-en"><span>2</span><span>In the menu that opens, tap <strong>Ajustes</strong> (Settings).</span></li>
+            <li class="lang-es"><span>2</span><span>En el menú que se abre, toca <strong>Ajustes</strong>.</span></li>
+          </ol>
+        </div>
+
+        <div class="guide-step" data-reveal>
+          <div class="guide-shot">
+            <img loading="lazy" decoding="async" src="../assets/shots/guide/ajustes_clave.webp"
+                 alt="Aura Settings — the Clave API section with the AEMET key field and Guardar clave" />
+            <span class="tap" style="left:78%; top:27%"><i></i><b>3</b></span>
+            <span class="tap" style="left:78%; top:33.5%"><i></i><b>4</b></span>
+          </div>
+          <ol class="guide-list">
+            <li class="lang-en"><span>3</span><span>Under <strong>Clave API</strong>, paste your key in <strong>Clave de AEMET</strong>.</span></li>
+            <li class="lang-es"><span>3</span><span>En <strong>Clave API</strong>, pega tu clave en <strong>Clave de AEMET</strong>.</span></li>
+            <li class="lang-en"><span>4</span><span>Tap <strong>Guardar clave</strong>. You can change it here whenever you like, or tap <strong>Borrar clave</strong> to remove it. The key is stored in your device's Keychain.</span></li>
+            <li class="lang-es"><span>4</span><span>Toca <strong>Guardar clave</strong>. Puedes cambiarla aquí cuando quieras, o tocar <strong>Borrar clave</strong> para eliminarla. La clave se guarda en el Llavero de tu dispositivo.</span></li>
+          </ol>
         </div>
       </div>
     </section>
