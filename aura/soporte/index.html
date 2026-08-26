@@ -40,7 +40,7 @@
 
     /* Support-page specifics, on top of the shared design tokens. */
     .support-lead { max-width: 44rem; color: var(--muted); line-height: 1.75; margin: 0 0 2.5rem; }
-    .support-grid { display: grid; gap: 1.25rem; grid-template-columns: 1fr; max-width: 44rem; }
+    .support-grid { display: grid; gap: 1.25rem; grid-template-columns: 1fr; max-width: 56rem; }
     @media (min-width: 720px) { .support-grid.two { grid-template-columns: 1fr 1fr; } }
     .support-card {
       background: var(--surface);
@@ -64,6 +64,20 @@
     }
     .support-mail:hover { background: var(--a25); text-decoration: none !important; }
     .support-mail svg { width: 18px; height: 18px; }
+    /* Inline copy control — a small icon button that sits on the email line. */
+    .mail-row { display: inline-flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; }
+    .copy-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      cursor: pointer; padding: 0.5rem;
+      border-radius: 10px; vertical-align: middle;
+      background: transparent; border: 1px solid var(--b30); color: var(--muted);
+    }
+    .copy-btn:hover { border-color: var(--a30); background: var(--a12); color: var(--text); }
+    .copy-btn.copied { border-color: var(--a30); background: var(--a20); color: var(--accent); }
+    .copy-btn svg { width: 17px; height: 17px; }
+    .copy-btn .ico-check { display: none; }
+    .copy-btn.copied .ico-copy { display: none; }
+    .copy-btn.copied .ico-check { display: inline; }
     .support-muted { color: var(--dim); font-size: 0.92rem; }
     .faq { max-width: 44rem; margin-top: 0.5rem; }
     .faq-item { border-top: 1px solid var(--b30); padding: 1.2rem 0; }
@@ -80,7 +94,6 @@
       max-width: 60rem; margin: 2.4rem 0 1.2rem;
       font-size: 1.05rem; font-weight: 700; color: var(--text);
     }
-    .guide-path::before { content: ""; width: 22px; height: 2px; border-radius: 2px; background: var(--a30); }
     .guide-step {
       display: grid; gap: 1.3rem 2.2rem; align-items: center;
       grid-template-columns: 1fr; max-width: 60rem; margin-bottom: 1.6rem;
@@ -175,6 +188,13 @@
     <symbol id="ico-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>
     </symbol>
+    <symbol id="ico-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="9" y="9" width="11" height="11" rx="2"/>
+      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+    </symbol>
+    <symbol id="ico-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 6 9 17l-5-5"/>
+    </symbol>
   </svg>
 
   <!-- ── Header ─────────────────────────────────────────────────── -->
@@ -238,11 +258,18 @@
             <h2><span class="lang-en">Email me</span><span class="lang-es">Escríbeme</span></h2>
             <p class="lang-en">The most direct way. I read and answer it myself, usually within a day or two.</p>
             <p class="lang-es">La forma más directa. Lo leo y respondo yo, normalmente en uno o dos días.</p>
-            <a class="support-mail" href="mailto:dears-respect.8u@icloud.com">
-              <svg><use href="#ico-mail"/></svg>dears-respect.8u@icloud.com
-            </a>
-            <p class="support-muted lang-en">Tell me your device and your iOS or iPadOS version, and what you expected to see. That gets it solved much faster.</p>
-            <p class="support-muted lang-es">Cuéntame tu dispositivo y tu versión de iOS o iPadOS, y qué esperabas ver. Así se resuelve mucho antes.</p>
+            <div class="mail-row">
+              <a class="support-mail" href="mailto:dears-respect.8u@icloud.com">
+                <svg><use href="#ico-mail"/></svg>dears-respect.8u@icloud.com
+              </a>
+              <button type="button" class="copy-btn" data-copy="dears-respect.8u@icloud.com"
+                      aria-label="Copy email address / Copiar la dirección de correo" title="Copy / Copiar">
+                <svg class="ico-copy"><use href="#ico-copy"/></svg>
+                <svg class="ico-check"><use href="#ico-check"/></svg>
+              </button>
+            </div>
+            <p class="support-muted lang-en">Tell me your device and your iOS, iPadOS, or Android version, and what you expected to see. That gets it solved much faster.</p>
+            <p class="support-muted lang-es">Cuéntame tu dispositivo y tu versión de iOS, iPadOS o Android, y qué esperabas ver. Así se resuelve mucho antes.</p>
           </div>
 
           <div class="support-card">
@@ -260,8 +287,8 @@
         <div class="support-grid" style="margin-top: 1.25rem;" data-reveal>
           <div class="support-card">
             <h2><span class="lang-en">Get your AEMET API key</span><span class="lang-es">Consigue tu clave de AEMET</span></h2>
-            <p class="lang-en">Aura reads the forecast through your own free AEMET OpenData key. Request one below — AEMET emails it to you — then paste it into Settings (Ajustes).</p>
-            <p class="lang-es">Aura lee la predicción con tu propia clave gratuita de AEMET OpenData. Solicítala aquí abajo —AEMET te la envía por correo— y pégala en Ajustes.</p>
+            <p class="lang-en">Aura reads the forecast through your own free AEMET OpenData key. Request one below (AEMET emails it to you), then paste it into Settings (Ajustes).</p>
+            <p class="lang-es">Aura lee la predicción con tu propia clave gratuita de AEMET OpenData. Solicítala aquí abajo (AEMET te la envía por correo) y pégala en Ajustes.</p>
             <a class="support-mail" href="https://opendata.aemet.es/centrodedescargas/altaUsuario" target="_blank" rel="noopener">
               <svg><use href="#ico-key"/></svg><span class="lang-en">Request an AEMET API key</span><span class="lang-es">Solicitar una clave de AEMET</span>
             </a>
@@ -283,12 +310,14 @@
         <p class="guide-lead lang-en" data-reveal>
           There are two moments to do this: the first time you open Aura (the onboarding shows you the
           screen automatically), or any time afterwards from Settings. The numbers on each screenshot
-          mark exactly where to tap.
+          mark exactly where to tap. These screenshots are from iPhone; on Android it's the same idea —
+          open Settings (the gear, top right) and paste your key under the AEMET key field.
         </p>
         <p class="guide-lead lang-es" data-reveal>
           Hay dos momentos para hacerlo: la primera vez que abres Aura (la bienvenida te muestra la
           pantalla automáticamente) o en cualquier momento después, desde Ajustes. Los números de cada
-          captura marcan exactamente dónde tocar.
+          captura marcan exactamente dónde tocar. Estas capturas son de iPhone; en Android es la misma idea:
+          abre Ajustes (el engranaje, arriba a la derecha) y pega tu clave en el campo de la clave de AEMET.
         </p>
 
         <!-- Path A: onboarding (first launch only) -->
@@ -379,12 +408,12 @@
             <div class="field">
               <label for="f-device"><span class="lang-en">Your device</span><span class="lang-es">Tu dispositivo</span></label>
               <input id="f-device" type="text" autocomplete="off"
-                     data-ph-en="e.g. iPhone 15, iPad Air" data-ph-es="p. ej. iPhone 15, iPad Air" />
+                     data-ph-en="e.g. iPhone 15, iPad Air, Pixel 8" data-ph-es="p. ej. iPhone 15, iPad Air, Pixel 8" />
             </div>
             <div class="field">
-              <label for="f-version"><span class="lang-en">iOS / iPadOS version</span><span class="lang-es">Versión de iOS / iPadOS</span></label>
+              <label for="f-version"><span class="lang-en">OS version</span><span class="lang-es">Versión del sistema</span></label>
               <input id="f-version" type="text" autocomplete="off"
-                     data-ph-en="e.g. 18.1" data-ph-es="p. ej. 18.1" />
+                     data-ph-en="e.g. iOS 18.1, Android 15" data-ph-es="p. ej. iOS 18.1, Android 15" />
             </div>
           </div>
           <div class="field">
@@ -446,6 +475,11 @@
             <p class="lang-es">Sí, con widgets en la pantalla de inicio y en la de bloqueo, y una complicación en el Apple Watch.</p>
           </div>
           <div class="faq-item">
+            <h3><span class="lang-en">Is Aura on Android?</span><span class="lang-es">¿Está Aura en Android?</span></h3>
+            <p class="lang-en">Yes — a native phone app, built in Kotlin, with a Home-screen widget. It's coming to Google Play; in the meantime the source is on <a href="https://github.com/mabaeyens/aura-android" target="_blank" rel="noopener">GitHub</a>. The iPad and Apple Watch extras are iOS-only; on Android it's the phone and its widget.</p>
+            <p class="lang-es">Sí: una app nativa para el teléfono, hecha en Kotlin, con un widget en la pantalla de inicio. Llegará próximamente a Google Play; mientras tanto, el código está en <a href="https://github.com/mabaeyens/aura-android" target="_blank" rel="noopener">GitHub</a>. Los extras de iPad y Apple Watch son solo de iOS; en Android es el teléfono y su widget.</p>
+          </div>
+          <div class="faq-item">
             <h3><span class="lang-en">Do tips unlock anything?</span><span class="lang-es">¿Las propinas desbloquean algo?</span></h3>
             <p class="lang-en">No. Tips are an optional way to say thank you and unlock no features. Aura is just as complete without them.</p>
             <p class="lang-es">No. Las propinas son una forma opcional de dar las gracias y no desbloquean ninguna función. Aura es igual de completa sin ellas.</p>
@@ -454,6 +488,11 @@
             <h3><span class="lang-en">How is my privacy handled?</span><span class="lang-es">¿Cómo se gestiona mi privacidad?</span></h3>
             <p class="lang-en">Aura has no servers of mine and collects no personal data. You can read the full <a href="/aura/privacidad">privacy policy</a>.</p>
             <p class="lang-es">Aura no tiene servidores míos y no recopila datos personales. Puedes leer la <a href="/aura/privacidad">política de privacidad</a> completa.</p>
+          </div>
+          <div class="faq-item">
+            <h3><span class="lang-en">How do I delete my data?</span><span class="lang-es">¿Cómo borro mis datos?</span></h3>
+            <p class="lang-en">There's nothing on a server to delete — Aura keeps no copy of your data off your device. Uninstalling the app, or clearing its storage, removes the only copy. There's more detail in the <a href="/aura/privacidad">privacy policy</a>.</p>
+            <p class="lang-es">No hay nada que borrar en ningún servidor: Aura no guarda ninguna copia de tus datos fuera de tu dispositivo. Desinstalar la app, o borrar su almacenamiento, elimina la única copia. Tienes más detalle en la <a href="/aura/privacidad">política de privacidad</a>.</p>
           </div>
         </div>
       </div>
@@ -466,8 +505,8 @@
     <div class="wrap">
       <img src="../assets/icon.png" class="footer-icon" alt="Aura" />
       <p class="footer-name">Aura</p>
-      <p class="footer-tag lang-en">A personal, private weather app for Spain, on every Apple surface.</p>
-      <p class="footer-tag lang-es">Una app del tiempo personal y privada para España, en cada dispositivo Apple.</p>
+      <p class="footer-tag lang-en">A personal, private weather app for Spain — on iPhone, iPad, Apple&nbsp;Watch, and Android.</p>
+      <p class="footer-tag lang-es">Una app del tiempo personal y privada para España, en iPhone, iPad, Apple&nbsp;Watch y Android.</p>
 
       <div class="footer-cta">
         <a href="mailto:dears-respect.8u@icloud.com" class="btn btn-primary">
@@ -542,7 +581,7 @@
         var subject = es ? 'Soporte de Aura' : 'Aura support';
         var lines = [];
         lines.push((es ? 'Dispositivo: ' : 'Device: ') + (device || (es ? '(sin indicar)' : '(not given)')));
-        lines.push((es ? 'iOS / iPadOS: ' : 'iOS / iPadOS: ') + (version || (es ? '(sin indicar)' : '(not given)')));
+        lines.push((es ? 'Sistema: ' : 'OS: ') + (version || (es ? '(sin indicar)' : '(not given)')));
         lines.push('');
         lines.push(message);
 
@@ -550,6 +589,36 @@
           + '?subject=' + encodeURIComponent(subject)
           + '&body=' + encodeURIComponent(lines.join('\n'));
         window.location.href = href;
+      });
+    })();
+
+    // Copy-to-clipboard buttons (e.g. the support email). No backend, no dependency.
+    (function () {
+      function fallbackCopy(text) {
+        var ta = document.createElement('textarea');
+        ta.value = text; ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+      }
+      document.querySelectorAll('.copy-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var text = btn.getAttribute('data-copy') || '';
+          var en = btn.querySelector('.lang-en'), es = btn.querySelector('.lang-es');
+          var priorEn = en ? en.textContent : '', priorEs = es ? es.textContent : '';
+          function flash() {
+            btn.classList.add('copied');
+            if (en) en.textContent = 'Copied'; if (es) es.textContent = 'Copiado';
+            setTimeout(function () {
+              btn.classList.remove('copied');
+              if (en) en.textContent = priorEn; if (es) es.textContent = priorEs;
+            }, 1600);
+          }
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(flash, function () { fallbackCopy(text); flash(); });
+          } else { fallbackCopy(text); flash(); }
+        });
       });
     })();
 

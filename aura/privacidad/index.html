@@ -153,8 +153,8 @@
 
         <div class="policy" data-reveal>
           <p class="policy-updated">
-            <span class="lang-en">Last updated: 22 August 2026</span>
-            <span class="lang-es">Última actualización: 22 de agosto de 2026</span>
+            <span class="lang-en">Last updated: 26 August 2026</span>
+            <span class="lang-es">Última actualización: 26 de agosto de 2026</span>
           </p>
 
           <p class="policy-lead lang-en">
@@ -178,7 +178,9 @@
                 fetch its forecast. It is never linked to your identity, because there is no identity: Aura
                 has no accounts.</li>
               <li>It's open source, so you can check every word of this for yourself:
-                <a href="https://github.com/mabaeyens/aura-apps" target="_blank" rel="noopener">github.com/mabaeyens/aura-apps</a>.</li>
+                <a href="https://github.com/mabaeyens/aura-apps" target="_blank" rel="noopener">aura-apps</a>
+                (iPhone, iPad, Apple&nbsp;Watch) and
+                <a href="https://github.com/mabaeyens/aura-android" target="_blank" rel="noopener">aura-android</a>.</li>
             </ul>
             <ul class="lang-es">
               <li>Sin cuenta. Sin registro. Sin seguimiento. Sin analíticas. Sin anuncios.</li>
@@ -190,7 +192,9 @@
                 obtener su previsión. Nunca se vincula a tu identidad, porque no hay identidad: Aura no
                 tiene cuentas.</li>
               <li>Es de código abierto, así que puedes comprobar cada palabra por ti mismo:
-                <a href="https://github.com/mabaeyens/aura-apps" target="_blank" rel="noopener">github.com/mabaeyens/aura-apps</a>.</li>
+                <a href="https://github.com/mabaeyens/aura-apps" target="_blank" rel="noopener">aura-apps</a>
+                (iPhone, iPad, Apple&nbsp;Watch) y
+                <a href="https://github.com/mabaeyens/aura-android" target="_blank" rel="noopener">aura-android</a>.</li>
             </ul>
           </div>
 
@@ -302,17 +306,79 @@ latitude=XX&amp;longitude=YY</code></pre>
 <span class="c">// CAMS / Copernicus (vía Open-Meteo) — un punto cerca de ti, no tu posición real.</span>
 latitude=XX&amp;longitude=YY</code></pre>
 
+          <!-- Google Play Data safety -->
+          <h3><span class="lang-en">Google Play Data safety</span><span class="lang-es">Seguridad de los datos en Google Play</span></h3>
+          <p class="lang-en">
+            On Android, Google Play shows a Data safety section for every app, and Aura's is as small as
+            it can honestly be. Aura declares that it collects one thing — your approximate location, the
+            municipality — and only to fetch the forecast. That location is processed <em>ephemerally</em>:
+            it is used in memory to answer the request and never stored by me, because there is no server
+            to store it on. It is <em>not shared</em>: sending the place you picked to a weather service is
+            a user-initiated action you'd expect. All of it travels over an encrypted (HTTPS) connection.
+            Nothing else — no personal info, no identifiers, no analytics, no ads — is collected or shared,
+            because none of it exists in the app. The same is true of the App Store's privacy label on iOS.
+          </p>
+          <p class="lang-es">
+            En Android, Google Play muestra una sección de «Seguridad de los datos» para cada app, y la de
+            Aura es tan pequeña como honestamente puede ser. Aura declara que recopila una sola cosa —tu
+            ubicación aproximada, el municipio— y solo para obtener la previsión. Esa ubicación se procesa
+            de forma <em>efímera</em>: se usa en memoria para responder a la petición y nunca la guardo,
+            porque no hay ningún servidor donde guardarla. <em>No se comparte</em>: enviar el lugar que has
+            elegido a un servicio meteorológico es una acción que tú inicias y que cabe esperar. Todo viaja
+            por una conexión cifrada (HTTPS). Nada más —ni datos personales, ni identificadores, ni
+            analítica, ni anuncios— se recopila ni se comparte, porque nada de eso existe en la app. Lo
+            mismo vale para la etiqueta de privacidad de la App Store en iOS.
+          </p>
+
+          <!-- Tips and purchases -->
+          <h3><span class="lang-en">Tips and purchases</span><span class="lang-es">Propinas y compras</span></h3>
+          <p class="lang-en">
+            Aura has an optional tip jar, and nothing is locked behind it — the app is identical whether or
+            not you ever tip. Payments go through each platform's own billing (Apple's In-App Purchases on
+            iOS, Google Play Billing on Android), which collects the payment details directly from you under
+            that platform's terms. Aura never sees your card or bank details, and it keeps no purchase
+            history off your device. No financial information reaches me.
+          </p>
+          <p class="lang-es">
+            Aura tiene un bote de propinas opcional, y no hay nada bloqueado tras él: la app es idéntica
+            tanto si dejas propina como si no. Los pagos pasan por el sistema de facturación de cada
+            plataforma (las compras integradas de Apple en iOS, Google Play Billing en Android), que recoge
+            los datos de pago directamente de ti según los términos de esa plataforma. Aura nunca ve tu
+            tarjeta ni tus datos bancarios, y no guarda ningún historial de compras fuera de tu dispositivo.
+            No me llega ninguna información financiera.
+          </p>
+
+          <!-- GDPR rights -->
+          <h3><span class="lang-en">Your data and your GDPR rights</span><span class="lang-es">Tus datos y tus derechos RGPD</span></h3>
+          <p class="lang-en">
+            Under the GDPR you have the right to access or delete the personal data an app holds about you.
+            With Aura there is almost nothing to act on, by design: I run no server and keep no copy of
+            anyone's data. An access request returns nothing I hold. To delete everything Aura stores,
+            uninstall the app or clear its storage — that removes the only copy, which lives entirely on
+            your device. If you want to ask anything about this, the contact below is the place, and I'm the
+            only person who reads it.
+          </p>
+          <p class="lang-es">
+            Con el RGPD tienes derecho a acceder a los datos personales que una app tenga sobre ti, o a
+            borrarlos. Con Aura no hay casi nada sobre lo que actuar, y es a propósito: no tengo ningún
+            servidor ni guardo copia de los datos de nadie. Una solicitud de acceso no devuelve nada que yo
+            tenga. Para borrar todo lo que Aura guarda, desinstala la app o borra su almacenamiento: eso
+            elimina la única copia, que vive por completo en tu dispositivo. Si quieres preguntar cualquier
+            cosa sobre esto, el contacto de abajo es el lugar, y soy la única persona que lo lee.
+          </p>
+
           <!-- Data that stays on your device -->
           <h3><span class="lang-en">Data that stays on your device</span><span class="lang-es">Datos que se quedan en tu dispositivo</span></h3>
           <p class="lang-en">
-            Cached forecasts, your chosen background theme, and last-used settings live on your device. If
-            iCloud is available they may sync across your own devices under your Apple ID, and nowhere
-            else, never to me.
+            Cached forecasts, your chosen background theme, and last-used settings live on your device. On
+            iPhone and iPad, if iCloud is available they may sync across your own devices under your Apple
+            ID, and nowhere else. On Android they stay on the phone. Either way, never to me.
           </p>
           <p class="lang-es">
             Las previsiones en caché, el tema de fondo que elijas y los últimos ajustes usados viven en tu
-            dispositivo. Si iCloud está disponible, pueden sincronizarse entre tus propios dispositivos con
-            tu Apple ID, y en ningún otro sitio.
+            dispositivo. En iPhone y iPad, si iCloud está disponible, pueden sincronizarse entre tus propios
+            dispositivos con tu Apple ID, y en ningún otro sitio. En Android se quedan en el teléfono. En
+            cualquier caso, nunca hasta mí.
           </p>
 
           <!-- Children's privacy -->
@@ -361,8 +427,8 @@ latitude=XX&amp;longitude=YY</code></pre>
     <div class="wrap">
       <img src="../assets/icon.png" class="footer-icon" alt="Aura" />
       <p class="footer-name">Aura</p>
-      <p class="footer-tag lang-en">A personal, private weather app for Spain, on every Apple surface.</p>
-      <p class="footer-tag lang-es">Una app del tiempo personal y privada para España, en cada dispositivo Apple.</p>
+      <p class="footer-tag lang-en">A personal, private weather app for Spain — on iPhone, iPad, Apple&nbsp;Watch, and Android.</p>
+      <p class="footer-tag lang-es">Una app del tiempo personal y privada para España, en iPhone, iPad, Apple&nbsp;Watch y Android.</p>
 
       <div class="footer-cta">
         <a href="/aura/soporte" class="btn btn-primary">

@@ -168,6 +168,9 @@
   border: 1px solid var(--a15);
 }
 
+/* Android — sized to a real Google Pixel 10a screen (1080 × 2424, 20:9). */
+.rail-android .shot-phone img { aspect-ratio: 1080 / 2424; }
+
 /* iPad */
 .shot-pad img {
   width: min(80vw, 470px);
