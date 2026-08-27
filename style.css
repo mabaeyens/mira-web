@@ -957,6 +957,20 @@ body::after {
 .footer-credit a.strong:hover { color: var(--accent); }
 .footer-credit svg { width: 0.85rem; height: 0.85rem; }
 
+/* Compliance footer: open-data sources + non-official disclaimer */
+.footer-legal {
+  max-width: 640px;
+  margin: 1.1rem auto 0;
+  text-align: center;
+  font-size: 0.72rem;
+  line-height: 1.55;
+  color: var(--dim);
+}
+.footer-legal p { margin: 0.35rem 0; }
+.footer-legal a { color: var(--muted); text-decoration: none; transition: color 0.15s; }
+.footer-legal a:hover { color: var(--accent); }
+.footer-disclaimer { color: var(--dim); }
+
 /* ── Theme toggle icons ─────────────────────────────────────── */
 .icon-sun  { display: block; }
 .icon-moon { display: none;  }
