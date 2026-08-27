@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support, Vera</title>
+  <meta name="description" content="Help and support for Vera, the native Markdown app for your repos. Email me directly, or open an issue on GitHub." />
+  <meta property="og:title" content="Support, Vera" />
+  <meta property="og:description" content="Help and support for Vera. Email me directly, I read and answer it myself." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://askmira.es/vera/support" />
+  <meta property="og:image" content="https://askmira.es/vera/assets/og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#15171A" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#F6F4EF" media="(prefers-color-scheme: light)" />
+
+  <link rel="icon" href="../assets/icon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="../assets/icon.png" />
+
+  <script>
+    (function(){
+      var t = localStorage.getItem('mira-theme');
+      if (t) document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+
+  <!-- Shared Mira design system + Vera teal overrides. No Tailwind. -->
+  <link rel="stylesheet" href="../../style.css" />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    .legal { padding: calc(3.6rem + clamp(2.5rem, 6vh, 4rem)) 0 clamp(4rem, 8vw, 6rem); }
+    .legal .wrap { max-width: 44rem; }
+    .legal .eyebrow { margin-bottom: 1rem; }
+    .legal h1 {
+      font-family: 'Lora', Georgia, serif; font-weight: 400;
+      font-size: clamp(2rem, 4vw, 2.6rem); letter-spacing: -0.01em;
+      color: var(--text); margin: 0.2rem 0 0.5rem;
+    }
+    .legal .lead { color: var(--muted); font-size: 1.02rem; line-height: 1.75; margin: 0 0 2.2rem; max-width: 40ch; }
+    .support-card {
+      background: var(--surface); border: 1px solid var(--b25);
+      border-radius: 0.9rem; padding: 1.5rem 1.5rem 1.6rem; margin-bottom: 1rem;
+    }
+    .support-card h2 { font-family: 'Lora', Georgia, serif; font-weight: 400; font-size: 1.2rem; color: var(--text); margin: 0 0 0.5rem; }
+    .support-card p { color: var(--muted); font-size: 0.92rem; line-height: 1.7; margin: 0 0 0.5rem; }
+    .support-card p:last-child { margin-bottom: 0; }
+    .support-card a.inline { color: var(--accent); text-decoration: none; }
+    .support-card a.inline:hover { color: var(--accent-hov); }
+    .mail-row { display: flex; align-items: center; gap: 0.5rem; margin: 0.8rem 0 0.4rem; flex-wrap: wrap; }
+    .mail-link {
+      display: inline-flex; align-items: center; gap: 0.55rem;
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem;
+      color: var(--accent); text-decoration: none;
+      background: var(--a12); padding: 0.55rem 0.85rem; border-radius: 0.6rem;
+    }
+    .mail-link:hover { background: var(--a20); }
+    .mail-link svg { width: 1rem; height: 1rem; }
+    .copy-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 2.2rem; height: 2.2rem; border-radius: 0.55rem;
+      border: 1px solid var(--b40); background: var(--surface-2);
+      color: var(--muted); cursor: pointer; transition: color .15s, border-color .15s;
+    }
+    .copy-btn:hover { color: var(--text); border-color: var(--b80); }
+    .copy-btn svg { width: 1rem; height: 1rem; }
+    .copy-btn .ico-check { display: none; color: var(--accent); }
+    .copy-btn.copied .ico-copy { display: none; }
+    .copy-btn.copied .ico-check { display: inline; }
+    .support-note { font-size: 0.82rem; color: var(--dim); margin-top: 0.5rem; }
+    .quick-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.4rem; }
+    .legal-foot { border-top: 1px solid var(--b20); padding: 2.5rem 0; text-align: center; }
+    .legal-foot .credit { font-size: 0.78rem; color: var(--dim); display: inline-flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+    .legal-foot a { color: var(--text); text-decoration: none; }
+    .legal-foot a:hover { color: var(--accent); }
+  </style>
+</head>
+
+<body>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="ico-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3.5 11.5 12 4l8.5 7.5"/><path d="M5.5 10v9.5h13V10"/>
+    </symbol>
+    <symbol id="ico-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/>
+    </symbol>
+    <symbol id="ico-apple" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+    </symbol>
+    <symbol id="ico-download" viewBox="0 0 24 24" fill="currentColor"><path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"/></symbol>
+    <symbol id="ico-github" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+    </symbol>
+    <symbol id="ico-linkedin" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 110-4.14 2.07 2.07 0 010 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/>
+    </symbol>
+    <symbol id="ico-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>
+    </symbol>
+    <symbol id="ico-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/>
+    </symbol>
+    <symbol id="ico-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 6 9 17l-5-5"/>
+    </symbol>
+  </svg>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a href="/vera" class="brand">
+        <img src="../assets/icon.png" alt="Vera" />
+        <span>Vera</span>
+      </a>
+      <div class="header-actions">
+        <a href="/" class="btn btn-ghost btn-sm" aria-label="Home">
+          <svg><use href="#ico-home"/></svg><span class="btn-label">Home</span>
+        </a>
+        <button id="theme-toggle" class="icon-btn" aria-label="Toggle theme">
+          <svg class="icon-sun" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg class="icon-moon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="legal" id="top">
+    <div class="wrap">
+      <p class="eyebrow">
+        <svg class="home-mark" aria-hidden="true"><use href="#ico-doc"/></svg>Vera · Support
+      </p>
+      <h1>Help and support</h1>
+      <p class="lead">
+        Something not working, or a feature you wish Vera had? Tell me. I build this myself, so it reaches the right person on the first try.
+      </p>
+
+      <div class="support-card">
+        <h2>Email me</h2>
+        <p>The most direct way. I read and answer it myself, usually within a day or two.</p>
+        <div class="mail-row">
+          <a class="mail-link" href="mailto:dears-respect.8u@icloud.com">
+            <svg aria-hidden="true"><use href="#ico-mail"/></svg>dears-respect.8u@icloud.com
+          </a>
+          <button class="copy-btn" id="copy-mail" aria-label="Copy email address" data-mail="dears-respect.8u@icloud.com">
+            <svg class="ico-copy" aria-hidden="true"><use href="#ico-copy"/></svg>
+            <svg class="ico-check" aria-hidden="true"><use href="#ico-check"/></svg>
+          </button>
+        </div>
+        <p class="support-note">Tell me your device and your macOS, iOS or iPadOS version, and what you expected to see. That gets it solved much faster.</p>
+      </div>
+
+      <div class="support-card">
+        <h2>Report a bug or suggest a feature</h2>
+        <p>If you have a GitHub account, you can also open a public issue. This is optional: for help, the email above is enough.</p>
+        <p><a class="inline" href="https://github.com/mabaeyens/vera-apps/issues" target="_blank" rel="noopener">Open an issue on GitHub →</a></p>
+      </div>
+
+      <div class="support-card">
+        <h2>Get Vera</h2>
+        <p>Not installed yet? The beta is on TestFlight for iPhone and iPad, and the Mac app is a direct download.</p>
+        <div class="quick-links">
+          <a class="btn btn-primary btn-sm" href="https://testflight.apple.com/join/AyS6RfM8" target="_blank" rel="noopener">
+            <svg><use href="#ico-apple"/></svg><span class="btn-label">Join beta</span>
+          </a>
+          <a class="btn btn-ghost btn-sm" href="https://github.com/mabaeyens/vera-apps/releases/latest" target="_blank" rel="noopener">
+            <svg><use href="#ico-download"/></svg><span class="btn-label">Download for Mac</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="legal-foot">
+    <p class="credit">
+      <span>Part of the <a href="/">Mira</a> ecosystem · Built by Miguel A. Baeyens, with Claude Code · <a href="/vera/privacy">Privacy</a></span>
+      <a href="https://linkedin.com/in/mabaeyens" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-linkedin"/></svg>
+      </a>
+    </p>
+  </footer>
+
+  <script>
+    document.getElementById('theme-toggle').addEventListener('click', function () {
+      var html = document.documentElement;
+      var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('mira-theme', next);
+    });
+
+    (function () {
+      var btn = document.getElementById('copy-mail');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        var mail = btn.getAttribute('data-mail');
+        if (navigator.clipboard) navigator.clipboard.writeText(mail);
+        btn.classList.add('copied');
+        setTimeout(function () { btn.classList.remove('copied'); }, 1600);
+      });
+    })();
+  </script>
+
+</body>
+</html>

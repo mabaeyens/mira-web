@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mira, a local AI assistant for Mac, iPhone & iPad</title>
+  <meta name="description" content="Mira is a finished AI assistant for Mac, iPhone, and iPad. It runs on your own hardware and syncs over your iCloud; no cloud, no accounts, no subscriptions." />
+  <meta property="og:title" content="Mira, a local AI assistant for Mac, iPhone & iPad" />
+  <meta property="og:description" content="A finished AI assistant across your Apple devices, private by default. Applied AI, no hype, built in the open with Claude Code." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://askmira.es/mira" />
+  <meta property="og:image" content="https://askmira.es/assets/og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#15171A" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#F6F4EF" media="(prefers-color-scheme: light)" />
+
+  <link rel="icon" href="../assets/icon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="../assets/icon.png" />
+
+  <!-- Anti-flash: restore saved theme before first paint -->
+  <script>
+    (function(){
+      var t = localStorage.getItem('mira-theme');
+      if (t) document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+
+  <!-- Handwritten CSS only, no Tailwind, no runtime CDN, so layout survives
+       content blockers / Lockdown Mode / offline. -->
+  <link rel="stylesheet" href="../style.css" />
+</head>
+
+<body>
+
+  <!-- ── Shared SVG symbols ─────────────────────────────────────── -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="ico-home" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3.5 11.5 12 4l8.5 7.5"/>
+      <path d="M5.5 10v9.5h13V10"/>
+    </symbol>
+    <symbol id="ico-apple" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+    </symbol>
+    <symbol id="ico-github" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+    </symbol>
+    <symbol id="ico-linkedin" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 110-4.14 2.07 2.07 0 010 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/>
+    </symbol>
+    <symbol id="ico-download" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"/>
+    </symbol>
+    <symbol id="ico-arrow-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M7 17L17 7M7 7h10v10"/>
+    </symbol>
+    <symbol id="ico-arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14M13 6l6 6-6 6"/>
+    </symbol>
+    <symbol id="ico-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/>
+      <path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/>
+    </symbol>
+    <symbol id="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19"/>
+    </symbol>
+  </svg>
+
+  <!-- ── Header ─────────────────────────────────────────────────── -->
+  <header class="site-header">
+    <div class="wrap">
+      <a href="/" class="brand">
+        <img src="../assets/icon.png" alt="Mira" />
+        <span>Mira</span>
+      </a>
+
+      <nav class="header-links" aria-label="Sections">
+        <a href="#capabilities">Capabilities</a>
+        <a href="#screens">Screens</a>
+        <a href="#performance">Performance</a>
+        <a href="#about">About</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="/" class="btn btn-ghost btn-sm" aria-label="Home">
+          <svg><use href="#ico-home"/></svg><span class="btn-label">Home</span>
+        </a>
+        <a href="https://testflight.apple.com/join/Q2gC5amE" target="_blank" rel="noopener"
+           class="btn btn-primary btn-sm" aria-label="Join beta">
+          <svg><use href="#ico-apple"/></svg><span class="btn-label">Join beta</span>
+        </a>
+        <a href="https://github.com/mabaeyens" target="_blank" rel="noopener"
+           class="icon-btn" aria-label="GitHub">
+          <svg><use href="#ico-github"/></svg>
+        </a>
+        <a href="https://linkedin.com/in/mabaeyens" target="_blank" rel="noopener"
+           class="icon-btn" aria-label="LinkedIn">
+          <svg><use href="#ico-linkedin"/></svg>
+        </a>
+        <button id="theme-toggle" class="icon-btn" aria-label="Toggle theme">
+          <svg class="icon-sun" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg class="icon-moon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+
+    <!-- ── Hero ─────────────────────────────────────────────────── -->
+    <section id="hero" class="hero">
+      <div class="wrap">
+        <p class="eyebrow hero-eyebrow">
+          <svg class="home-mark" aria-hidden="true"><use href="#ico-home"/></svg>
+          Local AI, honestly&nbsp;· Mac&nbsp;· iPhone&nbsp;· iPad
+        </p>
+
+        <h1 class="hero-title">A real assistant. All on your <em>own devices.</em></h1>
+
+        <p class="hero-copy">
+          Mira is a finished app for Mac, iPhone, and iPad. It runs the models on
+          your own hardware and syncs over your iCloud, so there's nothing to wire
+          up and nothing leaves your devices. The others are servers you bolt onto
+          your tools; this one you just open.
+        </p>
+
+        <div class="hero-cta">
+          <a href="https://testflight.apple.com/join/Q2gC5amE" target="_blank" rel="noopener" class="btn btn-primary">
+            <svg><use href="#ico-apple"/></svg>Join beta
+          </a>
+          <a href="https://github.com/mabaeyens/mira-apps/releases/latest" target="_blank" rel="noopener" class="btn btn-ghost">
+            <svg><use href="#ico-download"/></svg>Download for Mac
+          </a>
+          <a href="https://github.com/mabaeyens/mira-core" target="_blank" rel="noopener" class="btn btn-ghost">
+            <svg><use href="#ico-github"/></svg>View source
+          </a>
+        </div>
+
+        <p class="hero-note">
+          Applied AI, no hype. Built in the open with
+          <a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude&nbsp;Code</a>.
+        </p>
+
+        <!-- Live demo: replays real Mira conversations -->
+        <div class="hero-demo">
+          <div class="live-panel" aria-hidden="true">
+            <div class="live-header">
+              <span class="tl tl-red"></span><span class="tl tl-yellow"></span><span class="tl tl-green"></span>
+              <span class="live-title"><span class="live-dot"></span>mira · local</span>
+              <span class="live-readout" id="live-readout">▸ on-device · M5 · 0 tok/s</span>
+            </div>
+            <div class="live-body" id="live-body">
+              <div class="live-thread" id="live-thread"></div>
+            </div>
+          </div>
+          <div class="hero-mini hero-mini-ipad" aria-hidden="true">
+            <img src="../assets/ipados_translation.PNG" alt="" />
+          </div>
+          <div class="hero-mini hero-mini-iphone" aria-hidden="true">
+            <img src="../assets/ios_haiku.PNG" alt="" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Capabilities ─────────────────────────────────────────── -->
+    <section id="capabilities" class="section">
+      <div class="wrap">
+        <div class="sec-head" data-reveal>
+          <p class="eyebrow">
+            <svg class="home-mark" aria-hidden="true"><use href="#ico-home"/></svg>What you can do
+          </p>
+          <h2 class="sec-title">One app, most of your day.</h2>
+          <p class="sec-copy">
+            Not a toolkit to assemble; an assistant that already does the things
+            you'd actually ask for.
+          </p>
+        </div>
+
+        <div class="cap-grid" data-reveal>
+          <div class="cap-card">
+            <div class="cap-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>
+              </svg>
+            </div>
+            <h3>Chat with your codebase</h3>
+            <p>Open a project folder and ask questions about structure, logic, or specific files.</p>
+          </div>
+
+          <div class="cap-card">
+            <div class="cap-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke-linecap="round"/>
+                <polyline points="14 2 14 8 20 8" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>Summarize any document</h3>
+            <p>Drop in a PDF, an article, a note; Mira reads it locally and nothing leaves the device.</p>
+          </div>
+
+          <div class="cap-card">
+            <div class="cap-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <polyline points="17 1 21 5 17 9" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M3 11V9a4 4 0 014-4h14" stroke-linecap="round"/>
+                <polyline points="7 23 3 19 7 15" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M21 13v2a4 4 0 01-4 4H3" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>Switch models on the fly</h3>
+            <p>Qwen3.6, Gemma4, Llama, and more; models sized to fit any Apple Silicon Mac.</p>
+          </div>
+
+          <div class="cap-card">
+            <div class="cap-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+              </svg>
+            </div>
+            <h3>Search the web with context</h3>
+            <p>Opt-in grounded answers when you need current information.</p>
+          </div>
+
+          <div class="cap-card">
+            <div class="cap-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <rect x="7" y="2" width="10" height="20" rx="2" stroke-linecap="round"/>
+                <line x1="12" y1="18" x2="12" y2="18.5" stroke-linecap="round" stroke-width="2"/>
+              </svg>
+            </div>
+            <h3>Pick up on your iPhone</h3>
+            <p>Conversations sync to your iPhone via iCloud; start on Mac, continue on the go.</p>
+          </div>
+
+          <div class="cap-card">
+            <div class="cap-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Run without internet</h3>
+            <p>Full inference offline, zero API keys, no metered costs.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Screens ──────────────────────────────────────────────── -->
+    <section id="screens" class="section">
+      <div class="wrap screens-stage">
+        <div class="screens-head" data-reveal>
+          <p class="eyebrow">
+            <svg class="home-mark" aria-hidden="true"><use href="#ico-home"/></svg>See it running
+          </p>
+          <h2 class="sec-title">The same Mira, on every screen.</h2>
+        </div>
+
+        <div class="device-tabs" data-reveal role="tablist" aria-label="Device">
+          <button class="device-tab active" data-device="iphone">iPhone</button>
+          <button class="device-tab" data-device="mac">Mac</button>
+          <button class="device-tab" data-device="ipad">iPad</button>
+        </div>
+
+        <div class="ss-track" id="ss-track" data-reveal>
+          <!-- iPhone -->
+          <div class="ss-panel" data-device="iphone" data-pos="0">
+            <div class="iphone-frame ss-frame"><img src="../assets/ios_haiku.PNG"  alt="Mira on iPhone, haiku" /></div>
+          </div>
+          <div class="ss-panel" data-device="iphone" data-pos="1">
+            <div class="iphone-frame ss-frame"><img src="../assets/ios_python.PNG" alt="Mira on iPhone, Python code" loading="lazy" /></div>
+          </div>
+          <div class="ss-panel" data-device="iphone" data-pos="2">
+            <div class="iphone-frame ss-frame"><img src="../assets/ios_cherry.PNG" alt="Mira on iPhone, Kyoto itinerary" loading="lazy" /></div>
+          </div>
+          <div class="ss-panel" data-device="iphone" data-pos="3">
+            <div class="iphone-frame ss-frame"><img src="../assets/ios_sleep.PNG"  alt="Mira on iPhone, sleep tips" loading="lazy" /></div>
+          </div>
+
+          <!-- Mac -->
+          <div class="ss-panel" data-device="mac" data-pos="0">
+            <div class="mac-viewport ss-frame"><img src="../assets/macos_weather.png"  alt="Mira on Mac, Madrid weather" loading="lazy" /></div>
+          </div>
+          <div class="ss-panel" data-device="mac" data-pos="1">
+            <div class="mac-viewport ss-frame"><img src="../assets/macos_sleep.png"    alt="Mira on Mac, educational explanation" loading="lazy" /></div>
+          </div>
+          <div class="ss-panel" data-device="mac" data-pos="2">
+            <div class="mac-viewport ss-frame"><img src="../assets/macos_tip.png"      alt="Mira on Mac, tip calculator" loading="lazy" /></div>
+          </div>
+          <div class="ss-panel" data-device="mac" data-pos="3">
+            <div class="mac-viewport ss-frame"><img src="../assets/macos_stoicism.png" alt="Mira on Mac, stoicism" loading="lazy" /></div>
+          </div>
+
+          <!-- iPad -->
+          <div class="ss-panel" data-device="ipad" data-pos="0">
+            <div class="ipad-frame ss-frame"><img src="../assets/ipados_dinner.PNG"      alt="Mira on iPad, dinner recipe" loading="lazy" /></div>
+          </div>
+          <div class="ss-panel" data-device="ipad" data-pos="1">
+            <div class="ipad-frame ss-frame"><img src="../assets/ipados_translation.PNG" alt="Mira on iPad, quote translation" loading="lazy" /></div>
+          </div>
+          <div class="ss-panel" data-device="ipad" data-pos="2">
+            <div class="ipad-frame ss-frame"><img src="../assets/ipados_tcpudp.PNG"      alt="Mira on iPad, TCP vs UDP" loading="lazy" /></div>
+          </div>
+          <div class="ss-panel" data-device="ipad" data-pos="3">
+            <div class="ipad-frame ss-frame"><img src="../assets/ipados_2008.PNG"        alt="Mira on iPad, 2008 crisis" loading="lazy" /></div>
+          </div>
+        </div>
+
+        <p class="ss-caption" id="ss-cap">Short, elegant conversation</p>
+
+        <div class="ss-dots">
+          <button class="ss-dot active" data-pos="0" aria-label="Screenshot 1"></button>
+          <button class="ss-dot" data-pos="1" aria-label="Screenshot 2"></button>
+          <button class="ss-dot" data-pos="2" aria-label="Screenshot 3"></button>
+          <button class="ss-dot" data-pos="3" aria-label="Screenshot 4"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Performance ──────────────────────────────────────────── -->
+    <section id="performance" class="section">
+      <div class="wrap">
+        <div class="perf-grid">
+          <div class="sec-head" data-reveal>
+            <p class="eyebrow">
+              <svg class="home-mark" aria-hidden="true"><use href="#ico-home"/></svg>What runs on your Mac
+            </p>
+            <h2 class="sec-title">Local AI is a memory game.</h2>
+            <p class="sec-copy">
+              The bigger the model, the more RAM it eats. So forget leaderboards.
+              Here's what fits on your Mac, and how it feels to use.
+            </p>
+          </div>
+
+          <div data-reveal>
+            <p class="bench-metric-label">Unified memory &nbsp;·&nbsp; model that fits &nbsp;·&nbsp; how it feels</p>
+            <div class="bench-chart">
+              <div class="bench-row">
+                <span class="bench-label">16 GB &nbsp;·&nbsp; up to 8B</span>
+                <div class="bench-bar-wrap">
+                  <div class="bench-bar-track"><div class="bench-bar" data-pct="24"></div></div>
+                  <span class="bench-val">snappy</span>
+                </div>
+              </div>
+              <div class="bench-row">
+                <span class="bench-label">24 GB &nbsp;·&nbsp; up to 14B</span>
+                <div class="bench-bar-wrap">
+                  <div class="bench-bar-track"><div class="bench-bar" data-pct="44"></div></div>
+                  <span class="bench-val">comfortable</span>
+                </div>
+              </div>
+              <div class="bench-row winner">
+                <span class="bench-label">32 GB &nbsp;·&nbsp; 35B (4-bit)</span>
+                <div class="bench-bar-wrap">
+                  <div class="bench-bar-track"><div class="bench-bar" data-pct="70"></div></div>
+                  <span class="bench-val">~58 tok/s</span>
+                </div>
+              </div>
+              <div class="bench-row">
+                <span class="bench-label">64 GB+ &nbsp;·&nbsp; 70B</span>
+                <div class="bench-bar-wrap">
+                  <div class="bench-bar-track"><div class="bench-bar" data-pct="100"></div></div>
+                  <span class="bench-val">slower, still fine</span>
+                </div>
+              </div>
+            </div>
+            <p class="bench-footnote">
+              Measured, not marketed: 35B at 4-bit on an M5 MacBook Pro, 32 GB, June 2026. &nbsp;·&nbsp;
+              <a href="https://github.com/mabaeyens/mira-core/blob/main/docs/bench-results-2026-06-13.md" target="_blank" rel="noopener">Full numbers ↗</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Under the hood ───────────────────────────────────────── -->
+    <section id="how" class="section">
+      <div class="wrap">
+        <div class="sec-head" data-reveal>
+          <p class="eyebrow">
+            <svg class="home-mark" aria-hidden="true"><use href="#ico-home"/></svg>Under the hood
+          </p>
+          <h2 class="sec-title">Honest architecture.</h2>
+        </div>
+
+        <div class="hood-grid" data-reveal>
+          <div class="hood-card">
+            <div class="cap-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <rect x="4" y="4" width="16" height="16" rx="2" stroke-linecap="round"/>
+                <rect x="9" y="9" width="6" height="6" stroke-linecap="round"/>
+                <line x1="9" y1="2" x2="9" y2="4"/><line x1="15" y1="2" x2="15" y2="4"/>
+                <line x1="9" y1="20" x2="9" y2="22"/><line x1="15" y1="20" x2="15" y2="22"/>
+                <line x1="20" y1="9" x2="22" y2="9"/><line x1="20" y1="15" x2="22" y2="15"/>
+                <line x1="2" y1="9" x2="4" y2="9"/><line x1="2" y1="15" x2="4" y2="15"/>
+              </svg>
+            </div>
+            <h3>Local inference</h3>
+            <p>Powered by Apple Silicon. Run Qwen3.6, Gemma4, Llama, and other open models fully offline; zero API keys, no metered costs. Works on any M-series Mac with 16 GB or more.</p>
+          </div>
+
+          <div class="hood-card">
+            <div class="cap-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <rect x="5" y="11" width="14" height="10" rx="2" stroke-linecap="round"/>
+                <path d="M8 11V7a4 4 0 018 0v4" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>No cloud</h3>
+            <p>Your conversations stay on your Apple devices. Sync between Mac and iPhone uses your personal iCloud; no Mira servers, no third-party data handling, ever.</p>
+          </div>
+
+          <div class="hood-card">
+            <div class="cap-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <rect x="2" y="3" width="13" height="10" rx="1.5" stroke-linecap="round"/>
+                <path d="M2 17h13M7.5 13v4" stroke-linecap="round"/>
+                <rect x="16" y="7" width="6" height="12" rx="1.5" stroke-linecap="round"/>
+                <line x1="19" y1="17" x2="19" y2="17.5" stroke-linecap="round" stroke-width="2"/>
+              </svg>
+            </div>
+            <h3>macOS + iOS + iPadOS</h3>
+            <p>Native SwiftUI apps sharing one backend. The Mac runs the model; your iPhone and iPad connect over your home network for a seamless multi-screen experience.</p>
+            <a href="https://github.com/mabaeyens/mira-apps" target="_blank" rel="noopener" class="card-link">
+              mira-apps on GitHub <svg><use href="#ico-arrow-out"/></svg>
+            </a>
+          </div>
+
+          <div class="hood-card">
+            <div class="cap-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <use href="#ico-github"/>
+              </svg>
+            </div>
+            <h3>Open source</h3>
+            <p>The inference backend (mira-core) is MIT licensed; inspect it, modify it, self-host it. You can read exactly what runs on your machine.</p>
+            <a href="https://github.com/mabaeyens/mira-core" target="_blank" rel="noopener" class="card-link">
+              mira-core on GitHub <svg><use href="#ico-arrow-out"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── About ────────────────────────────────────────────────── -->
+    <section id="about" class="section">
+      <div class="wrap">
+        <div class="about-inner" data-reveal>
+          <p class="eyebrow">
+            <svg class="home-mark" aria-hidden="true"><use href="#ico-home"/></svg>About
+          </p>
+          <h2 class="sec-title">Learning by building.</h2>
+
+          <p>
+            It started with a let-down. I downloaded a small model, ran it locally, and
+            asked it to rate my Mac for running AI. It had nothing; its training stopped
+            in April 2024. So on its own the model was close to useless, and I could see
+            how much I still didn't know. I opened Claude Code and asked, more or
+            less: what do I do with this?
+          </p>
+
+          <p>
+            The answer was tools. My first web search worked and then immediately
+            didn't: it kept handing me link names and privacy policies instead of the
+            actual pages. Another letdown. So I asked for a fetch function to go read them,
+            and that one stuck. It works now. Suddenly I could ask almost anything, all
+            on my own hardware, and I felt two things at once: how little I still knew,
+            and how good it was to take one more step anyway. Back then I called it
+            OllamaSearch because of its limited scope (I didn't even know how long it
+            would take to wire a tool), just a non-engineer learning to work with Claude.
+            To me a viewport is still a window and a pill is a button. But I know how to
+            tell Claude what to fix, and that turns out to be most of it. I had no idea
+            about AI when I started. I'm getting somewhere now.
+          </p>
+
+          <blockquote class="about-quote">
+            <p>“AI is here, and it's useful. But you still need to know what it's good
+              for; it won't replace your judgment. Do your own research.”</p>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Footer ─────────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <img src="../assets/icon.png" class="footer-icon" alt="Mira" />
+      <p class="footer-name">Mira</p>
+      <p class="footer-tag">
+        <svg class="home-mark" aria-hidden="true"><use href="#ico-home"/></svg>AI that stays home.
+      </p>
+
+      <div class="footer-cta">
+        <a href="https://testflight.apple.com/join/Q2gC5amE" target="_blank" rel="noopener" class="btn btn-primary">
+          <svg><use href="#ico-apple"/></svg>Join beta
+        </a>
+        <a href="https://github.com/mabaeyens/mira-apps/releases/latest" target="_blank" rel="noopener" class="btn btn-ghost">
+          <svg><use href="#ico-download"/></svg>Download for Mac
+        </a>
+        <a href="https://github.com/mabaeyens/mira-core" target="_blank" rel="noopener" class="btn btn-ghost">
+          <svg><use href="#ico-github"/></svg>mira-core
+        </a>
+        <a href="https://github.com/mabaeyens/mira-apps" target="_blank" rel="noopener" class="btn btn-ghost">
+          <svg><use href="#ico-github"/></svg>mira-apps
+        </a>
+      </div>
+
+      <p class="footer-line">
+        Tried it? Tell me how it went.
+        <a href="https://github.com/mabaeyens/mira-core/discussions" target="_blank" rel="noopener">Help test Mira ↗</a>
+      </p>
+
+      <p class="footer-line">
+        Built out of the same workshop:
+        <a href="/vera">Vera, the native app for the Markdown in your repos →</a>
+      </p>
+
+      <p class="footer-line">
+        And in Spanish skies:
+        <a href="/aura">Aura, a personal weather app for Spain, on your Apple devices and soon Android →</a>
+      </p>
+
+      <div class="footer-credit">
+        <span>Built by Miguel A. Baeyens, with Claude Code&nbsp;· MIT&nbsp;· <a href="/mira/privacy" class="strong">Privacy</a>&nbsp;· <a href="/mira/support" class="strong">Support</a></span>
+        <a href="https://linkedin.com/in/mabaeyens" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-linkedin"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Screenshot preview">
+    <button id="lightbox-close" aria-label="Close">&times;</button>
+    <img id="lightbox-img" alt="" />
+  </div>
+
+  <!-- ── Scripts ───────────────────────────────────────────────── -->
+  <script>
+    // Theme toggle
+    document.getElementById('theme-toggle').addEventListener('click', function () {
+      var html = document.documentElement;
+      var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('mira-theme', next);
+    });
+
+    // Reveal-on-scroll
+    (function () {
+      var els = document.querySelectorAll('[data-reveal]');
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(function (e) { e.classList.add('in'); });
+        return;
+      }
+      var ro = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            ro.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      els.forEach(function (e) { ro.observe(e); });
+    })();
+
+    // Hero, replay real Mira conversations (thinking · web · RAG · code)
+    (function () {
+      var thread = document.getElementById('live-thread');
+      var bodyEl = document.getElementById('live-body');
+      var readEl = document.getElementById('live-readout');
+      var demoEl = document.querySelector('.hero-demo');
+      if (!thread || !bodyEl || !readEl || !demoEl) return;
+
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      var SVG = {
+        chevron: '<svg class="think-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"/></svg>',
+        brain:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3a3 3 0 00-3 3 3 3 0 00-2 5 3 3 0 001 5 3 3 0 005 2V5a2 2 0 00-2-2zM15 3a3 3 0 013 3 3 3 0 012 5 3 3 0 01-1 5 3 3 0 01-5 2V5a2 2 0 012-2z"/></svg>',
+        fetch:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 8v6M9 11l3 3 3-3"/></svg>',
+        search:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>',
+        pages:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="6"/><path d="M21 21l-5-5"/></svg>',
+        layers:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l9 5-9 5-9-5 9-5zM3 14l9 5 9-5"/></svg>',
+        copy:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>',
+        check:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>'
+      };
+
+      var SCENES = [
+        { // A, extended thinking (real: "How Black Holes Form")
+          prompt: 'Explain how a black hole forms, in plain language I can share with a curious 10-year-old',
+          tps: 56,
+          thinking: 'Analyze the request: topic, how a black hole forms; audience, a curious 10-year-old. Keep it plain, concise, no jargon.\n\nKey concepts: a star balances gravity (pulling in) against fusion pressure (pushing out); when a massive star runs out of fuel, gravity wins and the core collapses; if it is massive enough, not even light escapes, a black hole. Use one simple analogy (a cosmic drain).\n\nDraft ~150 words, then check: plain language? yes. Age-appropriate? yes. Accurate? massive star -> fuel runs out -> gravity wins -> core collapses -> black hole. Correct. No tools needed.',
+          answer: [
+            { type: 'p', text: 'Imagine a star much bigger than our Sun, maybe 20 times heavier. Stars are like giant cosmic furnaces: gas is squeezed so tightly it constantly fuses together, releasing energy that pushes outward. That push fights gravity pulling inward, and for millions of years they stay perfectly balanced.' },
+            { type: 'p', text: "But eventually the star runs out of fuel. The outward push stops, gravity suddenly wins, and the core is crushed into something unimaginably small and dense, until not even light can escape. That's a black hole." },
+            { type: 'p', text: "**Fun fact:** if you could shrink Earth to the size of a marble, it would become a black hole! (Please don't try this at home.)" }
+          ]
+        },
+        { // B, web sources (real: Madrid weather fetched from aemet.es)
+          prompt: "Fetch today's Madrid weather from aemet.es and summarise it, conditions, temperature, wind, and rain.",
+          tps: 58,
+          activity: ['Fetching www.aemet.es…', 'Reading forecast XML…'],
+          sources: {
+            kind: 'web',
+            title: 'Pages read (1)',
+            items: [
+              { name: 'www.aemet.es/xml/municipios/localidad_28079.xml', preview: 'AEMET · Madrid (28079) · hourly municipal forecast' }
+            ]
+          },
+          answer: [
+            { type: 'p', text: "Here's the AEMET forecast for **Madrid** (issued 12:25):" },
+            { type: 'p', text: '**Today**, clearing skies, partly cloudy then clear. 18–31 °C. Light winds 5–10 km/h (NE → SW). Rain 0 %. UV 8 (very high).' },
+            { type: 'p', text: '**Right now**, about 27 °C, partly cloudy, SE wind ~5 km/h, humidity ~25 %, 0 % rain. Warm, dry, and bright.' }
+          ]
+        },
+        { // C, RAG over a local document (real: "Summarize Document in 5 Bullets")
+          prompt: 'Summarize the attached brief in 5 bullet points',
+          tps: 54,
+          sources: {
+            kind: 'rag',
+            title: 'Document sections used (3)',
+            items: [
+              { name: 'apple_silicon_llm_brief.pdf', score: '0.86', preview: 'Unified memory removes the VRAM bottleneck of discrete GPUs…' },
+              { name: 'apple_silicon_llm_brief.pdf', score: '0.79', preview: 'mlx-lm runs 15–30% ahead of llama.cpp on Apple Silicon…' },
+              { name: 'apple_silicon_llm_brief.pdf', score: '0.71', preview: 'Q4_K_M 4-bit is the recommended default for 36–64 GB…' }
+            ]
+          },
+          answer: [
+            { type: 'p', text: "Here's a 5-point summary:" },
+            { type: 'p', text: '• **Unified memory** removes the VRAM bottleneck, large models (e.g. 70B 4-bit) run on one device, impossible on 24 GB consumer GPUs.' },
+            { type: 'p', text: '• **mlx-lm is fastest** on Apple Silicon (15–30% over llama.cpp), though model availability trails the GGUF ecosystem.' },
+            { type: 'p', text: '• **4-bit (Q4_K_M)** is the default sweet spot for 36–64 GB; 8-bit suits 128 GB long-context work.' },
+            { type: 'p', text: '• **llama.cpp / Ollama** stay the portable, model-diverse fallback, Ollama adds a REST API.' },
+            { type: 'p', text: '• **Open questions:** M4 Ultra bandwidth, speculative decoding (2–3× throughput), MoE memory, KV-cache at 128k.' }
+          ]
+        },
+        { // D, code generation (real: "Python Palindrome Checker Function")
+          prompt: 'Write a Python function that checks if a string is a palindrome, ignoring spaces and punctuation',
+          tps: 60,
+          answer: [
+            { type: 'code', lang: 'python', text: 'import re\n\ndef is_palindrome(s: str) -> bool:\n    """True if s reads the same forwards and backwards."""\n    cleaned = re.sub(r\'[^a-z0-9]\', \'\', s.lower())\n    return cleaned == cleaned[::-1]' },
+            { type: 'p', text: "Lower-cases the text, strips anything that isn't a letter or digit, then compares it to its reverse." },
+            { type: 'code', lang: 'python', text: '>>> is_palindrome("A man, a plan, a canal: Panama")\nTrue\n>>> is_palindrome("race a car")\nFalse' }
+          ]
+        }
+      ];
+
+      var gen = 0, running = false, tokens = 0, t0 = 0;
+
+      function sleep(ms, g) {
+        return new Promise(function (res, rej) {
+          setTimeout(function () { g !== gen ? rej('x') : res(); }, ms);
+        });
+      }
+      function down() { bodyEl.scrollTop = bodyEl.scrollHeight; }
+      function setReadout(v) { readEl.textContent = '▸ on-device · M5 · ' + Math.round(v) + ' tok/s'; }
+      function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+      function inline(s) { return esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>'); }
+      function el(tag, cls) { var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+      function bump(n) {
+        tokens += n / 4;
+        var e = (performance.now() - t0) / 1000;
+        if (e > 0.1) setReadout(Math.min(63, tokens / e));
+      }
+
+      async function stream(node, text, tps, g, pre) {
+        node.classList.add('streaming');
+        var chunks = text.match(/\s+|\S+/g) || [];
+        var acc = '';
+        for (var i = 0; i < chunks.length; i++) {
+          if (g !== gen) throw 'x';
+          acc += chunks[i];
+          node.textContent = acc;
+          bump(chunks[i].length);
+          down();
+          await sleep(Math.max(14, (chunks[i].length / 4) * (1000 / tps)), g);
+        }
+        node.classList.remove('streaming');
+        if (!pre) node.innerHTML = inline(text);   // settle markdown once complete
+      }
+
+      function thinkHead(state) {
+        return state === 'active'
+          ? SVG.chevron + '<span class="think-ic"><span class="think-spinner"></span></span><span class="think-label">Thinking…</span>'
+          : SVG.chevron + '<span class="think-ic">' + SVG.brain + '</span><span class="think-label">Thought</span>';
+      }
+
+      function buildSources(src) {
+        var p = el('div', 'src-panel');
+        var head = src.kind === 'rag' ? SVG.layers : SVG.pages;
+        var html = '<div class="src-head">' + head + '<span>' + esc(src.title) + '</span></div>';
+        src.items.forEach(function (it) {
+          if (src.kind === 'rag') {
+            html += '<div class="src-item"><div class="src-rowtop"><span class="src-name">' +
+                    esc(it.name) + '</span><span class="rag-score">' + esc(it.score) +
+                    '</span></div><span class="src-preview">' + esc(it.preview) + '</span></div>';
+          } else {
+            html += '<div class="src-item"><span class="src-name">' + esc(it.name) +
+                    '</span><span class="src-preview">' + esc(it.preview) + '</span></div>';
+          }
+        });
+        p.innerHTML = html;
+        return p;
+      }
+
+      function buildCode(lang, code) {
+        var wrap = el('div', 'code-block');
+        var head = el('div', 'code-head');
+        head.innerHTML = '<span>' + esc(lang || 'code') + '</span>';
+        var btn = el('button', 'code-copy');
+        btn.type = 'button';
+        btn.innerHTML = SVG.copy + '<span>Copy</span>';
+        btn.addEventListener('click', function () {
+          if (navigator.clipboard) navigator.clipboard.writeText(code);
+          btn.classList.add('copied');
+          btn.innerHTML = SVG.check + '<span>Copied</span>';
+          setTimeout(function () {
+            btn.classList.remove('copied');
+            btn.innerHTML = SVG.copy + '<span>Copy</span>';
+          }, 1400);
+        });
+        head.appendChild(btn);
+        var pre = el('pre', 'code-body');
+        var codeEl = document.createElement('code');
+        pre.appendChild(codeEl);
+        wrap.appendChild(head);
+        wrap.appendChild(pre);
+        return { wrap: wrap, body: codeEl };
+      }
+
+      async function renderAnswer(scene, g) {
+        var ans = el('div', 'msg-assistant');
+        thread.appendChild(ans);
+        for (var i = 0; i < scene.answer.length; i++) {
+          if (g !== gen) throw 'x';
+          var b = scene.answer[i];
+          if (b.type === 'code') {
+            var c = buildCode(b.lang, b.text);
+            ans.appendChild(c.wrap);
+            await stream(c.body, b.text, scene.tps + 22, g, true);
+          } else {
+            var p = el('p');
+            ans.appendChild(p);
+            await stream(p, b.text, scene.tps, g, false);
+          }
+          down();
+        }
+      }
+
+      async function playScene(scene, g) {
+        thread.innerHTML = '';
+        tokens = 0; t0 = performance.now();
+
+        var u = el('div', 'msg-user');
+        u.textContent = scene.prompt;
+        thread.appendChild(u); down();
+        await sleep(650, g);
+
+        if (scene.thinking) {
+          var think = el('div', 'think');
+          var head = el('div', 'think-head');
+          head.innerHTML = thinkHead('active');
+          head.addEventListener('click', function () { think.classList.toggle('collapsed'); });
+          var tb = el('div', 'think-body');
+          think.appendChild(head); think.appendChild(tb);
+          thread.appendChild(think); down();
+          await stream(tb, scene.thinking, scene.tps + 10, g, true);
+          head.innerHTML = thinkHead('done');
+          think.classList.add('collapsed');
+          await sleep(450, g);
+        }
+
+        var acts = [];
+        if (scene.activity) {
+          for (var i = 0; i < scene.activity.length; i++) {
+            if (g !== gen) throw 'x';
+            var label = scene.activity[i];
+            var ar = el('div', 'activity-row');
+            ar.innerHTML = (/fetch/i.test(label) ? SVG.fetch : SVG.search) + '<span>' + esc(label) + '</span>';
+            thread.appendChild(ar); acts.push(ar); down();
+            await sleep(850, g);
+          }
+        }
+
+        if (scene.sources) {
+          acts.forEach(function (n) { n.remove(); });
+          thread.appendChild(buildSources(scene.sources)); down();
+          await sleep(500, g);
+        }
+
+        await renderAnswer(scene, g);
+        setReadout(scene.tps);
+        await sleep(2600, g);
+      }
+
+      async function loop(g) {
+        var i = 0;
+        while (g === gen && running) {
+          try { await playScene(SCENES[i % SCENES.length], g); }
+          catch (e) { return; }
+          i++;
+          // Respect reduced-motion: stream through the scenes once, then settle.
+          if (reduce && i >= SCENES.length) { running = false; return; }
+        }
+      }
+
+      function start() { if (running) return; running = true; gen++; loop(gen); }
+      function stop() { running = false; gen++; }
+
+      // Observe against the viewport (root:null). A custom `root` that the
+      // target fully fills doesn't fire the initial callback in Firefox.
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { e.isIntersecting ? start() : stop(); });
+      }, { threshold: 0.35 });
+      io.observe(demoEl);
+    })();
+
+    // Bench bar animation, fires once when #performance enters view
+    (function () {
+      var bars = document.querySelectorAll('#performance .bench-bar');
+      var animated = false;
+      var perfObserver = new IntersectionObserver(function (entries) {
+        if (animated || !entries[0].isIntersecting) return;
+        animated = true;
+        bars.forEach(function (bar) {
+          var pct = bar.dataset.pct || '0';
+          bar.style.width = pct + '%';
+        });
+        perfObserver.disconnect();
+      }, { threshold: 0.4 });
+      var perfSection = document.getElementById('performance');
+      if (perfSection) perfObserver.observe(perfSection);
+    })();
+
+    // Screenshot device carousel, one continuous swipe across iPhone → Mac → iPad
+    (function () {
+      var track = document.getElementById('ss-track');
+      if (!track) return;
+      var panels  = Array.prototype.slice.call(track.querySelectorAll('.ss-panel'));
+      var tabs    = document.querySelectorAll('.device-tab');
+      var posDots = document.querySelectorAll('.ss-dot[data-pos]');
+      var cap     = document.getElementById('ss-cap');
+      var order   = ['iphone', 'mac', 'ipad'];
+
+      var CAPTIONS = {
+        iphone: ['Short, elegant conversation', 'Code block formatting', 'Structured travel itinerary', 'Clean numbered list'],
+        mac:    ['Everyday conversational query', 'Long educational explanation', 'Quick practical answer', 'Philosophical summary with actionable habit'],
+        ipad:   ['Lifestyle content, practical steps', 'Multilingual output', 'Technical side-by-side comparison', 'Bullet-point historical breakdown']
+      };
+
+      var current = -1;
+
+      function indexFromScroll() {
+        return track.clientWidth ? Math.round(track.scrollLeft / track.clientWidth) : 0;
+      }
+      function scrollToIndex(i, smooth) {
+        i = Math.max(0, Math.min(panels.length - 1, i));
+        track.scrollTo({ left: i * track.clientWidth, behavior: smooth ? 'smooth' : 'auto' });
+      }
+      function sync() {
+        var i = indexFromScroll();
+        if (i === current) return;
+        current = i;
+        var device = panels[i].dataset.device;
+        var pos    = parseInt(panels[i].dataset.pos, 10);
+        tabs.forEach(function (t) { t.classList.toggle('active', t.dataset.device === device); });
+        posDots.forEach(function (d, k) { d.classList.toggle('active', k === pos); });
+        if (cap) cap.textContent = CAPTIONS[device][pos];
+      }
+
+      var raf = null;
+      track.addEventListener('scroll', function () {
+        if (raf) return;
+        raf = requestAnimationFrame(function () { raf = null; sync(); });
+      });
+
+      // Tabs jump to the first screenshot of that device
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          var di = order.indexOf(tab.dataset.device);
+          if (di >= 0) scrollToIndex(di * 4, true);
+        });
+      });
+
+      // Dots jump within the current device
+      posDots.forEach(function (dot, k) {
+        dot.addEventListener('click', function () {
+          var di = Math.floor((current < 0 ? 0 : current) / 4);
+          scrollToIndex(di * 4 + k, true);
+        });
+      });
+
+      // Keyboard arrows step one screenshot at a time
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight') scrollToIndex(indexFromScroll() + 1, true);
+        if (e.key === 'ArrowLeft')  scrollToIndex(indexFromScroll() - 1, true);
+      });
+
+      // Lightbox, tap/click a screenshot to see it enlarged
+      var lightbox    = document.getElementById('lightbox');
+      var lightboxImg = document.getElementById('lightbox-img');
+      function openLightbox(img) {
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeLightbox() {
+        lightbox.classList.remove('open');
+        lightboxImg.src = '';
+        document.body.style.overflow = '';
+      }
+      panels.forEach(function (panel) {
+        var img = panel.querySelector('img');
+        var downX = null;
+        panel.addEventListener('pointerdown', function (e) { downX = e.clientX; });
+        panel.addEventListener('click', function (e) {
+          if (downX !== null && Math.abs(e.clientX - downX) > 8) return;
+          openLightbox(img);
+        });
+      });
+      if (lightbox) {
+        document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', function (e) { if (e.target === lightbox) closeLightbox(); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeLightbox(); });
+      }
+
+      window.addEventListener('resize', function () { current = -1; sync(); });
+      sync();
+    }());
+  </script>
+
+</body>
+</html>

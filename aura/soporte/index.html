@@ -64,7 +64,7 @@
     }
     .support-mail:hover { background: var(--a25); text-decoration: none !important; }
     .support-mail svg { width: 18px; height: 18px; }
-    /* Inline copy control — a small icon button that sits on the email line. */
+    /* Inline copy control, a small icon button that sits on the email line. */
     .mail-row { display: inline-flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; }
     .copy-btn {
       display: inline-flex; align-items: center; justify-content: center;
@@ -87,7 +87,7 @@
     .faq-item a { color: var(--accent); text-decoration: none; }
     .faq-item a:hover { color: var(--accent-hov); text-decoration: underline; }
 
-    /* Step-by-step guide — screenshots with tap markers over the real UI. */
+    /* Step-by-step guide, screenshots with tap markers over the real UI. */
     .guide-lead { max-width: 44rem; color: var(--muted); line-height: 1.75; margin: 0 0 1.6rem; }
     .guide-path {
       display: flex; align-items: center; gap: 0.6rem;
@@ -139,7 +139,7 @@
     .guide-list a { color: var(--accent); text-decoration: none; }
     .guide-list a:hover { color: var(--accent-hov); text-decoration: underline; }
 
-    /* Contact form — composes a pre-filled email, no backend, no third party. */
+    /* Contact form, composes a pre-filled email, no backend, no third party. */
     .support-form { max-width: 44rem; display: grid; gap: 1.1rem; }
     .form-row { display: grid; gap: 1.1rem; grid-template-columns: 1fr; }
     @media (min-width: 560px) { .form-row.two { grid-template-columns: 1fr 1fr; } }
@@ -170,6 +170,9 @@
 
   <!-- ── Shared SVG symbols ─────────────────────────────────────── -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="ico-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3.5 11.5 12 4l8.5 7.5"/><path d="M5.5 10v9.5h13V10"/>
+    </symbol>
     <symbol id="ico-linkedin" viewBox="0 0 24 24" fill="currentColor">
       <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 110-4.14 2.07 2.07 0 010 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/>
     </symbol>
@@ -206,8 +209,8 @@
       </a>
 
       <div class="header-actions">
-        <a href="/aura" class="btn btn-ghost btn-sm" aria-label="Back to Aura">
-          <span aria-hidden="true">←</span><span class="btn-label">Aura</span>
+        <a href="/" class="btn btn-ghost btn-sm" aria-label="Home / Inicio">
+          <svg><use href="#ico-home"/></svg><span class="btn-label lang-en">Home</span><span class="btn-label lang-es">Inicio</span>
         </a>
         <button id="lang-toggle" class="btn btn-ghost btn-sm" aria-label="Cambiar idioma / Change language">
           <svg><use href="#ico-globe"/></svg><span class="btn-label">English</span>
@@ -310,7 +313,7 @@
         <p class="guide-lead lang-en" data-reveal>
           There are two moments to do this: the first time you open Aura (the onboarding shows you the
           screen automatically), or any time afterwards from Settings. The numbers on each screenshot
-          mark exactly where to tap. These screenshots are from iPhone; on Android it's the same idea —
+          mark exactly where to tap. These screenshots are from iPhone; on Android it's the same idea,
           open Settings (the gear, top right) and paste your key under the AEMET key field.
         </p>
         <p class="guide-lead lang-es" data-reveal>
@@ -328,12 +331,12 @@
         <div class="guide-step" data-reveal>
           <div class="guide-shot">
             <img loading="lazy" decoding="async" src="../assets/shots/guide/onboarding_aemet.webp"
-                 alt="Aura onboarding — the AEMET key screen with the request button and the paste field" />
+                 alt="Aura onboarding, the AEMET key screen with the request button and the paste field" />
             <span class="tap" style="left:50%; top:65%"><i></i><b>1</b></span>
             <span class="tap" style="left:80%; top:71%"><i></i><b>2</b></span>
           </div>
           <ol class="guide-list">
-            <li class="lang-en"><span>1</span><span>Tap <strong>Solicitar mi clave gratis</strong>. AEMET's site opens; sign up and they email you a free key. (Prefer to do it later? <strong>Pasar</strong>, top right, skips this — you can always come back from Settings.)</span></li>
+            <li class="lang-en"><span>1</span><span>Tap <strong>Solicitar mi clave gratis</strong>. AEMET's site opens; sign up and they email you a free key. (Prefer to do it later? <strong>Pasar</strong>, top right, skips this, you can always come back from Settings.)</span></li>
             <li class="lang-es"><span>1</span><span>Toca <strong>Solicitar mi clave gratis</strong>. Se abre la web de AEMET; te registras y te envían por correo una clave gratuita. (¿Prefieres hacerlo luego? <strong>Pasar</strong>, arriba a la derecha, lo omite: siempre puedes volver desde Ajustes.)</span></li>
             <li class="lang-en"><span>2</span><span>Copy the key from AEMET's email, come back to Aura, paste it in <strong>Pega aquí tu clave</strong> and tap <strong>Guardar</strong>. That's it.</span></li>
             <li class="lang-es"><span>2</span><span>Copia la clave del correo de AEMET, vuelve a Aura, pégala en <strong>Pega aquí tu clave</strong> y toca <strong>Guardar</strong>. Ya está.</span></li>
@@ -348,7 +351,7 @@
         <div class="guide-step" data-reveal>
           <div class="guide-shot">
             <img loading="lazy" decoding="async" src="../assets/shots/guide/home_menu.webp"
-                 alt="Aura home screen — the menu button in the top-right corner" />
+                 alt="Aura home screen, the menu button in the top-right corner" />
             <span class="tap" style="left:91%; top:8.7%"><i></i><b>1</b></span>
           </div>
           <ol class="guide-list">
@@ -372,7 +375,7 @@
         <div class="guide-step" data-reveal>
           <div class="guide-shot">
             <img loading="lazy" decoding="async" src="../assets/shots/guide/ajustes_clave.webp"
-                 alt="Aura Settings — the Clave API section with the AEMET key field and Guardar clave" />
+                 alt="Aura Settings, the Clave API section with the AEMET key field and Guardar clave" />
             <span class="tap" style="left:78%; top:27%"><i></i><b>3</b></span>
             <span class="tap" style="left:78%; top:33.5%"><i></i><b>4</b></span>
           </div>
@@ -395,7 +398,7 @@
         </div>
 
         <p class="support-lead lang-en" data-reveal>
-          Fill this in and it opens your email app with everything ready to send to me — nothing is
+          Fill this in and it opens your email app with everything ready to send to me, nothing is
           submitted from this page, and there is no server in between. Just press send.
         </p>
         <p class="support-lead lang-es" data-reveal>
@@ -476,7 +479,7 @@
           </div>
           <div class="faq-item">
             <h3><span class="lang-en">Is Aura on Android?</span><span class="lang-es">¿Está Aura en Android?</span></h3>
-            <p class="lang-en">Yes — a native phone app, built in Kotlin, with a Home-screen widget. It's coming to Google Play; in the meantime the source is on <a href="https://github.com/mabaeyens/aura-android" target="_blank" rel="noopener">GitHub</a>. The iPad and Apple Watch extras are iOS-only; on Android it's the phone and its widget.</p>
+            <p class="lang-en">Yes, a native phone app, built in Kotlin, with a Home-screen widget. It's coming to Google Play; in the meantime the source is on <a href="https://github.com/mabaeyens/aura-android" target="_blank" rel="noopener">GitHub</a>. The iPad and Apple Watch extras are iOS-only; on Android it's the phone and its widget.</p>
             <p class="lang-es">Sí: una app nativa para el teléfono, hecha en Kotlin, con un widget en la pantalla de inicio. Llegará próximamente a Google Play; mientras tanto, el código está en <a href="https://github.com/mabaeyens/aura-android" target="_blank" rel="noopener">GitHub</a>. Los extras de iPad y Apple Watch son solo de iOS; en Android es el teléfono y su widget.</p>
           </div>
           <div class="faq-item">
@@ -491,7 +494,7 @@
           </div>
           <div class="faq-item">
             <h3><span class="lang-en">How do I delete my data?</span><span class="lang-es">¿Cómo borro mis datos?</span></h3>
-            <p class="lang-en">There's nothing on a server to delete — Aura keeps no copy of your data off your device. Uninstalling the app, or clearing its storage, removes the only copy. There's more detail in the <a href="/aura/privacidad">privacy policy</a>.</p>
+            <p class="lang-en">There's nothing on a server to delete, Aura keeps no copy of your data off your device. Uninstalling the app, or clearing its storage, removes the only copy. There's more detail in the <a href="/aura/privacidad">privacy policy</a>.</p>
             <p class="lang-es">No hay nada que borrar en ningún servidor: Aura no guarda ninguna copia de tus datos fuera de tu dispositivo. Desinstalar la app, o borrar su almacenamiento, elimina la única copia. Tienes más detalle en la <a href="/aura/privacidad">política de privacidad</a>.</p>
           </div>
         </div>
@@ -505,23 +508,11 @@
     <div class="wrap">
       <img src="../assets/icon.png" class="footer-icon" alt="Aura" />
       <p class="footer-name">Aura</p>
-      <p class="footer-tag lang-en">A personal, private weather app for Spain — on iPhone, iPad, Apple&nbsp;Watch, and Android.</p>
+      <p class="footer-tag lang-en">A personal, private weather app for Spain, on iPhone, iPad, Apple&nbsp;Watch, and Android.</p>
       <p class="footer-tag lang-es">Una app del tiempo personal y privada para España, en iPhone, iPad, Apple&nbsp;Watch y Android.</p>
 
-      <div class="footer-cta">
-        <a href="mailto:dears-respect.8u@icloud.com" class="btn btn-primary">
-          <svg><use href="#ico-mail"/></svg><span class="lang-en">Email support</span><span class="lang-es">Soporte por correo</span>
-        </a>
-        <a href="/aura/privacidad" class="btn btn-ghost">
-          <span class="lang-en">Privacy</span><span class="lang-es">Privacidad</span>
-        </a>
-        <a href="/aura" class="btn btn-ghost">
-          <span aria-hidden="true">←</span><span class="lang-en">Back to Aura</span><span class="lang-es">Volver a Aura</span>
-        </a>
-      </div>
-
       <div class="footer-credit">
-        <span>Weather data: Elaborado con datos de AEMET · Built by Miguel A. Baeyens, with Claude Code · <a href="/aura" class="strong">askmira.es/aura</a></span>
+        <span>Weather data: Elaborado con datos de AEMET · Built by Miguel A. Baeyens, with Claude Code · <a href="/aura/privacidad" class="strong"><span class="lang-en">Privacy</span><span class="lang-es">Privacidad</span></a></span>
         <a href="https://linkedin.com/in/mabaeyens" target="_blank" rel="noopener" aria-label="LinkedIn">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-linkedin"/></svg>
         </a>
@@ -578,7 +569,7 @@
       applyLang(next);
     });
 
-    // Contact form: compose a pre-filled email. No backend — the visitor's own
+    // Contact form: compose a pre-filled email. No backend, the visitor's own
     // mail app opens with everything filled in, addressed to support.
     (function () {
       var form = document.getElementById('support-form');

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aura — Custom Product Page (mockup)</title>
-  <meta name="description" content="Working mockup of Aura's App Store Connect custom product pages — the living-sky marketing panels, the coloured Home Screen widgets, and the Apple Watch complications, built from real screenshots." />
+  <title>Aura, Custom Product Page (mockup)</title>
+  <meta name="description" content="Working mockup of Aura's App Store Connect custom product pages, the living-sky marketing panels, the coloured Home Screen widgets, and the Apple Watch complications, built from real screenshots." />
   <meta name="robots" content="noindex" />
   <meta name="theme-color" content="#15171A" media="(prefers-color-scheme: dark)" />
   <meta name="theme-color" content="#F6F4EF" media="(prefers-color-scheme: light)" />
@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="../style.css" />
 
   <style>
-    /* ══════════ CPP mockup — self-contained on top of the Aura system ══════════ */
+    /* ══════════ CPP mockup, self-contained on top of the Aura system ══════════ */
     .cpp-main { padding-bottom: 4rem; }
     .cpp-intro { max-width: 720px; margin: 2.5rem auto 0; text-align: center; }
     .cpp-intro h1 { font-size: clamp(1.7rem, 4.5vw, 2.6rem); line-height: 1.1; margin: 0.6rem 0 0; letter-spacing: -0.02em; }
@@ -136,7 +136,7 @@
     /* Widgets are sized by their real Home-Screen grid footprint (unit = --u):
        Small 2×2, Medium 4×2, Large 4×4, iPad XL 8×4. Width is set per size;
        height follows the source aspect ratio, so Large stands taller than
-       Medium and XL reads widest — the true iOS size hierarchy. */
+       Medium and XL reads widest, the true iOS size hierarchy. */
     .wgrid { --u: 58px; display: flex; flex-wrap: wrap; gap: 1.5rem 1.4rem; align-items: flex-end; justify-content: center; margin-top: 2.5rem; }
     .wgrid figure { margin: 0; display: flex; flex-direction: column; align-items: center; }
     .wgrid img {
@@ -182,6 +182,9 @@
 
   <!-- shared icons -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="ico-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3.5 11.5 12 4l8.5 7.5"/><path d="M5.5 10v9.5h13V10"/>
+    </symbol>
     <symbol id="ico-github" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></symbol>
   </svg>
 
@@ -189,7 +192,7 @@
     <div class="wrap">
       <a href="/aura" class="brand"><img src="../assets/icon.png" alt="Aura" /><span>Aura</span></a>
       <div class="header-actions">
-        <a href="/aura" class="btn btn-ghost btn-sm"><span aria-hidden="true">←</span><span class="btn-label">Aura</span></a>
+        <a href="/" class="btn btn-ghost btn-sm" aria-label="Home"><svg><use href="#ico-home"/></svg><span class="btn-label">Home</span></a>
         <button id="theme-toggle" class="icon-btn" aria-label="Toggle theme">
           <svg class="icon-sun" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
@@ -211,7 +214,7 @@
         <div class="cpp-intro">
           <p class="eyebrow">App Store Connect · Custom Product Page</p>
           <h1>Aura's store pitch, <em>angle by angle</em>.</h1>
-          <p class="dek">A custom product page keeps the same app, price and icon, and swaps only the screenshots and the promotional line for a specific audience. Below: the marketing panels as they'd sit in the App Store, then the coloured Home&nbsp;Screen widgets and the Apple&nbsp;Watch complications the widgets/watch angles draw on — every shot real, no art generated yet.</p>
+          <p class="dek">A custom product page keeps the same app, price and icon, and swaps only the screenshots and the promotional line for a specific audience. Below: the marketing panels as they'd sit in the App Store, then the coloured Home&nbsp;Screen widgets and the Apple&nbsp;Watch complications the widgets/watch angles draw on, every shot real, no art generated yet.</p>
           <span class="cpp-note">Internal mockup · not linked from the site · screenshots from ../aura-apps/screenshots</span>
         </div>
       </div>
@@ -280,7 +283,7 @@
 
                 <div class="as-sec" style="margin-top:16px;"><h4>Descripción</h4><span class="cust-tag">Custom · promo</span></div>
                 <p class="promo">Widgets de inicio y pantalla de bloqueo con los datos oficiales de AEMET, configurables por lugar guardado. Sin servidores, sin cuenta: tu clave vive en el dispositivo.</p>
-                <p class="as-desc">Aura lleva los datos de AEMET a cada superficie de Apple —iPhone, iPad y Apple&nbsp;Watch— sobre un cielo vivo que sigue al sol real… <span class="more">más</span></p>
+                <p class="as-desc">Aura lleva los datos de AEMET a cada superficie de Apple,iPhone, iPad y Apple&nbsp;Watch,  sobre un cielo vivo que sigue al sol real… <span class="more">más</span></p>
               </div>
             </div>
           </div>
@@ -294,7 +297,7 @@
         <div class="block-head">
           <p class="eyebrow">Screen · ASC-widgets</p>
           <h2>The same widget, every colour of the sky</h2>
-          <p>The Home Screen widgets render the living sky behind the data, so a single size shifts palette with the hour and the weather — clear blue, a townscape teal, rainy slate, golden dusk. This is the art the “Widgets” CPP angle leads with.</p>
+          <p>The Home Screen widgets render the living sky behind the data, so a single size shifts palette with the hour and the weather, clear blue, a townscape teal, rainy slate, golden dusk. This is the art the “Widgets” CPP angle leads with.</p>
         </div>
         <div class="wgrid">
           <figure class="wg-m"><img loading="lazy" src="assets/widgets/widget-iphone-m.webp" alt="Medium widget, clear day" /><figcaption class="board-cap">Mediano · despejado</figcaption></figure>
@@ -317,7 +320,7 @@
         <div class="block-head">
           <p class="eyebrow">Screen · ASC-complications</p>
           <h2>Complications, in full colour</h2>
-          <p>The Apple&nbsp;Watch angle draws on the complication set — corner, circular, rectangular and inline families, each themed to what it shows: UV, rain chance, wind, sun &amp; moon, the day strip, avisos. Colour renders only.</p>
+          <p>The Apple&nbsp;Watch angle draws on the complication set, corner, circular, rectangular and inline families, each themed to what it shows: UV, rain chance, wind, sun &amp; moon, the day strip, avisos. Colour renders only.</p>
         </div>
         <div class="cgrid">
           <figure><img loading="lazy" src="assets/comps/rectangular-colour.webp" alt="Rectangular complication" /><figcaption>Rectangular</figcaption></figure>
@@ -346,11 +349,11 @@
         <div class="block-head">
           <p class="eyebrow">The recipe</p>
           <h2>Three layers, cleanly separated</h2>
-          <p>The sky is the art layer, the UI is always the real screenshot, and every word is set by the compositor — so accents, kerning and the exact screen come out right on every run.</p>
+          <p>The sky is the art layer, the UI is always the real screenshot, and every word is set by the compositor, so accents, kerning and the exact screen come out right on every run.</p>
         </div>
         <div class="build">
-          <div class="card"><span class="badge art">Art</span><h3>The sky background</h3><p>The atmosphere behind each panel — one sky per time of day, reused across the set. The only layer that's painted rather than captured.</p></div>
-          <div class="card"><span class="badge app">App</span><h3>The app screenshot</h3><p>The genuine Aura capture, dropped into the device frame. The store shows the real UI — never a mock-up of it.</p></div>
+          <div class="card"><span class="badge art">Art</span><h3>The sky background</h3><p>The atmosphere behind each panel, one sky per time of day, reused across the set. The only layer that's painted rather than captured.</p></div>
+          <div class="card"><span class="badge app">App</span><h3>The app screenshot</h3><p>The genuine Aura capture, dropped into the device frame. The store shows the real UI, never a mock-up of it.</p></div>
           <div class="card"><span class="badge code">Code</span><h3>Headline &amp; fine print</h3><p>Every word set by the compositor: perfect Spanish accents, exact kerning, and the same result on every run.</p></div>
         </div>
       </div>
@@ -360,7 +363,7 @@
 
   <footer class="site-footer">
     <div class="wrap">
-      <p class="footer-tag">Aura — Custom Product Page mockup · <a href="/aura" class="strong">askmira.es/aura</a></p>
+      <p class="footer-tag">Aura, Custom Product Page mockup</p>
       <div class="footer-cta">
         <a href="/aura" class="btn btn-ghost">← Aura</a>
         <a href="https://github.com/mabaeyens/aura-apps" target="_blank" rel="noopener" class="btn btn-ghost"><svg><use href="#ico-github"/></svg> Source</a>

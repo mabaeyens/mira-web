@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vera — a native Markdown app for your repos</title>
-  <meta name="description" content="Vera is a native Markdown app for iPhone, iPad, and Mac. Read and edit the Markdown in your iCloud Drive — and, opt-in, in your GitHub repositories: browse, commit, open a pull request. Part of the Mira ecosystem." />
-  <meta property="og:title" content="Vera — a native Markdown app for your repos" />
-  <meta property="og:description" content="The native Apple app for the Markdown in your repos. Browse your repo's Markdown, commit, and open pull requests — natively. Part of the Mira ecosystem." />
+  <title>Vera, a native Markdown app for your repos</title>
+  <meta name="description" content="Vera is a native Markdown app for iPhone, iPad, and Mac. Read and edit the Markdown in your iCloud Drive, and, opt-in, in your GitHub repositories: browse, commit, open a pull request. Part of the Mira ecosystem." />
+  <meta property="og:title" content="Vera, a native Markdown app for your repos" />
+  <meta property="og:description" content="The native Apple app for the Markdown in your repos. Browse your repo's Markdown, commit, and open pull requests, natively. Part of the Mira ecosystem." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://askmira.es/vera" />
   <meta property="og:image" content="https://askmira.es/vera/assets/og.png" />
@@ -34,6 +34,9 @@
 
   <!-- ── Shared SVG symbols ─────────────────────────────────────── -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="ico-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3.5 11.5 12 4l8.5 7.5"/><path d="M5.5 10v9.5h13V10"/>
+    </symbol>
     <symbol id="ico-apple" viewBox="0 0 24 24" fill="currentColor">
       <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
     </symbol>
@@ -57,8 +60,8 @@
       </a>
 
       <div class="header-actions">
-        <a href="/" class="btn btn-ghost btn-sm" aria-label="Back to Mira">
-          <span aria-hidden="true">←</span><span class="btn-label">Mira</span>
+        <a href="/" class="btn btn-ghost btn-sm" aria-label="Home">
+          <svg><use href="#ico-home"/></svg><span class="btn-label">Home</span>
         </a>
         <a href="https://testflight.apple.com/join/AyS6RfM8" target="_blank" rel="noopener"
            class="btn btn-primary btn-sm" aria-label="Join beta">
@@ -96,8 +99,8 @@
         <h1 class="hero-title">The native Apple app for the Markdown <em>in your repos.</em></h1>
 
         <p class="hero-copy">
-          Your AI agents write a lot of Markdown — <span class="repo-chip">AGENTS.md</span>,
-          <span class="repo-chip">CLAUDE.md</span>, specs, run logs, PR notes — and it lives
+          Your AI agents write a lot of Markdown, <span class="repo-chip">AGENTS.md</span>,
+          <span class="repo-chip">CLAUDE.md</span>, specs, run logs, PR notes, and it lives
           in your git repos, not iCloud. Vera reads it natively, lets you steer it, and commits
           it back. It also opens every <span class="font-mono">.md</span>
           in your iCloud Drive, with zero setup.
@@ -105,7 +108,7 @@
 
         <div class="hero-cta">
           <a href="https://testflight.apple.com/join/AyS6RfM8" target="_blank" rel="noopener" class="btn btn-primary">
-            <svg><use href="#ico-apple"/></svg>Join the beta
+            <svg><use href="#ico-apple"/></svg>Join beta
           </a>
           <a href="https://github.com/mabaeyens/vera-apps/releases/latest" target="_blank" rel="noopener" class="btn btn-ghost">
             <svg><use href="#ico-download"/></svg>Download for Mac
@@ -146,7 +149,7 @@
               </svg>
             </div>
             <h3>One tree for everything</h3>
-            <p>Every <span class="font-mono">.md</span> in your iCloud Drive or local folder and each connected repo collapse in the same leading-chevron sidebar, with lazy per-folder expansion. No vaults, no projects — a transparent window into files you already have.</p>
+            <p>Every <span class="font-mono">.md</span> in your iCloud Drive or local folder and each connected repo collapse in the same leading-chevron sidebar, with lazy per-folder expansion. No vaults, no projects, a transparent window into files you already have.</p>
           </div>
 
           <div class="hood-card">
@@ -187,7 +190,7 @@
 
       <div class="footer-cta">
         <a href="https://testflight.apple.com/join/AyS6RfM8" target="_blank" rel="noopener" class="btn btn-primary">
-          <svg><use href="#ico-apple"/></svg>Join the beta
+          <svg><use href="#ico-apple"/></svg>Join beta
         </a>
         <a href="https://github.com/mabaeyens/vera-apps/releases/latest" target="_blank" rel="noopener" class="btn btn-ghost">
           <svg><use href="#ico-download"/></svg>Download for Mac
@@ -198,7 +201,7 @@
       </div>
 
       <div class="footer-credit">
-        <span>Part of the <a href="/" class="strong">Mira</a> ecosystem · Built by Miguel A. Baeyens, with Claude Code · <a href="/vera" class="strong">askmira.es/vera</a> · <a href="/vera/privacy" class="strong">Privacy</a></span>
+        <span>Part of the <a href="/" class="strong">Mira</a> ecosystem · Built by Miguel A. Baeyens, with Claude Code · <a href="/vera/privacy" class="strong">Privacy</a> · <a href="/vera/support" class="strong">Support</a></span>
         <a href="https://linkedin.com/in/mabaeyens" target="_blank" rel="noopener" aria-label="LinkedIn">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-linkedin"/></svg>
         </a>
@@ -207,7 +210,7 @@
   </footer>
 
   <script>
-    // Theme toggle — shares the 'mira-theme' key across the askmira.es ecosystem
+    // Theme toggle, shares the 'mira-theme' key across the askmira.es ecosystem
     document.getElementById('theme-toggle').addEventListener('click', function () {
       var html = document.documentElement;
       var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';

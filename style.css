@@ -23,6 +23,10 @@
   --accent:     #E8BD6E;
   --accent-hov: #F4D08C;
 
+  /* sibling-app accents, matched to /vera and /aura */
+  --vera:       #4FC9CE;
+  --aura:       #4FA3F0;
+
   --b20: rgba(120,128,125,.20);
   --b25: rgba(120,128,125,.25);
   --b30: rgba(120,128,125,.30);
@@ -57,6 +61,9 @@
 
   --accent:     #9A6A1C;
   --accent-hov: #7C5413;
+
+  --vera:       #0B7C7E;
+  --aura:       #1466C4;
 
   --b20: rgba(92,88,82,.12);
   --b25: rgba(92,88,82,.16);
@@ -174,6 +181,119 @@ body::after {
   margin: 0;
   max-width: 32rem;
 }
+
+/* ── Ecosystem landing (app chooser + principles) ───────────── */
+/* two classes → beats .hero's shorthand padding regardless of source order */
+.hero.landing-hero { padding-bottom: clamp(2.5rem, 5vw, 3.75rem); }
+
+.apps-section {
+  padding: clamp(0.5rem, 2vw, 1.5rem) 0 clamp(4rem, 8vw, 6rem);
+  scroll-margin-top: 4rem;
+}
+
+.eco-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  text-align: left;
+}
+.app-card {
+  --c: var(--accent);
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 1.5rem 1.4rem 1.6rem;
+  background: var(--surface);
+  border: 1px solid var(--b25);
+  border-top: 3px solid var(--c);
+  border-radius: 0.9rem;
+  text-decoration: none;
+  color: inherit;
+  transition: transform .2s cubic-bezier(.22,.68,0,1), box-shadow .2s, border-color .2s;
+}
+.app-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--b40);
+}
+.app-card.is-vera { --c: var(--vera); }
+.app-card.is-aura { --c: var(--aura); }
+.ac-top { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; }
+.ac-icon {
+  width: 2.5rem; height: 2.5rem;
+  border-radius: 0.65rem;
+  display: grid; place-items: center;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 18%, transparent);
+}
+.ac-icon svg { width: 1.35rem; height: 1.35rem; }
+.ac-pill {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  padding: 0.22rem 0.55rem;
+  border-radius: 999px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 14%, transparent);
+  white-space: nowrap;
+}
+.ac-name {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1.3rem;
+  color: var(--text);
+  margin-top: 0.15rem;
+}
+.ac-what {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0;
+  flex: 1;
+}
+.ac-go {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.76rem;
+  color: var(--c);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.35rem;
+}
+.ac-go svg { width: 0.9rem; height: 0.9rem; transition: transform .2s; }
+.app-card:hover .ac-go svg { transform: translateX(3px); }
+
+/* Why-these-apps band */
+.why-head { max-width: 40rem; margin: 0 auto clamp(2rem, 4vw, 3rem); text-align: center; }
+.why-head .eyebrow { justify-content: center; }
+.why-head .sec-copy { margin: 0 auto; }
+.principles {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+.principle {
+  padding: 1.4rem 1.3rem;
+  background: var(--surface);
+  border: 1px solid var(--b25);
+  border-radius: 0.9rem;
+}
+.principle h3 {
+  font-family: 'Lora', Georgia, serif;
+  font-weight: 500;
+  font-size: 1.05rem;
+  margin: 0 0 0.5rem;
+  color: var(--text);
+}
+.principle p {
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0;
+}
+
+@media (max-width: 860px) { .principles { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 760px) { .eco-grid { grid-template-columns: 1fr; } }
+@media (max-width: 480px) { .principles { grid-template-columns: 1fr; } }
 
 /* ── Reveal on scroll ───────────────────────────────────────── */
 [data-reveal] {

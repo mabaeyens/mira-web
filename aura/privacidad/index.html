@@ -89,6 +89,9 @@
 
   <!-- ── Shared SVG symbols ─────────────────────────────────────── -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="ico-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3.5 11.5 12 4l8.5 7.5"/><path d="M5.5 10v9.5h13V10"/>
+    </symbol>
     <symbol id="ico-linkedin" viewBox="0 0 24 24" fill="currentColor">
       <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 110-4.14 2.07 2.07 0 010 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/>
     </symbol>
@@ -115,8 +118,8 @@
       </a>
 
       <div class="header-actions">
-        <a href="/aura" class="btn btn-ghost btn-sm" aria-label="Back to Aura">
-          <span aria-hidden="true">←</span><span class="btn-label">Aura</span>
+        <a href="/" class="btn btn-ghost btn-sm" aria-label="Home / Inicio">
+          <svg><use href="#ico-home"/></svg><span class="btn-label lang-en">Home</span><span class="btn-label lang-es">Inicio</span>
         </a>
         <button id="lang-toggle" class="btn btn-ghost btn-sm" aria-label="Cambiar idioma / Change language">
           <svg><use href="#ico-globe"/></svg><span class="btn-label">English</span>
@@ -250,8 +253,8 @@
               readings. <a href="https://www.miteco.gob.es" target="_blank" rel="noopener">miteco.gob.es</a></li>
             <li id="svc-cams-en"><strong>Open-Meteo</strong>, an open European weather API that serves the
               EU's Copernicus Atmosphere Monitoring Service (CAMS) data, for the hourly UV-index forecast.
-              Only the selected municipality's centroid coordinates are sent — never your device's actual
-              position — and the request carries no key, account, or identifier.
+              Only the selected municipality's centroid coordinates are sent, never your device's actual
+              position, and the request carries no key, account, or identifier.
               <a href="https://open-meteo.com" target="_blank" rel="noopener">open-meteo.com</a></li>
           </ul>
           <ul class="svc lang-es">
@@ -264,7 +267,7 @@
             <li id="svc-cams-es"><strong>Open-Meteo</strong>, una API meteorológica europea y abierta que
               sirve los datos del Servicio de Vigilancia Atmosférica de Copernicus de la UE (CAMS), para la
               predicción horaria del índice UV. Solo se envían las coordenadas del centro del municipio
-              elegido —nunca la posición real de tu dispositivo— y la petición no lleva clave, cuenta ni
+              elegido,nunca la posición real de tu dispositivo,  y la petición no lleva clave, cuenta ni
               identificador.
               <a href="https://open-meteo.com" target="_blank" rel="noopener">open-meteo.com</a></li>
           </ul>
@@ -281,7 +284,7 @@
           <h3><span class="lang-en">What actually leaves your device</span><span class="lang-es">Qué sale realmente de tu dispositivo</span></h3>
           <p class="lang-en">
             Because the match happens on your device, each outbound request carries only an identifier or a
-            town centroid — never your GPS position. Here is the exact user data each one sends, with Madrid
+            town centroid, never your GPS position. Here is the exact user data each one sends, with Madrid
             as the example:
           </p>
           <p class="lang-es">
@@ -289,51 +292,51 @@
             el centroide de un municipio, nunca tu posición GPS. Estos son los datos exactos que envía cada
             una, con Madrid como ejemplo:
           </p>
-<pre class="payload lang-en" aria-label="User data sent in each request"><code><span class="c">// AEMET — a municipality ID, not a zip code: the ID AEMET keys its forecasts by.</span>
+<pre class="payload lang-en" aria-label="User data sent in each request"><code><span class="c">// AEMET, a municipality ID, not a zip code: the ID AEMET keys its forecasts by.</span>
 28079
 
-<span class="c">// MITECO — the nearest air-quality station's ID (plus the day). No coordinates.</span>
+<span class="c">// MITECO, the nearest air-quality station's ID (plus the day). No coordinates.</span>
 28079004#…
 
-<span class="c">// CAMS / Copernicus (via Open-Meteo) — a point near you, not your real position.</span>
+<span class="c">// CAMS / Copernicus (via Open-Meteo), a point near you, not your real position.</span>
 latitude=XX&amp;longitude=YY</code></pre>
-<pre class="payload lang-es" aria-label="Datos de usuario que se envían en cada petición"><code><span class="c">// AEMET — un ID de municipio, no un código postal: el ID con el que AEMET indexa las predicciones.</span>
+<pre class="payload lang-es" aria-label="Datos de usuario que se envían en cada petición"><code><span class="c">// AEMET, un ID de municipio, no un código postal: el ID con el que AEMET indexa las predicciones.</span>
 28079
 
-<span class="c">// MITECO — el ID de la estación de calidad del aire más cercana (más el día). Sin coordenadas.</span>
+<span class="c">// MITECO, el ID de la estación de calidad del aire más cercana (más el día). Sin coordenadas.</span>
 28079004#…
 
-<span class="c">// CAMS / Copernicus (vía Open-Meteo) — un punto cerca de ti, no tu posición real.</span>
+<span class="c">// CAMS / Copernicus (vía Open-Meteo), un punto cerca de ti, no tu posición real.</span>
 latitude=XX&amp;longitude=YY</code></pre>
 
           <!-- Google Play Data safety -->
           <h3><span class="lang-en">Google Play Data safety</span><span class="lang-es">Seguridad de los datos en Google Play</span></h3>
           <p class="lang-en">
             On Android, Google Play shows a Data safety section for every app, and Aura's is as small as
-            it can honestly be. Aura declares that it collects one thing — your approximate location, the
-            municipality — and only to fetch the forecast. That location is processed <em>ephemerally</em>:
+            it can honestly be. Aura declares that it collects one thing, your approximate location, the
+            municipality, and only to fetch the forecast. That location is processed <em>ephemerally</em>:
             it is used in memory to answer the request and never stored by me, because there is no server
             to store it on. It is <em>not shared</em>: sending the place you picked to a weather service is
             a user-initiated action you'd expect. All of it travels over an encrypted (HTTPS) connection.
-            Nothing else — no personal info, no identifiers, no analytics, no ads — is collected or shared,
+            Nothing else, no personal info, no identifiers, no analytics, no ads, is collected or shared,
             because none of it exists in the app. The same is true of the App Store's privacy label on iOS.
           </p>
           <p class="lang-es">
             En Android, Google Play muestra una sección de «Seguridad de los datos» para cada app, y la de
-            Aura es tan pequeña como honestamente puede ser. Aura declara que recopila una sola cosa —tu
-            ubicación aproximada, el municipio— y solo para obtener la previsión. Esa ubicación se procesa
+            Aura es tan pequeña como honestamente puede ser. Aura declara que recopila una sola cosa,tu
+            ubicación aproximada, el municipio,  y solo para obtener la previsión. Esa ubicación se procesa
             de forma <em>efímera</em>: se usa en memoria para responder a la petición y nunca la guardo,
             porque no hay ningún servidor donde guardarla. <em>No se comparte</em>: enviar el lugar que has
             elegido a un servicio meteorológico es una acción que tú inicias y que cabe esperar. Todo viaja
-            por una conexión cifrada (HTTPS). Nada más —ni datos personales, ni identificadores, ni
-            analítica, ni anuncios— se recopila ni se comparte, porque nada de eso existe en la app. Lo
+            por una conexión cifrada (HTTPS). Nada más,ni datos personales, ni identificadores, ni
+            analítica, ni anuncios,  se recopila ni se comparte, porque nada de eso existe en la app. Lo
             mismo vale para la etiqueta de privacidad de la App Store en iOS.
           </p>
 
           <!-- Tips and purchases -->
           <h3><span class="lang-en">Tips and purchases</span><span class="lang-es">Propinas y compras</span></h3>
           <p class="lang-en">
-            Aura has an optional tip jar, and nothing is locked behind it — the app is identical whether or
+            Aura has an optional tip jar, and nothing is locked behind it, the app is identical whether or
             not you ever tip. Payments go through each platform's own billing (Apple's In-App Purchases on
             iOS, Google Play Billing on Android), which collects the payment details directly from you under
             that platform's terms. Aura never sees your card or bank details, and it keeps no purchase
@@ -354,7 +357,7 @@ latitude=XX&amp;longitude=YY</code></pre>
             Under the GDPR you have the right to access or delete the personal data an app holds about you.
             With Aura there is almost nothing to act on, by design: I run no server and keep no copy of
             anyone's data. An access request returns nothing I hold. To delete everything Aura stores,
-            uninstall the app or clear its storage — that removes the only copy, which lives entirely on
+            uninstall the app or clear its storage, that removes the only copy, which lives entirely on
             your device. If you want to ask anything about this, the contact below is the place, and I'm the
             only person who reads it.
           </p>
@@ -427,20 +430,11 @@ latitude=XX&amp;longitude=YY</code></pre>
     <div class="wrap">
       <img src="../assets/icon.png" class="footer-icon" alt="Aura" />
       <p class="footer-name">Aura</p>
-      <p class="footer-tag lang-en">A personal, private weather app for Spain — on iPhone, iPad, Apple&nbsp;Watch, and Android.</p>
+      <p class="footer-tag lang-en">A personal, private weather app for Spain, on iPhone, iPad, Apple&nbsp;Watch, and Android.</p>
       <p class="footer-tag lang-es">Una app del tiempo personal y privada para España, en iPhone, iPad, Apple&nbsp;Watch y Android.</p>
 
-      <div class="footer-cta">
-        <a href="/aura/soporte" class="btn btn-primary">
-          <svg><use href="#ico-mail"/></svg><span class="lang-en">Support</span><span class="lang-es">Soporte</span>
-        </a>
-        <a href="/aura" class="btn btn-ghost">
-          <span aria-hidden="true">←</span><span class="lang-en">Back to Aura</span><span class="lang-es">Volver a Aura</span>
-        </a>
-      </div>
-
       <div class="footer-credit">
-        <span>Weather data: Elaborado con datos de AEMET · Built by Miguel A. Baeyens, with Claude Code · <a href="/aura" class="strong">askmira.es/aura</a></span>
+        <span>Weather data: Elaborado con datos de AEMET · Built by Miguel A. Baeyens, with Claude Code · <a href="/aura/soporte" class="strong"><span class="lang-en">Support</span><span class="lang-es">Soporte</span></a></span>
         <a href="https://linkedin.com/in/mabaeyens" target="_blank" rel="noopener" aria-label="LinkedIn">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-linkedin"/></svg>
         </a>
