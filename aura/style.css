@@ -203,6 +203,15 @@
   .rail-widget .shot-widget img { height: 156px; border-radius: 15px; }
 }
 
+/* Pebble Time 2 — square-ish emulator frame, real 200×228 face proportions */
+.shot-pebble img {
+  width: 152px;
+  aspect-ratio: 200 / 228;
+  border-radius: 20px;
+  background: #000;
+  border: 1px solid rgba(255, 255, 255, .08);
+}
+
 /* ── App icon follows the theme ───────────────────────────────────
    Aura ships two distinct app icons. The markup points at the light
    icon (assets/icon.png); under the dark theme, swap in the dark one.
