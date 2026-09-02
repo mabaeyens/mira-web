@@ -12,6 +12,7 @@
 
 ## Done (one-liners; full detail in git history)
 
+- [2026-09-02] Added Pebble Time 2 to `/aura`: new "Watchfaces for Pebble Time 2" feature card, a 5-theme Aura Essential gallery row (`.shot-pebble` frame), and a Pebble appstore footer button; dropped a redundant in-gallery store link since the footer button already covers it (2ad31dc, a3276f4).
 - [2026-08-27] Aura site aligned with Google Play Misleading Claims policy: removed superiority claims, added open-data source links + non-official disclaimer on all four `aura/` pages, synced EN hero with Android copy (0bbf12d).
 - [2026-08-26] Reframed the whole `/aura` site from Apple-only to iOS + Android (new `aura-android` repo): Android named across hero/copy/meta/footer, "Now on Android" card + 5-shot Android gallery, platform-accurate privacy card, "coming to Google Play" (no badge yet), Play data-safety + GDPR-rights sections in Privacy, Android FAQs + copy-email button in Support.
 - [2026-08-24] Aura App Store custom product pages: 4 CPPs live on ASC (Widgets, Avisos CAP, Apple Watch, Datos AEMET) with promo text; CPP mockup shipped as a real page at `/aura/cpp`; widget board sized by real grid footprint; gallery refreshed from ASC materials (colour-only widgets); added the gitignored `notes/` folder. Keyword work handed to aura-apps' next release.
