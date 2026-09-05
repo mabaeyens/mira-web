@@ -184,8 +184,7 @@
   width: 148px;
   aspect-ratio: 410 / 502;
   border-radius: 34px;
-  background: #000;
-  border: 1px solid rgba(255, 255, 255, .08);
+  border: 1px solid var(--a15);
 }
 
 /* ── Widgets — real Home Screen renders, height-normalised in a rail
