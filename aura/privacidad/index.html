@@ -40,7 +40,10 @@
     [data-lang="es"] .lang-en { display: none !important; }
 
     /* Privacy-page prose, on top of the shared design tokens. */
-    .policy { max-width: 44rem; }
+    /* Centered column, matching Mira/Vera's legal pages, instead of hugging
+       the left edge of the wide site .wrap. */
+    .sec-head { margin-left: auto; margin-right: auto; }
+    .policy { max-width: 44rem; margin: 0 auto; }
     .policy-updated { color: var(--dim); font-size: 0.92rem; margin: 0 0 2rem; }
     .policy-lead { color: var(--muted); line-height: 1.75; margin: 0 0 2.5rem; font-size: 1.05rem; }
     .policy-card {

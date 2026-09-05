@@ -39,8 +39,11 @@
     [data-lang="es"] .lang-en { display: none !important; }
 
     /* Support-page specifics, on top of the shared design tokens. */
-    .support-lead { max-width: 44rem; color: var(--muted); line-height: 1.75; margin: 0 0 2.5rem; }
-    .support-grid { display: grid; gap: 1.25rem; grid-template-columns: 1fr; max-width: 56rem; }
+    /* Centered column, matching Mira/Vera's legal pages, instead of hugging
+       the left edge of the wide site .wrap. */
+    .sec-head { margin-left: auto; margin-right: auto; }
+    .support-lead { max-width: 44rem; color: var(--muted); line-height: 1.75; margin: 0 auto 2.5rem; }
+    .support-grid { display: grid; gap: 1.25rem; grid-template-columns: 1fr; max-width: 56rem; margin: 0 auto; }
     @media (min-width: 720px) { .support-grid.two { grid-template-columns: 1fr 1fr; } }
     .support-card {
       background: var(--surface);
@@ -79,7 +82,7 @@
     .copy-btn.copied .ico-copy { display: none; }
     .copy-btn.copied .ico-check { display: inline; }
     .support-muted { color: var(--dim); font-size: 0.92rem; }
-    .faq { max-width: 44rem; margin-top: 0.5rem; }
+    .faq { max-width: 44rem; margin: 0.5rem auto 0; }
     .faq-item { border-top: 1px solid var(--b30); padding: 1.2rem 0; }
     .faq-item:first-child { border-top: 0; }
     .faq-item h3 { font-size: 1rem; margin: 0 0 0.4rem; color: var(--text); }
@@ -88,15 +91,15 @@
     .faq-item a:hover { color: var(--accent-hov); text-decoration: underline; }
 
     /* Step-by-step guide, screenshots with tap markers over the real UI. */
-    .guide-lead { max-width: 44rem; color: var(--muted); line-height: 1.75; margin: 0 0 1.6rem; }
+    .guide-lead { max-width: 44rem; color: var(--muted); line-height: 1.75; margin: 0 auto 1.6rem; }
     .guide-path {
       display: flex; align-items: center; gap: 0.6rem;
-      max-width: 60rem; margin: 2.4rem 0 1.2rem;
+      max-width: 60rem; margin: 2.4rem auto 1.2rem;
       font-size: 1.05rem; font-weight: 700; color: var(--text);
     }
     .guide-step {
       display: grid; gap: 1.3rem 2.2rem; align-items: center;
-      grid-template-columns: 1fr; max-width: 60rem; margin-bottom: 1.6rem;
+      grid-template-columns: 1fr; max-width: 60rem; margin: 0 auto 1.6rem;
     }
     @media (min-width: 720px) {
       .guide-step { grid-template-columns: 236px 1fr; }
@@ -140,7 +143,7 @@
     .guide-list a:hover { color: var(--accent-hov); text-decoration: underline; }
 
     /* Contact form, composes a pre-filled email, no backend, no third party. */
-    .support-form { max-width: 44rem; display: grid; gap: 1.1rem; }
+    .support-form { max-width: 44rem; display: grid; gap: 1.1rem; margin: 0 auto; }
     .form-row { display: grid; gap: 1.1rem; grid-template-columns: 1fr; }
     @media (min-width: 560px) { .form-row.two { grid-template-columns: 1fr 1fr; } }
     .field { display: flex; flex-direction: column; gap: 0.4rem; }
