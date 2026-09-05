@@ -29,18 +29,18 @@
   <link rel="stylesheet" href="../../style.css" />
   <style>
     /* Legal/prose layout, on the shared tokens */
-    .legal { padding: calc(3.6rem + clamp(2.5rem, 6vh, 4rem)) 0 clamp(4rem, 8vw, 6rem); }
+    .legal { padding: calc(var(--header-h) + clamp(2.5rem, 6vh, 4rem)) 0 clamp(4rem, 8vw, 6rem); }
     .legal .wrap { max-width: 44rem; }
     .legal .eyebrow { margin-bottom: 1rem; }
     .legal h1 {
-      font-family: 'Lora', Georgia, serif; font-weight: 400;
+      font-family: var(--display); font-weight: 500;
       font-size: clamp(2rem, 4vw, 2.6rem); letter-spacing: -0.01em;
       color: var(--text); margin: 0.2rem 0 0.4rem;
     }
-    .legal .updated { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--dim); margin: 0 0 2.2rem; }
+    .legal .updated { font-family: var(--mono); font-size: 0.78rem; color: var(--dim); margin: 0 0 2.2rem; }
     .legal .lead { color: var(--muted); font-size: 1.02rem; line-height: 1.75; margin: 0 0 2.4rem; }
     .legal section { margin-bottom: 2rem; }
-    .legal h2 { font-family: 'Lora', Georgia, serif; font-weight: 400; font-size: 1.25rem; color: var(--text); margin: 0 0 0.7rem; }
+    .legal h2 { font-family: var(--display); font-weight: 500; font-size: 1.25rem; color: var(--text); margin: 0 0 0.7rem; }
     .legal p, .legal li { color: var(--muted); font-size: 0.94rem; line-height: 1.8; }
     .legal p { margin: 0 0 0.6rem; }
     .legal ul, .legal ol { margin: 0.4rem 0 0; padding-left: 1.25rem; }
@@ -48,7 +48,7 @@
     .legal strong { color: var(--text-90); font-weight: 500; }
     .legal a { color: var(--accent); text-decoration: none; }
     .legal a:hover { color: var(--accent-hov); }
-    .legal code { font-family: 'IBM Plex Mono', monospace; font-size: 0.85em; background: var(--surface-2); padding: 0.1em 0.35em; border-radius: 4px; }
+    .legal code { font-family: var(--mono); font-size: 0.85em; background: var(--surface-2); padding: 0.1em 0.35em; border-radius: 4px; }
     .legal-foot { border-top: 1px solid var(--b20); padding: 2.5rem 0; text-align: center; }
     .legal-foot .credit { font-size: 0.78rem; color: var(--dim); display: inline-flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
     .legal-foot a { color: var(--text); text-decoration: none; }

@@ -269,14 +269,14 @@ svg { display: block; }
   will-change: transform;
 }
 .col::before { display: block; }
-.col-a { animation-duration: 64s; }
-.col-b { animation-duration: 82s; animation-delay: -20s; }
-.col-c { animation-duration: 58s; animation-delay: -37s; }
-.col-d { animation-duration: 74s; animation-delay: -9s; }
-.col-e { animation-duration: 90s; animation-delay: -51s; }
-.col-f { animation-duration: 68s; animation-delay: -28s; }
-.col-g { animation-duration: 78s; animation-delay: -44s; }
-.col-h { animation-duration: 60s; animation-delay: -15s; }
+.col-a { animation-duration: 48s; }
+.col-b { animation-duration: 62s; animation-delay: -15s; }
+.col-c { animation-duration: 44s; animation-delay: -28s; }
+.col-d { animation-duration: 56s; animation-delay: -7s; }
+.col-e { animation-duration: 68s; animation-delay: -38s; }
+.col-f { animation-duration: 52s; animation-delay: -21s; }
+.col-g { animation-duration: 60s; animation-delay: -33s; }
+.col-h { animation-duration: 46s; animation-delay: -11s; }
 .col-a::before { content: "0.0217\A -0.1183\A 0.4409\A 0.0031\A -0.0926\A 0.2274\A 0.0008\A -0.3311\A 0.1502\A 0.0642\A -0.0057\A 0.9127\A 0.0013\A -0.2049\A 0.3388\A 0.0170\A -0.0611\A 0.5520\A 0.0294\A -0.4470\A 0.0217\A -0.1183\A 0.4409\A 0.0031\A -0.0926\A 0.2274\A 0.0008\A -0.3311\A 0.1502\A 0.0642\A -0.0057\A 0.9127\A 0.0013\A -0.2049\A 0.3388\A 0.0170\A -0.0611\A 0.5520\A 0.0294\A -0.4470"; }
 .col-b::before { content: "7a3f\A 21c9\A 0e40\A b8d2\A 5f17\A c003\A 9a6e\A 0341\A e2b7\A 4d80\A 1f5c\A a9e3\A 6b02\A d47f\A 0c91\A 83ea\A 2e5d\A f108\A 57b4\A c62a\A 7a3f\A 21c9\A 0e40\A b8d2\A 5f17\A c003\A 9a6e\A 0341\A e2b7\A 4d80\A 1f5c\A a9e3\A 6b02\A d47f\A 0c91\A 83ea\A 2e5d\A f108\A 57b4\A c62a"; }
 .col-c::before { content: "tok 4821\A tok 4822\A tok 4823\A tok 4824\A tok 4825\A tok 4826\A tok 4827\A tok 4828\A tok 4829\A tok 4830\A tok 4831\A tok 4832\A tok 4833\A tok 4834\A tok 4835\A tok 4836\A tok 4837\A tok 4838\A tok 4839\A tok 4840\A tok 4821\A tok 4822\A tok 4823\A tok 4824\A tok 4825\A tok 4826\A tok 4827\A tok 4828\A tok 4829\A tok 4830\A tok 4831\A tok 4832\A tok 4833\A tok 4834\A tok 4835\A tok 4836\A tok 4837\A tok 4838\A tok 4839\A tok 4840"; }
@@ -328,7 +328,7 @@ svg { display: block; }
 }
 .is-mira .tile-text { gap: 18px; max-width: 340px; }
 .is-vera .tile-text p { max-width: 290px; }
-.is-aura .tile-text { max-width: 200px; }
+.is-aura .tile-text p { max-width: 290px; }
 
 .tile-top { display: flex; align-items: center; gap: 12px; }
 .tile-top img { width: 40px; height: 40px; border-radius: 10px; }
@@ -395,7 +395,7 @@ svg { display: block; }
   background: #000;
 }
 .is-mira .shot-phone { left: 610px; top: 330px; }
-.is-aura .shot-phone { right: 26px; top: 56px; width: 168px; }
+.is-aura .shot-phone { right: 28px; top: 214px; width: 176px; }
 
 /* Vera: a small diff, drawn */
 .shot-diff {
