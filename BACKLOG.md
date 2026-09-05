@@ -12,6 +12,8 @@
 
 ## Done (one-liners; full detail in git history)
 
+- [2026-09-05] Homepage redesign, "Option B" from the design canvas: cool near-black with a light sibling, Newsreader + Manrope + IBM Plex Mono, bento tiles with real screenshots (Mira gets the big one), a slow CSS-only stream of numbers behind the hero (masked off the headline, off under reduced motion, hidden under 760px), copy run through the humanize pass. All of it lives in the new `home.css`; `style.css` and the three subpages are untouched. Spec in `specs/03-homepage-option-b.md`.
+
 - [2026-09-02] Added Pebble Time 2 to `/aura`: new "Watchfaces for Pebble Time 2" feature card, a 5-theme Aura Essential gallery row (`.shot-pebble` frame), and a Pebble appstore footer button; dropped a redundant in-gallery store link since the footer button already covers it (2ad31dc, a3276f4).
 - [2026-08-27] Aura site aligned with Google Play Misleading Claims policy: removed superiority claims, added open-data source links + non-official disclaimer on all four `aura/` pages, synced EN hero with Android copy (0bbf12d).
 - [2026-08-26] Reframed the whole `/aura` site from Apple-only to iOS + Android (new `aura-android` repo): Android named across hero/copy/meta/footer, "Now on Android" card + 5-shot Android gallery, platform-accurate privacy card, "coming to Google Play" (no badge yet), Play data-safety + GDPR-rights sections in Privacy, Android FAQs + copy-email button in Support.
@@ -26,7 +28,7 @@
 
 ## Notes
 
-- Design direction is deliberately "field manual for a machine you own" (mono/spec-sheet, warm stone + terracotta, honest copy), chosen over a generic SaaS template to stay distinctive.
+- Design direction: the homepage (since 2026-09-05) is the "night bento" look, serif display over a cool near-black, tiles that show the apps, honest copy. The subpages still carry the earlier "field manual for a machine you own" system (mono/spec-sheet, warm charcoal + amber, `style.css`); bring them over one at a time if the homepage look sticks.
 - Hero demo content is pulled verbatim (trimmed) from real non-sensitive conversations in `~/.local/share/mira/conversations.db` (black holes, Madrid weather, Apple Silicon brief, palindrome). Only the RAG source-chip scores/snippets are representative; prompts/thinking/answers are real.
 - Mira's SwiftUI app palette matches the site's CSS `:root` tokens (bg `#1C1917`, accent `#D09268`, muted `#A8A29E`, surface `#232120`, border `#57534E`), so no new colors are needed.
-- Page-specific component CSS/JS lives inline in `index.html`; shared structural CSS is in `style.css`. Tailwind utilities are compiled to `assets/tailwind.css` (committed, still used by `vera/privacy`). Rebuild after any Tailwind class change: `npx tailwindcss@3 -c tailwind.config.js -i tailwind-input.css -o assets/tailwind.css --minify`.
+- The homepage loads only `home.css` (self-contained tokens, header, hero, stream, bento, principles, footer). `/mira`, `/vera` and `/aura` load the shared `style.css` plus their own sheet. Tailwind utilities are compiled to `assets/tailwind.css` (committed, still used by `vera/privacy`). Rebuild after any Tailwind class change: `npx tailwindcss@3 -c tailwind.config.js -i tailwind-input.css -o assets/tailwind.css --minify`.
