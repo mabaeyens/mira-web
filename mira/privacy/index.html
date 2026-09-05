@@ -49,10 +49,6 @@
     .legal a { color: var(--accent); text-decoration: none; }
     .legal a:hover { color: var(--accent-hov); }
     .legal code { font-family: var(--mono); font-size: 0.85em; background: var(--surface-2); padding: 0.1em 0.35em; border-radius: 4px; }
-    .legal-foot { border-top: 1px solid var(--b20); padding: 2.5rem 0; text-align: center; }
-    .legal-foot .credit { font-size: 0.78rem; color: var(--dim); display: inline-flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
-    .legal-foot a { color: var(--text); text-decoration: none; }
-    .legal-foot a:hover { color: var(--accent); }
   </style>
 </head>
 
@@ -165,13 +161,21 @@
     </div>
   </main>
 
-  <footer class="legal-foot">
-    <p class="credit">
-      <span>Part of the <a href="/">Mira</a> ecosystem · Built by Miguel A. Baeyens, with Claude Code · <a href="/mira/support">Support</a></span>
-      <a href="https://linkedin.com/in/mabaeyens" target="_blank" rel="noopener" aria-label="LinkedIn">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-linkedin"/></svg>
-      </a>
-    </p>
+  <footer class="site-footer">
+    <div class="wrap">
+      <img src="../../assets/icon.png" class="footer-icon" alt="Mira" />
+      <p class="footer-name">Mira</p>
+      <p class="footer-tag">
+        <svg class="home-mark" aria-hidden="true"><use href="#ico-home"/></svg>AI that stays home.
+      </p>
+
+      <div class="footer-credit">
+        <span>Built by Miguel A. Baeyens, with Claude Code · MIT · <a href="/mira/support" class="strong">Support</a></span>
+        <a href="https://linkedin.com/in/mabaeyens" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-linkedin"/></svg>
+        </a>
+      </div>
+    </div>
   </footer>
 
   <script>
