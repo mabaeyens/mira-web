@@ -6,7 +6,6 @@
 - **Aura Android — capture an annotated AEMET-key guide** so Support has a real Android walkthrough (gear → Ajustes → AEMET key), matching the iPhone one. Only a text note exists today.
 - **Aura CPP — art generation (the last parked piece).** The four pages are live on ASC with promo text + a keyword plan; what's parked is the screenshots. GPT Image 2 generates only the text-free living-sky backgrounds (6 tuned prompts); real screenshots + headlines are composited by code. Locked to planning only until I say go (cost is real); EN+ES adds no extra generations. Full detail in the gitignored `notes/aura-custom-product-page.md`; keyword follow-up tracked in aura-apps.
 - **Vera — screenshots + `og.png`** (spec `specs/02`). `vera/index.html` still has the `TODO(assets)` marker and `vera/assets/og.png` doesn't exist yet (social cards show a broken image). Needs assets, then wire in a simple `.mac-shadow` image row.
-- **Browser QA of the live design** — scene pacing/legibility, hero panel fits within 100vh, mobile stacking, dark/light across thinking/sources/RAG/code, reduced-motion path.
 - **Restore TestFlight buttons** (nav, hero CTA, credits) once Apple external review approves the URL; consider a waitlist CTA (Buttondown, GDPR-friendly) as a pre-launch alternative.
 
 ## Done (one-liners; full detail in git history)
