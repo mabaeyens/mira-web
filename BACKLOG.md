@@ -31,6 +31,7 @@
 
 ## Notes
 
+- Pebble lives on `/aura/pebble`, not on `/aura`: new Pebble items get a section there (copy, buttons, rail), and `/aura` only carries the teaser card and one footer link. The screenshots stay in `aura/assets/shots/pebble/`. Aura LCD's copy deliberately never names Casio ("80s-inspired LCD", "classic digital watch"); the store listing in aura-pebble still does.
 - Design direction: the whole site (since 2026-09-05) is the "night bento" look, serif display over a cool near-black with a light sibling, tiles that show the apps, honest copy. The homepage has it in `home.css`; every other page gets it from the shared `style.css`. The old "field manual" system (warm charcoal, grain, Lora + Inter) is gone.
 - Hero demo content is pulled verbatim (trimmed) from real non-sensitive conversations in `~/.local/share/mira/conversations.db` (black holes, Madrid weather, Apple Silicon brief, palindrome). Only the RAG source-chip scores/snippets are representative; prompts/thinking/answers are real.
 - Mira's SwiftUI app palette matches the site's CSS `:root` tokens (bg `#1C1917`, accent `#D09268`, muted `#A8A29E`, surface `#232120`, border `#57534E`), so no new colors are needed.
