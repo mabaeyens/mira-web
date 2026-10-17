@@ -202,13 +202,15 @@
   .rail-widget .shot-widget img { height: 156px; border-radius: 15px; }
 }
 
-/* Pebble Time 2 — square-ish emulator frame, real 200×228 face proportions */
+/* Pebble Time 2 — shown 1:1 at the native 200×228 screen, square corners
+   (the display has none), pixels kept sharp. */
 .shot-pebble img {
-  width: 152px;
+  width: 200px;
+  height: 228px;
   aspect-ratio: 200 / 228;
-  border-radius: 20px;
+  border-radius: 0;
   background: #000;
-  border: 1px solid rgba(255, 255, 255, .08);
+  image-rendering: pixelated;
 }
 
 /* ── App icon follows the theme ───────────────────────────────────
