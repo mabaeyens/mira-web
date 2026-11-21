@@ -128,9 +128,9 @@
         <ul>
           <li>Your conversations with Mira, and any documents you hand it to read. They live on your Mac.</li>
           <li>The model you have downloaded, and your settings (which model, preferences, and so on).</li>
-          <li>On an iPhone or iPad, a copy of your conversation list and transcripts, so you can read them when your Mac is out of reach, and the connection you saved: your Mac's address, its name, and the pairing token that proves the phone may talk to it.</li>
+          <li>On an iPhone or iPad, a list of your conversations (titles and dates, not the messages), a short-lived copy of the conversations you opened so they appear quickly (it stays on that device, is not synced, and the system may clear it), and the connection you saved: your Mac's address, its name, and the pairing token that proves the phone may talk to it.</li>
         </ul>
-        <p>The copies on your iPhone and iPad, your saved connection and your preferences sync across your own devices only through <strong>your own</strong> iCloud, under your Apple ID, never to me. Anyone who can sign in to that Apple ID can read them, as with any iCloud data, so protect it with a strong password and two-factor authentication. You can cut a device off at any time by creating a new pairing token on your Mac, which stops every previously paired device.</p>
+        <p>The conversation list, your saved connection and your preferences sync across your own devices only through <strong>your own</strong> iCloud, under your Apple ID, never to me. The messages themselves are not stored in iCloud. Anyone who can sign in to that Apple ID can read them, as with any iCloud data, so protect it with a strong password and two-factor authentication. You can cut a device off at any time by creating a new pairing token on your Mac, which stops every previously paired device.</p>
       </section>
 
       <section>
@@ -142,7 +142,7 @@
         <h2>What the apps ask permission for</h2>
         <ul>
           <li><strong>Camera.</strong> To scan the QR code that pairs your phone with your Mac. The image is not stored or sent anywhere.</li>
-          <li><strong>Microphone and speech recognition.</strong> Only if you dictate a message. Turning speech into text is done by Apple's speech recognition, under Apple's terms. I never receive the audio.</li>
+          <li><strong>Microphone and speech recognition.</strong> Only if you dictate a message. Turning speech into text is done by Apple's speech recognition, which may process the audio on Apple's servers, under Apple's terms. I never receive the audio.</li>
           <li><strong>Photos.</strong> Only for images you pick to attach. They go to your Mac, not to me.</li>
           <li><strong>Local network.</strong> To find your Mac when it is on the same network.</li>
         </ul>
@@ -153,7 +153,7 @@
         <p>Mira makes no network calls of its own, with these honest exceptions. Each one goes directly to the service named, never through any server of mine:</p>
         <ol>
           <li><strong>Downloading a model.</strong> The first time you use a model that isn't on your Mac yet, Mira fetches it from its host (for example Hugging Face). The download goes to that host. Once it's on your Mac, running it needs no network at all.</li>
-          <li><strong>Searching or reading the web (you ask for it).</strong> If you ask Mira to look something up or to read a link, your Mac requests that page or those results directly from the site or search provider, so it can answer. This only happens when you ask; a plain conversation makes no such calls.</li>
+          <li><strong>Searching or reading the web.</strong> When a question needs current information, or you ask Mira to read a link, Mira can decide to search the web or fetch a page. Your Mac then requests it directly from the search engine or site (for example DuckDuckGo or Brave), and the words of that search go to that provider. A conversation that needs nothing current makes no such calls.</li>
           <li><strong>Updates.</strong> The menu-bar app checks GitHub for a newer version and downloads it from there. GitHub sees the request, as with any download.</li>
           <li><strong>Documents you add.</strong> Files you point Mira at are read and indexed on your Mac. Their contents are not uploaded anywhere.</li>
         </ol>
