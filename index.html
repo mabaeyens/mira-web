@@ -42,9 +42,11 @@
 <section class="hero">
   <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
     <filter id="pen" x="-5%" y="-10%" width="110%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3.2"/></filter>
+  <radialGradient id="sg"><stop offset="0" stop-color="#F4BE50" stop-opacity=".42"/><stop offset=".45" stop-color="#F4BE50" stop-opacity=".14"/><stop offset="1" stop-color="#F4BE50" stop-opacity="0"/></radialGradient>
   </defs></svg>
   <div class="sky" aria-hidden="true">
     <svg class="sun" viewBox="0 0 160 160" fill="rgba(244,190,80,.30)" stroke="#E9A93A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)">
+      <circle class="glow" cx="80" cy="80" r="80" fill="url(#sg)" stroke="none"/>
       <path d="M80 8 C82 52 96 66 152 80 C96 94 82 108 80 152 C78 108 64 94 8 80 C64 66 78 52 80 8 Z"/>
       <path d="M128 118 C129 128 133 131 142 132 C133 133 129 136 128 146 C127 136 123 133 114 132 C123 131 127 128 128 118 Z"/>
     </svg>
@@ -60,7 +62,6 @@
     <svg class="cl v3" viewBox="0 0 120 56" fill="none" stroke="#2FA9AF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><g class="bob"><path d="M36 10 C26 18 20 24 14 30 C22 36 28 41 38 49"/><path d="M71 7 C66 20 61 34 52 50"/><path d="M84 10 C94 18 100 24 106 30 C98 36 92 41 82 49"/></g></svg>
     <svg class="cl v2" viewBox="0 0 120 56" fill="none" stroke="#2FA9AF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><g class="bob"><path d="M36 10 C26 18 20 24 14 30 C22 36 28 41 38 49"/><path d="M71 7 C66 20 61 34 52 50"/><path d="M84 10 C94 18 100 24 106 30 C98 36 92 41 82 49"/></g></svg>
     <div class="nt" aria-hidden="true">
-    <svg class="moon" viewBox="0 0 100 100" fill="rgba(222,228,244,.14)" stroke="#DCE2F2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M62 10 C34 14 16 36 18 62 C20 86 44 98 68 92 C44 84 36 56 44 34 C48 24 54 16 62 10 Z"/></svg>
     <svg class="sp" style="left:45.5%;top:54.1%;width:10px;height:10px;--d:4.3s;--dl:-0.9s" viewBox="-7 -7 14 14" fill="rgba(240,226,176,.55)" stroke="#F0E2B0" stroke-width="1" stroke-linejoin="round" filter="url(#pen)"><path d="M0 -6 C.5 -1.8 1.8 -.5 6 0 C1.8 .5 .5 1.8 0 6 C-.5 1.8 -1.8 .5 -6 0 C-1.8 -.5 -.5 -1.8 0 -6Z"/></svg>
     <svg class="sp" style="left:20.9%;top:75.1%;width:10px;height:10px;--d:5.0s;--dl:-1.2s" viewBox="-7 -7 14 14" fill="rgba(240,226,176,.55)" stroke="#F0E2B0" stroke-width="1" stroke-linejoin="round" filter="url(#pen)"><path d="M0 -6 C.5 -1.8 1.8 -.5 6 0 C1.8 .5 .5 1.8 0 6 C-.5 1.8 -1.8 .5 -6 0 C-1.8 -.5 -.5 -1.8 0 -6Z"/></svg>
     <svg class="sp" style="left:11.8%;top:32.1%;width:6px;height:6px;--d:4.7s;--dl:-0.7s" viewBox="-7 -7 14 14" fill="rgba(240,226,176,.55)" stroke="#F0E2B0" stroke-width="1" stroke-linejoin="round" filter="url(#pen)"><path d="M0 -6 C.5 -1.8 1.8 -.5 6 0 C1.8 .5 .5 1.8 0 6 C-.5 1.8 -1.8 .5 -6 0 C-1.8 -.5 -.5 -1.8 0 -6Z"/></svg>
