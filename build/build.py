@@ -124,14 +124,14 @@ UI = {
         "mira_t": "AI assistant that runs on your own Mac", "mira_b": "In beta",
         "vera_t": "Markdown editor for your git repos", "vera_b": "In beta",
         "aura_t": "Weather for Spain, from AEMET data", "aura_b": "App Store",
-        "privacy": "Privacy", "support": "Support", "locale": "en_US",
+        "privacy": "Privacy", "support": "Support", "theme": "Switch light or dark theme", "locale": "en_US",
     },
     "es": {
         "lang": "es", "apps": "Apps", "writing": "Escritos", "about": "Sobre mí",
         "mira_t": "Asistente de IA que corre en tu propio Mac", "mira_b": "En beta",
         "vera_t": "Editor de Markdown para tus repos git", "vera_b": "En beta",
         "aura_t": "El tiempo en España, con datos de AEMET", "aura_b": "App Store",
-        "privacy": "Privacidad", "support": "Soporte", "locale": "es_ES",
+        "privacy": "Privacidad", "support": "Soporte", "theme": "Cambiar tema claro u oscuro", "locale": "es_ES",
     },
 }
 
@@ -159,6 +159,9 @@ def nav(lang, key, current, solid=False):
            else f'<a href="{url(key, "en")}" hreflang="en" lang="en">EN</a> / <b>ES</b>')
         + "</span>"
     )
+    toggle = (f'<button class="tt" type="button" onclick="miraTheme()" aria-label="{u["theme"]}" title="{u["theme"]}">'
+              '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">'
+              '<circle cx="10" cy="10" r="7"/><path d="M10 3a7 7 0 0 1 0 14z" fill="currentColor"/></svg></button>')
     dd_cur = " cur" if current == "apps" else ""
     return f"""<div class="bar{' solid' if solid else ''}"><div class="wrap">
   <a class="brand" href="{url('home', lang)}">askmira.es</a>
@@ -171,7 +174,7 @@ def nav(lang, key, current, solid=False):
         <a class="dd-i" href="{url('aura', lang)}"><img src="/aura/assets/icon.png" alt=""><span><b style="color:var(--aura-s)">Aura</b><i>{u['aura_t']}</i></span><em>{u['aura_b']}</em></a>
       </div>
     </div>
-    <a href="{url('writing', lang)}"{cur('writing')}>{u['writing']}</a><a href="{url('about', lang)}"{cur('about')}>{u['about']}</a><a href="{GITHUB}">GitHub</a>{switch}
+    <a href="{url('writing', lang)}"{cur('writing')}>{u['writing']}</a><a href="{url('about', lang)}"{cur('about')}>{u['about']}</a><a href="{GITHUB}">GitHub</a>{switch}{toggle}
   </nav>
 </div></div>"""
 
@@ -183,6 +186,15 @@ def foot(lang, inner=False, app="mira"):
             f'<a href="{url(app + "-privacy", lang)}">{u["privacy"]}</a> · '
             f'<a href="{url(app + "-support", lang)}">{u["support"]}</a> · '
             f'<a href="{GITHUB}">GitHub</a></span></div></div>')
+
+
+DARK_ACCENT = {"#9A6A12": "#E3A93A", "#17787D": "#46C2C8", "#1F66B8": "#6AAEF2"}
+
+THEME_JS = ("<script>(function(){var d=document.documentElement,t;try{t=localStorage.getItem('mira-theme')}catch(e){}"
+            "if(t!=='dark'&&t!=='light')t=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';"
+            "d.setAttribute('data-theme',t);window.miraTheme=function(){var n=d.getAttribute('data-theme')==='dark'?'light':'dark';"
+            "d.setAttribute('data-theme',n);try{localStorage.setItem('mira-theme',n)}catch(e){}"
+            "var m=document.querySelector('meta[name=theme-color]');if(m)m.content=n==='dark'?'#121419':'#F1F2F5'}})()</script>")
 
 
 def head(key, lang):
@@ -197,7 +209,7 @@ def head(key, lang):
     t, d = html.escape(title), html.escape(desc, quote=True)
     extra = ""
     if m.get("extra"):
-        extra = f'\n<link rel="stylesheet" href="/assets/{m["extra"]}">\n<style>:root{{--app:{m["accent"]}}}</style>'
+        extra = f'\n<link rel="stylesheet" href="/assets/{m["extra"]}">\n<style>:root{{--app:{m["accent"]};--app-dk:{DARK_ACCENT.get(m["accent"], m["accent"])}}}</style>'
     return f"""<!DOCTYPE html>
 <html lang="{u['lang']}">
 <head>
@@ -215,12 +227,14 @@ def head(key, lang):
 <meta property="og:image" content="{SITE}/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#F1F2F5">
+{THEME_JS}
 <link rel="icon" href="/assets/icon.png" type="image/png">
 <link rel="apple-touch-icon" href="/assets/icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/{m['css']}">{extra}
+<link rel="stylesheet" href="/assets/dark.css">
 </head>"""
 
 

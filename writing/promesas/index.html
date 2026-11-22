@@ -15,12 +15,14 @@
 <meta property="og:image" content="https://askmira.es/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#F1F2F5">
+<script>(function(){var d=document.documentElement,t;try{t=localStorage.getItem('mira-theme')}catch(e){}if(t!=='dark'&&t!=='light')t=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';d.setAttribute('data-theme',t);window.miraTheme=function(){var n=d.getAttribute('data-theme')==='dark'?'light':'dark';d.setAttribute('data-theme',n);try{localStorage.setItem('mira-theme',n)}catch(e){}var m=document.querySelector('meta[name=theme-color]');if(m)m.content=n==='dark'?'#121419':'#F1F2F5'}})()</script>
 <link rel="icon" href="/assets/icon.png" type="image/png">
 <link rel="apple-touch-icon" href="/assets/icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/inner.css">
+<link rel="stylesheet" href="/assets/dark.css">
 </head>
 <body>
 <div class="bar solid"><div class="wrap">
@@ -34,7 +36,7 @@
         <a class="dd-i" href="/aura/"><img src="/aura/assets/icon.png" alt=""><span><b style="color:var(--aura-s)">Aura</b><i>Weather for Spain, from AEMET data</i></span><em>App Store</em></a>
       </div>
     </div>
-    <a href="/writing/" class="cur" aria-current="page">Writing</a><a href="/about/">About</a><a href="https://github.com/mabaeyens">GitHub</a><span class="lang"><b>EN</b> / <a href="/es/escritos/promesas/" hreflang="es" lang="es">ES</a></span>
+    <a href="/writing/" class="cur" aria-current="page">Writing</a><a href="/about/">About</a><a href="https://github.com/mabaeyens">GitHub</a><span class="lang"><b>EN</b> / <a href="/es/escritos/promesas/" hreflang="es" lang="es">ES</a></span><button class="tt" type="button" onclick="miraTheme()" aria-label="Switch light or dark theme" title="Switch light or dark theme"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="M10 3a7 7 0 0 1 0 14z" fill="currentColor"/></svg></button>
   </nav>
 </div></div>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>

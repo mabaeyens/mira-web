@@ -1,0 +1,65 @@
+/* Dark theme for askmira.es. Loaded last on every page.
+   html[data-theme=dark] is set before first paint by the inline script in <head>
+   (saved choice in localStorage 'mira-theme', else the system preference). */
+
+/* theme toggle button in the nav (both themes) */
+.tt{appearance:none;background:none;border:0;padding:4px;margin:-4px 0 -4px -6px;cursor:pointer;color:var(--soft);
+  display:inline-flex;align-items:center;border-radius:6px;line-height:0}
+.tt:hover,.tt:focus-visible{color:var(--ink)}
+.tt svg{width:17px;height:17px}
+
+html[data-theme=dark]{
+  color-scheme:dark;
+  --bg:#121419; --ink:#E9EBF1; --soft:#9AA1B1; --line:#2A2E3A;
+  --accent:#E4756A; --accent-text:#F0948A;
+  --mira-h:#E3A93A; --mira-s:#E3A93A;
+  --vera-h:#46C2C8; --vera-s:#46C2C8;
+  --aura-h:#6AAEF2; --aura-s:#6AAEF2;
+  --app:var(--app-dk);
+}
+html[data-theme=dark] body{background:var(--bg);color:var(--ink)}
+
+/* surfaces */
+html[data-theme=dark] .dd{background:#1A1D25;box-shadow:0 18px 40px rgba(0,0,0,.55),0 0 0 1px #2A2E3A}
+html[data-theme=dark] .dd-i:hover{background:#242833}
+html[data-theme=dark] .hero{background:#121419}
+html[data-theme=dark] .chips span{background:#1A1D25}
+html[data-theme=dark] .proj .tile{background:#242833;box-shadow:0 0 0 1px #353A47}
+html[data-theme=dark] .trk{background:#2A2F3B}
+html[data-theme=dark] .prose3 code{background:#262A35}
+html[data-theme=dark] .screen{background:linear-gradient(#1D2740,#2B2433)}
+html[data-theme=dark] .menubar{background:rgba(18,20,25,.62);color:#CDD2DD}
+html[data-theme=dark] .menubar span:first-child{color:var(--mira-s)}
+html[data-theme=dark] .sun{fill:#6A5A2C!important}
+html[data-theme=dark] .floor{background:#2A2E3A}
+
+/* body copy that used a fixed mid-grey */
+html[data-theme=dark] .hero p,html[data-theme=dark] .row p,html[data-theme=dark] .intro .lede,
+html[data-theme=dark] .job p,html[data-theme=dark] .plain p,html[data-theme=dark] .wlede,
+html[data-theme=dark] .mhero p,html[data-theme=dark] .cap p{color:#B9BFCD}
+html[data-theme=dark] .prose,html[data-theme=dark] .prose2 p,html[data-theme=dark] .item-copy,
+html[data-theme=dark] .prose3 .lead,html[data-theme=dark] .prose3>p:first-of-type,
+html[data-theme=dark] .prose3 p,html[data-theme=dark] .prose3 li{color:#CBD0DC}
+
+/* hairlines and shadows around screenshots */
+html[data-theme=dark] .dev .shot,html[data-theme=dark] .mac,html[data-theme=dark] .mark,
+html[data-theme=dark] .strip .shot,html[data-theme=dark] .shot2{box-shadow:0 0 0 1px #353A47,0 14px 30px rgba(0,0,0,.45)}
+html[data-theme=dark] .proj img{box-shadow:0 0 0 1px #353A47}
+html[data-theme=dark] .guide-shot img{box-shadow:0 0 0 1px #353A47,0 10px 24px rgba(0,0,0,.4)}
+html[data-theme=dark] .mwin{box-shadow:0 16px 34px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.08)}
+html[data-theme=dark] .tap{box-shadow:0 0 0 3px rgba(18,20,25,.85)}
+html[data-theme=dark] .pside img{box-shadow:0 0 0 1px #2A2E3A}
+
+/* the two technical articles carry their own token set (scoped under .art) */
+html[data-theme=dark] .art{
+  --ground:#0c1015; --surface:#141a22; --surface-2:#1b232e; --line:#2a3542;
+  --ink:#e7ecf2; --ink-2:#a2adbb; --ink-3:#6f7c8b;
+  --draft:#e6a545; --verify:#5f9dff; --good:#43c088; --bad:#ff6f5c; --untested:#94a0af;
+  --draft-wash:#2a2113; --verify-wash:#12203a; --good-wash:#0f2a1f; --bad-wash:#2c1613;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 30px rgba(0,0,0,.35);
+}
+
+/* filled buttons: dark text on the lighter dark-mode accents */
+html[data-theme=dark] .btn,html[data-theme=dark] .btn span{color:#14161A}
+html[data-theme=dark] .prose3 .btn,html[data-theme=dark] .prose3 a.btn,html[data-theme=dark] .prose3 a.btn span{color:#14161A!important}
+html[data-theme=dark] .tap{color:#14161A}
