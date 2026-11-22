@@ -63,3 +63,19 @@ html[data-theme=dark] .art{
 html[data-theme=dark] .btn,html[data-theme=dark] .btn span{color:#14161A}
 html[data-theme=dark] .prose3 .btn,html[data-theme=dark] .prose3 a.btn,html[data-theme=dark] .prose3 a.btn span{color:#14161A!important}
 html[data-theme=dark] .tap{color:#14161A}
+
+/* ---- night sky: same three symbols (star, clouds, birds), redrawn for the dark ---- */
+.nt{display:none}
+html[data-theme=dark] .nt{display:block;position:absolute;inset:0;pointer-events:none}
+html[data-theme=dark] .nt *{pointer-events:none}
+.nt .moon{position:absolute;right:21%;top:7%;width:78px;height:78px;filter:drop-shadow(0 0 16px rgba(210,220,255,.35))}
+.nt .sp,.nt .dt{position:absolute;animation:twinkle var(--d,4s) ease-in-out var(--dl,0s) infinite}
+.nt .dt{width:2.5px;height:2.5px;border-radius:50%;background:#C9D2EA;opacity:.5}
+@keyframes twinkle{0%,100%{opacity:.25}50%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.nt .sp,.nt .dt{animation:none;opacity:.7}}
+
+/* the gold star glows instead of shining in daylight */
+html[data-theme=dark] .sun{fill:rgba(244,190,80,.20)!important;stroke:#F6CB63;filter:drop-shadow(0 0 18px rgba(244,190,80,.55)) url(#pen)}
+/* clouds catch the moonlight; birds are brighter teal */
+html[data-theme=dark] .cl[stroke="#8D97B0"]{stroke:#7F8BB0;fill:rgba(150,165,215,.07)}
+html[data-theme=dark] .cl[stroke="#2FA9AF"]{stroke:#5ED6DB;filter:drop-shadow(0 0 6px rgba(94,214,219,.35)) url(#pen)}
