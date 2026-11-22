@@ -83,7 +83,7 @@ html[data-theme=dark] .cl[stroke="#2FA9AF"]{stroke:#5ED6DB;filter:drop-shadow(0 
 
 /* narrow screens: the post image stays at the right edge and the text wraps beside it */
 @media (max-width:1300px){
-  .pside{float:right;position:static;width:clamp(140px,40%,340px);margin:6px 0 10px 18px}
+  .pside{float:right;position:static;width:clamp(140px,44vw,600px);margin:6px 0 14px 28px}
   .pside img{border-radius:8px 0 0 8px}
 }
-@media (max-width:760px){.pside{margin:4px -20px 8px 14px;width:42%}}
+@media (max-width:760px){.pside{margin:4px -20px 8px 14px;width:44vw}}
