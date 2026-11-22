@@ -1,264 +1,139 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mira: apps that stay on your own devices</title>
-  <meta name="description" content="Three small, finished apps that stay on the devices you already own: Mira, an AI assistant that runs on your Mac, iPhone and iPad; Vera, a Markdown editor for your git repos; Aura, a weather app for Spain. No accounts, no server of mine. Built in the open with Claude Code." />
-  <meta property="og:title" content="Mira: apps that stay on your own devices" />
-  <meta property="og:description" content="Three finished apps that run on your own devices: a local AI assistant, a Markdown editor for your repos, and a weather app for Spain. No accounts, no server of mine." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://askmira.es" />
-  <meta property="og:image" content="https://askmira.es/assets/og.png" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="theme-color" content="#0B0D12" media="(prefers-color-scheme: dark)" />
-  <meta name="theme-color" content="#F4F5F7" media="(prefers-color-scheme: light)" />
-
-  <link rel="icon" href="assets/icon.png" type="image/png" />
-  <link rel="apple-touch-icon" href="assets/icon.png" />
-
-  <!-- Anti-flash: restore saved theme before first paint -->
-  <script>
-    (function(){
-      var t = localStorage.getItem('mira-theme');
-      if (t) document.documentElement.setAttribute('data-theme', t);
-    })();
-  </script>
-
-  <!-- Handwritten CSS only, no Tailwind, no runtime CDN, so layout survives
-       content blockers / Lockdown Mode / offline. Google Fonts is the one
-       external request; every face has a system fallback. -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,500;1,6..72,500&family=Manrope:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
-  <link rel="stylesheet" href="home.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mira, Vera, Aura: apps that stay on your own devices</title>
+<meta name="description" content="Three small, finished apps that stay on the devices you already own: Mira, an AI assistant that runs on your Mac, iPhone and iPad; Vera, a Markdown editor for your git repos; Aura, a weather app for Spain. No accounts, no server of mine.">
+<link rel="canonical" href="https://askmira.es/">
+<link rel="alternate" hreflang="en" href="https://askmira.es/"><link rel="alternate" hreflang="es" href="https://askmira.es/es/"><link rel="alternate" hreflang="x-default" href="https://askmira.es/">
+<meta property="og:title" content="Mira, Vera, Aura: apps that stay on your own devices">
+<meta property="og:description" content="Three small, finished apps that stay on the devices you already own: Mira, an AI assistant that runs on your Mac, iPhone and iPad; Vera, a Markdown editor for your git repos; Aura, a weather app for Spain. No accounts, no server of mine.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://askmira.es/">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://askmira.es/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#F1F2F5">
+<link rel="icon" href="/assets/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="/assets/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/home.css">
 </head>
-
 <body>
-
-  <!-- ── Shared SVG symbols ─────────────────────────────────────── -->
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-    <symbol id="ico-github" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
-    </symbol>
-    <symbol id="ico-linkedin" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 110-4.14 2.07 2.07 0 010 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/>
-    </symbol>
-    <symbol id="ico-arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M5 12h14M13 6l6 6-6 6"/>
-    </symbol>
-    <symbol id="ico-arrow-d" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M12 5v14M6 13l6 6 6-6"/>
-    </symbol>
-  </svg>
-
-  <!-- ── Header ─────────────────────────────────────────────────── -->
-  <header class="site-header">
-    <div class="wrap">
-      <a href="/" class="brand">
-        <img src="assets/icon.png" alt="Mira" />
-        <span>Mira</span>
-      </a>
-
-      <nav class="pill-nav" aria-label="Sections">
-        <a href="#apps">Apps</a>
-        <a href="#why">Principles</a>
-        <a href="https://github.com/mabaeyens" target="_blank" rel="noopener">GitHub</a>
-      </nav>
-
-      <div class="header-actions">
-        <a href="https://linkedin.com/in/mabaeyens" target="_blank" rel="noopener"
-           class="icon-btn" aria-label="LinkedIn">
-          <svg><use href="#ico-linkedin"/></svg>
-        </a>
-        <button id="theme-toggle" class="icon-btn" aria-label="Toggle theme">
-          <svg class="icon-sun" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="4.5"/>
-            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19"/>
-          </svg>
-          <svg class="icon-moon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
-            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
-          </svg>
-        </button>
+<div class="bar"><div class="wrap">
+  <a class="brand" href="/">askmira.es</a>
+  <nav aria-label="Main">
+    <div class="dd-wrap">
+      <a href="/#apps" class="dd-t">Apps <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M2 3.5l3 3 3-3"/></svg></a>
+      <div class="dd">
+        <a class="dd-i" href="/mira/"><img src="/assets/icon.png" alt=""><span><b style="color:var(--mira-s)">Mira</b><i>AI assistant that runs on your own Mac</i></span><em>In beta</em></a>
+        <a class="dd-i" href="/vera/"><img src="/vera/assets/icon.png" alt=""><span><b style="color:var(--vera-s)">Vera</b><i>Markdown editor for your git repos</i></span><em>In beta</em></a>
+        <a class="dd-i" href="/aura/"><img src="/aura/assets/icon.png" alt=""><span><b style="color:var(--aura-s)">Aura</b><i>Weather for Spain, from AEMET data</i></span><em>App Store</em></a>
       </div>
     </div>
-  </header>
+    <a href="/writing/">Writing</a><a href="/about/">About</a><a href="https://github.com/mabaeyens">GitHub</a><span class="lang"><b>EN</b> / <a href="/es/" hreflang="es" lang="es">ES</a></span>
+  </nav>
+</div></div>
+<section class="hero">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <filter id="pen" x="-5%" y="-10%" width="110%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3.2"/></filter>
+  </defs></svg>
+  <div class="sky" aria-hidden="true">
+    <svg class="sun" viewBox="0 0 160 160" fill="rgba(244,190,80,.30)" stroke="#E9A93A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)">
+      <path d="M80 8 C82 52 96 66 152 80 C96 94 82 108 80 152 C78 108 64 94 8 80 C64 66 78 52 80 8 Z"/>
+      <path d="M128 118 C129 128 133 131 142 132 C133 133 129 136 128 146 C127 136 123 133 114 132 C123 131 127 128 128 118 Z"/>
+    </svg>
+    <svg class="cl c1" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M22 74 C8 74 4 56 19 52 C16 35 35 27 48 36 C54 17 83 13 95 30 C107 19 132 23 136 40 C155 32 177 43 172 59 C191 59 201 74 184 76 Z"/><path d="M58 63 C78 67 98 65 118 60"/></svg>
+    <svg class="cl c2" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M26 76 C10 76 8 58 24 55 C24 38 42 32 54 40 C62 22 90 22 100 38 C116 30 138 38 138 52 C158 50 172 64 160 76 Z"/><path d="M52 66 C70 69 88 68 104 64"/></svg>
+    <svg class="cl c3" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M18 72 C6 72 4 58 16 55 C16 42 30 37 40 43 C46 28 68 27 77 40 C88 33 106 38 106 50 C122 50 130 62 120 72 Z"/></svg>
+    <svg class="cl c4" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M22 74 C8 74 4 56 19 52 C16 35 35 27 48 36 C54 17 83 13 95 30 C107 19 132 23 136 40 C155 32 177 43 172 59 C191 59 201 74 184 76 Z"/><path d="M58 63 C78 67 98 65 118 60"/></svg>
+    <svg class="cl v1" viewBox="0 0 120 56" fill="none" stroke="#2FA9AF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><g class="bob"><path d="M36 10 C26 18 20 24 14 30 C22 36 28 41 38 49"/><path d="M71 7 C66 20 61 34 52 50"/><path d="M84 10 C94 18 100 24 106 30 C98 36 92 41 82 49"/></g></svg>
+    <svg class="cl c7" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M22 74 C8 74 4 56 19 52 C16 35 35 27 48 36 C54 17 83 13 95 30 C107 19 132 23 136 40 C155 32 177 43 172 59 C191 59 201 74 184 76 Z"/><path d="M58 63 C78 67 98 65 118 60"/></svg>
+    <svg class="cl c8" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M26 76 C10 76 8 58 24 55 C24 38 42 32 54 40 C62 22 90 22 100 38 C116 30 138 38 138 52 C158 50 172 64 160 76 Z"/><path d="M52 66 C70 69 88 68 104 64"/></svg>
+    <svg class="cl c9" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M18 72 C6 72 4 58 16 55 C16 42 30 37 40 43 C46 28 68 27 77 40 C88 33 106 38 106 50 C122 50 130 62 120 72 Z"/></svg>
+    <svg class="cl v4" viewBox="0 0 120 56" fill="none" stroke="#2FA9AF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><g class="bob"><path d="M36 10 C26 18 20 24 14 30 C22 36 28 41 38 49"/><path d="M71 7 C66 20 61 34 52 50"/><path d="M84 10 C94 18 100 24 106 30 C98 36 92 41 82 49"/></g></svg>
+    <svg class="cl v3" viewBox="0 0 120 56" fill="none" stroke="#2FA9AF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><g class="bob"><path d="M36 10 C26 18 20 24 14 30 C22 36 28 41 38 49"/><path d="M71 7 C66 20 61 34 52 50"/><path d="M84 10 C94 18 100 24 106 30 C98 36 92 41 82 49"/></g></svg>
+    <svg class="cl v2" viewBox="0 0 120 56" fill="none" stroke="#2FA9AF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><g class="bob"><path d="M36 10 C26 18 20 24 14 30 C22 36 28 41 38 49"/><path d="M71 7 C66 20 61 34 52 50"/><path d="M84 10 C94 18 100 24 106 30 C98 36 92 41 82 49"/></g></svg>
+  </div>
+  <div class="wrap">
+    <h1>Apps that stay on your own devices.</h1>
+    <p>I build small, finished apps for the hardware you already own. No account to create, no server of mine in the middle (there isn't one). Three so far.</p>
+  </div>
+</section>
 
-  <main class="hero-wrap">
+<section class="stage"><div class="wrap">
+  <div class="lead mono"><span>Every screen below is real.</span><span>Drawn to scale. 1 cm of hardware = 16 px.</span></div>
+  <div class="lscroll"><div class="lin">
+  <div class="line">
+    <div class="dev" style="width:calc(var(--px)*30.9)">
+      <div class="mac">
+        <div class="screen">
+          <div class="menubar"><span>&#10022; Mira</span><span>Fri 09:41</span></div>
+          <img class="mwin" src="/assets/shots/mira/mac-home.webp" alt="Mira on a Mac">
+        </div>
+      </div>
+      <div class="base"></div>
+    </div>
+    <div class="dev" style="width:calc(var(--px)*25)"><div class="shot"><img src="/assets/shots/mira/ipad-lisbon.webp" alt="Mira on an iPad"></div></div>
+    <div class="dev" style="width:calc(var(--px)*7.1)"><div class="shot"><img src="/assets/shots/mira/iphone-04-thinking.webp" alt="Mira on an iPhone"></div></div>
+    <div class="dev" style="width:calc(var(--px)*3.7)"><div class="shot"><img src="/aura/assets/shots/watch/app_dusk_storm.webp" alt="Aura on Apple Watch"></div></div>
+    <div class="dev pix" style="width:calc(var(--px)*3)"><div class="shot"><img src="/aura/assets/shots/pebble/sky-golden-hour.png" alt="Aura on a Pebble"></div></div>
+  </div>
+  <div class="floor"></div>
+  <div class="caps mono">
+    <div style="width:calc(var(--px)*30.9)">Mac</div><div style="width:calc(var(--px)*25)">iPad</div><div style="width:calc(var(--px)*7.1)">iPhone</div><div style="width:calc(var(--px)*3.7)">Watch</div><div style="width:calc(var(--px)*3)">Pebble</div>
+  </div>
+</div></div>
+</div></section>
 
-    <!-- Number stream behind the hero. Decorative; content lives in home.css. -->
-    <div class="stream" aria-hidden="true">
-      <div class="stream-row">
-        <div class="col col-a"></div>
-        <div class="col col-b"></div>
-        <div class="col col-c"></div>
-        <div class="col col-d"></div>
-        <div class="col col-e"></div>
-        <div class="col col-f"></div>
-        <div class="col col-g"></div>
-        <div class="col col-h"></div>
+<section class="apps" id="apps"><div class="wrap">
+  <div class="head">Three apps. One way of making them.</div>
+
+  <div class="row">
+    <img class="mark" src="/assets/icon.png" alt="">
+    <div><h3 style="color:var(--mira-h)">Mira <span>IN BETA</span></h3><p>An AI assistant whose models run on your own Mac, iPhone and iPad. Your questions stay on the machine that answers them.</p><a class="go" href="/mira/">Open Mira →</a></div>
+    <div class="strip">
+      <div class="shot" style="width:150px"><img src="/assets/shots/mira/iphone-02-demo-welcome.webp" alt=""></div>
+      <div class="shot" style="width:150px"><img src="/assets/shots/mira/iphone-05-lisbon.webp" alt=""></div>
+      <div class="shot" style="width:150px"><img src="/assets/shots/mira/iphone-06-code.webp" alt=""></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <img class="mark" src="/vera/assets/icon.png" alt="">
+    <div><h3 style="color:var(--vera-h)">Vera <span>IN BETA</span></h3><p>A native editor for the Markdown in your git repos. It knows what changed since your last commit. MIT-licensed, free.</p><a class="go" href="/vera/">Open Vera →</a></div>
+    <div class="code"><span class="c"># Release notes</span><br><span class="a">+ Weekly build, shipped Friday.</span><br><span class="r">- Weekly build, shipped Monday.</span><br>Nothing leaves the repo.</div>
+  </div>
+
+  <div class="row">
+    <img class="mark" src="/aura/assets/icon.png" alt="">
+    <div><h3 style="color:var(--aura-h)">Aura <span>APP STORE</span></h3><p>A weather app for Spain built on AEMET's open data, for iPhone, iPad, Apple Watch and Android. Pebble watchfaces too.</p><a class="go" href="/aura/">Open Aura →</a></div>
+    <div class="strip">
+      <div class="shot" style="width:150px"><img src="/aura/assets/shots/iphone/02_hero_storm.webp" alt=""></div>
+      <div class="px" style="display:grid;grid-template-columns:repeat(3,100px);gap:12px">
+        <div class="shot"><img src="/aura/assets/shots/pebble/lcd-stack.png" alt=""></div>
+        <div class="shot"><img src="/aura/assets/shots/pebble/essential-midnight.png" alt=""></div>
+        <div class="shot"><img src="/aura/assets/shots/pebble/cityscape-rainy-dusk.png" alt=""></div>
       </div>
     </div>
+  </div>
 
-    <!-- ── Hero ─────────────────────────────────────────────────── -->
-    <section id="top" class="wrap hero">
-      <p class="eyebrow">
-        <span class="dot" aria-hidden="true"></span>
-        <span>One workshop · Mac · iPhone · iPad · Watch</span>
-      </p>
+  <div class="rules">
+    <h3>Made the same way, on purpose.</h3>
+    <ol>
+      <li>No account to create.</li>
+      <li>No server of mine in the middle.</li>
+      <li>Your data stays on the device that made it.</li>
+      <li>Nothing locks behind a payment. Tips are voluntary.</li>
+    </ol>
+  </div>
+  
+</div></section>
 
-      <h1 class="hero-title">Apps that stay on your <em>own devices.</em></h1>
 
-      <div class="hero-row">
-        <p class="hero-copy">
-          I build small, finished apps for the hardware you already own. No account
-          to create, no server of mine in the middle (there isn't one). Three so far.
-        </p>
-        <a href="#apps" class="hero-go">
-          <span>Pick where you're headed</span>
-          <svg aria-hidden="true"><use href="#ico-arrow-d"/></svg>
-        </a>
-      </div>
-    </section>
-
-    <!-- ── The apps ─────────────────────────────────────────────── -->
-    <section id="apps" class="wrap bento" data-reveal>
-
-      <a href="/mira/" class="tile is-mira">
-        <div class="tile-text">
-          <div class="tile-top">
-            <img src="assets/icon.png" alt="" />
-            <span class="tile-pill">In beta</span>
-          </div>
-          <h2 class="tile-name">Mira</h2>
-          <p>An AI assistant whose models run on your own Mac, iPhone and iPad. Your questions stay on the machine that answers them.</p>
-          <span class="tile-go">Open Mira <svg aria-hidden="true"><use href="#ico-arrow-r"/></svg></span>
-        </div>
-        <div class="shots" aria-hidden="true">
-          <div class="shot-mac">
-            <img src="assets/home/mira-mac.jpg" alt="" loading="lazy" />
-          </div>
-          <div class="shot-phone">
-            <img src="assets/home/mira-phone.jpg" alt="" loading="lazy" />
-          </div>
-        </div>
-      </a>
-
-      <a href="/vera" class="tile is-vera">
-        <div class="tile-text">
-          <div class="tile-top">
-            <img src="vera/assets/icon.png" alt="" />
-            <span class="tile-pill">In beta</span>
-          </div>
-          <h2 class="tile-name">Vera</h2>
-          <p>A native editor for the Markdown in your git repos. It knows what changed since your last commit. MIT-licensed, free.</p>
-        </div>
-        <div class="shot-diff" aria-hidden="true"><span class="ctx">  # Release notes</span><span class="add">+ Weekly build, shipped Friday.</span><span class="ctx">- Weekly build, shipped Monday.</span><span>  Nothing leaves the repo.</span></div>
-      </a>
-
-      <a href="/aura" class="tile is-aura">
-        <div class="tile-text">
-          <div class="tile-top">
-            <img src="aura/assets/apple-touch-icon.png" alt="" />
-            <span class="tile-pill">App Store</span>
-          </div>
-          <h2 class="tile-name">Aura</h2>
-          <p>A weather app for Spain built on AEMET's open data, for iPhone, iPad, Apple Watch and Android. Pebble watchfaces too.</p>
-        </div>
-        <div class="shot-phone" aria-hidden="true">
-          <img src="aura/assets/shots/iphone/01_hero_clear.webp" alt="" loading="lazy" />
-        </div>
-      </a>
-
-    </section>
-
-    <!-- ── Why these apps ───────────────────────────────────────── -->
-    <section id="why" class="wrap principles-section">
-      <div class="principles-head">
-        <div>
-          <p class="eyebrow">What ties them together</p>
-          <h2 class="sec-title">Made the same way, on purpose.</h2>
-        </div>
-        <p>
-          Different jobs, one set of rules. Whichever you open, it behaves the
-          way I'd want software on my own devices to behave.
-        </p>
-      </div>
-
-      <div class="principles" data-reveal>
-        <div class="principle">
-          <span class="num">01</span>
-          <h3>On your device</h3>
-          <p>The work happens on the device in your hand, and I don't run a server. I couldn't read your data even if I wanted to.</p>
-        </div>
-        <div class="principle">
-          <span class="num">02</span>
-          <h3>No accounts</h3>
-          <p>No sign-up screen, no login, no email asked for. Download, open, use.</p>
-        </div>
-        <div class="principle">
-          <span class="num">03</span>
-          <h3>Open where it counts</h3>
-          <p>Mira's engine, Vera and the Pebble watchfaces are MIT-licensed. Don't take my word for what they do; read the code.</p>
-        </div>
-        <div class="principle">
-          <span class="num">04</span>
-          <h3>Built in the open</h3>
-          <p>One person and Claude Code, shipping a small release most weeks. The commit history is public, warts included.</p>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- ── Footer ─────────────────────────────────────────────────── -->
-  <footer class="site-footer">
-    <div class="wrap">
-      <div class="footer-brand">
-        <img src="assets/icon.png" alt="" />
-        <span class="name">Mira</span>
-        <span class="tag">Small, honest apps that stay on your devices.</span>
-      </div>
-      <nav class="footer-links" aria-label="Footer">
-        <a href="/mira/">Mira</a>
-        <a href="/vera">Vera</a>
-        <a href="/aura">Aura</a>
-        <a href="https://github.com/mabaeyens" target="_blank" rel="noopener">GitHub ↗</a>
-        <a href="https://linkedin.com/in/mabaeyens" target="_blank" rel="noopener">LinkedIn ↗</a>
-      </nav>
-      <p class="footer-credit">Built by Miguel A. Baeyens, with Claude Code · MIT</p>
-    </div>
-  </footer>
-
-  <!-- ── Scripts ───────────────────────────────────────────────── -->
-  <script>
-    // Theme toggle
-    document.getElementById('theme-toggle').addEventListener('click', function () {
-      var html = document.documentElement;
-      var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      html.setAttribute('data-theme', next);
-      localStorage.setItem('mira-theme', next);
-    });
-
-    // Reveal-on-scroll
-    (function () {
-      var els = document.querySelectorAll('[data-reveal]');
-      if (!('IntersectionObserver' in window)) {
-        els.forEach(function (e) { e.classList.add('in'); });
-        return;
-      }
-      var ro = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in');
-            ro.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.12 });
-      els.forEach(function (e) { ro.observe(e); });
-    })();
-  </script>
+<div class="wrap"><div class="foot mono"><span><a href="/mira/privacy/">Privacy</a> · <a href="/mira/support/">Support</a> · <a href="https://github.com/mabaeyens">GitHub</a></span></div></div>
 </body>
 </html>

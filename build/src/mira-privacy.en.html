@@ -1,0 +1,85 @@
+{{sky_defs}}
+<div class="pband">
+{{sky_inner}}
+  <div class="wrap pbw"><div class="eyebrow">Mira · Legal</div><h1 class="ph1">Privacy Policy</h1></div>
+</div>
+<div class="wrap page" style="padding-top:34px"><div class="prose3">
+      <p class="updated">Last updated: 2026-11-22</p>
+
+      <p class="lead">
+        Mira is built privacy-first, and this policy is short because there is little to say.
+        The model runs on your own Mac. The iPhone and iPad apps are windows onto it, and what you say to Mira stays between your own devices.
+      </p>
+
+      <section>
+        <h2>The short version</h2>
+        <ul>
+          <li><strong>No account. No sign-up. No tracking. No analytics. No ads.</strong></li>
+          <li><strong>No servers of mine.</strong> Mira has no backend of its own. There is no "Mira cloud" for your chats to pass through.</li>
+          <li><strong>The AI runs on your Mac.</strong> The Mac app and the menu-bar app load and run the model locally. The iPhone and iPad apps do not run a model: they connect to your own Mac and show what it answers. Your prompts and their answers are produced on your Mac.</li>
+          <li><strong>Open source.</strong> The engine is public, so you can check every word of this:
+            <a href="https://github.com/mabaeyens/mira-core">github.com/mabaeyens/mira-core</a>.
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>What data Mira collects</h2>
+        <p>None. Mira does not collect, transmit, or sell any personal data. There is no analytics SDK and no server of mine to send anything to.</p>
+      </section>
+
+      <section>
+        <h2>Data that stays on your devices</h2>
+        <ul>
+          <li>Your conversations with Mira, and any documents you hand it to read. They live on your Mac.</li>
+          <li>The model you have downloaded, and your settings (which model, preferences, and so on).</li>
+          <li>On an iPhone or iPad, a list of your conversations (titles and dates, not the messages), a short-lived copy of the conversations you opened so they appear quickly (it stays on that device, is not synced, and the system may clear it), and the connection you saved: your Mac's name and address. The pairing token that proves the phone may talk to your Mac is kept in the device's Keychain.</li>
+        </ul>
+        <p>The conversation list, your saved connection's name and address, and your preferences sync across your own devices only through <strong>your own</strong> iCloud, under your Apple ID, never to me. The pairing token travels between your devices only through iCloud Keychain, which is end-to-end encrypted, so neither I nor Apple can read it; with iCloud Keychain off, the token stays on that device and your other device needs pairing again. The messages themselves are not stored in iCloud. Anyone who can sign in to that Apple ID can read the list, as with any iCloud data, so protect it with a strong password and two-factor authentication. On a Mac, Mira Desktop keeps its token in that Mac's Keychain only. You can cut a device off at any time by creating a new pairing token on your Mac, which stops every previously paired device.</p>
+      </section>
+
+      <section>
+        <h2>How your devices talk to each other</h2>
+        <p>The iPhone and iPad apps reach your Mac over HTTPS, through your own <a href="https://tailscale.com">Tailscale</a> network, or over your local network. Every request carries the pairing token your Mac generated, and the traffic goes from device to device, never through a server of mine. Tailscale is a separate service with its own privacy policy. Mira asks Tailscale for an HTTPS certificate for your Mac's name; that exchange is between your Mac and Tailscale.</p>
+      </section>
+
+      <section>
+        <h2>What the apps ask permission for</h2>
+        <ul>
+          <li><strong>Camera.</strong> To scan the QR code that pairs your phone with your Mac. The image is not stored or sent anywhere.</li>
+          <li><strong>Microphone and speech recognition.</strong> Only if you dictate a message. Dictation uses Apple's speech recognition, on your device when your language supports it; otherwise Apple may process the audio, under Apple's terms. I never receive the audio.</li>
+          <li><strong>Photos.</strong> Only for images you pick to attach. They go to your Mac, not to me.</li>
+          <li><strong>Local network.</strong> To find your Mac when it is on the same network.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>The only other network activity</h2>
+        <p>Mira makes no network calls of its own, with these honest exceptions. Each one goes directly to the service named, never through any server of mine:</p>
+        <ol>
+          <li><strong>Downloading a model.</strong> The first time you use a model that isn't on your Mac yet, Mira fetches it from its host (for example Hugging Face). The download goes to that host. Once it's on your Mac, running it needs no network at all.</li>
+          <li><strong>Searching or reading the web.</strong> When a question needs current information, or you ask Mira to read a link, Mira can decide to search the web or fetch a page. Your Mac then requests it directly from the search engine or site (for example DuckDuckGo or Brave), and the words of that search go to that provider. A conversation that needs nothing current makes no such calls.</li>
+          <li><strong>Updates.</strong> The menu-bar app checks GitHub for a newer version and downloads it from there. GitHub sees the request, as with any download.</li>
+          <li><strong>Documents you add.</strong> Files you point Mira at are read and indexed on your Mac. Their contents are not uploaded anywhere.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Children's privacy</h2>
+        <p>Mira collects no data from anyone, including children.</p>
+      </section>
+
+      <section>
+        <h2>Changes</h2>
+        <p>If this policy ever changes, the update lands here and in the public repository, with the two kept in sync.</p>
+      </section>
+
+      <section>
+        <h2>Contact</h2>
+        <p>Questions or concerns? The fastest way to reach me is the <a href="{{url:mira-support}}">support page</a>. You can also open a discussion at
+          <a href="https://github.com/mabaeyens/mira-core/discussions">github.com/mabaeyens/mira-core</a>.
+        </p>
+      </section>
+    
+  </div>
+</div>

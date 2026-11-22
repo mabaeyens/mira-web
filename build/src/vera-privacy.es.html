@@ -1,0 +1,69 @@
+{{sky_defs}}
+<div class="pband">
+{{sky_inner}}
+  <div class="wrap pbw"><div class="eyebrow">Vera · Legal</div><h1 class="ph1">Política de privacidad</h1></div>
+</div>
+<div class="wrap page" style="padding-top:34px"><div class="prose3">
+      <p class="updated">Última actualización: 2026-07-06</p>
+
+      <p class="lead">
+        Vera está hecha pensando primero en la privacidad, y esta política es breve porque hay muy poco que decir.
+      </p>
+
+      <section>
+        <h2>Lo esencial</h2>
+        <ul>
+          <li><strong>Sin cuenta. Sin registro. Sin seguimiento. Sin analíticas. Sin anuncios.</strong></li>
+          <li><strong>Sin servidores propios.</strong> Vera no tiene backend. No existe ninguna «nube de Vera» a la que enviar nada.</li>
+          <li><strong>Tus archivos siguen siendo tuyos.</strong> Vera lee y escribe los archivos Markdown de la carpeta que elijas, en tu iCloud Drive o en tu dispositivo. Nunca pasan por nosotros.</li>
+          <li><strong>Código abierto.</strong> El código completo está en GitHub, así que puedes comprobar cada palabra de esto:
+            <a href="https://github.com/mabaeyens/vera-apps">github.com/mabaeyens/vera-apps</a>.
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Qué datos recopila Vera</h2>
+        <p>Ninguno. Vera no recopila, transmite ni vende datos personales. No podríamos hacerlo: no hay servidor ni SDK de analíticas.</p>
+      </section>
+
+      <section>
+        <h2>Datos que se quedan en tu dispositivo</h2>
+        <ul>
+          <li>La carpeta que eliges se recuerda mediante un marcador con ámbito de seguridad guardado en el <strong>Llavero</strong> de tu dispositivo.</li>
+          <li>Las preferencias pequeñas (tamaño de letra, linter activado o no, modo foco, últimos archivos abiertos) viven en los ajustes locales de la app.</li>
+        </ul>
+        <p>Ambos se quedan en tu dispositivo y solo se sincronizan a través de <strong>tu propio</strong> iCloud, bajo tu Apple ID, nunca con nosotros.</p>
+      </section>
+
+      <section>
+        <h2>La única actividad de red</h2>
+        <p>Vera no hace llamadas de red por su cuenta, con dos excepciones sinceras:</p>
+        <ol>
+          <li><strong>Imágenes remotas en tu Markdown.</strong> Si un archivo que abres hace referencia a una imagen por URL (<code>![](https://…)</code>), Vera descarga esa imagen para mostrarla, igual que un navegador. La petición va directamente al servidor de la imagen, no a nosotros. Si nunca abres archivos así, esto no ocurre.</li>
+          <li><strong>GitHub (opcional).</strong> Cuando conectas un repositorio, Vera habla directamente con la API de GitHub usando un token de acceso, que se obtiene pegando un token de acceso personal de ámbito reducido que <strong>creas</strong> tú, o iniciando sesión con el OAuth Device Flow de GitHub (apruebas un código en github.com y GitHub entrega el token directamente a la app). De cualquier forma, el token se guarda solo en el Llavero de tu dispositivo, no se sincroniza en ningún sitio, ni siquiera por iCloud, y nunca pasa por ningún servidor nuestro. La <em>lista</em> de repositorios que has añadido se sincroniza entre tus dispositivos mediante el almacén clave-valor de iCloud, bajo tu Apple ID, nunca con nosotros.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Privacidad de los menores</h2>
+        <p>Vera no recopila datos de nadie, tampoco de menores.</p>
+      </section>
+
+      <section>
+        <h2>Cambios</h2>
+        <p>Si esta política cambia alguna vez, la actualización llegará primero a
+          <a href="https://github.com/mabaeyens/vera-apps/blob/main/PRIVACY.md">PRIVACY.md</a>
+          en el repositorio público, y esta página se mantendrá sincronizada.
+        </p>
+      </section>
+
+      <section>
+        <h2>Contacto</h2>
+        <p>¿Dudas o inquietudes? La forma más rápida de contactar conmigo es la <a href="{{url:vera-support}}">página de soporte</a>. También puedes abrir una incidencia o una discusión en
+          <a href="https://github.com/mabaeyens/vera-apps">github.com/mabaeyens/vera-apps</a>.
+        </p>
+      </section>
+    
+  </div>
+</div>

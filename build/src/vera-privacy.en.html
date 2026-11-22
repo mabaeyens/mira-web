@@ -1,0 +1,69 @@
+{{sky_defs}}
+<div class="pband">
+{{sky_inner}}
+  <div class="wrap pbw"><div class="eyebrow">Vera · Legal</div><h1 class="ph1">Privacy Policy</h1></div>
+</div>
+<div class="wrap page" style="padding-top:34px"><div class="prose3">
+      <p class="updated">Last updated: 2026-07-06</p>
+
+      <p class="lead">
+        Vera is built privacy-first, and this policy is short because there is very little to say.
+      </p>
+
+      <section>
+        <h2>The short version</h2>
+        <ul>
+          <li><strong>No account. No sign-up. No tracking. No analytics. No ads.</strong></li>
+          <li><strong>No servers of ours.</strong> Vera has no backend. There is no "Vera cloud" to send anything to.</li>
+          <li><strong>Your files stay yours.</strong> Vera reads and writes the Markdown files in the folder you choose, in your iCloud Drive or on your device. They never pass through us.</li>
+          <li><strong>Open source.</strong> The full source is on GitHub, so you can verify every word of this:
+            <a href="https://github.com/mabaeyens/vera-apps">github.com/mabaeyens/vera-apps</a>.
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>What data Vera collects</h2>
+        <p>None. Vera does not collect, transmit, or sell any personal data. We have no way to, there is no server and no analytics SDK.</p>
+      </section>
+
+      <section>
+        <h2>Data that stays on your device</h2>
+        <ul>
+          <li>The folder you pick is remembered via a security-scoped bookmark stored in your device <strong>Keychain</strong>.</li>
+          <li>Small preferences (font size, linter on/off, focus mode, last-opened files) live in the app's local settings.</li>
+        </ul>
+        <p>Both stay on your device and sync only through <strong>your own</strong> iCloud, under your Apple ID, never to us.</p>
+      </section>
+
+      <section>
+        <h2>The only network activity</h2>
+        <p>Vera makes no network calls of its own, with two honest exceptions:</p>
+        <ol>
+          <li><strong>Remote images in your Markdown.</strong> If a file you open references an image by URL (<code>![](https://…)</code>), Vera fetches that image to display it, exactly like a web browser. This goes directly to the image's host, not to us. If you never open such files, this never happens.</li>
+          <li><strong>GitHub (opt-in).</strong> When you connect a repository, Vera talks directly to GitHub's API using an access token, obtained either by pasting a fine-grained personal access token <strong>you</strong> create, or by signing in through GitHub's own OAuth Device Flow (you approve a code on github.com and GitHub issues the token directly to the app). Either way, the token is stored only in your device Keychain, it never syncs anywhere, not even via iCloud, and never passes through any server of ours. The <em>list</em> of repositories you've added syncs across your own devices through iCloud's key-value store, under your Apple ID, never to us.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Children's privacy</h2>
+        <p>Vera collects no data from anyone, including children.</p>
+      </section>
+
+      <section>
+        <h2>Changes</h2>
+        <p>If this policy ever changes, the update will land in
+          <a href="https://github.com/mabaeyens/vera-apps/blob/main/PRIVACY.md">PRIVACY.md</a>
+          in the public repository first, with this page kept in sync.
+        </p>
+      </section>
+
+      <section>
+        <h2>Contact</h2>
+        <p>Questions or concerns? The fastest way to reach me is the <a href="{{url:vera-support}}">support page</a>. You can also open an issue or discussion at
+          <a href="https://github.com/mabaeyens/vera-apps">github.com/mabaeyens/vera-apps</a>.
+        </p>
+      </section>
+    
+  </div>
+</div>

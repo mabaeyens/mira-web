@@ -1,7 +1,71 @@
-<title>Small Mac, fast AI</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Making a small Mac keep up with a big AI</title>
+<meta name="description" content="Mira is a private AI assistant that runs entirely on one Mac. Over the holidays I tried to make it faster without making it dumber.">
+<link rel="canonical" href="https://askmira.es/writing/small-mac-fast-ai/">
+<link rel="alternate" hreflang="en" href="https://askmira.es/writing/small-mac-fast-ai/"><link rel="alternate" hreflang="es" href="https://askmira.es/es/escritos/small-mac-fast-ai/"><link rel="alternate" hreflang="x-default" href="https://askmira.es/writing/small-mac-fast-ai/">
+<meta property="og:title" content="Making a small Mac keep up with a big AI">
+<meta property="og:description" content="Mira is a private AI assistant that runs entirely on one Mac. Over the holidays I tried to make it faster without making it dumber.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://askmira.es/writing/small-mac-fast-ai/">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://askmira.es/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#F1F2F5">
+<link rel="icon" href="/assets/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="/assets/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/inner.css">
+</head>
+<body>
+<div class="bar solid"><div class="wrap">
+  <a class="brand" href="/">askmira.es</a>
+  <nav aria-label="Main">
+    <div class="dd-wrap">
+      <a href="/#apps" class="dd-t">Apps <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M2 3.5l3 3 3-3"/></svg></a>
+      <div class="dd">
+        <a class="dd-i" href="/mira/"><img src="/assets/icon.png" alt=""><span><b style="color:var(--mira-s)">Mira</b><i>AI assistant that runs on your own Mac</i></span><em>In beta</em></a>
+        <a class="dd-i" href="/vera/"><img src="/vera/assets/icon.png" alt=""><span><b style="color:var(--vera-s)">Vera</b><i>Markdown editor for your git repos</i></span><em>In beta</em></a>
+        <a class="dd-i" href="/aura/"><img src="/aura/assets/icon.png" alt=""><span><b style="color:var(--aura-s)">Aura</b><i>Weather for Spain, from AEMET data</i></span><em>App Store</em></a>
+      </div>
+    </div>
+    <a href="/writing/" class="cur" aria-current="page">Writing</a><a href="/about/">About</a><a href="https://github.com/mabaeyens">GitHub</a><span class="lang"><b>EN</b> / <a href="/es/escritos/small-mac-fast-ai/" hreflang="es" lang="es">ES</a></span>
+  </nav>
+</div></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <filter id="pen" x="-5%" y="-10%" width="110%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3.2"/></filter>
+  </defs></svg>
+<div class="pband">
+<div class="sky" aria-hidden="true">
+    <svg class="sun" viewBox="0 0 160 160" fill="rgba(244,190,80,.30)" stroke="#E9A93A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)">
+      <path d="M80 8 C82 52 96 66 152 80 C96 94 82 108 80 152 C78 108 64 94 8 80 C64 66 78 52 80 8 Z"/>
+      <path d="M128 118 C129 128 133 131 142 132 C133 133 129 136 128 146 C127 136 123 133 114 132 C123 131 127 128 128 118 Z"/>
+    </svg>
+    <svg class="cl c1" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M22 74 C8 74 4 56 19 52 C16 35 35 27 48 36 C54 17 83 13 95 30 C107 19 132 23 136 40 C155 32 177 43 172 59 C191 59 201 74 184 76 Z"/><path d="M58 63 C78 67 98 65 118 60"/></svg>
+    <svg class="cl c2" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M26 76 C10 76 8 58 24 55 C24 38 42 32 54 40 C62 22 90 22 100 38 C116 30 138 38 138 52 C158 50 172 64 160 76 Z"/><path d="M52 66 C70 69 88 68 104 64"/></svg>
+    <svg class="cl c3" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M18 72 C6 72 4 58 16 55 C16 42 30 37 40 43 C46 28 68 27 77 40 C88 33 106 38 106 50 C122 50 130 62 120 72 Z"/></svg>
+    <svg class="cl c4" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M22 74 C8 74 4 56 19 52 C16 35 35 27 48 36 C54 17 83 13 95 30 C107 19 132 23 136 40 C155 32 177 43 172 59 C191 59 201 74 184 76 Z"/><path d="M58 63 C78 67 98 65 118 60"/></svg>
+    <svg class="cl v1" viewBox="0 0 120 56" fill="none" stroke="#2FA9AF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><g class="bob"><path d="M36 10 C26 18 20 24 14 30 C22 36 28 41 38 49"/><path d="M71 7 C66 20 61 34 52 50"/><path d="M84 10 C94 18 100 24 106 30 C98 36 92 41 82 49"/></g></svg>
+    <svg class="cl c7" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M22 74 C8 74 4 56 19 52 C16 35 35 27 48 36 C54 17 83 13 95 30 C107 19 132 23 136 40 C155 32 177 43 172 59 C191 59 201 74 184 76 Z"/><path d="M58 63 C78 67 98 65 118 60"/></svg>
+    <svg class="cl c8" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M26 76 C10 76 8 58 24 55 C24 38 42 32 54 40 C62 22 90 22 100 38 C116 30 138 38 138 52 C158 50 172 64 160 76 Z"/><path d="M52 66 C70 69 88 68 104 64"/></svg>
+    <svg class="cl c9" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M18 72 C6 72 4 58 16 55 C16 42 30 37 40 43 C46 28 68 27 77 40 C88 33 106 38 106 50 C122 50 130 62 120 72 Z"/></svg>
+    <svg class="cl v4" viewBox="0 0 120 56" fill="none" stroke="#2FA9AF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><g class="bob"><path d="M36 10 C26 18 20 24 14 30 C22 36 28 41 38 49"/><path d="M71 7 C66 20 61 34 52 50"/><path d="M84 10 C94 18 100 24 106 30 C98 36 92 41 82 49"/></g></svg>
+    <svg class="cl v3" viewBox="0 0 120 56" fill="none" stroke="#2FA9AF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><g class="bob"><path d="M36 10 C26 18 20 24 14 30 C22 36 28 41 38 49"/><path d="M71 7 C66 20 61 34 52 50"/><path d="M84 10 C94 18 100 24 106 30 C98 36 92 41 82 49"/></g></svg>
+    <svg class="cl v2" viewBox="0 0 120 56" fill="none" stroke="#2FA9AF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><g class="bob"><path d="M36 10 C26 18 20 24 14 30 C22 36 28 41 38 49"/><path d="M71 7 C66 20 61 34 52 50"/><path d="M84 10 C94 18 100 24 106 30 C98 36 92 41 82 49"/></g></svg>
+  </div>
+  <div class="wrap pbw">
+  <a class="back" href="/writing/">&larr; Writing</a>
+  <h1 class="ph1">Making a small Mac keep up with a big AI</h1>
+  <div class="pmeta mono">Aug 2026 · In English · Technical article</div>
+  </div>
+</div>
 <style>
-  :root{
+.art{
     --ground:#f4f6f9; --surface:#ffffff; --surface-2:#eaeef3; --line:#d3dae3;
     --ink:#141a22; --ink-2:#4a5566; --ink-3:#78838f;
     --draft:#b56a06; --verify:#2560d0;
@@ -11,128 +75,110 @@
     --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
     --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   }
-  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-    --ground:#0c1015; --surface:#141a22; --surface-2:#1b232e; --line:#2a3542;
-    --ink:#e7ecf2; --ink-2:#a2adbb; --ink-3:#6f7c8b;
-    --draft:#e6a545; --verify:#5f9dff;
-    --good:#43c088; --bad:#ff6f5c; --untested:#94a0af;
-    --draft-wash:#2a2113; --verify-wash:#12203a; --good-wash:#0f2a1f; --bad-wash:#2c1613;
-    --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 30px rgba(0,0,0,.35);
-  }}
-  :root[data-theme="dark"]{
-    --ground:#0c1015; --surface:#141a22; --surface-2:#1b232e; --line:#2a3542;
-    --ink:#e7ecf2; --ink-2:#a2adbb; --ink-3:#6f7c8b;
-    --draft:#e6a545; --verify:#5f9dff;
-    --good:#43c088; --bad:#ff6f5c; --untested:#94a0af;
-    --draft-wash:#2a2113; --verify-wash:#12203a; --good-wash:#0f2a1f; --bad-wash:#2c1613;
-    --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 30px rgba(0,0,0,.35);
-  }
-  *{box-sizing:border-box}
-  html{-webkit-text-size-adjust:100%}
-  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);
+.art *{box-sizing:border-box}
+.art{-webkit-text-size-adjust:100%}
+.art{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);
     font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-  .wrap{max-width:760px;margin:0 auto;padding:0 24px}
-  h1,h2,h3{font-family:var(--mono);font-weight:600;line-height:1.14;text-wrap:balance;letter-spacing:-.01em}
-  p{margin:0 0 1.1em}
-  a{color:var(--verify);text-decoration:none;border-bottom:1px solid color-mix(in oklab,var(--verify) 35%,transparent)}
-  a:hover{border-bottom-color:var(--verify)}
-  code,.mono{font-family:var(--mono);font-size:.9em}
-  code{background:var(--surface-2);padding:.08em .34em;border-radius:4px;border:1px solid var(--line)}
-  b,strong{color:var(--ink);font-weight:600}
-  em{color:var(--ink)}
-  figure{margin:0}
-  figcaption{font-size:14px;line-height:1.5;color:var(--ink-2);margin-top:12px}
-  figcaption b{color:var(--ink)}
-  svg{max-width:100%;height:auto;display:block}
-  :focus-visible{outline:2px solid var(--verify);outline-offset:3px;border-radius:3px}
-
-  /* hero */
-  header.hero{padding:88px 0 44px;border-bottom:1px solid var(--line)}
-  .kicker{display:inline-flex;gap:10px;align-items:center;font-family:var(--mono);font-size:12px;
+.art .wrap{max-width:760px;margin:0 auto;padding:0 24px}
+.art h1,.art h2,.art h3{font-family:var(--mono);font-weight:600;line-height:1.14;text-wrap:balance;letter-spacing:-.01em}
+.art p{margin:0 0 1.1em}
+.art a{color:var(--verify);text-decoration:none;border-bottom:1px solid color-mix(in oklab,var(--verify) 35%,transparent)}
+.art a:hover{border-bottom-color:var(--verify)}
+.art code,.art .mono{font-family:var(--mono);font-size:.9em}
+.art code{background:var(--surface-2);padding:.08em .34em;border-radius:4px;border:1px solid var(--line)}
+.art b,.art strong{color:var(--ink);font-weight:600}
+.art em{color:var(--ink)}
+.art figure{margin:0}
+.art figcaption{font-size:14px;line-height:1.5;color:var(--ink-2);margin-top:12px}
+.art figcaption b{color:var(--ink)}
+.art svg{max-width:100%;height:auto;display:block}
+.art :focus-visible{outline:2px solid var(--verify);outline-offset:3px;border-radius:3px}
+.art header.ahero{padding:88px 0 44px;border-bottom:1px solid var(--line)}
+.art .kicker{display:inline-flex;gap:10px;align-items:center;font-family:var(--mono);font-size:12px;
     letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);
     border:1px solid var(--line);border-radius:100px;padding:6px 14px;background:var(--surface)}
-  .kicker .dot{width:7px;height:7px;border-radius:50%;background:var(--good)}
-  h1{font-size:clamp(2.3rem,6.4vw,3.9rem);margin:26px 0 0}
-  h1 .u{color:var(--verify)}
-  .dek{font-size:clamp(1.05rem,2.4vw,1.3rem);color:var(--ink-2);max-width:42ch;margin:22px 0 0;line-height:1.5}
-  .byline{margin-top:26px;font-family:var(--mono);font-size:12.5px;color:var(--ink-3);letter-spacing:.03em}
-
-  /* rhythm */
-  section{padding:54px 0;border-bottom:1px solid var(--line)}
-  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+.art .kicker .dot{width:7px;height:7px;border-radius:50%;background:var(--good)}
+.art h1{font-size:clamp(2.3rem,6.4vw,3.9rem);margin:26px 0 0}
+.art h1 .u{color:var(--verify)}
+.art .dek{font-size:clamp(1.05rem,2.4vw,1.3rem);color:var(--ink-2);max-width:42ch;margin:22px 0 0;line-height:1.5}
+.art .byline{margin-top:26px;font-family:var(--mono);font-size:12.5px;color:var(--ink-3);letter-spacing:.03em}
+.art section{padding:54px 0;border-bottom:1px solid var(--line)}
+.art .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;
     color:var(--ink-3);display:block;margin-bottom:12px}
-  h2{font-size:clamp(1.55rem,3.4vw,2.15rem);margin:0 0 22px}
-  h3{font-size:1.12rem;margin:32px 0 .5em}
-  .lead{font-size:1.16rem;color:var(--ink)}
-
-  /* figure card */
-  .fig{margin:30px 0;padding:24px;background:var(--surface);border:1px solid var(--line);
+.art h2{font-size:clamp(1.55rem,3.4vw,2.15rem);margin:0 0 22px}
+.art h3{font-size:1.12rem;margin:32px 0 .5em}
+.art .lead{font-size:1.16rem;color:var(--ink)}
+.art .fig{margin:30px 0;padding:24px;background:var(--surface);border:1px solid var(--line);
     border-radius:14px;box-shadow:var(--shadow)}
-  .scroll{overflow-x:auto}
-
-  /* aside callout */
-  .aside{border:1px solid var(--line);border-left:3px solid var(--draft);background:var(--surface-2);
+.art .scroll{overflow-x:auto}
+.art .aside{border:1px solid var(--line);border-left:3px solid var(--draft);background:var(--surface-2);
     border-radius:0 12px 12px 0;padding:16px 20px;margin:26px 0}
-  .aside .atag{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+.art .aside .atag{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;
     color:var(--draft);margin-bottom:8px}
-  .aside p{font-size:.98rem;color:var(--ink-2);line-height:1.58;margin:0 0 .6em}
-  .aside p:last-child{margin:0}
-  .aside b{color:var(--ink)}
-
-  /* scoreline */
-  .scoreline{display:flex;flex-wrap:wrap;gap:0;margin:30px 0;border:1px solid var(--line);
+.art .aside p{font-size:.98rem;color:var(--ink-2);line-height:1.58;margin:0 0 .6em}
+.art .aside p:last-child{margin:0}
+.art .aside b{color:var(--ink)}
+.art .scoreline{display:flex;flex-wrap:wrap;gap:0;margin:30px 0;border:1px solid var(--line);
     border-radius:14px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
-  .scoreline .cell{flex:1 1 120px;padding:16px 18px;border-right:1px solid var(--line)}
-  .scoreline .cell:last-child{border-right:0}
-  .scoreline .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3)}
-  .scoreline .val{font-family:var(--mono);font-size:1.7rem;font-weight:600;margin-top:6px;font-variant-numeric:tabular-nums}
-  .scoreline .val small{font-size:.8rem;color:var(--ink-3);font-weight:400}
-  .c-base .val{color:var(--ink)} .c-moe .val{color:var(--good)}
-  .c-fine .val{color:var(--good)} .c-omlx .val{color:var(--verify)}
-
-  /* chips + verdicts */
-  .chip{font-family:var(--mono);font-size:.82em;font-variant-numeric:tabular-nums;
+.art .scoreline .cell{flex:1 1 120px;padding:16px 18px;border-right:1px solid var(--line)}
+.art .scoreline .cell:last-child{border-right:0}
+.art .scoreline .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3)}
+.art .scoreline .val{font-family:var(--mono);font-size:1.7rem;font-weight:600;margin-top:6px;font-variant-numeric:tabular-nums}
+.art .scoreline .val small{font-size:.8rem;color:var(--ink-3);font-weight:400}
+.art .c-base .val{color:var(--ink)}
+.art .c-moe .val{color:var(--good)}
+.art .c-fine .val{color:var(--good)}
+.art .c-omlx .val{color:var(--verify)}
+.art .chip{font-family:var(--mono);font-size:.82em;font-variant-numeric:tabular-nums;
     padding:2px 8px;border-radius:6px;border:1px solid var(--line);background:var(--surface-2);white-space:nowrap}
-  .chip.good{color:var(--good);border-color:color-mix(in oklab,var(--good) 40%,var(--line));background:var(--good-wash)}
-  .chip.bad{color:var(--bad);border-color:color-mix(in oklab,var(--bad) 40%,var(--line));background:var(--bad-wash)}
-  .verdicts{display:grid;gap:12px;margin:24px 0}
-  .vc{display:grid;grid-template-columns:92px 1fr;gap:16px;align-items:start;
+.art .chip.good{color:var(--good);border-color:color-mix(in oklab,var(--good) 40%,var(--line));background:var(--good-wash)}
+.art .chip.bad{color:var(--bad);border-color:color-mix(in oklab,var(--bad) 40%,var(--line));background:var(--bad-wash)}
+.art .verdicts{display:grid;gap:12px;margin:24px 0}
+.art .vc{display:grid;grid-template-columns:92px 1fr;gap:16px;align-items:start;
     border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--surface)}
-  .vc .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+.art .vc .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
     padding:3px 0;text-align:center;border-radius:100px;border:1px solid;height:fit-content}
-  .vc .tag.no{color:var(--bad);border-color:var(--bad);background:var(--bad-wash)}
-  .vc .tag.na{color:var(--untested);border-color:var(--untested);background:var(--surface-2)}
-  .vc .tag.meh{color:var(--draft);border-color:var(--draft);background:var(--draft-wash)}
-  .vc .txt{font-size:.96rem;color:var(--ink-2);line-height:1.5}
-  .vc .txt b{color:var(--ink)}
+.art .vc .tag.no{color:var(--bad);border-color:var(--bad);background:var(--bad-wash)}
+.art .vc .tag.na{color:var(--untested);border-color:var(--untested);background:var(--surface-2)}
+.art .vc .tag.meh{color:var(--draft);border-color:var(--draft);background:var(--draft-wash)}
+.art .vc .txt{font-size:.96rem;color:var(--ink-2);line-height:1.5}
+.art .vc .txt b{color:var(--ink)}
+.art .s-draft{fill:var(--draft)}
+.art .st-draft{stroke:var(--draft)}
+.art .s-verify{fill:var(--verify)}
+.art .st-verify{stroke:var(--verify)}
+.art .s-good{fill:var(--good)}
+.art .s-ink{fill:var(--ink)}
+.art .st-ink{stroke:var(--ink)}
+.art .s-line{stroke:var(--line)}
+.art .s-surf{fill:var(--surface-2)}
+.art .s-dim{fill:var(--ink-3)}
+.art .glyph{font-family:var(--mono);fill:var(--ink)}
+.art .glyph-m{font-family:var(--mono);fill:var(--ink-2)}
+.art .glyph-lab{font-family:var(--mono);fill:var(--ink-3);letter-spacing:.03em}
+.art footer{padding:44px 0 80px;color:var(--ink-3);font-size:13px;font-family:var(--mono);line-height:1.7}
+.art footer a{color:var(--ink-3);border-bottom-color:var(--line)}
+@media (max-width:560px){.art{font-size:16px}
+.art header.ahero{padding:56px 0 34px}
+.art section{padding:44px 0}
+.art .fig{padding:16px}
+.art .vc{grid-template-columns:1fr;gap:8px}}
+@media (prefers-reduced-motion:reduce){.art *{animation:none!important;transition:none!important}}
+.art{margin:0 auto;background:none;font-size:17px;line-height:1.65;color:var(--ink);font-family:var(--sans)}
+.art .aw{max-width:760px;margin:0;padding:0 40px 0 0}
+.art header.ahero{padding:6px 0 36px}
+.art a{background:none;margin:0;padding:0}
+.art h1,.art h2,.art h3{color:var(--ink)}
+.art section:last-of-type{border-bottom:0}
+.art footer{padding:30px 0 10px;margin:0}
+@media (max-width:760px){.art .aw{padding:0 20px}}
 
-  /* svg semantic classes */
-  .s-draft{fill:var(--draft)} .st-draft{stroke:var(--draft)}
-  .s-verify{fill:var(--verify)} .st-verify{stroke:var(--verify)}
-  .s-good{fill:var(--good)} .s-ink{fill:var(--ink)} .st-ink{stroke:var(--ink)}
-  .s-line{stroke:var(--line)} .s-surf{fill:var(--surface-2)} .s-dim{fill:var(--ink-3)}
-  .glyph{font-family:var(--mono);fill:var(--ink)}
-  .glyph-m{font-family:var(--mono);fill:var(--ink-2)}
-  .glyph-lab{font-family:var(--mono);fill:var(--ink-3);letter-spacing:.03em}
-
-  footer{padding:44px 0 80px;color:var(--ink-3);font-size:13px;font-family:var(--mono);line-height:1.7}
-  footer a{color:var(--ink-3);border-bottom-color:var(--line)}
-
-  @media (max-width:560px){
-    body{font-size:16px}
-    header.hero{padding:56px 0 34px}
-    section{padding:44px 0}
-    .fig{padding:16px}
-    .vc{grid-template-columns:1fr;gap:8px}
-  }
-  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
+<div class="wrap page art" style="padding-top:6px">
+<div class="aw">
 
-<div class="wrap">
-
-<header class="hero">
+<header class="ahero">
   <span class="kicker"><span class="dot"></span>A holiday side-quest</span>
-  <h1>Making a small Mac keep up with a <span class="u">big&nbsp;AI</span></h1>
   <p class="dek">Mira is a private AI assistant that runs entirely on one Mac. Over the holidays I tried to make it faster without making it dumber. Here is the whole story, no machine-learning degree required.</p>
   <p class="byline">Written for friends who use AI every day and build other things for a living.</p>
 </header>
@@ -365,10 +411,15 @@
 </section>
 
 <footer>
-  <div class="wrap" style="padding:0">
-    Written on holiday, for fun, about Mira &mdash; a private AI assistant that runs entirely on one Mac.<br>
-    The deep-dive with every chart and citation lives in <a href="mtp-moe-explainer.html">the full explainer</a>.
+  <div>
+    Written on holiday, for fun, about Mira , a private AI assistant that runs entirely on one Mac.<br>
+    The deep-dive with every chart and citation lives in <a href="/writing/chasing-80-tokens/">the full explainer</a>.
   </div>
 </footer>
 
 </div>
+</div>
+
+<div class="wrap"><div class="foot mono" style="margin-top:50px"><span><a href="/mira/privacy/">Privacy</a> · <a href="/mira/support/">Support</a> · <a href="https://github.com/mabaeyens">GitHub</a></span></div></div>
+</body>
+</html>

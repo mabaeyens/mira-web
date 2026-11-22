@@ -1,368 +1,75 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark" data-lang="es">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aura en Pebble, esferas y watchapps del tiempo para el Pebble Time 2</title>
-  <meta name="description" content="Aura for Pebble: two free, open-source watchfaces (Aura Essential and Aura LCD) and the Aura Sky Weather and Aura Cityscape Weather watchapps for the Pebble Time 2. Worldwide weather via Open-Meteo, AEMET as an option in Spain, no account, no key." />
-  <meta property="og:title" content="Aura for Pebble, watchfaces and weather watchapps" />
-  <meta property="og:description" content="Aura Essential, Aura LCD, Aura Sky Weather and Aura Cityscape Weather, built for the Pebble Time 2. Free and open source." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://askmira.es/aura/pebble" />
-  <meta property="og:image" content="https://askmira.es/aura/assets/og.png" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="theme-color" content="#15171A" media="(prefers-color-scheme: dark)" />
-  <meta name="theme-color" content="#F6F4EF" media="(prefers-color-scheme: light)" />
-
-  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png" />
-  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
-
-  <!-- Anti-flash: restore saved theme and language before first paint (shared keys with askmira.es) -->
-  <script>
-    (function(){
-      var t = localStorage.getItem('mira-theme');
-      if (t) document.documentElement.setAttribute('data-theme', t);
-      var l = localStorage.getItem('aura-lang');
-      if (l !== 'en' && l !== 'es') l = 'es';  // Spanish is the default
-      document.documentElement.setAttribute('data-lang', l);
-      document.documentElement.lang = l;
-    })();
-  </script>
-
-  <!-- Shared Mira design system + Aura sky-blue overrides. No Tailwind. -->
-  <link rel="stylesheet" href="../../style.css" />
-  <link rel="stylesheet" href="../style.css" />
-
-  <style>
-    /* Critical, inlined so it can't be defeated by a cache-stale style.css:
-       show only the active language, with no flash-of-both before CSS loads. */
-    [data-lang="en"] .lang-es { display: none !important; }
-    [data-lang="es"] .lang-en { display: none !important; }
-
-    /* Pebble page specifics, on top of the shared design tokens. */
-    .item-copy { max-width: 46rem; color: var(--muted); line-height: 1.75; margin: 0 0 1rem; }
-    .item-copy strong { color: var(--text); }
-    .item-copy a { color: var(--accent); text-decoration: none; }
-    .item-copy a:hover { color: var(--accent-hov); text-decoration: underline; }
-    .item-cta { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 1.1rem 0 0; }
-    .item-status { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--dim); margin: 0.9rem 0 0; }
-    .item-credits { max-width: 46rem; font-size: 0.8rem; color: var(--dim); line-height: 1.65; margin: 0.9rem 0 0; }
-    .item-credits a { color: inherit; text-decoration: underline; }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aura on Pebble: weather watchfaces and watchapps</title>
+<meta name="description" content="Aura Essential, Aura LCD, Aura Sky Weather and Aura Cityscape Weather for the Pebble Time 2. Free and open source.">
+<link rel="canonical" href="https://askmira.es/aura/pebble/">
+<link rel="alternate" hreflang="en" href="https://askmira.es/aura/pebble/"><link rel="alternate" hreflang="es" href="https://askmira.es/es/aura/pebble/"><link rel="alternate" hreflang="x-default" href="https://askmira.es/aura/pebble/">
+<meta property="og:title" content="Aura on Pebble: weather watchfaces and watchapps">
+<meta property="og:description" content="Aura Essential, Aura LCD, Aura Sky Weather and Aura Cityscape Weather for the Pebble Time 2. Free and open source.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://askmira.es/aura/pebble/">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://askmira.es/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#F1F2F5">
+<link rel="icon" href="/assets/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="/assets/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/inner.css">
+<link rel="stylesheet" href="/assets/app.css">
+<style>:root{--app:#1F66B8}</style>
 </head>
-
 <body>
-
-  <!-- ── Shared SVG symbols ─────────────────────────────────────── -->
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-    <symbol id="ico-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M3.5 11.5 12 4l8.5 7.5"/><path d="M5.5 10v9.5h13V10"/>
-    </symbol>
-    <symbol id="ico-linkedin" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 110-4.14 2.07 2.07 0 010 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/>
-    </symbol>
-    <symbol id="ico-github" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
-    </symbol>
-    <symbol id="ico-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="9"/>
-      <path d="M3 12h18"/>
-      <path d="M12 3c2.5 2.5 3.8 5.7 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.7-3.8-9S9.5 5.5 12 3z"/>
-    </symbol>
-  </svg>
-
-  <!-- ── Header ─────────────────────────────────────────────────── -->
-  <header class="site-header">
-    <div class="wrap">
-      <a href="/aura" class="brand">
-        <img src="../assets/icon.png" alt="Aura" />
-        <span>Aura</span>
-      </a>
-
-      <div class="header-actions">
-        <a href="/aura" class="btn btn-ghost btn-sm" aria-label="Back to Aura / Volver a Aura">
-          <svg><use href="#ico-home"/></svg><span class="btn-label">Aura</span>
-        </a>
-        <button id="lang-toggle" class="btn btn-ghost btn-sm" aria-label="Cambiar idioma / Change language">
-          <svg><use href="#ico-globe"/></svg><span class="btn-label">English</span>
-        </button>
-        <a href="https://github.com/mabaeyens/aura-pebble" target="_blank" rel="noopener"
-           class="icon-btn" aria-label="GitHub">
-          <svg><use href="#ico-github"/></svg>
-        </a>
-        <button id="theme-toggle" class="icon-btn" aria-label="Toggle theme">
-          <svg class="icon-sun" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <circle cx="12" cy="12" r="5"/>
-            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-          </svg>
-          <svg class="icon-moon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
-          </svg>
-        </button>
+<div class="bar solid"><div class="wrap">
+  <a class="brand" href="/">askmira.es</a>
+  <nav aria-label="Main">
+    <div class="dd-wrap">
+      <a href="/#apps" class="dd-t cur">Apps <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M2 3.5l3 3 3-3"/></svg></a>
+      <div class="dd">
+        <a class="dd-i" href="/mira/"><img src="/assets/icon.png" alt=""><span><b style="color:var(--mira-s)">Mira</b><i>AI assistant that runs on your own Mac</i></span><em>In beta</em></a>
+        <a class="dd-i" href="/vera/"><img src="/vera/assets/icon.png" alt=""><span><b style="color:var(--vera-s)">Vera</b><i>Markdown editor for your git repos</i></span><em>In beta</em></a>
+        <a class="dd-i" href="/aura/"><img src="/aura/assets/icon.png" alt=""><span><b style="color:var(--aura-s)">Aura</b><i>Weather for Spain, from AEMET data</i></span><em>App Store</em></a>
       </div>
     </div>
-  </header>
+    <a href="/writing/">Writing</a><a href="/about/">About</a><a href="https://github.com/mabaeyens">GitHub</a><span class="lang"><b>EN</b> / <a href="/es/aura/pebble/" hreflang="es" lang="es">ES</a></span>
+  </nav>
+</div></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <filter id="pen" x="-5%" y="-10%" width="110%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3.2"/></filter>
+  </defs></svg>
+<div class="pband">
+<div class="sky" aria-hidden="true">
+    <svg class="sun" viewBox="0 0 160 160" fill="rgba(244,190,80,.30)" stroke="#E9A93A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)">
+      <path d="M80 8 C82 52 96 66 152 80 C96 94 82 108 80 152 C78 108 64 94 8 80 C64 66 78 52 80 8 Z"/>
+      <path d="M128 118 C129 128 133 131 142 132 C133 133 129 136 128 146 C127 136 123 133 114 132 C123 131 127 128 128 118 Z"/>
+    </svg>
+    <svg class="cl c1" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M22 74 C8 74 4 56 19 52 C16 35 35 27 48 36 C54 17 83 13 95 30 C107 19 132 23 136 40 C155 32 177 43 172 59 C191 59 201 74 184 76 Z"/><path d="M58 63 C78 67 98 65 118 60"/></svg>
+    <svg class="cl c2" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M26 76 C10 76 8 58 24 55 C24 38 42 32 54 40 C62 22 90 22 100 38 C116 30 138 38 138 52 C158 50 172 64 160 76 Z"/><path d="M52 66 C70 69 88 68 104 64"/></svg>
+    <svg class="cl c3" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M18 72 C6 72 4 58 16 55 C16 42 30 37 40 43 C46 28 68 27 77 40 C88 33 106 38 106 50 C122 50 130 62 120 72 Z"/></svg>
+    <svg class="cl c4" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M22 74 C8 74 4 56 19 52 C16 35 35 27 48 36 C54 17 83 13 95 30 C107 19 132 23 136 40 C155 32 177 43 172 59 C191 59 201 74 184 76 Z"/><path d="M58 63 C78 67 98 65 118 60"/></svg>
+    <svg class="cl v1" viewBox="0 0 120 56" fill="none" stroke="#2FA9AF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><g class="bob"><path d="M36 10 C26 18 20 24 14 30 C22 36 28 41 38 49"/><path d="M71 7 C66 20 61 34 52 50"/><path d="M84 10 C94 18 100 24 106 30 C98 36 92 41 82 49"/></g></svg>
+    <svg class="cl c7" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M22 74 C8 74 4 56 19 52 C16 35 35 27 48 36 C54 17 83 13 95 30 C107 19 132 23 136 40 C155 32 177 43 172 59 C191 59 201 74 184 76 Z"/><path d="M58 63 C78 67 98 65 118 60"/></svg>
+    <svg class="cl c8" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M26 76 C10 76 8 58 24 55 C24 38 42 32 54 40 C62 22 90 22 100 38 C116 30 138 38 138 52 C158 50 172 64 160 76 Z"/><path d="M52 66 C70 69 88 68 104 64"/></svg>
+    <svg class="cl c9" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M18 72 C6 72 4 58 16 55 C16 42 30 37 40 43 C46 28 68 27 77 40 C88 33 106 38 106 50 C122 50 130 62 120 72 Z"/></svg>
+    <svg class="cl v4" viewBox="0 0 120 56" fill="none" stroke="#2FA9AF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><g class="bob"><path d="M36 10 C26 18 20 24 14 30 C22 36 28 41 38 49"/><path d="M71 7 C66 20 61 34 52 50"/><path d="M84 10 C94 18 100 24 106 30 C98 36 92 41 82 49"/></g></svg>
+    <svg class="cl v3" viewBox="0 0 120 56" fill="none" stroke="#2FA9AF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><g class="bob"><path d="M36 10 C26 18 20 24 14 30 C22 36 28 41 38 49"/><path d="M71 7 C66 20 61 34 52 50"/><path d="M84 10 C94 18 100 24 106 30 C98 36 92 41 82 49"/></g></svg>
+    <svg class="cl v2" viewBox="0 0 120 56" fill="none" stroke="#2FA9AF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><g class="bob"><path d="M36 10 C26 18 20 24 14 30 C22 36 28 41 38 49"/><path d="M71 7 C66 20 61 34 52 50"/><path d="M84 10 C94 18 100 24 106 30 C98 36 92 41 82 49"/></g></svg>
+  </div>
+  <div class="wrap pbw"><div class="eyebrow">Aura for Pebble · Pebble Time 2</div><h1 class="ph1">Aura, on my wrist.</h1></div>
+</div>
+<div class="wrap page" style="padding-top:44px">
+  <div class="mhero"><div><p>It all started under the weather umbrella, so Aura is the name I use for everything I build for Pebble. I had the original Pebble back in 2015, and my Pebble Time 2 just arrived. Two watchfaces and two weather watchapps live here now, all free and open source.</p></div><div class="cta"><a class="btn" href="https://github.com/mabaeyens/aura-pebble">View source</a><a class="lnk" href="/aura/">Aura for iPhone and Android</a></div></div>
+  <div class="sec"><h2><span class="mk">Aura Essential</span></h2><div><div class="kind">Watchface</div><p class="item-copy">A free, open-source watchface with configurable colour blocks and complications, in five colour themes. It's the first piece of Aura's design language on the Pebble Time 2.</p><div class="cta"><a class="btn" href="https://apps.repebble.com/aura-essential_19335d2e746b4d6aa6ba8c63">Pebble appstore</a></div><div class="strip2" style="padding-top:26px"><figure class="pbf"><img loading="lazy" src="/aura/assets/shots/pebble/essential-classic.png" alt="Aura Essential watchface on Pebble Time 2, classic theme"><figcaption>Classic</figcaption></figure><figure class="pbf"><img loading="lazy" src="/aura/assets/shots/pebble/essential-ocean.png" alt="Aura Essential watchface on Pebble Time 2, ocean theme"><figcaption>Ocean</figcaption></figure><figure class="pbf"><img loading="lazy" src="/aura/assets/shots/pebble/essential-midnight.png" alt="Aura Essential watchface on Pebble Time 2, midnight theme"><figcaption>Midnight</figcaption></figure><figure class="pbf"><img loading="lazy" src="/aura/assets/shots/pebble/essential-forest.png" alt="Aura Essential watchface on Pebble Time 2, forest theme"><figcaption>Forest</figcaption></figure><figure class="pbf"><img loading="lazy" src="/aura/assets/shots/pebble/essential-dusk.png" alt="Aura Essential watchface on Pebble Time 2, dusk theme"><figcaption>Dusk</figcaption></figure></div></div></div>
+  <div class="sec"><h2><span class="mk">Aura LCD</span></h2><div><div class="kind">Watchface</div><p class="item-copy">An 80s-inspired LCD face that keeps the look of a classic digital watch and reorganises it for reading at a glance. The time is in slanted <strong>7-segment digits</strong>, the date in 14-segment LCD letters. Under the date, a small arch shows the <strong>sun's path</strong> with the time left until sunset (or sunrise, at night). The bottom has the current temperature with the day's low and high, and the next 12 hours of temperature and rain chance. A sliced moon phase sits alongside, and the countdown reads &ldquo;SUNSET IN&rdquo; or &ldquo;SUNRISE IN&rdquo;. After sunset the face turns negative with amber digits.</p><p class="item-copy">Three watchfaces in one: the layouts are Quiet (the default), Timeline and Stack. There are 13 colour themes, each with a day and a night look (Classic LCD, High contrast, Black on yellow, Paper and ink, Sand and amber, Sky, six weather moods and one that follows the current weather), plus an accent colour, 24 or 12 hour time and units, all set in the settings page. Custom colours come from the full 64-colour Pebble palette, and the time, the date, the sunset countdown and the temperature can each be thin or bold. Stack keeps the date and weather in a centred column of LCD lettering, and a setting puts it left or right of the time. Weather, forecast and sun times come from Open-Meteo, with a worldwide city search or the phone's GPS. No account, no key.</p><div class="cta"><a class="btn" href="https://apps.repebble.com/75df0aa5863e415eaa84c66b">Pebble appstore</a></div><div class="strip2" style="padding-top:26px"><figure class="pbf"><img loading="lazy" src="/aura/assets/shots/pebble/lcd-sun.png" alt="Aura LCD watchface on Pebble Time 2, Quiet layout in citrus colours"><figcaption>Quiet, citrus</figcaption></figure><figure class="pbf"><img loading="lazy" src="/aura/assets/shots/pebble/lcd-night.png" alt="Aura LCD watchface on Pebble Time 2, Quiet layout in deep blue"><figcaption>Quiet, deep blue</figcaption></figure><figure class="pbf"><img loading="lazy" src="/aura/assets/shots/pebble/lcd-indoor.png" alt="Aura LCD watchface on Pebble Time 2, Quiet layout in dark red"><figcaption>Quiet, dark red</figcaption></figure><figure class="pbf"><img loading="lazy" src="/aura/assets/shots/pebble/lcd-weather.png" alt="Aura LCD watchface on Pebble Time 2, Timeline layout in white and navy"><figcaption>Timeline, white and navy</figcaption></figure><figure class="pbf"><img loading="lazy" src="/aura/assets/shots/pebble/lcd-stack.png" alt="Aura LCD watchface on Pebble Time 2, Stack layout in sky blue, with the date and weather in a column beside the time"><figcaption>Stack, sky blue</figcaption></figure></div></div></div>
+  <div class="sec"><h2><span class="mk">Aura Sky Weather</span></h2><div><div class="kind">Watchapp</div><p class="item-copy">Not just a face: Aura Sky Weather puts the weather on the Pebble Time 2 as a sky. The whole screen is painted from the real time of day and the current conditions, indigo at night, magenta at dawn, blue at noon. The sun rides its arc, the moon shows its real phase, clouds drift, rain falls and snow tumbles, and it only moves when I shake my wrist, to spare the battery. Over it sit one big temperature, today's high and low, and the one extra fact I check first. <strong>Down</strong> gives the next six hours, each painted as the sky will look then, and again the six-day outlook. The sky follows the light of the city you picked, not the clock on your wrist. Worldwide via Open-Meteo, with AEMET as an option in Spain, no account, no key.</p><div class="cta"><a class="btn" href="https://apps.repebble.com/0a9a48594f2845d4a911ff41">Pebble appstore</a><a class="lnk" href="https://github.com/mabaeyens/aura-pebble">View source</a></div><div class="strip2" style="padding-top:26px"><figure class="pbf"><img loading="lazy" src="/aura/assets/shots/pebble/sky-golden-hour.png" alt="Aura Sky Weather on Pebble Time 2, a golden hour sky"><figcaption>Golden hour</figcaption></figure><figure class="pbf"><img loading="lazy" src="/aura/assets/shots/pebble/sky-rainy-dusk.png" alt="Aura Sky Weather, rain at dusk"><figcaption>Rainy dusk</figcaption></figure><figure class="pbf"><img loading="lazy" src="/aura/assets/shots/pebble/sky-clear-night.png" alt="Aura Sky Weather, a clear night with the moon"><figcaption>Clear night</figcaption></figure><figure class="pbf"><img loading="lazy" src="/aura/assets/shots/pebble/sky-hourly.png" alt="Aura Sky Weather, the next six hours, each painted as the sky will look"><figcaption>Hourly</figcaption></figure><figure class="pbf"><img loading="lazy" src="/aura/assets/shots/pebble/sky-daily.png" alt="Aura Sky Weather, the six-day outlook"><figcaption>Daily</figcaption></figure></div></div></div>
+  <div class="sec"><h2><span class="mk">Aura Cityscape Weather</span></h2><div><div class="kind">Watchapp</div><p class="item-copy">Aura Cityscape Weather turns the forecast into a small town on the Pebble Time 2. The sun or the moon rides its real arc over the skyline, and the sky and every layer of the scene change with the hour, from dawn through golden hour to a night of lit windows. Clouds drift, rain falls, snow settles on the roofs and a storm brings lightning, so I read the weather before I read a number. A thermometer tower fills to the current temperature and a pennant streams out as the wind picks up. <strong>Down</strong> gives the next eight hours as little windows, each in that hour's sky, and then six days as a skyline whose buildings grow with each day's high. Worldwide via Open-Meteo, with AEMET as an option in Spain, no account, no key.</p><div class="cta"><a class="btn" href="https://apps.repebble.com/f96217ed9b8a41bfb25e2700">Pebble appstore</a><a class="lnk" href="https://github.com/mabaeyens/aura-pebble">View source</a></div><div class="strip2" style="padding-top:26px"><figure class="pbf"><img loading="lazy" src="/aura/assets/shots/pebble/cityscape-clear-day.png" alt="Aura Cityscape Weather on Pebble Time 2, a clear day over the town"><figcaption>Clear day</figcaption></figure><figure class="pbf"><img loading="lazy" src="/aura/assets/shots/pebble/cityscape-rainy-dusk.png" alt="Aura Cityscape Weather, rain at dusk"><figcaption>Rainy dusk</figcaption></figure><figure class="pbf"><img loading="lazy" src="/aura/assets/shots/pebble/cityscape-clear-night.png" alt="Aura Cityscape Weather, a clear night with lit windows"><figcaption>Clear night</figcaption></figure><figure class="pbf"><img loading="lazy" src="/aura/assets/shots/pebble/cityscape-hourly.png" alt="Aura Cityscape Weather, the next eight hours as little windows"><figcaption>Hourly</figcaption></figure><figure class="pbf"><img loading="lazy" src="/aura/assets/shots/pebble/cityscape-daily.png" alt="Aura Cityscape Weather, the six-day outlook as a skyline"><figcaption>Daily</figcaption></figure></div></div></div>
+</div>
 
-  <main id="top">
-
-    <!-- ── Hero ─────────────────────────────────────────────────── -->
-    <section class="hero">
-      <div class="wrap">
-        <p class="eyebrow hero-eyebrow">
-          <span class="lang-en">Aura for Pebble&nbsp;· Pebble&nbsp;Time&nbsp;2</span>
-          <span class="lang-es">Aura para Pebble&nbsp;· Pebble&nbsp;Time&nbsp;2</span>
-        </p>
-
-        <h1 class="hero-title">
-          <span class="lang-en">Aura, <em>on my wrist.</em></span>
-          <span class="lang-es">Aura, <em>en la muñeca.</em></span>
-        </h1>
-
-        <p class="hero-copy lang-en">
-          It all started under the weather umbrella, so Aura is the name I use for everything I build for Pebble.
-          I had the original Pebble back in 2015, and my Pebble Time 2 just arrived. Two watchfaces and two weather
-          watchapps live here now, all free and open source.
-        </p>
-        <p class="hero-copy lang-es">
-          Todo empezó bajo el paraguas del tiempo, así que Aura es el nombre que uso para todo lo que hago para Pebble.
-          Tuve el Pebble original en 2015, y mi Pebble Time 2 acaba de llegar. Aquí viven ahora dos esferas y dos
-          watchapps del tiempo, todo gratuito y de código abierto.
-        </p>
-
-        <div class="hero-cta">
-          <a href="https://github.com/mabaeyens/aura-pebble" target="_blank" rel="noopener" class="btn btn-primary">
-            <svg><use href="#ico-github"/></svg><span class="lang-en">View source</span><span class="lang-es">Ver el código</span>
-          </a>
-          <a href="/aura" class="btn btn-ghost">
-            <span class="lang-en">Aura for iPhone and Android</span><span class="lang-es">Aura para iPhone y Android</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── Aura Essential ───────────────────────────────────────── -->
-    <section class="section gallery">
-      <div class="wrap">
-        <div class="sec-head" data-reveal>
-          <p class="eyebrow"><span class="lang-en">Watchface</span><span class="lang-es">Esfera</span></p>
-          <h2 class="sec-title">Aura Essential</h2>
-        </div>
-        <div data-reveal>
-          <p class="item-copy lang-en">A free, open-source watchface with configurable colour blocks and complications, in five colour themes. It's the first piece of Aura's design language on the Pebble Time 2.</p>
-          <p class="item-copy lang-es">Una esfera gratuita y de código abierto, con bloques de color y complicaciones configurables, en cinco temas de color. Es la primera pieza del lenguaje de diseño de Aura en el Pebble Time 2.</p>
-          <div class="item-cta">
-            <a href="https://apps.repebble.com/aura-essential_19335d2e746b4d6aa6ba8c63" target="_blank" rel="noopener" class="btn btn-primary">
-              <span class="lang-en">Pebble appstore</span><span class="lang-es">Tienda de Pebble</span>
-            </a>
-          </div>
-        </div>
-
-        <div class="gallery-group" data-reveal>
-          <h3 class="group-label">Pebble <span class="group-note"><span class="lang-en">· Aura Essential, on the Pebble Time 2, five colour themes</span><span class="lang-es">· Aura Essential, en el Pebble Time 2, cinco temas de color</span></span></h3>
-          <div class="rail rail-pebble">
-            <figure class="shot-pebble"><img loading="lazy" decoding="async" src="../assets/shots/pebble/essential-classic.png" alt="Aura Essential watchface on Pebble Time 2, classic theme" /><figcaption>Classic</figcaption></figure>
-            <figure class="shot-pebble"><img loading="lazy" decoding="async" src="../assets/shots/pebble/essential-ocean.png" alt="Aura Essential watchface on Pebble Time 2, ocean theme" /><figcaption>Ocean</figcaption></figure>
-            <figure class="shot-pebble"><img loading="lazy" decoding="async" src="../assets/shots/pebble/essential-midnight.png" alt="Aura Essential watchface on Pebble Time 2, midnight theme" /><figcaption>Midnight</figcaption></figure>
-            <figure class="shot-pebble"><img loading="lazy" decoding="async" src="../assets/shots/pebble/essential-forest.png" alt="Aura Essential watchface on Pebble Time 2, forest theme" /><figcaption>Forest</figcaption></figure>
-            <figure class="shot-pebble"><img loading="lazy" decoding="async" src="../assets/shots/pebble/essential-dusk.png" alt="Aura Essential watchface on Pebble Time 2, dusk theme" /><figcaption>Dusk</figcaption></figure>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── Aura LCD ─────────────────────────────────────────────── -->
-    <section class="section gallery">
-      <div class="wrap">
-        <div class="sec-head" data-reveal>
-          <p class="eyebrow"><span class="lang-en">Watchface</span><span class="lang-es">Esfera</span></p>
-          <h2 class="sec-title">Aura LCD</h2>
-        </div>
-        <div data-reveal>
-          <p class="item-copy lang-en">An 80s-inspired LCD face that keeps the look of a classic digital watch and reorganises it for reading at a glance. The time is in slanted <strong>7-segment digits</strong>, the date in 14-segment LCD letters. Under the date, a small arch shows the <strong>sun's path</strong> with the time left until sunset (or sunrise, at night). The bottom has the current temperature with the day's low and high, and the next 12 hours of temperature and rain chance. A sliced moon phase sits alongside, and the countdown reads &ldquo;SUNSET IN&rdquo; or &ldquo;SUNRISE IN&rdquo;. After sunset the face turns negative with amber digits.</p>
-          <p class="item-copy lang-en">Three watchfaces in one: the layouts are Quiet (the default), Timeline and Stack. There are 13 colour themes, each with a day and a night look (Classic LCD, High contrast, Black on yellow, Paper and ink, Sand and amber, Sky, six weather moods and one that follows the current weather), plus an accent colour, 24 or 12 hour time and units, all set in the settings page. Custom colours come from the full 64-colour Pebble palette, and the time, the date, the sunset countdown and the temperature can each be thin or bold. Stack keeps the date and weather in a centred column of LCD lettering, and a setting puts it left or right of the time. Weather, forecast and sun times come from Open-Meteo, with a worldwide city search or the phone's GPS. No account, no key.</p>
-          <p class="item-copy lang-es">Una esfera LCD de inspiración ochentera que conserva el aspecto de un reloj digital clásico y lo reorganiza para leerlo de un vistazo. La hora va en <strong>dígitos de 7 segmentos</strong> inclinados, y la fecha en letras LCD de 14 segmentos. Bajo la fecha, un pequeño arco muestra el <strong>recorrido del sol</strong> con el tiempo que queda hasta el ocaso (o hasta el amanecer, de noche). Abajo están la temperatura actual con la mínima y la máxima del día, y la temperatura y la probabilidad de lluvia de las próximas 12 horas. Al lado hay una fase lunar por rebanadas y la cuenta atrás dice &ldquo;SUNSET IN&rdquo; o &ldquo;SUNRISE IN&rdquo;. Después del ocaso la esfera se invierte, con dígitos ámbar.</p>
-          <p class="item-copy lang-es">Tres esferas en una: los diseños son Quiet (el predeterminado), Timeline y Stack. Hay 13 temas de color, cada uno con un aspecto de día y otro de noche (Classic LCD, High contrast, Black on yellow, Paper and ink, Sand and amber, Sky, seis ambientes del tiempo y uno que sigue el tiempo actual), además de un color de acento, el formato de 24 o 12 horas y las unidades, y todo se ajusta en la página de ajustes. Los colores personalizados salen de la paleta completa de 64 colores de Pebble, y la hora, la fecha, la cuenta atrás del ocaso y la temperatura pueden ir cada una en trazo fino o grueso. Stack deja la fecha y el tiempo en una columna centrada con letras LCD, y un ajuste la coloca a la izquierda o a la derecha de la hora. El tiempo, la previsión y las horas del sol vienen de Open-Meteo, con búsqueda de ciudades en todo el mundo o el GPS del teléfono. Sin cuenta ni clave.</p>
-          <div class="item-cta">
-            <a href="https://apps.repebble.com/75df0aa5863e415eaa84c66b" target="_blank" rel="noopener" class="btn btn-primary">
-              <span class="lang-en">Pebble appstore</span><span class="lang-es">Tienda de Pebble</span>
-            </a>
-          </div>
-        </div>
-
-        <div class="gallery-group" data-reveal>
-          <h3 class="group-label">Pebble <span class="group-note"><span class="lang-en">· Aura LCD, on the Pebble Time 2, thirteen themes and three layouts</span><span class="lang-es">· Aura LCD, en el Pebble Time 2, trece temas y tres diseños</span></span></h3>
-          <div class="rail rail-pebble">
-            <figure class="shot-pebble"><img loading="lazy" decoding="async" src="../assets/shots/pebble/lcd-sun.png" alt="Aura LCD watchface on Pebble Time 2, Quiet layout in citrus colours" /><figcaption>Quiet, citrus</figcaption></figure>
-            <figure class="shot-pebble"><img loading="lazy" decoding="async" src="../assets/shots/pebble/lcd-night.png" alt="Aura LCD watchface on Pebble Time 2, Quiet layout in deep blue" /><figcaption>Quiet, deep blue</figcaption></figure>
-            <figure class="shot-pebble"><img loading="lazy" decoding="async" src="../assets/shots/pebble/lcd-indoor.png" alt="Aura LCD watchface on Pebble Time 2, Quiet layout in dark red" /><figcaption>Quiet, dark red</figcaption></figure>
-            <figure class="shot-pebble"><img loading="lazy" decoding="async" src="../assets/shots/pebble/lcd-weather.png" alt="Aura LCD watchface on Pebble Time 2, Timeline layout in white and navy" /><figcaption>Timeline, white and navy</figcaption></figure>
-            <figure class="shot-pebble"><img loading="lazy" decoding="async" src="../assets/shots/pebble/lcd-stack.png" alt="Aura LCD watchface on Pebble Time 2, Stack layout in sky blue, with the date and weather in a column beside the time" /><figcaption>Stack, sky blue</figcaption></figure>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── Aura Sky Weather ─────────────────────────────────────────── -->
-    <section class="section gallery">
-      <div class="wrap">
-        <div class="sec-head" data-reveal>
-          <p class="eyebrow"><span class="lang-en">Watchapp</span><span class="lang-es">Watchapp</span></p>
-          <h2 class="sec-title">Aura Sky Weather</h2>
-        </div>
-        <div data-reveal>
-          <p class="item-copy lang-en">Not just a face: Aura Sky Weather puts the weather on the Pebble Time 2 as a sky. The whole screen is painted from the real time of day and the current conditions, indigo at night, magenta at dawn, blue at noon. The sun rides its arc, the moon shows its real phase, clouds drift, rain falls and snow tumbles, and it only moves when I shake my wrist, to spare the battery. Over it sit one big temperature, today's high and low, and the one extra fact I check first. <strong>Down</strong> gives the next six hours, each painted as the sky will look then, and again the six-day outlook. The sky follows the light of the city you picked, not the clock on your wrist. Worldwide via Open-Meteo, with AEMET as an option in Spain, no account, no key.</p>
-          <p class="item-copy lang-es">No solo una esfera: Aura Sky Weather lleva el tiempo al Pebble Time 2 como un cielo. Toda la pantalla se pinta con la hora real del día y las condiciones actuales: índigo de noche, magenta al amanecer, azul a mediodía. El sol recorre su arco, la luna muestra su fase real, las nubes pasan, llueve y nieva, y solo se mueve cuando agito la muñeca, para ahorrar batería. Encima van una temperatura grande, la máxima y la mínima de hoy, y el dato extra que miro primero. <strong>Abajo</strong> da las próximas seis horas, cada una pintada como será el cielo entonces, y otra vez la previsión de seis días. El cielo sigue la luz de la ciudad que elijas, no el reloj de tu muñeca. En todo el mundo con Open-Meteo, con AEMET como opción en España, sin cuenta ni clave.</p>
-          <div class="item-cta">
-            <a href="https://apps.repebble.com/0a9a48594f2845d4a911ff41" target="_blank" rel="noopener" class="btn btn-primary">
-              <span class="lang-en">Pebble appstore</span><span class="lang-es">Tienda de Pebble</span>
-            </a>
-            <a href="https://github.com/mabaeyens/aura-pebble" target="_blank" rel="noopener" class="btn btn-ghost">
-              <svg><use href="#ico-github"/></svg><span class="lang-en">View source</span><span class="lang-es">Ver el código</span>
-            </a>
-          </div>
-        </div>
-
-        <div class="gallery-group" data-reveal>
-          <h3 class="group-label">Pebble <span class="group-note"><span class="lang-en">· Aura Sky Weather, on the Pebble Time 2</span><span class="lang-es">· Aura Sky Weather, en el Pebble Time 2</span></span></h3>
-          <div class="rail rail-pebble">
-            <figure class="shot-pebble"><img loading="lazy" decoding="async" src="../assets/shots/pebble/sky-golden-hour.png" alt="Aura Sky Weather on Pebble Time 2, a golden hour sky" /><figcaption><span class="lang-en">Golden hour</span><span class="lang-es">Hora dorada</span></figcaption></figure>
-            <figure class="shot-pebble"><img loading="lazy" decoding="async" src="../assets/shots/pebble/sky-rainy-dusk.png" alt="Aura Sky Weather, rain at dusk" /><figcaption><span class="lang-en">Rainy dusk</span><span class="lang-es">Lluvia al anochecer</span></figcaption></figure>
-            <figure class="shot-pebble"><img loading="lazy" decoding="async" src="../assets/shots/pebble/sky-clear-night.png" alt="Aura Sky Weather, a clear night with the moon" /><figcaption><span class="lang-en">Clear night</span><span class="lang-es">Noche despejada</span></figcaption></figure>
-            <figure class="shot-pebble"><img loading="lazy" decoding="async" src="../assets/shots/pebble/sky-hourly.png" alt="Aura Sky Weather, the next six hours, each painted as the sky will look" /><figcaption><span class="lang-en">Hourly</span><span class="lang-es">Horas</span></figcaption></figure>
-            <figure class="shot-pebble"><img loading="lazy" decoding="async" src="../assets/shots/pebble/sky-daily.png" alt="Aura Sky Weather, the six-day outlook" /><figcaption><span class="lang-en">Daily</span><span class="lang-es">Días</span></figcaption></figure>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── Aura Cityscape Weather ─────────────────────────────────────────── -->
-    <section class="section gallery">
-      <div class="wrap">
-        <div class="sec-head" data-reveal>
-          <p class="eyebrow"><span class="lang-en">Watchapp</span><span class="lang-es">Watchapp</span></p>
-          <h2 class="sec-title">Aura Cityscape Weather</h2>
-        </div>
-        <div data-reveal>
-          <p class="item-copy lang-en">Aura Cityscape Weather turns the forecast into a small town on the Pebble Time 2. The sun or the moon rides its real arc over the skyline, and the sky and every layer of the scene change with the hour, from dawn through golden hour to a night of lit windows. Clouds drift, rain falls, snow settles on the roofs and a storm brings lightning, so I read the weather before I read a number. A thermometer tower fills to the current temperature and a pennant streams out as the wind picks up. <strong>Down</strong> gives the next eight hours as little windows, each in that hour's sky, and then six days as a skyline whose buildings grow with each day's high. Worldwide via Open-Meteo, with AEMET as an option in Spain, no account, no key.</p>
-          <p class="item-copy lang-es">Aura Cityscape Weather convierte la previsión en un pequeño pueblo en el Pebble Time 2. El sol o la luna recorre su arco real sobre el horizonte, y el cielo y cada capa de la escena cambian con la hora, del amanecer a la hora dorada y a una noche de ventanas encendidas. Las nubes pasan, llueve, la nieve se posa en los tejados y una tormenta trae relámpagos, así que leo el tiempo antes que un número. Una torre termómetro se llena hasta la temperatura actual y un banderín ondea más cuanto más viento hay. <strong>Abajo</strong> da las próximas ocho horas como ventanitas, cada una con el cielo de esa hora, y después seis días como un horizonte cuyos edificios crecen con la máxima de cada día. En todo el mundo con Open-Meteo, con AEMET como opción en España, sin cuenta ni clave.</p>
-          <div class="item-cta">
-            <a href="https://apps.repebble.com/f96217ed9b8a41bfb25e2700" target="_blank" rel="noopener" class="btn btn-primary">
-              <span class="lang-en">Pebble appstore</span><span class="lang-es">Tienda de Pebble</span>
-            </a>
-            <a href="https://github.com/mabaeyens/aura-pebble" target="_blank" rel="noopener" class="btn btn-ghost">
-              <svg><use href="#ico-github"/></svg><span class="lang-en">View source</span><span class="lang-es">Ver el código</span>
-            </a>
-          </div>
-        </div>
-
-        <div class="gallery-group" data-reveal>
-          <h3 class="group-label">Pebble <span class="group-note"><span class="lang-en">· Aura Cityscape Weather, on the Pebble Time 2</span><span class="lang-es">· Aura Cityscape Weather, en el Pebble Time 2</span></span></h3>
-          <div class="rail rail-pebble">
-            <figure class="shot-pebble"><img loading="lazy" decoding="async" src="../assets/shots/pebble/cityscape-clear-day.png" alt="Aura Cityscape Weather on Pebble Time 2, a clear day over the town" /><figcaption><span class="lang-en">Clear day</span><span class="lang-es">Día despejado</span></figcaption></figure>
-            <figure class="shot-pebble"><img loading="lazy" decoding="async" src="../assets/shots/pebble/cityscape-rainy-dusk.png" alt="Aura Cityscape Weather, rain at dusk" /><figcaption><span class="lang-en">Rainy dusk</span><span class="lang-es">Lluvia al anochecer</span></figcaption></figure>
-            <figure class="shot-pebble"><img loading="lazy" decoding="async" src="../assets/shots/pebble/cityscape-clear-night.png" alt="Aura Cityscape Weather, a clear night with lit windows" /><figcaption><span class="lang-en">Clear night</span><span class="lang-es">Noche despejada</span></figcaption></figure>
-            <figure class="shot-pebble"><img loading="lazy" decoding="async" src="../assets/shots/pebble/cityscape-hourly.png" alt="Aura Cityscape Weather, the next eight hours as little windows" /><figcaption><span class="lang-en">Hourly</span><span class="lang-es">Horas</span></figcaption></figure>
-            <figure class="shot-pebble"><img loading="lazy" decoding="async" src="../assets/shots/pebble/cityscape-daily.png" alt="Aura Cityscape Weather, the six-day outlook as a skyline" /><figcaption><span class="lang-en">Daily</span><span class="lang-es">Días</span></figcaption></figure>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- ── Footer ─────────────────────────────────────────────────── -->
-  <footer class="site-footer">
-    <div class="wrap">
-      <img src="../assets/icon.png" class="footer-icon" alt="Aura" />
-      <p class="footer-name">Aura</p>
-      <p class="footer-tag lang-en">Watchfaces and weather watchapps for the Pebble Time 2. Free and open source.</p>
-      <p class="footer-tag lang-es">Esferas y watchapps del tiempo para el Pebble Time 2. Gratuito y de código abierto.</p>
-
-      <div class="footer-cta">
-        <a href="https://github.com/mabaeyens/aura-pebble" target="_blank" rel="noopener" class="btn btn-primary">
-          <svg><use href="#ico-github"/></svg><span class="lang-en">Pebble source</span><span class="lang-es">Código (Pebble)</span>
-        </a>
-        <a href="/aura" class="btn btn-ghost"><span class="lang-en">Aura</span><span class="lang-es">Aura</span></a>
-        <a href="/aura/soporte" class="btn btn-ghost"><span class="lang-en">Support</span><span class="lang-es">Soporte</span></a>
-        <a href="/aura/privacidad" class="btn btn-ghost"><span class="lang-en">Privacy</span><span class="lang-es">Privacidad</span></a>
-      </div>
-
-      <div class="footer-credit">
-        <span>Built by Miguel A. Baeyens, with Claude Code</span>
-        <a href="https://linkedin.com/in/mabaeyens" target="_blank" rel="noopener" aria-label="LinkedIn">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-linkedin"/></svg>
-        </a>
-      </div>
-
-      <div class="footer-legal">
-        <p class="footer-sources">
-          <span class="lang-en">Credits:</span><span class="lang-es">Créditos:</span>
-          <span class="lang-en">weather data by <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo.com</a> (CC BY 4.0); Aura LCD digit rendering adapted from PT2-LCD221 by Kicou (MIT), with the 7-Segment font by Jan Bobrowski, DSEG14 by Keshikan and Weather Icons by Erik Flowers (all SIL OFL 1.1).</span>
-          <span class="lang-es">datos del tiempo de <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo.com</a> (CC BY 4.0); el dibujo de los dígitos de Aura LCD está adaptado de PT2-LCD221 de Kicou (MIT), con la fuente 7-Segment de Jan Bobrowski, DSEG14 de Keshikan y Weather Icons de Erik Flowers (todas SIL OFL 1.1).</span>
-        </p>
-        <p class="footer-disclaimer">
-          <span class="lang-en">Aura is an independent project. It is not affiliated with Pebble, AEMET, or any government entity.</span><span class="lang-es">Aura es un proyecto independiente. No está afiliado a Pebble, a AEMET ni a ninguna entidad gubernamental.</span>
-        </p>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    // Keep the browser-tab favicon on the theme-matched app icon.
-    function syncFavicon(theme) {
-      var href = theme === 'dark' ? '../assets/favicon-32-dark.png' : '../assets/favicon-32.png';
-      document.querySelectorAll('link[rel="icon"]')
-        .forEach(function (l) { l.href = href; });
-    }
-    syncFavicon(document.documentElement.getAttribute('data-theme'));
-
-    // Theme toggle, shares the 'mira-theme' key across the askmira.es ecosystem
-    document.getElementById('theme-toggle').addEventListener('click', function () {
-      var html = document.documentElement;
-      var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      html.setAttribute('data-theme', next);
-      localStorage.setItem('mira-theme', next);
-      syncFavicon(next);
-    });
-
-    // Language toggle, English / Spanish, remembered under 'aura-lang' (shared with /aura and /aura/soporte)
-    function applyLang(l) {
-      document.documentElement.setAttribute('data-lang', l);
-      document.documentElement.lang = l;
-      document.title = (l === 'es')
-        ? 'Aura en Pebble, esferas y watchapps del tiempo para el Pebble Time 2'
-        : 'Aura for Pebble, watchfaces and weather watchapps for the Pebble Time 2';
-      var lbl = document.querySelector('#lang-toggle .btn-label');
-      if (lbl) lbl.textContent = (l === 'es') ? 'English' : 'Español';
-    }
-    applyLang(document.documentElement.getAttribute('data-lang') || 'es');
-    document.getElementById('lang-toggle').addEventListener('click', function () {
-      var next = document.documentElement.getAttribute('data-lang') === 'es' ? 'en' : 'es';
-      localStorage.setItem('aura-lang', next);
-      applyLang(next);
-    });
-
-    // Reveal-on-scroll (same pattern as the main page)
-    (function () {
-      var els = document.querySelectorAll('[data-reveal]');
-      if (!('IntersectionObserver' in window)) {
-        els.forEach(function (e) { e.classList.add('in'); });
-        return;
-      }
-      var ro = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in');
-            ro.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.12 });
-      els.forEach(function (e) { ro.observe(e); });
-    })();
-  </script>
-
+<div class="wrap"><div class="foot mono" style="margin-top:50px"><span><a href="/aura/privacy/">Privacy</a> · <a href="/aura/support/">Support</a> · <a href="https://github.com/mabaeyens">GitHub</a></span></div></div>
 </body>
 </html>

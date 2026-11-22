@@ -1,476 +1,75 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark" data-lang="es">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aura, el tiempo en España, en iPhone, iPad, Apple Watch y Android</title>
-  <meta name="description" content="Aura is a personal weather app for Spain on iPhone, iPad, Apple Watch, and Android, powered by AEMET OpenData and your own free API key. A living sun-tracking sky, Home & Lock Screen widgets, Watch complications, a home-screen widget on Android, air quality, UV, radar and per-town avisos. No backend, the device is the hub." />
-  <meta property="og:title" content="Aura, a personal, private weather app for Spain" />
-  <meta property="og:description" content="AEMET's data, on every surface you own, iPhone, iPad, Apple Watch, and now Android. Home-screen and Lock Screen widgets, Watch complications, real observed temperatures, and CAP warnings, all from your own OpenData key. No backend." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://askmira.es/aura" />
-  <meta property="og:image" content="https://askmira.es/aura/assets/og.png" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="theme-color" content="#15171A" media="(prefers-color-scheme: dark)" />
-  <meta name="theme-color" content="#F6F4EF" media="(prefers-color-scheme: light)" />
-
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
-  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
-
-  <!-- Anti-flash: restore saved theme and language before first paint (shared keys with askmira.es) -->
-  <script>
-    (function(){
-      var t = localStorage.getItem('mira-theme');
-      if (t) document.documentElement.setAttribute('data-theme', t);
-      var l = localStorage.getItem('aura-lang');
-      if (l !== 'en' && l !== 'es') l = 'es';  // Spanish is the default
-      document.documentElement.setAttribute('data-lang', l);
-      document.documentElement.lang = l;
-    })();
-  </script>
-
-  <!-- Shared Mira design system + Aura sky-blue overrides. No Tailwind. -->
-  <link rel="stylesheet" href="../style.css" />
-  <link rel="stylesheet" href="style.css" />
-
-  <style>
-    /* Critical, inlined so it can't be defeated by a cache-stale style.css:
-       show only the active language, with no flash-of-both before CSS loads. */
-    [data-lang="en"] .lang-es { display: none !important; }
-    [data-lang="es"] .lang-en { display: none !important; }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aura: Spain&#x27;s weather on every screen you own</title>
+<meta name="description" content="A weather app for Spain on AEMET open data: iPhone, iPad, Apple Watch and Android. No backend, no account, no telemetry.">
+<link rel="canonical" href="https://askmira.es/aura/">
+<link rel="alternate" hreflang="en" href="https://askmira.es/aura/"><link rel="alternate" hreflang="es" href="https://askmira.es/es/aura/"><link rel="alternate" hreflang="x-default" href="https://askmira.es/aura/">
+<meta property="og:title" content="Aura: Spain&#x27;s weather on every screen you own">
+<meta property="og:description" content="A weather app for Spain on AEMET open data: iPhone, iPad, Apple Watch and Android. No backend, no account, no telemetry.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://askmira.es/aura/">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://askmira.es/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#F1F2F5">
+<link rel="icon" href="/assets/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="/assets/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/inner.css">
+<link rel="stylesheet" href="/assets/app.css">
+<style>:root{--app:#1F66B8}</style>
 </head>
-
 <body>
-
-  <!-- ── Shared SVG symbols ─────────────────────────────────────── -->
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-    <symbol id="ico-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M3.5 11.5 12 4l8.5 7.5"/><path d="M5.5 10v9.5h13V10"/>
-    </symbol>
-    <symbol id="ico-linkedin" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 110-4.14 2.07 2.07 0 010 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/>
-    </symbol>
-    <symbol id="ico-github" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
-    </symbol>
-    <symbol id="ico-key" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12.65 10A5.99 5.99 0 006.999 6 6 6 0 006 18a5.99 5.99 0 005.65-4H17v4h4v-4h1v-4H12.65zM7 15a3 3 0 110-6 3 3 0 010 6z"/>
-    </symbol>
-    <symbol id="ico-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="9"/>
-      <path d="M3 12h18"/>
-      <path d="M12 3c2.5 2.5 3.8 5.7 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.7-3.8-9S9.5 5.5 12 3z"/>
-    </symbol>
-  </svg>
-
-  <!-- ── Header ─────────────────────────────────────────────────── -->
-  <header class="site-header">
-    <div class="wrap">
-      <a href="#top" class="brand">
-        <img src="assets/icon.png" alt="Aura" />
-        <span>Aura</span>
-      </a>
-
-      <div class="header-actions">
-        <a href="/" class="btn btn-ghost btn-sm" aria-label="Home / Inicio">
-          <svg><use href="#ico-home"/></svg><span class="btn-label lang-en">Home</span><span class="btn-label lang-es">Inicio</span>
-        </a>
-        <a href="https://opendata.aemet.es/centrodedescargas/altaUsuario" target="_blank" rel="noopener"
-           class="btn btn-primary btn-sm" aria-label="Get an AEMET key">
-          <svg><use href="#ico-key"/></svg><span class="btn-label"><span class="lang-en">AEMET key</span><span class="lang-es">Clave AEMET</span></span>
-        </a>
-        <button id="lang-toggle" class="btn btn-ghost btn-sm" aria-label="Cambiar idioma / Change language">
-          <svg><use href="#ico-globe"/></svg><span class="btn-label">English</span>
-        </button>
-        <a href="https://github.com/mabaeyens/aura-apps" target="_blank" rel="noopener"
-           class="icon-btn" aria-label="GitHub">
-          <svg><use href="#ico-github"/></svg>
-        </a>
-        <button id="theme-toggle" class="icon-btn" aria-label="Toggle theme">
-          <svg class="icon-sun" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <circle cx="12" cy="12" r="5"/>
-            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-          </svg>
-          <svg class="icon-moon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
-          </svg>
-        </button>
+<div class="bar solid"><div class="wrap">
+  <a class="brand" href="/">askmira.es</a>
+  <nav aria-label="Main">
+    <div class="dd-wrap">
+      <a href="/#apps" class="dd-t cur">Apps <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M2 3.5l3 3 3-3"/></svg></a>
+      <div class="dd">
+        <a class="dd-i" href="/mira/"><img src="/assets/icon.png" alt=""><span><b style="color:var(--mira-s)">Mira</b><i>AI assistant that runs on your own Mac</i></span><em>In beta</em></a>
+        <a class="dd-i" href="/vera/"><img src="/vera/assets/icon.png" alt=""><span><b style="color:var(--vera-s)">Vera</b><i>Markdown editor for your git repos</i></span><em>In beta</em></a>
+        <a class="dd-i" href="/aura/"><img src="/aura/assets/icon.png" alt=""><span><b style="color:var(--aura-s)">Aura</b><i>Weather for Spain, from AEMET data</i></span><em>App Store</em></a>
       </div>
     </div>
-  </header>
-
-  <main id="top">
-
-    <!-- ── Hero ─────────────────────────────────────────────────── -->
-    <section class="hero">
-      <div class="wrap">
-        <p class="eyebrow hero-eyebrow">
-          <span class="lang-en">A personal weather app&nbsp;· iPhone&nbsp;· iPad&nbsp;· Apple&nbsp;Watch&nbsp;· Android</span>
-          <span class="lang-es">Una app del tiempo personal&nbsp;· iPhone&nbsp;· iPad&nbsp;· Apple&nbsp;Watch&nbsp;· Android</span>
-        </p>
-
-        <h1 class="hero-title">
-          <span class="lang-en">Spain's weather, <em>on every screen you own.</em></span>
-          <span class="lang-es">El tiempo en España, <em>en cada una de tus pantallas.</em></span>
-        </h1>
-
-        <p class="hero-copy lang-en">
-          Aura reads <span class="wx-chip">AEMET</span>'s open data (Spain's national weather service)
-          through its public <span class="wx-chip">OpenData</span> API and your own free key, and presents
-          it clearly on every screen you own: home-screen and Lock Screen widgets, Apple&nbsp;Watch complications,
-          real observed temperatures, and <span class="wx-chip">avisos</span> matched to your town.
-          Now on <span class="wx-chip">Android</span> too, built natively in Kotlin, with its own home-screen widget.
-          No backend, no account, no telemetry: the device is the hub.
-        </p>
-        <p class="hero-copy lang-es">
-          Aura lee los datos abiertos de <span class="wx-chip">AEMET</span> (la agencia estatal de meteorología)
-          a través de su API pública <span class="wx-chip">OpenData</span> y tu propia clave gratuita, y los
-          presenta con claridad en todas tus pantallas: widgets en la pantalla de inicio y de bloqueo, complicaciones en el
-          Apple&nbsp;Watch, temperaturas realmente observadas y <span class="wx-chip">avisos</span>
-          que coinciden con tu municipio. Ahora también en <span class="wx-chip">Android</span>, con app nativa
-          en Kotlin y su propio widget en la pantalla de inicio. Sin servidores, sin cuenta, sin telemetría: el dispositivo es el centro.
-        </p>
-
-        <div class="hero-cta">
-          <a href="https://github.com/mabaeyens/aura-apps" target="_blank" rel="noopener" class="btn btn-primary">
-            <svg><use href="#ico-github"/></svg><span class="lang-en">View source</span><span class="lang-es">Ver el código</span>
-          </a>
-          <a href="https://opendata.aemet.es/centrodedescargas/altaUsuario" target="_blank" rel="noopener" class="btn btn-ghost">
-            <svg><use href="#ico-key"/></svg><span class="lang-en">Get an AEMET key</span><span class="lang-es">Consigue una clave de AEMET</span>
-          </a>
-        </div>
-
-        <p class="hero-sub hero-note lang-en">Free &amp; open source (MIT) · iPhone, iPad, Apple&nbsp;Watch &amp; Android · Elaborado con datos de AEMET</p>
-        <p class="hero-sub hero-note lang-es">Gratis y de código abierto (MIT) · iPhone, iPad, Apple&nbsp;Watch y Android · Elaborado con datos de AEMET</p>
-
-        <!-- ── Hero teaser: the living sky, three conditions ─────── -->
-        <div class="hero-shots" data-reveal>
-          <figure class="shot-phone">
-            <img src="assets/shots/iphone/01_hero_clear.webp" width="620" height="1347"
-                 loading="eager" decoding="async"
-                 alt="Aura's Hoy screen on iPhone: 26° in A Coruña at midday, with a natural-language Spanish summary over a clear sun-tracking sky." />
-          </figure>
-          <figure class="shot-phone">
-            <img src="assets/shots/iphone/02_hero_storm.webp" width="620" height="1347"
-                 loading="lazy" decoding="async"
-                 alt="Aura's Hoy screen on iPhone during a storm: the sky darkens and the summary changes with the weather." />
-          </figure>
-          <figure class="shot-phone">
-            <img src="assets/shots/iphone/03_hero_night.webp" width="620" height="1347"
-                 loading="lazy" decoding="async"
-                 alt="Aura's Hoy screen on iPhone at night: the sky turns dark and the sun disc becomes the moon." />
-          </figure>
-        </div>
-        <p class="shots-hint lang-en">The same screen, dawn to storm to night, the sky follows the real sun.</p>
-        <p class="shots-hint lang-es">La misma pantalla, del amanecer a la tormenta y a la noche: el cielo sigue al sol real.</p>
-      </div>
-    </section>
-
-    <!-- ── Features ─────────────────────────────────────────────── -->
-    <section class="section">
-      <div class="wrap">
-        <div class="sec-head" data-reveal>
-          <p class="eyebrow"><span class="lang-en">What it does</span><span class="lang-es">Qué hace</span></p>
-          <h2 class="sec-title"><span class="lang-en">AEMET's open data, on widgets, your Watch, and Android.</span><span class="lang-es">Los datos abiertos de AEMET, en widgets, en tu Watch y en Android.</span></h2>
-        </div>
-
-        <div class="hood-grid" data-reveal>
-
-          <div class="hood-card">
-            <div class="cap-icon">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                <path d="M12 3v2M12 19v2M5 12H3M21 12h-2M6.3 6.3 4.9 4.9M19.1 19.1l-1.4-1.4" stroke-linecap="round"/>
-                <circle cx="12" cy="12" r="4"/>
-              </svg>
-            </div>
-            <h3><span class="lang-en">An editorial Hoy screen</span><span class="lang-es">Una pantalla Hoy con criterio</span></h3>
-            <p class="lang-en"><strong>Hoy</strong> opens on a hero written on-device in plain Spanish, then a full card stack: current conditions, the hourly strip, a seven-day outlook, a sunrise→sunset arc, wind, <strong>air quality</strong> (MITECO ICA), the <strong>UV index</strong>, the nearest radar, and the official AEMET bulletin, all over a live sun-tracking sky. <strong>Predicción</strong> keeps AEMET's human-written narrative for your community, resolved to the one that covers today.</p>
-            <p class="lang-es"><strong>Hoy</strong> abre con un titular redactado en el dispositivo, en español claro, y luego una pila completa de tarjetas: condiciones actuales, la franja horaria, la previsión a siete días, el arco del amanecer al ocaso, el viento, la <strong>calidad del aire</strong> (ICA de MITECO), el <strong>índice UV</strong>, el radar más cercano y el boletín oficial de AEMET, todo sobre un cielo que sigue al sol en directo. <strong>Predicción</strong> conserva el texto redactado por personas de AEMET para tu comunidad.</p>
-          </div>
-
-          <div class="hood-card">
-            <div class="cap-icon">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                <rect x="3" y="3" width="7" height="7" rx="1.5"/>
-                <rect x="14" y="3" width="7" height="7" rx="1.5"/>
-                <rect x="3" y="14" width="7" height="7" rx="1.5"/>
-                <rect x="14" y="14" width="7" height="7" rx="1.5"/>
-              </svg>
-            </div>
-            <h3><span class="lang-en">Widgets &amp; Lock Screen</span><span class="lang-es">Widgets y pantalla de bloqueo</span></h3>
-            <p class="lang-en">Home Screen (small / medium / large, plus the iPad extra-large) over the same living sky, and Lock Screen (circular / rectangular / inline) families, each <strong>configurable to a specific saved location</strong> via App Intents. Every card renders from the same shared code as the app, so nothing drifts.</p>
-            <p class="lang-es">En la pantalla de inicio (pequeño / mediano / grande, más el extragrande de iPad) sobre el mismo cielo vivo, y en la de bloqueo (circular / rectangular / en línea), cada uno <strong>configurable a una ubicación guardada concreta</strong> mediante App Intents. Cada tarjeta se dibuja con el mismo código que la app, así que nada se desincroniza.</p>
-          </div>
-
-          <div class="hood-card">
-            <div class="cap-icon">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                <rect x="7" y="6" width="10" height="12" rx="3"/>
-                <path d="M9 6l.5-3h5l.5 3M9 18l.5 3h5l.5-3" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <h3><span class="lang-en">Apple Watch, live</span><span class="lang-es">Apple Watch, en directo</span></h3>
-            <p class="lang-en">A watch app and a face complication (corner / circular / rectangular / inline), fed from the phone over WatchConnectivity. The screen and the complication both update in place as the phone syncs, no separate fetch, no separate key.</p>
-            <p class="lang-es">Una app para el reloj y una complicación de esfera (esquina / circular / rectangular / en línea), alimentadas desde el teléfono por WatchConnectivity. La pantalla y la complicación se actualizan sobre la marcha cuando el teléfono sincroniza: sin una descarga aparte, sin otra clave.</p>
-          </div>
-
-          <div class="hood-card">
-            <div class="cap-icon">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                <path d="M10.29 3.86 1.82 18a1 1 0 00.86 1.5h18.64a1 1 0 00.86-1.5L13.71 3.86a1 1 0 00-1.72 0z" stroke-linejoin="round"/>
-                <path d="M12 9v4M12 17h.01" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <h3><span class="lang-en">Real readings &amp; warnings</span><span class="lang-es">Lecturas reales y avisos</span></h3>
-            <p class="lang-en">The <strong>observed temperature</strong> from the nearest AEMET station, not just the forecast. And <strong>avisos</strong>, the official CAP weather warnings, fetched, unpacked on-device, and matched to each saved location by province.</p>
-            <p class="lang-es">La <strong>temperatura observada</strong> en la estación de AEMET más cercana, no solo la previsión. Y los <strong>avisos</strong> (las alertas meteorológicas oficiales en formato CAP), descargados, descomprimidos en el dispositivo y asignados a cada ubicación guardada por provincia.</p>
-          </div>
-
-          <div class="hood-card">
-            <div class="cap-icon">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                <path d="M12 21s-7-4.35-7-10a7 7 0 0114 0c0 5.65-7 10-7 10z" stroke-linejoin="round"/>
-                <circle cx="12" cy="11" r="2.5"/>
-              </svg>
-            </div>
-            <h3><span class="lang-en">Your places, your order</span><span class="lang-es">Tus lugares, en tu orden</span></h3>
-            <p class="lang-en">Favourites from a bundled list of all 8,122 Spanish municipalities AEMET covers (new in 1.1.0), or the nearest city to your current GPS location. Reorder, delete, pick the active one. The favourites list is mirrored to the widgets, so their picker lists exactly the places you saved.</p>
-            <p class="lang-es">Favoritos a partir de una lista incluida con los 8122 municipios de España que cubre AEMET (nuevo en la 1.1.0), o la ciudad más cercana a tu ubicación GPS actual. Reordena, elimina, elige la activa. La lista de favoritos se refleja en los widgets, así que su selector muestra exactamente los lugares que guardaste.</p>
-          </div>
-
-          <div class="hood-card">
-            <div class="cap-icon">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                <rect x="5" y="11" width="14" height="10" rx="2" stroke-linecap="round"/>
-                <path d="M8 11V7a4 4 0 018 0v4" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <h3><span class="lang-en">Private by design</span><span class="lang-es">Privada por diseño</span></h3>
-            <p class="lang-en">Your AEMET key lives in the device Keychain, or Android's encrypted storage, never in the binary, the repo, or a server. There is no backend: the app caches each location's snapshot on the device, and the widgets (and Apple&nbsp;Watch) read it from there. Nothing leaves your devices.</p>
-            <p class="lang-es">Tu clave de AEMET vive en el Llavero del dispositivo, o en el almacenamiento cifrado de Android, nunca en el binario, el repositorio ni un servidor. No hay servidores: la app guarda la instantánea de cada ubicación en el dispositivo, y los widgets (y el Apple&nbsp;Watch) la leen de ahí. Nada sale de tus dispositivos.</p>
-          </div>
-
-          <div class="hood-card">
-            <div class="cap-icon">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                <rect x="6" y="2" width="12" height="20" rx="2.5"/>
-                <path d="M10 18h4" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <h3><span class="lang-en">Now on Android</span><span class="lang-es">Ahora en Android</span></h3>
-            <p class="lang-en">A native Android port, phone-first, in Kotlin and Jetpack Compose: the same editorial <strong>Hoy</strong> screen, the living sun-tracking sky, air quality, UV, wind and <strong>avisos</strong>, plus a <strong>home-screen widget</strong> you can pin to any saved place. No Google Play Services, no analytics, coarse location only. Coming to <strong>Google Play</strong>; the source is on <a href="https://github.com/mabaeyens/aura-android" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">GitHub</a>.</p>
-            <p class="lang-es">Una versión nativa para Android, centrada en el teléfono, en Kotlin y Jetpack Compose: la misma pantalla <strong>Hoy</strong> con criterio, el cielo vivo que sigue al sol, la calidad del aire, el UV, el viento y los <strong>avisos</strong>, más un <strong>widget en la pantalla de inicio</strong> que puedes fijar a cualquier lugar guardado. Sin Google Play Services, sin analítica, solo ubicación aproximada. Próximamente en <strong>Google Play</strong>; el código está en <a href="https://github.com/mabaeyens/aura-android" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">GitHub</a>.</p>
-          </div>
-
-          <div class="hood-card">
-            <div class="cap-icon">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                <rect x="4" y="3" width="16" height="18" rx="6"/>
-                <circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/>
-              </svg>
-            </div>
-            <h3><span class="lang-en">Aura on Pebble</span><span class="lang-es">Aura en Pebble</span></h3>
-            <p class="lang-en">Aura is the name I use for everything I build for the Pebble Time 2, because it all started under the weather umbrella: <strong>Aura Essential</strong> and <strong>Aura LCD</strong> watchfaces, and <strong>Aura Sky Weather</strong> and <strong>Aura Cityscape Weather</strong>, the weather as watchapps. All free and open source. <a href="/aura/pebble" style="color:var(--accent);text-decoration:none">See them on the Pebble page</a>.</p>
-            <p class="lang-es">Aura es el nombre que uso para todo lo que hago para el Pebble Time 2, porque todo empezó bajo el paraguas del tiempo: las esferas <strong>Aura Essential</strong> y <strong>Aura LCD</strong>, y <strong>Aura Sky Weather</strong> y <strong>Aura Cityscape Weather</strong>, el tiempo como watchapps. Todo gratuito y de código abierto. <a href="/aura/pebble" style="color:var(--accent);text-decoration:none">Míralas en la página de Pebble</a>.</p>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ── Gallery ──────────────────────────────────────────────── -->
-    <section class="section gallery">
-      <div class="wrap">
-        <div class="sec-head" data-reveal>
-          <p class="eyebrow"><span class="lang-en">See it</span><span class="lang-es">Míralo</span></p>
-          <h2 class="sec-title"><span class="lang-en">Every surface, the same living sky.</span><span class="lang-es">Cada superficie, el mismo cielo vivo.</span></h2>
-          <p class="sec-sub"><span class="lang-en">Real screenshots, iPhone, iPad, Apple&nbsp;Watch, the widgets, and Android. Swipe each row.</span><span class="lang-es">Capturas reales: iPhone, iPad, Apple&nbsp;Watch, los widgets y Android. Desliza cada fila.</span></p>
-        </div>
-
-        <!-- iPhone -->
-        <div class="gallery-group" data-reveal>
-          <h3 class="group-label">iPhone</h3>
-          <div class="rail rail-phone">
-            <figure class="shot-phone"><img loading="lazy" decoding="async" src="assets/shots/iphone/01_hero_clear.webp" alt="iPhone, Hoy on a clear day" /><figcaption>Hoy · despejado</figcaption></figure>
-            <figure class="shot-phone"><img loading="lazy" decoding="async" src="assets/shots/iphone/02_hero_storm.webp" alt="iPhone, Hoy during a storm" /><figcaption>Hoy · tormenta</figcaption></figure>
-            <figure class="shot-phone"><img loading="lazy" decoding="async" src="assets/shots/iphone/03_hero_night.webp" alt="iPhone, Hoy at night" /><figcaption>Hoy · de noche</figcaption></figure>
-            <figure class="shot-phone"><img loading="lazy" decoding="async" src="assets/shots/iphone/04_prediccion.webp" alt="iPhone, hourly strip and seven-day outlook" /><figcaption>Horas y días</figcaption></figure>
-            <figure class="shot-phone"><img loading="lazy" decoding="async" src="assets/shots/iphone/05_aviso.webp" alt="iPhone, an active AEMET aviso" /><figcaption>Aviso activo</figcaption></figure>
-            <figure class="shot-phone"><img loading="lazy" decoding="async" src="assets/shots/iphone/06_sol_luna.webp" alt="iPhone, the sunrise to sunset arc" /><figcaption>Sol y luna</figcaption></figure>
-            <figure class="shot-phone"><img loading="lazy" decoding="async" src="assets/shots/iphone/07_aire_expanded.webp" alt="iPhone, air quality by pollutant" /><figcaption>Calidad del aire</figcaption></figure>
-            <figure class="shot-phone"><img loading="lazy" decoding="async" src="assets/shots/iphone/08_widgets.webp" alt="iPhone Home Screen with Aura widgets" /><figcaption>Widgets en casa</figcaption></figure>
-          </div>
-        </div>
-
-        <!-- iPad -->
-        <div class="gallery-group" data-reveal>
-          <h3 class="group-label">iPad <span class="group-note"><span class="lang-en">· also runs on Apple&nbsp;Silicon Macs as “Designed for iPad”</span><span class="lang-es">· también en Macs con Apple&nbsp;Silicon como «Diseñada para iPad»</span></span></h3>
-          <div class="rail rail-pad">
-            <figure class="shot-pad"><img loading="lazy" decoding="async" src="assets/shots/ipad/01_hero_clear.webp" alt="iPad, Hoy on a clear day" /><figcaption>Hoy · despejado</figcaption></figure>
-            <figure class="shot-pad"><img loading="lazy" decoding="async" src="assets/shots/ipad/02_hero_dusk.webp" alt="iPad, Hoy at dusk" /><figcaption>Hoy · atardecer</figcaption></figure>
-            <figure class="shot-pad"><img loading="lazy" decoding="async" src="assets/shots/ipad/03_hero_night.webp" alt="iPad, Hoy at night" /><figcaption>Hoy · de noche</figcaption></figure>
-            <figure class="shot-pad"><img loading="lazy" decoding="async" src="assets/shots/ipad/04_prediccion.webp" alt="iPad, the forecast detail" /><figcaption>Predicción</figcaption></figure>
-            <figure class="shot-pad"><img loading="lazy" decoding="async" src="assets/shots/ipad/05_aviso.webp" alt="iPad, an active aviso" /><figcaption>Aviso activo</figcaption></figure>
-            <figure class="shot-pad"><img loading="lazy" decoding="async" src="assets/shots/ipad/06_sol_luna.webp" alt="iPad, the sun and moon arc" /><figcaption>Sol y luna</figcaption></figure>
-            <figure class="shot-pad"><img loading="lazy" decoding="async" src="assets/shots/ipad/07_widgets.webp" alt="iPad Home Screen with Aura widgets" /><figcaption>Widgets en casa</figcaption></figure>
-          </div>
-        </div>
-
-        <!-- Apple Watch -->
-        <div class="gallery-group" data-reveal>
-          <h3 class="group-label">Apple Watch <span class="group-note"><span class="lang-en">· the app, and complications across five faces</span><span class="lang-es">· la app y complicaciones en cinco esferas</span></span></h3>
-          <div class="rail rail-watch">
-            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/watch/app_noon_clear.webp" alt="Apple Watch app, clear midday" /><figcaption>App · mediodía</figcaption></figure>
-            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/watch/app_dawn_rain.webp" alt="Apple Watch app, rain at dawn" /><figcaption>App · amanecer</figcaption></figure>
-            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/watch/app_dusk_storm.webp" alt="Apple Watch app, storm at dusk" /><figcaption>App · tormenta</figcaption></figure>
-            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/watch/app_night_snow.webp" alt="Apple Watch app, snow at night" /><figcaption>App · nieve</figcaption></figure>
-            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/faces/face_wf1_hot_clear.webp" alt="Watch face with Aura complications, hot and clear" /><figcaption>Cara 1 · calor</figcaption></figure>
-            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/faces/face_wf1_mild_cloud.webp" alt="Watch face with Aura complications, mild and cloudy" /><figcaption>Cara 1 · nubes</figcaption></figure>
-            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/faces/face_wf1_cold_rain.webp" alt="Watch face with Aura complications, cold and rainy" /><figcaption>Cara 1 · lluvia</figcaption></figure>
-            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/faces/face_wf1_snow_night.webp" alt="Watch face with Aura complications, snow at night" /><figcaption>Cara 1 · nieve</figcaption></figure>
-            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/faces/face_wf1_storm_aviso.webp" alt="Watch face with Aura complications, storm and aviso" /><figcaption>Cara 1 · aviso</figcaption></figure>
-            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/faces/face_wf2_hot_clear.webp" alt="Second watch face, hot and clear" /><figcaption>Cara 2 · calor</figcaption></figure>
-            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/faces/face_wf2_mild_cloud.webp" alt="Second watch face, mild and cloudy" /><figcaption>Cara 2 · nubes</figcaption></figure>
-            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/faces/face_wf2_cold_rain.webp" alt="Second watch face, cold and rainy" /><figcaption>Cara 2 · lluvia</figcaption></figure>
-            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/faces/face_wf2_snow_night.webp" alt="Second watch face, snow at night" /><figcaption>Cara 2 · nieve</figcaption></figure>
-            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/faces/face_wf2_storm_aviso.webp" alt="Second watch face, storm and aviso" /><figcaption>Cara 2 · aviso</figcaption></figure>
-            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/faces/face_wf3_compass.webp" alt="Explorer compass face with Aura complications, bearing, sunset, and warnings" /><figcaption>Cara 3 · brújula</figcaption></figure>
-            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/faces/face_wf4_chrono_pro.webp" alt="Chronograph Pro face with Aura complications" /><figcaption>Cara 4 · crono</figcaption></figure>
-            <figure class="shot-watch"><img loading="lazy" decoding="async" src="assets/shots/faces/face_wf5_chrono_gauges.webp" alt="Chronograph face with Aura gauge complications, temperature, wind, and UV" /><figcaption>Cara 5 · indicadores</figcaption></figure>
-          </div>
-        </div>
-
-        <!-- Widgets -->
-        <div class="gallery-group" data-reveal>
-          <h3 class="group-label">Widgets <span class="group-note"><span class="lang-en">· Home Screen, every size, over the living sky</span><span class="lang-es">· pantalla de inicio, todos los tamaños, sobre el cielo vivo</span></span></h3>
-          <div class="rail rail-widget">
-            <figure class="shot-widget"><img loading="lazy" decoding="async" src="assets/shots/widgets/widget-iphone-s-sunset.webp" alt="Small iPhone widget at sunset, temperature over the sun-tracking sky" /><figcaption>iPhone · pequeño</figcaption></figure>
-            <figure class="shot-widget"><img loading="lazy" decoding="async" src="assets/shots/widgets/widget-iphone-m-city.webp" alt="Medium iPhone widget with the hourly strip over a townscape sky and an aviso pill" /><figcaption>iPhone · mediano</figcaption></figure>
-            <figure class="shot-widget"><img loading="lazy" decoding="async" src="assets/shots/widgets/widget-iphone-l-rain.webp" alt="Large iPhone widget in the rain, hourly strip, three-day outlook, sunrise and UV" /><figcaption>iPhone · grande</figcaption></figure>
-            <figure class="shot-widget"><img loading="lazy" decoding="async" src="assets/shots/widgets/widget-ipad-m.webp" alt="Medium iPad widget with the hourly strip on a clear day" /><figcaption>iPad · mediano</figcaption></figure>
-            <figure class="shot-widget"><img loading="lazy" decoding="async" src="assets/shots/widgets/widget-ipad-l-city.webp" alt="Large iPad widget over a townscape sky, current conditions, hourly strip and three-day outlook" /><figcaption>iPad · grande</figcaption></figure>
-            <figure class="shot-widget"><img loading="lazy" decoding="async" src="assets/shots/widgets/widget-ipad-xl-sunset.webp" alt="Extra-large iPad widget at sunset, the full forecast on one panel" /><figcaption>iPad · extragrande</figcaption></figure>
-          </div>
-        </div>
-
-        <!-- Android -->
-        <div class="gallery-group" data-reveal>
-          <h3 class="group-label">Android <span class="group-note"><span class="lang-en">· phone-only, native Kotlin, the app and its home-screen widget</span><span class="lang-es">· solo teléfono, Kotlin nativo, la app y su widget en la pantalla de inicio</span></span></h3>
-          <div class="rail rail-phone rail-android">
-            <figure class="shot-phone"><img loading="lazy" decoding="async" src="assets/shots/android/01_hoy.webp" alt="Aura on Android, the Hoy screen for Barcelona over a rainy living sky" /><figcaption>Hoy · Android</figcaption></figure>
-            <figure class="shot-phone"><img loading="lazy" decoding="async" src="assets/shots/android/02_prediccion.webp" alt="Aura on Android, the hourly strip and seven-day outlook" /><figcaption>Horas y días</figcaption></figure>
-            <figure class="shot-phone"><img loading="lazy" decoding="async" src="assets/shots/android/03_uv.webp" alt="Aura on Android, the UV index scale detail" /><figcaption>Índice UV</figcaption></figure>
-            <figure class="shot-phone"><img loading="lazy" decoding="async" src="assets/shots/android/04_viento.webp" alt="Aura on Android, the Beaufort wind scale detail" /><figcaption>Viento</figcaption></figure>
-            <figure class="shot-phone"><img loading="lazy" decoding="async" src="assets/shots/android/05_widget.webp" alt="Aura's home-screen widget on an Android home screen" /><figcaption>Widget en casa</figcaption></figure>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-  </main>
-
-  <!-- ── Footer ─────────────────────────────────────────────────── -->
-  <footer class="site-footer">
-    <div class="wrap">
-      <img src="assets/icon.png" class="footer-icon" alt="Aura" />
-      <p class="footer-name">Aura</p>
-      <p class="footer-tag lang-en">A personal, private weather app for Spain, on iPhone, iPad, Apple&nbsp;Watch, and Android.</p>
-      <p class="footer-tag lang-es">Una app del tiempo personal y privada para España, en iPhone, iPad, Apple&nbsp;Watch y Android.</p>
-
-      <div class="footer-cta">
-        <a href="https://github.com/mabaeyens/aura-apps" target="_blank" rel="noopener" class="btn btn-primary">
-          <svg><use href="#ico-github"/></svg><span class="lang-en">iOS source</span><span class="lang-es">Código (iOS)</span>
-        </a>
-        <a href="https://github.com/mabaeyens/aura-android" target="_blank" rel="noopener" class="btn btn-ghost">
-          <svg><use href="#ico-github"/></svg><span class="lang-en">Android source</span><span class="lang-es">Código (Android)</span>
-        </a>
-        <a href="/aura/pebble" class="btn btn-ghost">
-          <span class="lang-en">Aura for Pebble</span><span class="lang-es">Aura para Pebble</span>
-        </a>
-        <a href="/aura/soporte" class="btn btn-ghost"><span class="lang-en">Support</span><span class="lang-es">Soporte</span></a>
-        <a href="/aura/privacidad" class="btn btn-ghost"><span class="lang-en">Privacy</span><span class="lang-es">Privacidad</span></a>
-      </div>
-
-      <div class="footer-credit">
-        <span>Weather data: Elaborado con datos de AEMET · Built by Miguel A. Baeyens, with Claude Code</span>
-        <a href="https://linkedin.com/in/mabaeyens" target="_blank" rel="noopener" aria-label="LinkedIn">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-linkedin"/></svg>
-        </a>
-      </div>
-
-      <div class="footer-legal">
-        <p class="footer-sources">
-          <span class="lang-en">Open data sources, publicly available:</span><span class="lang-es">Fuentes de datos abiertos, de acceso público:</span>
-          <a href="https://opendata.aemet.es" target="_blank" rel="noopener">AEMET OpenData</a> ·
-          <a href="https://www.miteco.gob.es" target="_blank" rel="noopener">MITECO ICA</a> ·
-          <a href="https://atmosphere.copernicus.eu" target="_blank" rel="noopener">Copernicus CAMS</a>
-        </p>
-        <p class="footer-disclaimer">
-          <span class="lang-en">Aura is an independent app. It is not affiliated with, and does not represent, AEMET, MITECO, or any government entity.</span><span class="lang-es">Aura es una app independiente. No está afiliada a AEMET, MITECO ni a ninguna entidad gubernamental, ni las representa.</span>
-        </p>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    // Keep the browser-tab favicon on the theme-matched app icon.
-    // (On-page icons are swapped in CSS via `content`; the favicon can't be.)
-    function syncFavicon(theme) {
-      var href = theme === 'dark' ? 'assets/favicon-32-dark.png' : 'assets/favicon-32.png';
-      document.querySelectorAll('link[rel="icon"]')
-        .forEach(function (l) { l.href = href; });
-    }
-    syncFavicon(document.documentElement.getAttribute('data-theme'));
-
-    // Theme toggle, shares the 'mira-theme' key across the askmira.es ecosystem
-    document.getElementById('theme-toggle').addEventListener('click', function () {
-      var html = document.documentElement;
-      var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      html.setAttribute('data-theme', next);
-      localStorage.setItem('mira-theme', next);
-      syncFavicon(next);
-    });
-
-    // Language toggle, English / Spanish, remembered under 'aura-lang' (shared with /aura/soporte)
-    function applyLang(l) {
-      document.documentElement.setAttribute('data-lang', l);
-      document.documentElement.lang = l;
-      document.title = (l === 'es')
-        ? 'Aura, el tiempo en España, en iPhone, iPad, Apple Watch y Android'
-        : 'Aura, a personal, private weather app for Spain';
-      var lbl = document.querySelector('#lang-toggle .btn-label');
-      if (lbl) lbl.textContent = (l === 'es') ? 'English' : 'Español';
-    }
-    applyLang(document.documentElement.getAttribute('data-lang') || 'es');
-    document.getElementById('lang-toggle').addEventListener('click', function () {
-      var next = document.documentElement.getAttribute('data-lang') === 'es' ? 'en' : 'es';
-      localStorage.setItem('aura-lang', next);
-      applyLang(next);
-    });
-
-    // Reveal-on-scroll (same pattern as the main page)
-    (function () {
-      var els = document.querySelectorAll('[data-reveal]');
-      if (!('IntersectionObserver' in window)) {
-        els.forEach(function (e) { e.classList.add('in'); });
-        return;
-      }
-      var ro = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in');
-            ro.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.12 });
-      els.forEach(function (e) { ro.observe(e); });
-    })();
-  </script>
-
+    <a href="/writing/">Writing</a><a href="/about/">About</a><a href="https://github.com/mabaeyens">GitHub</a><span class="lang"><b>EN</b> / <a href="/es/aura/" hreflang="es" lang="es">ES</a></span>
+  </nav>
+</div></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <filter id="pen" x="-5%" y="-10%" width="110%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3.2"/></filter>
+  </defs></svg>
+<div class="pband">
+<div class="sky" aria-hidden="true">
+    <svg class="sun" viewBox="0 0 160 160" fill="rgba(244,190,80,.30)" stroke="#E9A93A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)">
+      <path d="M80 8 C82 52 96 66 152 80 C96 94 82 108 80 152 C78 108 64 94 8 80 C64 66 78 52 80 8 Z"/>
+      <path d="M128 118 C129 128 133 131 142 132 C133 133 129 136 128 146 C127 136 123 133 114 132 C123 131 127 128 128 118 Z"/>
+    </svg>
+    <svg class="cl c1" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M22 74 C8 74 4 56 19 52 C16 35 35 27 48 36 C54 17 83 13 95 30 C107 19 132 23 136 40 C155 32 177 43 172 59 C191 59 201 74 184 76 Z"/><path d="M58 63 C78 67 98 65 118 60"/></svg>
+    <svg class="cl c2" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M26 76 C10 76 8 58 24 55 C24 38 42 32 54 40 C62 22 90 22 100 38 C116 30 138 38 138 52 C158 50 172 64 160 76 Z"/><path d="M52 66 C70 69 88 68 104 64"/></svg>
+    <svg class="cl c3" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M18 72 C6 72 4 58 16 55 C16 42 30 37 40 43 C46 28 68 27 77 40 C88 33 106 38 106 50 C122 50 130 62 120 72 Z"/></svg>
+    <svg class="cl c4" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M22 74 C8 74 4 56 19 52 C16 35 35 27 48 36 C54 17 83 13 95 30 C107 19 132 23 136 40 C155 32 177 43 172 59 C191 59 201 74 184 76 Z"/><path d="M58 63 C78 67 98 65 118 60"/></svg>
+    <svg class="cl v1" viewBox="0 0 120 56" fill="none" stroke="#2FA9AF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><g class="bob"><path d="M36 10 C26 18 20 24 14 30 C22 36 28 41 38 49"/><path d="M71 7 C66 20 61 34 52 50"/><path d="M84 10 C94 18 100 24 106 30 C98 36 92 41 82 49"/></g></svg>
+    <svg class="cl c7" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M22 74 C8 74 4 56 19 52 C16 35 35 27 48 36 C54 17 83 13 95 30 C107 19 132 23 136 40 C155 32 177 43 172 59 C191 59 201 74 184 76 Z"/><path d="M58 63 C78 67 98 65 118 60"/></svg>
+    <svg class="cl c8" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M26 76 C10 76 8 58 24 55 C24 38 42 32 54 40 C62 22 90 22 100 38 C116 30 138 38 138 52 C158 50 172 64 160 76 Z"/><path d="M52 66 C70 69 88 68 104 64"/></svg>
+    <svg class="cl c9" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M18 72 C6 72 4 58 16 55 C16 42 30 37 40 43 C46 28 68 27 77 40 C88 33 106 38 106 50 C122 50 130 62 120 72 Z"/></svg>
+    <svg class="cl v4" viewBox="0 0 120 56" fill="none" stroke="#2FA9AF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><g class="bob"><path d="M36 10 C26 18 20 24 14 30 C22 36 28 41 38 49"/><path d="M71 7 C66 20 61 34 52 50"/><path d="M84 10 C94 18 100 24 106 30 C98 36 92 41 82 49"/></g></svg>
+    <svg class="cl v3" viewBox="0 0 120 56" fill="none" stroke="#2FA9AF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><g class="bob"><path d="M36 10 C26 18 20 24 14 30 C22 36 28 41 38 49"/><path d="M71 7 C66 20 61 34 52 50"/><path d="M84 10 C94 18 100 24 106 30 C98 36 92 41 82 49"/></g></svg>
+    <svg class="cl v2" viewBox="0 0 120 56" fill="none" stroke="#2FA9AF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><g class="bob"><path d="M36 10 C26 18 20 24 14 30 C22 36 28 41 38 49"/><path d="M71 7 C66 20 61 34 52 50"/><path d="M84 10 C94 18 100 24 106 30 C98 36 92 41 82 49"/></g></svg>
+  </div>
+  <div class="wrap pbw"><div class="eyebrow">Aura · iPhone, iPad, Apple Watch, Android</div><h1 class="ph1">Spain's weather, on every screen you own.</h1></div>
+</div>
+<div class="wrap page" style="padding-top:44px">
+  <div class="mhero"><div><p>Aura reads AEMET's open data (Spain's national weather service) through its public OpenData API and your own free key, and presents it clearly on every screen you own: widgets, Apple Watch complications, real observed temperatures, and avisos matched to your town.</p><p>Now on Android too, built natively in Kotlin, with its own home-screen widget. No backend, no account, no telemetry: the device is the hub.</p></div><div><div class="cta"><a class="btn" href="https://apps.apple.com/us/app/aura-el-tiempo/id6804193524">Download on the App Store</a><a class="lnk" href="https://github.com/mabaeyens/aura-apps">View source</a><a class="lnk" href="https://opendata.aemet.es/centrodedescargas/altaUsuario">Get an AEMET key</a></div><p class="foot2" style="padding-top:18px;font-size:14px">Free and open source (MIT) · iPhone, iPad, Apple Watch and Android · Made with AEMET data</p></div></div>
+  <div class="devs" style="overflow-x:auto"><div class="shot2" style="width:calc(var(--px)*7.1)"><img src="/aura/assets/shots/iphone/01_hero_clear.webp" alt=""></div><div class="shot2" style="width:calc(var(--px)*7.1)"><img src="/aura/assets/shots/iphone/02_hero_storm.webp" alt=""></div><div class="shot2" style="width:calc(var(--px)*7.1)"><img src="/aura/assets/shots/iphone/03_hero_night.webp" alt=""></div><div class="shot2" style="width:calc(var(--px)*3.7)"><img src="/aura/assets/shots/watch/app_dusk_storm.webp" alt=""></div></div>
+<p class="foot2" style="padding:0 0 44px;margin-top:-30px;font-size:14px">The same screen, dawn to storm to night. The sky follows the real sun.</p>
+  <div class="sec"><h2><span class="mk">What it does</span></h2><div><div class="cap"><h3>An editorial Hoy screen</h3><p>Hoy opens on a hero written on-device in plain Spanish, then a full card stack: current conditions, the hourly strip, a seven-day outlook, a sunrise to sunset arc, wind, air quality (MITECO ICA), the UV index, the nearest radar, and the official AEMET bulletin, all over a live sun-tracking sky. Predicción keeps AEMET's human-written narrative for your community, resolved to the one that covers today.</p></div><div class="cap"><h3>Widgets and Lock Screen</h3><p>Home Screen (small, medium, large, plus the iPad extra-large) over the same living sky, and Lock Screen (circular, rectangular, inline) families, each configurable to a specific saved location via App Intents. Every card renders from the same shared code as the app, so nothing drifts.</p></div><div class="cap"><h3>Apple Watch, live</h3><p>A watch app and a face complication (corner, circular, rectangular, inline), fed from the phone over WatchConnectivity. The screen and the complication both update in place as the phone syncs, no separate fetch, no separate key.</p></div><div class="cap"><h3>Real readings and warnings</h3><p>The observed temperature from the nearest AEMET station, not just the forecast. And avisos, the official CAP weather warnings, fetched, unpacked on-device, and matched to each saved location by province.</p></div><div class="cap"><h3>Your places, your order</h3><p>Favourites from a bundled list of all 8,122 Spanish municipalities AEMET covers, or the nearest city to your current GPS location. Reorder, delete, pick the active one. The favourites list is mirrored to the widgets, so their picker lists exactly the places you saved.</p></div><div class="cap"><h3>Private by design</h3><p>Your AEMET key lives in the device Keychain, or Android's encrypted storage, never in the binary, the repo, or a server. There is no backend: the app caches each location's snapshot on the device, and the widgets and Apple Watch read it from there. Nothing leaves your devices.</p></div><div class="cap"><h3>Now on Android</h3><p>A native Android port, phone-first, in Kotlin and Jetpack Compose: the same editorial Hoy screen, the living sun-tracking sky, air quality, UV, wind and avisos, plus a home-screen widget you can pin to any saved place. No Google Play Services, no analytics, coarse location only. Coming to Google Play. The source is on <a class="lnk" href="https://github.com/mabaeyens/aura-android">GitHub</a>.</p></div><div class="cap"><h3>Aura on Pebble</h3><p>Aura is the name I use for everything I build for the Pebble Time 2, because it all started under the weather umbrella: Aura Essential and Aura LCD watchfaces, and Aura Sky Weather and Aura Cityscape Weather, the weather as watchapps. All free and open source. <a class="lnk" href="/aura/pebble/">See them on the Pebble page</a>.</p></div></div></div>
+<div class="sec"><h2><span class="mk">Every screen</span></h2><div><div class="strip2"><div class="shot2" style="width:150px"><img src="/aura/assets/shots/iphone/04_prediccion.webp" alt=""></div><div class="shot2" style="width:150px"><img src="/aura/assets/shots/iphone/05_aviso.webp" alt=""></div><div class="shot2" style="width:150px"><img src="/aura/assets/shots/iphone/06_sol_luna.webp" alt=""></div><div class="shot2" style="width:150px"><img src="/aura/assets/shots/iphone/07_aire_expanded.webp" alt=""></div><div class="shot2" style="width:150px"><img src="/aura/assets/shots/iphone/08_widgets.webp" alt=""></div></div><div class="strip2"><div class="shot2" style="width:300px"><img src="/aura/assets/shots/ipad/01_hero_clear.webp" alt=""></div><div class="shot2" style="width:300px"><img src="/aura/assets/shots/ipad/02_hero_dusk.webp" alt=""></div><div class="shot2" style="width:300px"><img src="/aura/assets/shots/ipad/04_prediccion.webp" alt=""></div></div><div class="strip2"><div class="shot2" style="width:130px"><img src="/aura/assets/shots/android/01_hoy.webp" alt=""></div><div class="shot2" style="width:130px"><img src="/aura/assets/shots/android/02_prediccion.webp" alt=""></div><div class="shot2" style="width:130px"><img src="/aura/assets/shots/android/03_uv.webp" alt=""></div><div class="shot2" style="width:130px"><img src="/aura/assets/shots/android/04_viento.webp" alt=""></div></div></div></div>
+<div class="sec"><h2><span class="mk">Sources</span></h2><div><p class="foot2">Weather data: <a class="lnk" href="https://opendata.aemet.es">AEMET OpenData</a>. Air quality: <a class="lnk" href="https://www.miteco.gob.es">MITECO ICA</a> and <a class="lnk" href="https://atmosphere.copernicus.eu">Copernicus CAMS</a>.</p></div></div>
+</div>
+<div class="wrap"><div class="foot mono" style="margin-top:50px"><span><a href="/aura/privacy/">Privacy</a> · <a href="/aura/support/">Support</a> · <a href="https://github.com/mabaeyens">GitHub</a></span></div></div>
 </body>
 </html>

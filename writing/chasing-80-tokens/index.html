@@ -1,203 +1,237 @@
-<title>Chasing 80 tok/s</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chasing 80 tok/s</title>
+<meta name="description" content="A field guide to native multi-token prediction on a mixture-of-experts model, and an honest ledger of where the speed is still hiding.">
+<link rel="canonical" href="https://askmira.es/writing/chasing-80-tokens/">
+<link rel="alternate" hreflang="en" href="https://askmira.es/writing/chasing-80-tokens/"><link rel="alternate" hreflang="es" href="https://askmira.es/es/escritos/chasing-80-tokens/"><link rel="alternate" hreflang="x-default" href="https://askmira.es/writing/chasing-80-tokens/">
+<meta property="og:title" content="Chasing 80 tok/s">
+<meta property="og:description" content="A field guide to native multi-token prediction on a mixture-of-experts model, and an honest ledger of where the speed is still hiding.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://askmira.es/writing/chasing-80-tokens/">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://askmira.es/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#F1F2F5">
+<link rel="icon" href="/assets/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="/assets/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/inner.css">
+</head>
+<body>
+<div class="bar solid"><div class="wrap">
+  <a class="brand" href="/">askmira.es</a>
+  <nav aria-label="Main">
+    <div class="dd-wrap">
+      <a href="/#apps" class="dd-t">Apps <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M2 3.5l3 3 3-3"/></svg></a>
+      <div class="dd">
+        <a class="dd-i" href="/mira/"><img src="/assets/icon.png" alt=""><span><b style="color:var(--mira-s)">Mira</b><i>AI assistant that runs on your own Mac</i></span><em>In beta</em></a>
+        <a class="dd-i" href="/vera/"><img src="/vera/assets/icon.png" alt=""><span><b style="color:var(--vera-s)">Vera</b><i>Markdown editor for your git repos</i></span><em>In beta</em></a>
+        <a class="dd-i" href="/aura/"><img src="/aura/assets/icon.png" alt=""><span><b style="color:var(--aura-s)">Aura</b><i>Weather for Spain, from AEMET data</i></span><em>App Store</em></a>
+      </div>
+    </div>
+    <a href="/writing/" class="cur" aria-current="page">Writing</a><a href="/about/">About</a><a href="https://github.com/mabaeyens">GitHub</a><span class="lang"><b>EN</b> / <a href="/es/escritos/chasing-80-tokens/" hreflang="es" lang="es">ES</a></span>
+  </nav>
+</div></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <filter id="pen" x="-5%" y="-10%" width="110%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3.2"/></filter>
+  </defs></svg>
+<div class="pband">
+<div class="sky" aria-hidden="true">
+    <svg class="sun" viewBox="0 0 160 160" fill="rgba(244,190,80,.30)" stroke="#E9A93A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)">
+      <path d="M80 8 C82 52 96 66 152 80 C96 94 82 108 80 152 C78 108 64 94 8 80 C64 66 78 52 80 8 Z"/>
+      <path d="M128 118 C129 128 133 131 142 132 C133 133 129 136 128 146 C127 136 123 133 114 132 C123 131 127 128 128 118 Z"/>
+    </svg>
+    <svg class="cl c1" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M22 74 C8 74 4 56 19 52 C16 35 35 27 48 36 C54 17 83 13 95 30 C107 19 132 23 136 40 C155 32 177 43 172 59 C191 59 201 74 184 76 Z"/><path d="M58 63 C78 67 98 65 118 60"/></svg>
+    <svg class="cl c2" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M26 76 C10 76 8 58 24 55 C24 38 42 32 54 40 C62 22 90 22 100 38 C116 30 138 38 138 52 C158 50 172 64 160 76 Z"/><path d="M52 66 C70 69 88 68 104 64"/></svg>
+    <svg class="cl c3" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M18 72 C6 72 4 58 16 55 C16 42 30 37 40 43 C46 28 68 27 77 40 C88 33 106 38 106 50 C122 50 130 62 120 72 Z"/></svg>
+    <svg class="cl c4" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M22 74 C8 74 4 56 19 52 C16 35 35 27 48 36 C54 17 83 13 95 30 C107 19 132 23 136 40 C155 32 177 43 172 59 C191 59 201 74 184 76 Z"/><path d="M58 63 C78 67 98 65 118 60"/></svg>
+    <svg class="cl v1" viewBox="0 0 120 56" fill="none" stroke="#2FA9AF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><g class="bob"><path d="M36 10 C26 18 20 24 14 30 C22 36 28 41 38 49"/><path d="M71 7 C66 20 61 34 52 50"/><path d="M84 10 C94 18 100 24 106 30 C98 36 92 41 82 49"/></g></svg>
+    <svg class="cl c7" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M22 74 C8 74 4 56 19 52 C16 35 35 27 48 36 C54 17 83 13 95 30 C107 19 132 23 136 40 C155 32 177 43 172 59 C191 59 201 74 184 76 Z"/><path d="M58 63 C78 67 98 65 118 60"/></svg>
+    <svg class="cl c8" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M26 76 C10 76 8 58 24 55 C24 38 42 32 54 40 C62 22 90 22 100 38 C116 30 138 38 138 52 C158 50 172 64 160 76 Z"/><path d="M52 66 C70 69 88 68 104 64"/></svg>
+    <svg class="cl c9" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M18 72 C6 72 4 58 16 55 C16 42 30 37 40 43 C46 28 68 27 77 40 C88 33 106 38 106 50 C122 50 130 62 120 72 Z"/></svg>
+    <svg class="cl v4" viewBox="0 0 120 56" fill="none" stroke="#2FA9AF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><g class="bob"><path d="M36 10 C26 18 20 24 14 30 C22 36 28 41 38 49"/><path d="M71 7 C66 20 61 34 52 50"/><path d="M84 10 C94 18 100 24 106 30 C98 36 92 41 82 49"/></g></svg>
+    <svg class="cl v3" viewBox="0 0 120 56" fill="none" stroke="#2FA9AF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><g class="bob"><path d="M36 10 C26 18 20 24 14 30 C22 36 28 41 38 49"/><path d="M71 7 C66 20 61 34 52 50"/><path d="M84 10 C94 18 100 24 106 30 C98 36 92 41 82 49"/></g></svg>
+    <svg class="cl v2" viewBox="0 0 120 56" fill="none" stroke="#2FA9AF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><g class="bob"><path d="M36 10 C26 18 20 24 14 30 C22 36 28 41 38 49"/><path d="M71 7 C66 20 61 34 52 50"/><path d="M84 10 C94 18 100 24 106 30 C98 36 92 41 82 49"/></g></svg>
+  </div>
+  <div class="wrap pbw">
+  <a class="back" href="/writing/">&larr; Writing</a>
+  <h1 class="ph1">Chasing 80 tok/s</h1>
+  <div class="pmeta mono">Aug 2026 · In English · Technical article</div>
+  </div>
+</div>
 <style>
-  :root{
-    /* light, cool silicon */
+.art{
+    
     --ground:#f4f6f9; --surface:#ffffff; --surface-2:#eaeef3; --line:#d3dae3;
     --ink:#141a22; --ink-2:#4a5566; --ink-3:#78838f;
-    --draft:#b56a06;   /* draft head, amber */
-    --verify:#2560d0;  /* backbone verify, blue */
+    --draft:#b56a06;   
+    --verify:#2560d0;  
     --good:#127a4f; --bad:#c0392b; --untested:#6b7684;
     --draft-wash:#f6ecdb; --verify-wash:#e5edfb; --good-wash:#e0f0e8; --bad-wash:#f6e4e1;
     --shadow:0 1px 2px rgba(20,26,34,.06),0 8px 24px rgba(20,26,34,.06);
     --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
     --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   }
-  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-    --ground:#0c1015; --surface:#141a22; --surface-2:#1b232e; --line:#2a3542;
-    --ink:#e7ecf2; --ink-2:#a2adbb; --ink-3:#6f7c8b;
-    --draft:#e6a545; --verify:#5f9dff;
-    --good:#43c088; --bad:#ff6f5c; --untested:#94a0af;
-    --draft-wash:#2a2113; --verify-wash:#12203a; --good-wash:#0f2a1f; --bad-wash:#2c1613;
-    --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 30px rgba(0,0,0,.35);
-  }}
-  :root[data-theme="dark"]{
-    --ground:#0c1015; --surface:#141a22; --surface-2:#1b232e; --line:#2a3542;
-    --ink:#e7ecf2; --ink-2:#a2adbb; --ink-3:#6f7c8b;
-    --draft:#e6a545; --verify:#5f9dff;
-    --good:#43c088; --bad:#ff6f5c; --untested:#94a0af;
-    --draft-wash:#2a2113; --verify-wash:#12203a; --good-wash:#0f2a1f; --bad-wash:#2c1613;
-    --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 30px rgba(0,0,0,.35);
-  }
-  *{box-sizing:border-box}
-  html{-webkit-text-size-adjust:100%}
-  body{
+.art *{box-sizing:border-box}
+.art{-webkit-text-size-adjust:100%}
+.art{
     margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);
     font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased;
     text-rendering:optimizeLegibility;
   }
-  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
-  .spine{max-width:660px}
-  h1,h2,h3{font-family:var(--mono);font-weight:600;line-height:1.12;text-wrap:balance;letter-spacing:-.01em}
-  p{margin:0 0 1.05em}
-  a{color:var(--verify);text-decoration:none;border-bottom:1px solid color-mix(in oklab,var(--verify) 35%,transparent)}
-  a:hover{border-bottom-color:var(--verify)}
-  code,.mono{font-family:var(--mono);font-size:.9em}
-  code{background:var(--surface-2);padding:.08em .34em;border-radius:4px;border:1px solid var(--line)}
-  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
-  figure{margin:0}
-  figcaption{font-size:14px;line-height:1.5;color:var(--ink-2);margin-top:12px;font-family:var(--sans)}
-  figcaption b{color:var(--ink);font-weight:600}
-  svg{max-width:100%;height:auto;display:block}
-  :focus-visible{outline:2px solid var(--verify);outline-offset:3px;border-radius:3px}
-
-  /* ---- hero ---- */
-  header.hero{padding:88px 0 40px;border-bottom:1px solid var(--line)}
-  .kicker{display:inline-flex;gap:10px;align-items:center;font-family:var(--mono);font-size:12px;
+.art .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.art .spine{max-width:660px}
+.art h1,.art h2,.art h3{font-family:var(--mono);font-weight:600;line-height:1.12;text-wrap:balance;letter-spacing:-.01em}
+.art p{margin:0 0 1.05em}
+.art a{color:var(--verify);text-decoration:none;border-bottom:1px solid color-mix(in oklab,var(--verify) 35%,transparent)}
+.art a:hover{border-bottom-color:var(--verify)}
+.art code,.art .mono{font-family:var(--mono);font-size:.9em}
+.art code{background:var(--surface-2);padding:.08em .34em;border-radius:4px;border:1px solid var(--line)}
+.art .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.art figure{margin:0}
+.art figcaption{font-size:14px;line-height:1.5;color:var(--ink-2);margin-top:12px;font-family:var(--sans)}
+.art figcaption b{color:var(--ink);font-weight:600}
+.art svg{max-width:100%;height:auto;display:block}
+.art :focus-visible{outline:2px solid var(--verify);outline-offset:3px;border-radius:3px}
+.art header.ahero{padding:88px 0 40px;border-bottom:1px solid var(--line)}
+.art .kicker{display:inline-flex;gap:10px;align-items:center;font-family:var(--mono);font-size:12px;
     letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);
     border:1px solid var(--line);border-radius:100px;padding:6px 14px;background:var(--surface)}
-  .kicker .dot{width:7px;height:7px;border-radius:50%;background:var(--good)}
-  h1{font-size:clamp(2.5rem,7vw,4.6rem);margin:26px 0 0}
-  h1 .u{color:var(--verify)}
-  .dek{font-size:clamp(1.05rem,2.4vw,1.32rem);color:var(--ink-2);max-width:34ch;margin:20px 0 0;line-height:1.45}
-  .scoreline{display:flex;flex-wrap:wrap;gap:0;margin-top:40px;border:1px solid var(--line);
+.art .kicker .dot{width:7px;height:7px;border-radius:50%;background:var(--good)}
+.art h1{font-size:clamp(2.5rem,7vw,4.6rem);margin:26px 0 0}
+.art h1 .u{color:var(--verify)}
+.art .dek{font-size:clamp(1.05rem,2.4vw,1.32rem);color:var(--ink-2);max-width:34ch;margin:20px 0 0;line-height:1.45}
+.art .scoreline{display:flex;flex-wrap:wrap;gap:0;margin-top:40px;border:1px solid var(--line);
     border-radius:14px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
-  .scoreline .cell{flex:1 1 130px;padding:18px 20px;border-right:1px solid var(--line)}
-  .scoreline .cell:last-child{border-right:0}
-  .scoreline .lab{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
-  .scoreline .val{font-family:var(--mono);font-size:2rem;font-weight:600;margin-top:6px;font-variant-numeric:tabular-nums}
-  .scoreline .val small{font-size:.9rem;color:var(--ink-3);font-weight:400}
-  .scoreline .c-base .val{color:var(--ink)}
-  .scoreline .c-now .val{color:var(--good)}
-  .scoreline .c-omlx .val{color:var(--verify)}
-  .scoreline .c-goal .val{color:var(--draft)}
-
-  /* ---- rhythm ---- */
-  section{padding:64px 0;border-bottom:1px solid var(--line)}
-  .sec-head{margin-bottom:34px}
-  .sec-head .eyebrow{display:block;margin-bottom:12px}
-  h2{font-size:clamp(1.7rem,3.6vw,2.4rem);margin:0}
-  h3{font-size:1.16rem;margin:0 0 .5em}
-  .lead{font-size:1.16rem;color:var(--ink);max-width:60ch}
-
-  /* ---- three-band concept ---- */
-  .triad{margin:30px 0;border:1px solid var(--line);border-radius:14px;background:var(--surface);
+.art .scoreline .cell{flex:1 1 130px;padding:18px 20px;border-right:1px solid var(--line)}
+.art .scoreline .cell:last-child{border-right:0}
+.art .scoreline .lab{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.art .scoreline .val{font-family:var(--mono);font-size:2rem;font-weight:600;margin-top:6px;font-variant-numeric:tabular-nums}
+.art .scoreline .val small{font-size:.9rem;color:var(--ink-3);font-weight:400}
+.art .scoreline .c-base .val{color:var(--ink)}
+.art .scoreline .c-now .val{color:var(--good)}
+.art .scoreline .c-omlx .val{color:var(--verify)}
+.art .scoreline .c-goal .val{color:var(--draft)}
+.art section{padding:64px 0;border-bottom:1px solid var(--line)}
+.art .sec-head{margin-bottom:34px}
+.art .sec-head .eyebrow{display:block;margin-bottom:12px}
+.art h2{font-size:clamp(1.7rem,3.6vw,2.4rem);margin:0}
+.art h3{font-size:1.16rem;margin:0 0 .5em}
+.art .lead{font-size:1.16rem;color:var(--ink);max-width:60ch}
+.art .triad{margin:30px 0;border:1px solid var(--line);border-radius:14px;background:var(--surface);
     overflow:hidden;box-shadow:var(--shadow)}
-  .triad .band{padding:18px 22px;border-top:1px solid var(--line)}
-  .triad .band:first-child{border-top:0}
-  .triad .btag{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+.art .triad .band{padding:18px 22px;border-top:1px solid var(--line)}
+.art .triad .band:first-child{border-top:0}
+.art .triad .btag{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;
     color:var(--ink-3);margin-bottom:7px}
-  .triad .core{background:var(--surface-2)}
-  .triad .core .txt{font-size:1.14rem;line-height:1.45;color:var(--ink);font-weight:500}
-  .triad .mech .txt{font-size:.98rem;color:var(--ink-2);line-height:1.55}
-  .triad .meas{background:linear-gradient(180deg,transparent,color-mix(in oklab,var(--good-wash) 55%,transparent))}
-  .triad .meas .readout{font-family:var(--mono);font-size:1rem;color:var(--ink);font-variant-numeric:tabular-nums}
-  .triad .meas .readout b{color:var(--good)}
-
-  /* ---- readout chips ---- */
-  .chip{font-family:var(--mono);font-size:.82em;font-variant-numeric:tabular-nums;
+.art .triad .core{background:var(--surface-2)}
+.art .triad .core .txt{font-size:1.14rem;line-height:1.45;color:var(--ink);font-weight:500}
+.art .triad .mech .txt{font-size:.98rem;color:var(--ink-2);line-height:1.55}
+.art .triad .meas{background:linear-gradient(180deg,transparent,color-mix(in oklab,var(--good-wash) 55%,transparent))}
+.art .triad .meas .readout{font-family:var(--mono);font-size:1rem;color:var(--ink);font-variant-numeric:tabular-nums}
+.art .triad .meas .readout b{color:var(--good)}
+.art .chip{font-family:var(--mono);font-size:.82em;font-variant-numeric:tabular-nums;
     padding:2px 8px;border-radius:6px;border:1px solid var(--line);background:var(--surface-2);white-space:nowrap}
-  .chip.draft{color:var(--draft);border-color:color-mix(in oklab,var(--draft) 40%,var(--line));background:var(--draft-wash)}
-  .chip.verify{color:var(--verify);border-color:color-mix(in oklab,var(--verify) 40%,var(--line));background:var(--verify-wash)}
-  .chip.good{color:var(--good);border-color:color-mix(in oklab,var(--good) 40%,var(--line));background:var(--good-wash)}
-  .chip.bad{color:var(--bad);border-color:color-mix(in oklab,var(--bad) 40%,var(--line));background:var(--bad-wash)}
-
-  .fig{margin:34px 0;padding:26px;background:var(--surface);border:1px solid var(--line);
+.art .chip.draft{color:var(--draft);border-color:color-mix(in oklab,var(--draft) 40%,var(--line));background:var(--draft-wash)}
+.art .chip.verify{color:var(--verify);border-color:color-mix(in oklab,var(--verify) 40%,var(--line));background:var(--verify-wash)}
+.art .chip.good{color:var(--good);border-color:color-mix(in oklab,var(--good) 40%,var(--line));background:var(--good-wash)}
+.art .chip.bad{color:var(--bad);border-color:color-mix(in oklab,var(--bad) 40%,var(--line));background:var(--bad-wash)}
+.art .fig{margin:34px 0;padding:26px;background:var(--surface);border:1px solid var(--line);
     border-radius:14px;box-shadow:var(--shadow)}
-  .fig.wide{max-width:1080px}
-  .scroll{overflow-x:auto}
-
-  /* ---- data table ---- */
-  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
-  th,td{padding:10px 12px;text-align:right;border-bottom:1px solid var(--line);font-family:var(--mono)}
-  th:first-child,td:first-child{text-align:left}
-  thead th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);border-bottom:1.5px solid var(--line)}
-  tbody tr:hover{background:var(--surface-2)}
-  td .tag{font-size:11px;padding:2px 7px;border-radius:5px}
-  .row-star td{background:color-mix(in oklab,var(--good-wash) 40%,transparent)}
-
-  /* ---- verdict pills ---- */
-  .pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;
+.art .fig.wide{max-width:1080px}
+.art .scroll{overflow-x:auto}
+.art table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+.art th,.art td{padding:10px 12px;text-align:right;border-bottom:1px solid var(--line);font-family:var(--mono)}
+.art th:first-child,.art td:first-child{text-align:left}
+.art thead th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);border-bottom:1.5px solid var(--line)}
+.art tbody tr:hover{background:var(--surface-2)}
+.art td .tag{font-size:11px;padding:2px 7px;border-radius:5px}
+.art .row-star td{background:color-mix(in oklab,var(--good-wash) 40%,transparent)}
+.art .pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;
     letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:100px;border:1px solid}
-  .pill.banked{color:var(--good);border-color:var(--good);background:var(--good-wash)}
-  .pill.rej{color:var(--bad);border-color:var(--bad);background:var(--bad-wash)}
-  .pill.unt{color:var(--untested);border-color:var(--untested);background:var(--surface-2)}
-  .pill.open{color:var(--draft);border-color:var(--draft);background:var(--draft-wash)}
-  .pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
-
-  /* ---- ledger cards ---- */
-  .ledger{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:14px;margin-top:26px}
-  .lev{border:1px solid var(--line);border-radius:12px;padding:16px 17px;background:var(--surface);
+.art .pill.banked{color:var(--good);border-color:var(--good);background:var(--good-wash)}
+.art .pill.rej{color:var(--bad);border-color:var(--bad);background:var(--bad-wash)}
+.art .pill.unt{color:var(--untested);border-color:var(--untested);background:var(--surface-2)}
+.art .pill.open{color:var(--draft);border-color:var(--draft);background:var(--draft-wash)}
+.art .pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.art .ledger{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:14px;margin-top:26px}
+.art .lev{border:1px solid var(--line);border-radius:12px;padding:16px 17px;background:var(--surface);
     display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow)}
-  .lev.rej{opacity:.9}
-  .lev h4{margin:0;font-family:var(--mono);font-size:.98rem;font-weight:600;letter-spacing:-.01em}
-  .lev .why{font-size:13.5px;color:var(--ink-2);line-height:1.5;margin:0}
-  .lev .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}
-  .lev .meta .chip{font-size:11px}
-
-  /* ---- wrong/reversal thread ---- */
-  .reversal{border-left:3px solid var(--bad);background:var(--bad-wash);border-radius:0 10px 10px 0;
+.art .lev.rej{opacity:.9}
+.art .lev h4{margin:0;font-family:var(--mono);font-size:.98rem;font-weight:600;letter-spacing:-.01em}
+.art .lev .why{font-size:13.5px;color:var(--ink-2);line-height:1.5;margin:0}
+.art .lev .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}
+.art .lev .meta .chip{font-size:11px}
+.art .reversal{border-left:3px solid var(--bad);background:var(--bad-wash);border-radius:0 10px 10px 0;
     padding:14px 18px;margin:16px 0;font-size:.97rem}
-  .reversal .claim{font-family:var(--mono);color:var(--bad);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
-  .reversal .fix{color:var(--ink)}
-  .reversal .fix b{color:var(--good)}
-
-  /* ---- plain-language primer ---- */
-  .primer{border:1px solid var(--line);border-left:3px solid var(--verify);background:var(--surface-2);
+.art .reversal .claim{font-family:var(--mono);color:var(--bad);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
+.art .reversal .fix{color:var(--ink)}
+.art .reversal .fix b{color:var(--good)}
+.art .primer{border:1px solid var(--line);border-left:3px solid var(--verify);background:var(--surface-2);
     border-radius:0 12px 12px 0;padding:16px 20px 18px;margin:24px 0}
-  .primer .ptag{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+.art .primer .ptag{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;
     color:var(--verify);margin-bottom:9px;display:flex;align-items:center;gap:8px}
-  .primer .ptag::before{content:"?";display:inline-flex;align-items:center;justify-content:center;
+.art .primer .ptag::before{content:"?";display:inline-flex;align-items:center;justify-content:center;
     width:16px;height:16px;border-radius:50%;border:1px solid var(--verify);font-size:10px;font-weight:600}
-  .primer p{font-size:.98rem;color:var(--ink-2);line-height:1.58;margin:0 0 .7em}
-  .primer p:last-child{margin-bottom:0}
-  .primer b,.primer strong{color:var(--ink);font-weight:600}
-  .primer dl{margin:.2em 0 0;display:grid;grid-template-columns:auto 1fr;gap:8px 16px}
-  .primer dt{font-family:var(--mono);color:var(--ink);font-size:.88rem;font-weight:600;white-space:nowrap}
-  .primer dd{margin:0;font-size:.95rem;color:var(--ink-2);line-height:1.5}
-  @media (max-width:520px){.primer dl{grid-template-columns:1fr;gap:2px 0}.primer dd{margin:0 0 .5em}}
+.art .primer p{font-size:.98rem;color:var(--ink-2);line-height:1.58;margin:0 0 .7em}
+.art .primer p:last-child{margin-bottom:0}
+.art .primer b,.art .primer strong{color:var(--ink);font-weight:600}
+.art .primer dl{margin:.2em 0 0;display:grid;grid-template-columns:auto 1fr;gap:8px 16px}
+.art .primer dt{font-family:var(--mono);color:var(--ink);font-size:.88rem;font-weight:600;white-space:nowrap}
+.art .primer dd{margin:0;font-size:.95rem;color:var(--ink-2);line-height:1.5}
+@media (max-width:520px){.art .primer dl{grid-template-columns:1fr;gap:2px 0}
+.art .primer dd{margin:0 0 .5em}}
+.art .legend{display:flex;flex-wrap:wrap;gap:16px;font-family:var(--mono);font-size:12px;color:var(--ink-2);margin-top:14px}
+.art .legend span{display:inline-flex;align-items:center;gap:7px}
+.art .swatch{width:13px;height:13px;border-radius:3px;display:inline-block}
+.art .refs{display:grid;gap:2px;font-size:14px}
+.art .ref{display:grid;grid-template-columns:118px 1fr;gap:16px;padding:12px 0;border-bottom:1px solid var(--line)}
+.art .ref .id{font-family:var(--mono);color:var(--verify);font-size:13px}
+.art .ref .what{color:var(--ink-2)}
+.art .ref .what b{color:var(--ink);font-weight:600}
+.art footer{padding:48px 0 80px;color:var(--ink-3);font-size:13px;font-family:var(--mono)}
+.art .s-draft{fill:var(--draft)}
+.art .st-draft{stroke:var(--draft)}
+.art .s-verify{fill:var(--verify)}
+.art .st-verify{stroke:var(--verify)}
+.art .s-good{fill:var(--good)}
+.art .s-bad{fill:var(--bad)}
+.art .s-unt{fill:var(--untested)}
+.art .s-ink{fill:var(--ink)}
+.art .st-ink{stroke:var(--ink)}
+.art .s-line{stroke:var(--line)}
+.art .s-surf{fill:var(--surface-2)}
+.art .glyph{font-family:var(--mono);fill:var(--ink)}
+.art .glyph-m{font-family:var(--mono);fill:var(--ink-2)}
+.art .glyph-lab{font-family:var(--mono);fill:var(--ink-3);letter-spacing:.04em}
+@media (max-width:640px){.art{font-size:16px}
+.art header.ahero{padding:56px 0 32px}
+.art section{padding:48px 0}
+.art .fig{padding:16px}
+.art .ref{grid-template-columns:1fr;gap:2px}
+.art .ref .id{font-size:12px}}
+@media (prefers-reduced-motion:reduce){.art *{animation:none!important;transition:none!important}}
+.art{margin:0 auto;background:none;font-size:17px;line-height:1.65;color:var(--ink);font-family:var(--sans)}
+.art .aw{max-width:760px;margin:0;padding:0 40px 0 0}
+.art header.ahero{padding:6px 0 36px}
+.art a{background:none;margin:0;padding:0}
+.art h1,.art h2,.art h3{color:var(--ink)}
+.art section:last-of-type{border-bottom:0}
+.art footer{padding:30px 0 10px;margin:0}
+@media (max-width:760px){.art .aw{padding:0 20px}}
 
-  /* ---- legend ---- */
-  .legend{display:flex;flex-wrap:wrap;gap:16px;font-family:var(--mono);font-size:12px;color:var(--ink-2);margin-top:14px}
-  .legend span{display:inline-flex;align-items:center;gap:7px}
-  .swatch{width:13px;height:13px;border-radius:3px;display:inline-block}
-
-  /* ---- refs ---- */
-  .refs{display:grid;gap:2px;font-size:14px}
-  .ref{display:grid;grid-template-columns:118px 1fr;gap:16px;padding:12px 0;border-bottom:1px solid var(--line)}
-  .ref .id{font-family:var(--mono);color:var(--verify);font-size:13px}
-  .ref .what{color:var(--ink-2)}
-  .ref .what b{color:var(--ink);font-weight:600}
-
-  footer{padding:48px 0 80px;color:var(--ink-3);font-size:13px;font-family:var(--mono)}
-
-  /* svg semantic classes */
-  .s-draft{fill:var(--draft)} .st-draft{stroke:var(--draft)}
-  .s-verify{fill:var(--verify)} .st-verify{stroke:var(--verify)}
-  .s-good{fill:var(--good)} .s-bad{fill:var(--bad)} .s-unt{fill:var(--untested)}
-  .s-ink{fill:var(--ink)} .st-ink{stroke:var(--ink)}
-  .s-line{stroke:var(--line)} .s-surf{fill:var(--surface-2)}
-  .glyph{font-family:var(--mono);fill:var(--ink)}
-  .glyph-m{font-family:var(--mono);fill:var(--ink-2)}
-  .glyph-lab{font-family:var(--mono);fill:var(--ink-3);letter-spacing:.04em}
-
-  @media (max-width:640px){
-    body{font-size:16px}
-    header.hero{padding:56px 0 32px}
-    section{padding:48px 0}
-    .fig{padding:16px}
-    .ref{grid-template-columns:1fr;gap:2px}
-    .ref .id{font-size:12px}
-  }
-  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
-
-<div class="wrap">
+<div class="wrap page art" style="padding-top:6px">
+<div class="aw">
 
 <!-- ================= HERO ================= -->
-<header class="hero">
+<header class="ahero">
   <span class="kicker"><span class="dot"></span>mira-mlx &middot; Qwen3.6-35B-A3B MoE &middot; Apple&nbsp;M5 / 32GB</span>
-  <h1>Chasing <span class="u">80&nbsp;tok/s</span></h1>
   <p class="dek">A field guide to native multi-token prediction on a mixture-of-experts model, and an honest ledger of where the speed is still hiding.</p>
 
   <div class="scoreline" role="group" aria-label="Throughput scoreboard, decode tokens per second">
@@ -324,14 +358,14 @@
 
     <div class="primer">
       <div class="ptag">Start here &middot; what &ldquo;free-M&rdquo; and a cycle actually are</div>
-      <p><b>M</b> is the <b>verify width</b> &mdash; the number of token positions the big model scores in a single forward pass. &ldquo;<b>Free-M</b>&rdquo; is the name for the finding this section proves: going from <span class="mono">M=1</span> to <span class="mono">M=4</span> costs almost nothing extra, because a decode pass is bottlenecked on <em>reading the weights out of memory</em>, not on the arithmetic. Four tokens ride the same weight read, so checking four is nearly as cheap as checking one. That flatness is the entire reason speculative decoding pays.</p>
+      <p><b>M</b> is the <b>verify width</b> , the number of token positions the big model scores in a single forward pass. &ldquo;<b>Free-M</b>&rdquo; is the name for the finding this section proves: going from <span class="mono">M=1</span> to <span class="mono">M=4</span> costs almost nothing extra, because a decode pass is bottlenecked on <em>reading the weights out of memory</em>, not on the arithmetic. Four tokens ride the same weight read, so checking four is nearly as cheap as checking one. That flatness is the entire reason speculative decoding pays.</p>
       <p>A <b>cycle</b> is the repeating unit drawn in section 01. Broken down <b>by step</b> it is three moves:</p>
       <dl>
         <dt>1 &middot; draft</dt><dd>the lightweight MTP head cheaply guesses the next few tokens, each guess feeding the next (<span class="mono">d1&rarr;d2&rarr;d3</span>).</dd>
-        <dt>2 &middot; verify</dt><dd>one backbone forward scores all of them at once &mdash; this is the pass whose width is <span class="mono">M</span>.</dd>
+        <dt>2 &middot; verify</dt><dd>one backbone forward scores all of them at once , this is the pass whose width is <span class="mono">M</span>.</dd>
         <dt>3 &middot; emit</dt><dd>keep the longest run of guesses the backbone agrees with, add its own token as one free correction at the first miss, then start the next cycle.</dd>
       </dl>
-      <p>Broken down <b>by time</b>, that same cycle is a wall-clock budget: the stacked bar at the foot of this section shows one cycle is about <span class="mono">34&nbsp;ms</span>, of which verify is <span class="mono">77%</span>, drafting is <span class="mono">21%</span>, and host bookkeeping is the rest. So &ldquo;step&rdquo; tells you <em>what happens</em>; &ldquo;time&rdquo; tells you <em>where the milliseconds go</em> &mdash; and the winning lever in section 05 attacks that <span class="mono">21%</span> draft slice.</p>
+      <p>Broken down <b>by time</b>, that same cycle is a wall-clock budget: the stacked bar at the foot of this section shows one cycle is about <span class="mono">34&nbsp;ms</span>, of which verify is <span class="mono">77%</span>, drafting is <span class="mono">21%</span>, and host bookkeeping is the rest. So &ldquo;step&rdquo; tells you <em>what happens</em>; &ldquo;time&rdquo; tells you <em>where the milliseconds go</em> , and the winning lever in section 05 attacks that <span class="mono">21%</span> draft slice.</p>
     </div>
   </div>
 
@@ -552,9 +586,9 @@
     <div class="primer">
       <div class="ptag">Reminder &middot; vocabulary, token ids, and the knee</div>
       <dl>
-        <dt>the vocabulary</dt><dd>the fixed list of <span class="mono">248,320</span> tokens (word-pieces) the model can ever output. Every step it produces one score per row and takes the highest &mdash; that pick is the next token. The <b>lm_head</b> is the big matrix that turns a hidden state into those 248,320 scores.</dd>
+        <dt>the vocabulary</dt><dd>the fixed list of <span class="mono">248,320</span> tokens (word-pieces) the model can ever output. Every step it produces one score per row and takes the highest , that pick is the next token. The <b>lm_head</b> is the big matrix that turns a hidden state into those 248,320 scores.</dd>
         <dt>token ids</dt><dd>just the row numbers, <span class="mono">0</span> to <span class="mono">248,319</span>. Qwen3's tokenizer gives <b>low ids</b> to the most common pieces (frequent words, punctuation, code symbols) and <b>high ids</b> to rare ones. So &ldquo;the first <span class="mono">N</span> rows&rdquo; means &ldquo;the <span class="mono">N</span> most common tokens.&rdquo;</dd>
-        <dt>the knee</dt><dd>as you shrink the draft's vocabulary <span class="mono">N</span>, speed climbs while accept rate holds &mdash; up to the point where accept starts to fall. That elbow in the curve is the knee. <span class="chip good">131072</span> sits right on it: half the width, zero accept loss.</dd>
+        <dt>the knee</dt><dd>as you shrink the draft's vocabulary <span class="mono">N</span>, speed climbs while accept rate holds , up to the point where accept starts to fall. That elbow in the curve is the knee. <span class="chip good">131072</span> sits right on it: half the width, zero accept loss.</dd>
         <dt>past the knee</dt><dd>cut further (e.g. <span class="chip bad">32768</span>) and you've trimmed so hard that real next-tokens start landing beyond <span class="mono">N</span>. Accept collapses, the controller starts parking, and you lose more than the narrower projection saved.</dd>
       </dl>
     </div>
@@ -721,7 +755,7 @@
         <text x="445" y="292" text-anchor="middle" class="glyph-lab" font-size="10">width N = 32768</text>
       </svg>
       </div>
-      <figcaption><b>The proof, and its ceiling.</b> At an identical projection width of <span class="mono">16384</span>, the frequency-remapped draft accepts <span class="mono">0.766</span> against the contiguous slice's <span class="mono">0.692</span> &mdash; <span class="mono">+7.4</span> points for the same cost. The mechanism does exactly what it claims. Widening remap to <span class="mono">32768</span> reaches <span class="mono">0.796</span>, still short of full-vocab <span class="mono">0.822</span>.</figcaption>
+      <figcaption><b>The proof, and its ceiling.</b> At an identical projection width of <span class="mono">16384</span>, the frequency-remapped draft accepts <span class="mono">0.766</span> against the contiguous slice's <span class="mono">0.692</span> , <span class="mono">+7.4</span> points for the same cost. The mechanism does exactly what it claims. Widening remap to <span class="mono">32768</span> reaches <span class="mono">0.796</span>, still short of full-vocab <span class="mono">0.822</span>.</figcaption>
     </figure>
   </div>
 
@@ -781,7 +815,7 @@
         <!-- annotations -->
         <g class="glyph" font-size="11" style="fill:var(--bad)">
           <text x="370" y="196">&#10007; 30 linear layers must FORK recurrent state</text>
-          <text x="370" y="216">&nbsp;&nbsp;&nbsp;per branch &mdash; no cheap copy like a KV cache</text>
+          <text x="370" y="216">&nbsp;&nbsp;&nbsp;per branch , no cheap copy like a KV cache</text>
           <text x="370" y="242">&#10007; more distinct tokens &rarr; wider expert union</text>
           <text x="370" y="262">&nbsp;&nbsp;&nbsp;&rarr; MoE verify cost climbs faster than a chain</text>
         </g>
@@ -840,8 +874,8 @@
     <div class="primer">
       <div class="ptag">Two words this section leans on</div>
       <dl>
-        <dt>greedy</dt><dd>the decoding rule where each step always takes the single highest-scoring token &mdash; no sampling, no temperature, no randomness. Same input plus same numerics gives the same choice. These benchmarks all run greedy.</dd>
-        <dt>lossless</dt><dd>the speculative machinery never changes <em>which</em> token greedy would have picked: every emitted token is still <code>argmax(full-vocab&nbsp;verify)</code>, the backbone's own choice. What it does <b>not</b> promise is identical <em>bytes</em> &mdash; see below.</dd>
+        <dt>greedy</dt><dd>the decoding rule where each step always takes the single highest-scoring token , no sampling, no temperature, no randomness. Same input plus same numerics gives the same choice. These benchmarks all run greedy.</dd>
+        <dt>lossless</dt><dd>the speculative machinery never changes <em>which</em> token greedy would have picked: every emitted token is still <code>argmax(full-vocab&nbsp;verify)</code>, the backbone's own choice. What it does <b>not</b> promise is identical <em>bytes</em> , see below.</dd>
       </dl>
       <p>So &ldquo;lossless&rdquo; here means <b>same decision rule, same quality</b>, not <b>same output text</b>. The bytes can still shift because the tie-breaking arithmetic differs by batch width on this hardware.</p>
     </div>
@@ -854,7 +888,7 @@
     <figure>
       <div class="scroll">
       <svg viewBox="0 0 680 210" role="img" aria-label="Two outputs from the same prompt under full vocab and reduced vocab: the text differs in wording but both are correct, illustrating equal-quality non-determinism rather than a regression.">
-        <text x="20" y="24" class="glyph-lab" font-size="11">prompt: derivative of x^3 &middot; ln(x) &mdash; both runs, product rule</text>
+        <text x="20" y="24" class="glyph-lab" font-size="11">prompt: derivative of x^3 &middot; ln(x) , both runs, product rule</text>
         <!-- left -->
         <rect x="20" y="40" width="300" height="130" rx="10" class="st-verify" fill="var(--verify-wash)" style="stroke-width:1.4"/>
         <text x="34" y="62" class="glyph" font-size="11" font-weight="600" style="fill:var(--verify)">FULL VOCAB</text>
@@ -980,7 +1014,7 @@
     </div>
     <div class="lev">
       <h4>Accept via head retrain</h4>
-      <p class="why">Exhausted <em>only on the dense head</em> &mdash; FastMTP and HASS both plateaued there. The MoE head, at <span class="mono">0.83</span> accept, was never retrained, and a weaker head can hold more headroom, not less. The distill harness is already built, so the probe is a training run, not new code. The one lever here with compounding headroom toward 80.</p>
+      <p class="why">Exhausted <em>only on the dense head</em> , FastMTP and HASS both plateaued there. The MoE head, at <span class="mono">0.83</span> accept, was never retrained, and a weaker head can hold more headroom, not less. The distill harness is already built, so the probe is a training run, not new code. The one lever here with compounding headroom toward 80.</p>
       <div class="meta"><span class="pill open">open &middot; MoE head unproven</span><span class="chip good">compounding</span></div>
     </div>
     <div class="lev rej">
@@ -1002,27 +1036,27 @@
 
   <h3 class="spine" style="margin-top:44px">The audit: where the last few t/s hide</h3>
   <div class="spine">
-    <p>Chasing 80 harder, I put the engine and the literature through a twelve-way audit and turned two of the reviewers loose on this very page. The blunt result: the <span class="mono">76.0</span> base is softer than it looks. It is the top of a noisy pass-pair whose low end is <span class="mono">70.7</span>, and every number here was measured at short context while production serves <span class="mono">131072</span>. I later profiled that taper: decode falls from <span class="mono">73</span> t/s at 2k to <span class="mono">25</span> at 32k to <span class="mono">11</span> at 64k as the KV read takes over, so the <span class="mono">76</span> base is a 2k number and the served regime is <b>7&times;+ slower</b> &mdash; &ldquo;80&rdquo; describes a benchmark, not the product. So the honest reading is that 80 is an aspiration, not a delivery &mdash; but the audit turned up more than trims. The first card below is the surprise: the verify batch never coalesces its expert gather because MLX gates the sort at a width the single-stream batch never reaches, and flipping it on is bit-identical and cut ~20% off every MoE forward in a resident A/B that held steady across 32 cold layers &mdash; a one-time jump that the resident full-model A/B then measured at <span class="mono">+4.6%</span> end-to-end: real, lossless, and dead-consistent, but a third of the projection, so it lifts 76 to ~<span class="mono">79.5</span> without clearing 80. The one lever with <em>compounding</em> headroom is still retraining the MoE head, ruled out so far only on the dense one: a faster head lifts accept, which multiplies every cycle after. Both are unrun. Before I am allowed to write &ldquo;exhausted&rdquo;, they have to be.</p>
+    <p>Chasing 80 harder, I put the engine and the literature through a twelve-way audit and turned two of the reviewers loose on this very page. The blunt result: the <span class="mono">76.0</span> base is softer than it looks. It is the top of a noisy pass-pair whose low end is <span class="mono">70.7</span>, and every number here was measured at short context while production serves <span class="mono">131072</span>. I later profiled that taper: decode falls from <span class="mono">73</span> t/s at 2k to <span class="mono">25</span> at 32k to <span class="mono">11</span> at 64k as the KV read takes over, so the <span class="mono">76</span> base is a 2k number and the served regime is <b>7&times;+ slower</b> , &ldquo;80&rdquo; describes a benchmark, not the product. So the honest reading is that 80 is an aspiration, not a delivery , but the audit turned up more than trims. The first card below is the surprise: the verify batch never coalesces its expert gather because MLX gates the sort at a width the single-stream batch never reaches, and flipping it on is bit-identical and cut ~20% off every MoE forward in a resident A/B that held steady across 32 cold layers , a one-time jump that the resident full-model A/B then measured at <span class="mono">+4.6%</span> end-to-end: real, lossless, and dead-consistent, but a third of the projection, so it lifts 76 to ~<span class="mono">79.5</span> without clearing 80. The one lever with <em>compounding</em> headroom is still retraining the MoE head, ruled out so far only on the dense one: a faster head lifts accept, which multiplies every cycle after. Both are unrun. Before I am allowed to write &ldquo;exhausted&rdquo;, they have to be.</p>
   </div>
   <div class="ledger">
     <div class="lev">
       <h4>Bounded penalty context</h4>
-      <p class="why">Every cycle marshals the <em>full</em> token history to replay the repetition penalty, but the penalty only reads the last 64 tokens. A host-only probe measured the waste: <span class="mono">3.3&nbsp;ms/cycle</span> at 64k context, and bounding it to the window is byte-identical. That is ~<span class="mono">10%</span> decode at 64k (2&ndash;5% at 16&ndash;32k), paid only at long context &mdash; exactly the served regime every headline skipped.</p>
+      <p class="why">Every cycle marshals the <em>full</em> token history to replay the repetition penalty, but the penalty only reads the last 64 tokens. A host-only probe measured the waste: <span class="mono">3.3&nbsp;ms/cycle</span> at 64k context, and bounding it to the window is byte-identical. That is ~<span class="mono">10%</span> decode at 64k (2&ndash;5% at 16&ndash;32k), paid only at long context , exactly the served regime every headline skipped.</p>
       <div class="meta"><span class="pill open">measured &middot; promising</span><span class="chip good">~10% @64k</span><span class="chip">lossless</span></div>
     </div>
     <div class="lev">
-      <h4>Expert-gather coalescing &mdash; measured</h4>
-      <p class="why">MLX sorts the MoE expert gather only at <span class="mono">&ge;64</span> routed indices; a single-stream verify batch routes <span class="mono">4&times;8=32</span>, so it runs <em>unsorted</em> and an expert two verified tokens share is read twice. I measured the overlap live: <span class="mono">20.6</span> distinct of 32 (~36% reuse). Forcing the sort on is <b>bit-identical</b> (|&Delta;|&thinsp;=&thinsp;0) and the win <em>scales with reuse</em> &mdash; the coalescing signature. A resident A/B then streamed the verify forward through 8&ndash;32 <em>distinct</em> cold layers (a 14&nbsp;GB working set, cache-defeating) and the speedup held rock-steady at <b>on/off&nbsp;<span class="mono">0.80</span></b> &mdash; ~20% off every MoE forward, not decaying with scale. Those forwards are <span class="mono">55%</span> of the cycle, so it projected to +12% end-to-end. The resident full-model A/B then settled it: 36 paired-interleaved reps with the model fully resident gave <b>+4.6% end-to-end, 76 &rarr; ~79.5</b> &mdash; ON faster in 36/36 pairs, byte-identical output, accept unchanged. Real and free, but a third of the projection: MoE is a smaller share of the cycle than 55% once the whole stack is resident, so this trims rather than clears 80. The fix is a threshold, not a kernel: sort at <span class="mono">&ge;16</span> (catches verify M=2&ndash;7, spares single-token decode), via Mira's own MTP patch.</p>
+      <h4>Expert-gather coalescing , measured</h4>
+      <p class="why">MLX sorts the MoE expert gather only at <span class="mono">&ge;64</span> routed indices; a single-stream verify batch routes <span class="mono">4&times;8=32</span>, so it runs <em>unsorted</em> and an expert two verified tokens share is read twice. I measured the overlap live: <span class="mono">20.6</span> distinct of 32 (~36% reuse). Forcing the sort on is <b>bit-identical</b> (|&Delta;|&thinsp;=&thinsp;0) and the win <em>scales with reuse</em> , the coalescing signature. A resident A/B then streamed the verify forward through 8&ndash;32 <em>distinct</em> cold layers (a 14&nbsp;GB working set, cache-defeating) and the speedup held rock-steady at <b>on/off&nbsp;<span class="mono">0.80</span></b> , ~20% off every MoE forward, not decaying with scale. Those forwards are <span class="mono">55%</span> of the cycle, so it projected to +12% end-to-end. The resident full-model A/B then settled it: 36 paired-interleaved reps with the model fully resident gave <b>+4.6% end-to-end, 76 &rarr; ~79.5</b> , ON faster in 36/36 pairs, byte-identical output, accept unchanged. Real and free, but a third of the projection: MoE is a smaller share of the cycle than 55% once the whole stack is resident, so this trims rather than clears 80. The fix is a threshold, not a kernel: sort at <span class="mono">&ge;16</span> (catches verify M=2&ndash;7, spares single-token decode), via Mira's own MTP patch.</p>
       <div class="meta"><span class="pill open">measured &middot; full-model confirmed</span><span class="chip good">~20% MoE fwd</span><span class="chip good">+4.6% end-to-end</span><span class="chip">lossless</span></div>
     </div>
     <div class="lev">
       <h4>N-gram draft extension</h4>
-      <p class="why">After the head's drafts, scan the context for the current suffix and append the following tokens into the <em>same</em> verify. Free draft tokens, no head forward, and it stays a linear chain, so the GatedDeltaNet recurrence never forks &mdash; the exact blocker that killed the tree. Large on code and edits, ~0 on prose. Untried.</p>
+      <p class="why">After the head's drafts, scan the context for the current suffix and append the following tokens into the <em>same</em> verify. Free draft tokens, no head forward, and it stays a linear chain, so the GatedDeltaNet recurrence never forks , the exact blocker that killed the tree. Large on code and edits, ~0 on prose. Untried.</p>
       <div class="meta"><span class="pill open">open &middot; untried</span><span class="chip good">code-heavy</span></div>
     </div>
     <div class="lev">
-      <h4>Penalty-aware drafts &mdash; redundant</h4>
-      <p class="why">Penalty-aligned drafting was added to lift accept, but the reduced-vocab knee already covers the hot penalized tokens. The A/B settled it: at draft_vocab <span class="mono">131072</span>, rep-penalty 1.15, accept <em>holds</em> with it off (<span class="mono">0.767</span> on / <span class="mono">0.776</span> off), so the per-draft replay is dead overhead &mdash; safe to drop. The t/s it saves sits below the cross-process noise floor, so it is cleanup, not a lever.</p>
+      <h4>Penalty-aware drafts , redundant</h4>
+      <p class="why">Penalty-aligned drafting was added to lift accept, but the reduced-vocab knee already covers the hot penalized tokens. The A/B settled it: at draft_vocab <span class="mono">131072</span>, rep-penalty 1.15, accept <em>holds</em> with it off (<span class="mono">0.767</span> on / <span class="mono">0.776</span> off), so the per-draft replay is dead overhead , safe to drop. The t/s it saves sits below the cross-process noise floor, so it is cleanup, not a lever.</p>
       <div class="meta"><span class="pill open">measured &middot; redundant</span><span class="chip good">accept unchanged</span><span class="chip">safe to drop</span></div>
     </div>
   </div>
@@ -1068,19 +1102,19 @@
     <h2>What each reference decided</h2>
   </div>
   <div class="refs">
-    <div class="ref"><span class="id">2211.17192</span><span class="what"><b>Leviathan et&nbsp;al.</b> &mdash; speculative decoding foundations: draft, verify, accept the matching prefix. The frame for the whole cycle.</span></div>
-    <div class="ref"><span class="id">DeepSeek-V3</span><span class="what"><b>MTP head</b> &mdash; the single-head, linear-chain self-speculative design we implement, rather than a separate draft model.</span></div>
-    <div class="ref"><span class="id">2509.18362</span><span class="what"><b>FastMTP</b> &mdash; self-distilled head fine-tune and draft-vocab compression. We built the fine-tune (it plateaued) and shipped the contiguous-vocab idea (it won); its frequency-remap variant tested real but marginal.</span></div>
-    <div class="ref"><span class="id">2408.15766</span><span class="what"><b>HASS</b> &mdash; carry the head's own hidden forward to fix exposure bias. Built into the multi-step retrain; still hit the ceiling.</span></div>
-    <div class="ref"><span class="id">2406.16858</span><span class="what"><b>EAGLE-2</b> &mdash; dynamic draft trees. The technique we deliberately rejected for this hybrid MoE (section 06).</span></div>
-    <div class="ref"><span class="id">2503.01840</span><span class="what"><b>EAGLE-3</b> &mdash; training-time test and richer trees. Same rejection reasoning: linear state does not fork cheaply.</span></div>
-    <div class="ref"><span class="id">2505.19645</span><span class="what"><b>MoESD</b> &mdash; measured the batch-1 expert-union ratio at 1.25&ndash;1.42&times;. This is the honest ceiling on MoE speculative gains.</span></div>
-    <div class="ref"><span class="id">2608.02989</span><span class="what"><b>AcceptMoE</b> &mdash; verifier expert-set shrink for 1.29&times;. Rejected: risks the losslessness invariant on a resident model.</span></div>
-    <div class="ref"><span class="id">2607.24434</span><span class="what"><b>DraftExpert</b> &mdash; 1.45&times; by hiding expert-offload latency. Not applicable: our experts are resident.</span></div>
-    <div class="ref"><span class="id">2605.00342</span><span class="what"><b>EVICT</b> &mdash; MoE expert eviction on Qwen3-30B-A3B. A memory-pressure tool; this deployment is not expert-memory bound.</span></div>
-    <div class="ref"><span class="id">SpecDec++ / DISCO</span><span class="what"><b>Controller objectives</b> &mdash; adaptive draft-length heuristics our <code>score(d)</code> subsumes as approximations of expected tokens per unit time.</span></div>
-    <div class="ref"><span class="id">llama.cpp #25198</span><span class="what"><b>p_min</b> &mdash; a confidence-gated stop rule, another special case of the same argmax the controller solves directly.</span></div>
-    <div class="ref"><span class="id">mlx#3897 / #3860</span><span class="what"><b>M5 batched attention</b> &mdash; batched-verify numerics differ by width (closed won't-fix). The reason we run <code>MLX_ENABLE_TF32=0</code> and why losslessness is not byte-identity.</span></div>
+    <div class="ref"><span class="id">2211.17192</span><span class="what"><b>Leviathan et&nbsp;al.</b> , speculative decoding foundations: draft, verify, accept the matching prefix. The frame for the whole cycle.</span></div>
+    <div class="ref"><span class="id">DeepSeek-V3</span><span class="what"><b>MTP head</b> , the single-head, linear-chain self-speculative design we implement, rather than a separate draft model.</span></div>
+    <div class="ref"><span class="id">2509.18362</span><span class="what"><b>FastMTP</b> , self-distilled head fine-tune and draft-vocab compression. We built the fine-tune (it plateaued) and shipped the contiguous-vocab idea (it won); its frequency-remap variant tested real but marginal.</span></div>
+    <div class="ref"><span class="id">2408.15766</span><span class="what"><b>HASS</b> , carry the head's own hidden forward to fix exposure bias. Built into the multi-step retrain; still hit the ceiling.</span></div>
+    <div class="ref"><span class="id">2406.16858</span><span class="what"><b>EAGLE-2</b> , dynamic draft trees. The technique we deliberately rejected for this hybrid MoE (section 06).</span></div>
+    <div class="ref"><span class="id">2503.01840</span><span class="what"><b>EAGLE-3</b> , training-time test and richer trees. Same rejection reasoning: linear state does not fork cheaply.</span></div>
+    <div class="ref"><span class="id">2505.19645</span><span class="what"><b>MoESD</b> , measured the batch-1 expert-union ratio at 1.25&ndash;1.42&times;. This is the honest ceiling on MoE speculative gains.</span></div>
+    <div class="ref"><span class="id">2608.02989</span><span class="what"><b>AcceptMoE</b> , verifier expert-set shrink for 1.29&times;. Rejected: risks the losslessness invariant on a resident model.</span></div>
+    <div class="ref"><span class="id">2607.24434</span><span class="what"><b>DraftExpert</b> , 1.45&times; by hiding expert-offload latency. Not applicable: our experts are resident.</span></div>
+    <div class="ref"><span class="id">2605.00342</span><span class="what"><b>EVICT</b> , MoE expert eviction on Qwen3-30B-A3B. A memory-pressure tool; this deployment is not expert-memory bound.</span></div>
+    <div class="ref"><span class="id">SpecDec++ / DISCO</span><span class="what"><b>Controller objectives</b> , adaptive draft-length heuristics our <code>score(d)</code> subsumes as approximations of expected tokens per unit time.</span></div>
+    <div class="ref"><span class="id">llama.cpp #25198</span><span class="what"><b>p_min</b> , a confidence-gated stop rule, another special case of the same argmax the controller solves directly.</span></div>
+    <div class="ref"><span class="id">mlx#3897 / #3860</span><span class="what"><b>M5 batched attention</b> , batched-verify numerics differ by width (closed won't-fix). The reason we run <code>MLX_ENABLE_TF32=0</code> and why losslessness is not byte-identity.</span></div>
   </div>
 </section>
 
@@ -1089,3 +1123,8 @@
 </footer>
 
 </div>
+</div>
+
+<div class="wrap"><div class="foot mono" style="margin-top:50px"><span><a href="/mira/privacy/">Privacy</a> · <a href="/mira/support/">Support</a> · <a href="https://github.com/mabaeyens">GitHub</a></span></div></div>
+</body>
+</html>

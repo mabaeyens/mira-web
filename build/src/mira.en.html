@@ -1,0 +1,36 @@
+{{sky_defs}}
+<div class="pband">
+{{sky_inner}}
+  <div class="wrap pbw"><div class="eyebrow">Mira · In beta · Mac, iPhone, iPad</div><h1 class="ph1">A real assistant. All on your own devices.</h1></div>
+</div>
+<div class="wrap page" style="padding-top:44px">
+  <div class="mhero">
+    <div>
+      <p>Mira is a finished app for Mac, iPhone and iPad. The Mac runs the models, and your iPhone and iPad connect to it over your own private network, so nothing goes through anyone else's servers.</p>
+      <p>Install the Mac app, scan one QR code with your phone, and there's nothing else to wire up. The others are servers you bolt onto your tools. This one you just open.</p>
+    </div>
+    <div class="cta"><a class="btn" href="https://testflight.apple.com/join/Q2gC5amE">Join the beta</a><a class="lnk" href="https://github.com/mabaeyens/mira-menubar/releases/latest">Download for Mac</a><a class="lnk" href="https://github.com/mabaeyens/mira-core">View source</a></div>
+  </div>
+  <div class="devs">
+    <div class="shot2 win" style="width:calc(var(--px)*30)"><img src="/assets/macos_stoicism.png" alt="Mira on a Mac"></div>
+    <div class="shot2" style="width:calc(var(--px)*7.1)"><img src="/assets/shots/mira/iphone-05-lisbon.webp" alt="Mira on an iPhone"></div>
+    <div class="shot2" style="width:calc(var(--px)*7.1)"><img src="/assets/shots/mira/iphone-06-code.webp" alt="Mira on an iPhone"></div>
+  </div>
+  <div class="sec"><h2><span class="mk">What you can do</span></h2><div><div class="cap"><h3>Chat with your codebase</h3><p>Open a project folder and ask questions about structure, logic, or specific files.</p></div><div class="cap"><h3>Summarize any document</h3><p>Drop in a PDF, an article, a note. Mira reads it locally and nothing leaves the device.</p></div><div class="cap"><h3>Switch models on the fly</h3><p>Qwen3.6, Gemma4, Llama, and more, sized to fit any Apple Silicon Mac.</p></div><div class="cap"><h3>Search the web with context</h3><p>Grounded answers when a question needs current information.</p></div><div class="cap"><h3>Pick up on your iPhone</h3><p>Your conversations live on your Mac and show up on every device you pair. Your phone keeps the list in your own iCloud, so you can see your titles when the Mac is asleep. Opening one needs the Mac.</p></div><div class="cap"><h3>Run without internet</h3><p>Full inference offline, zero API keys, no metered costs.</p></div></div></div>
+  <div class="sec"><h2><span class="mk">Every screen</span></h2><div><div class="strip2">
+    <div class="shot2" style="width:150px"><img src="/assets/ios_haiku.PNG" alt=""></div>
+    <div class="shot2" style="width:150px"><img src="/assets/ios_python.PNG" alt=""></div>
+    <div class="shot2" style="width:150px"><img src="/assets/ios_cherry.PNG" alt=""></div>
+    <div class="shot2" style="width:150px"><img src="/assets/ios_sleep.PNG" alt=""></div></div>
+    <div class="strip2"><div class="shot2" style="width:330px"><img src="/assets/ipados_dinner.PNG" alt=""></div><div class="shot2" style="width:330px"><img src="/assets/ipados_translation.PNG" alt=""></div></div></div></div>
+  <div class="sec"><h2><span class="mk">Local AI is a memory game</span></h2><div>
+    <p style="max-width:32em;color:#3d4150;margin-bottom:18px">The bigger the model, the more RAM it eats. So forget leaderboards. Here is what fits on your Mac, and how it feels to use.</p>
+    <div class="brow"><span>16 GB · up to 8B</span><div class="trk"><i style="width:24%"></i></div><em>snappy</em></div><div class="brow"><span>24 GB · up to 14B</span><div class="trk"><i style="width:44%"></i></div><em>comfortable</em></div><div class="brow win"><span>32 GB · 35B (4-bit)</span><div class="trk"><i style="width:70%"></i></div><em>~58 tok/s</em></div><div class="brow"><span>64 GB+ · 70B</span><div class="trk"><i style="width:100%"></i></div><em>slower, still fine</em></div>
+    <p class="foot2">Measured, not marketed: 35B at 4-bit on an M5 MacBook Pro, 32 GB, June 2026. <a class="lnk" href="https://github.com/mabaeyens/mira-core/blob/main/docs/bench-results-2026-06-13.md">Full numbers</a></p></div></div>
+  <div class="sec"><h2><span class="mk">Under the hood</span></h2><div><div class="cap"><h3>Local inference</h3><p>Powered by Apple Silicon. Run Qwen3.6, Gemma4, Llama and other open models fully offline. Works on any M-series Mac with 16 GB or more.</p></div><div class="cap"><h3>No cloud</h3><p>Your conversations stay on your own devices. The phone talks to your Mac directly, keeps your conversation list in your personal iCloud and its pairing token in your iCloud Keychain. There are no Mira servers. The only third parties are ones you already use: your iCloud, Tailscale for the connection, and the search engines your Mac asks when Mira looks something up.</p></div><div class="cap"><h3>macOS, iOS and iPadOS</h3><p>Native SwiftUI apps sharing one backend. The Mac runs the model and a menu-bar app keeps it running. Your iPhone and iPad connect to it over your own Tailscale network, paired with a QR code.</p><a class="lnk" href="https://github.com/mabaeyens/mira-apps">mira-apps on GitHub</a></div><div class="cap"><h3>Open source</h3><p>The inference backend, mira-core, is MIT licensed. Inspect it, modify it, self-host it. You can read exactly what runs on your machine.</p><a class="lnk" href="https://github.com/mabaeyens/mira-core">mira-core on GitHub</a></div></div></div>
+  <div class="sec"><h2><span class="mk">Learning by building</span></h2><div class="prose2">
+    <p>It started with a let-down. I downloaded a small model, ran it locally, and asked it to rate my Mac for running AI. It had nothing. Its training stopped in April 2024. So on its own the model was close to useless, and I could see how much I still didn't know. I opened Claude Code and asked, more or less: what do I do with this?</p>
+    <p>The answer was tools. My first web search worked and then immediately didn't: it kept handing me link names and privacy policies instead of the actual pages. Another letdown. So I asked for a fetch function to go read them, and that one stuck. Suddenly I could ask almost anything, all on my own hardware, and I felt two things at once: how little I still knew, and how good it was to take one more step anyway.</p>
+    <blockquote>AI is here, and it's useful. But you still need to know what it's good for. It won't replace your judgment. Do your own research.</blockquote>
+    <p class="foot2">Tried it? <a class="lnk" href="https://github.com/mabaeyens/mira-core/discussions">Tell me how it went</a>.</p></div></div>
+</div>

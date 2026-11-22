@@ -1,0 +1,187 @@
+{{sky_defs}}
+<div class="pband">
+{{sky_inner}}
+  <div class="wrap pbw"><div class="eyebrow">Aura · Privacy</div><h1 class="ph1">Privacy policy</h1></div>
+</div>
+<div class="wrap page" style="padding-top:34px"><div class="prose3">
+
+    
+    
+      
+        
+          
+          
+        
+
+        
+          <p class="updated">
+            Last updated: 26 August 2026
+            
+          </p>
+
+          <p class="lead">
+            Aura is a personal weather app for Spain. This policy is short because Aura collects almost
+            nothing, and none of it reaches me.
+          </p>
+          
+
+          
+          
+            <ul>
+              <li>No account. No sign-up. No tracking. No analytics. No ads.</li>
+              <li>No servers of mine. Aura talks only to Spain's official public data services for the
+                weather, and to public open-data sources<sup><a href="#svc-cams">*</a></sup>. It never
+                phones home to me, because there is no “Aura cloud”.</li>
+              <li>Your location is matched to your municipality entirely on your device. Only that
+                municipality's public code (never your actual position) is sent to the official services to
+                fetch its forecast. It is never linked to your identity, because there is no identity: Aura
+                has no accounts.</li>
+              <li>It's open source, so you can check every word of this for yourself:
+                <a href="https://github.com/mabaeyens/aura-apps">aura-apps</a>
+                (iPhone, iPad, Apple&nbsp;Watch) and
+                <a href="https://github.com/mabaeyens/aura-android">aura-android</a>.</li>
+            </ul>
+            
+          
+
+          
+          <h3>What data Aura collects</h3>
+          <p>
+            None that comes to me. Aura has no backend of mine, no analytics SDK, and no advertising. I
+            don't receive, store, or sell any of your data. I couldn't if I wanted to.
+          </p>
+          
+
+          
+          <h3>Your location</h3>
+          <p>
+            If you grant location access (“While Using the App”), Aura takes a rough, kilometre-level fix
+            and, on your device, matches it to the nearest Spanish municipality from a list bundled in the
+            app, the same list you can pick from by hand. Only public identifiers then leave your device:
+            that municipality's official code (its INE code) is sent to AEMET, the code of the nearest
+            air-quality station to MITECO, and that municipality's centroid coordinates to Open-Meteo for
+            the hourly UV index, to fetch the forecast, the air reading, and the UV. Your actual
+            coordinates never leave your device, the request carries no name, account, or device identifier
+            that ties it to you, and Aura keeps no history of where you've been.
+          </p>
+          <p>
+            You can decline location access and Aura still works; you just choose the place yourself.
+          </p>
+          
+          
+
+          
+          <h3>The services Aura talks to</h3>
+          <ul>
+            <li><strong>AEMET OpenData</strong>, the Spanish State Meteorological Agency (Agencia Estatal de
+              Meteorología), for forecasts, warnings, and UV.
+              <a href="https://opendata.aemet.es">opendata.aemet.es</a></li>
+            <li><strong>MITECO</strong>, the Ministry for the Ecological Transition, for air-quality (ICA)
+              readings. <a href="https://www.miteco.gob.es">miteco.gob.es</a></li>
+            <li id="svc-cams"><strong>Open-Meteo</strong>, an open European weather API that serves the
+              EU's Copernicus Atmosphere Monitoring Service (CAMS) data, for the hourly UV-index forecast.
+              Only the selected municipality's centroid coordinates are sent, never your device's actual
+              position, and the request carries no key, account, or identifier.
+              <a href="https://open-meteo.com">open-meteo.com</a></li>
+          </ul>
+          
+          <p>
+            Your use of the data those agencies provide is governed by their own terms. Aura sends them
+            only what's needed to answer “what's the weather where I am” and reads the answer back.
+          </p>
+          
+
+          
+          <h3>What actually leaves your device</h3>
+          <p>
+            Because the match happens on your device, each outbound request carries only an identifier or a
+            town centroid, never your GPS position. Here is the exact user data each one sends, with Madrid
+            as the example:
+          </p>
+          
+<pre><code>// AEMET, a municipality ID, not a zip code: the ID AEMET keys its forecasts by.
+28079
+
+// MITECO, the nearest air-quality station's ID (plus the day). No coordinates.
+28079004#…
+
+// CAMS / Copernicus (via Open-Meteo), a point near you, not your real position.
+latitude=XX&amp;longitude=YY</code></pre>
+
+
+          
+          <h3>Google Play Data safety</h3>
+          <p>
+            On Android, Google Play shows a Data safety section for every app, and Aura's is as small as
+            it can honestly be. Aura declares that it collects one thing, your approximate location, the
+            municipality, and only to fetch the forecast. That location is processed <em>ephemerally</em>:
+            it is used in memory to answer the request and never stored by me, because there is no server
+            to store it on. It is <em>not shared</em>: sending the place you picked to a weather service is
+            a user-initiated action you'd expect. All of it travels over an encrypted (HTTPS) connection.
+            Nothing else, no personal info, no identifiers, no analytics, no ads, is collected or shared,
+            because none of it exists in the app. The same is true of the App Store's privacy label on iOS.
+          </p>
+          
+
+          
+          <h3>Tips and purchases</h3>
+          <p>
+            Aura has an optional tip jar, and nothing is locked behind it, the app is identical whether or
+            not you ever tip. Payments go through each platform's own billing (Apple's In-App Purchases on
+            iOS, Google Play Billing on Android), which collects the payment details directly from you under
+            that platform's terms. Aura never sees your card or bank details, and it keeps no purchase
+            history off your device. No financial information reaches me.
+          </p>
+          
+
+          
+          <h3>Your data and your GDPR rights</h3>
+          <p>
+            Under the GDPR you have the right to access or delete the personal data an app holds about you.
+            With Aura there is almost nothing to act on, by design: I run no server and keep no copy of
+            anyone's data. An access request returns nothing I hold. To delete everything Aura stores,
+            uninstall the app or clear its storage, that removes the only copy, which lives entirely on
+            your device. If you want to ask anything about this, the contact below is the place, and I'm the
+            only person who reads it.
+          </p>
+          
+
+          
+          <h3>Data that stays on your device</h3>
+          <p>
+            Cached forecasts, your chosen background theme, and last-used settings live on your device. On
+            iPhone and iPad, if iCloud is available they may sync across your own devices under your Apple
+            ID, and nowhere else. On Android they stay on the phone. Either way, never to me.
+          </p>
+          
+
+          
+          <h3>Children's privacy</h3>
+          <p>
+            Aura is a general-audience weather app. It does not knowingly collect any data from anyone,
+            children included.
+          </p>
+          
+
+          
+          <h3>Changes</h3>
+          <p>
+            If this policy ever changes, the update lands here with a new date at the top.
+          </p>
+          
+
+          
+          <h3>Contact</h3>
+          <p>
+            Questions about privacy? Email me at
+            <a href="mailto:dears-respect.8u@icloud.com">dears-respect.8u@icloud.com</a> or open an issue at
+            <a href="https://github.com/mabaeyens/aura-apps/issues">github.com/mabaeyens/aura-apps/issues</a>.
+            You can also visit the <a href="{{url:aura-support}}">support page</a>.
+          </p>
+          
+        
+      
+    
+
+  </div>
+</div>

@@ -1,0 +1,85 @@
+{{sky_defs}}
+<div class="pband">
+{{sky_inner}}
+  <div class="wrap pbw"><div class="eyebrow">Mira · Legal</div><h1 class="ph1">Política de privacidad</h1></div>
+</div>
+<div class="wrap page" style="padding-top:34px"><div class="prose3">
+      <p class="updated">Última actualización: 2026-11-22</p>
+
+      <p class="lead">
+        Mira está hecha pensando primero en la privacidad, y esta política es breve porque hay poco que decir.
+        El modelo corre en tu propio Mac. Las apps de iPhone y iPad son ventanas hacia él, y lo que le dices a Mira se queda entre tus propios dispositivos.
+      </p>
+
+      <section>
+        <h2>Lo esencial</h2>
+        <ul>
+          <li><strong>Sin cuenta. Sin registro. Sin seguimiento. Sin analíticas. Sin anuncios.</strong></li>
+          <li><strong>Sin servidores míos.</strong> Mira no tiene backend propio. No existe ninguna «nube de Mira» por la que pasen tus conversaciones.</li>
+          <li><strong>La IA corre en tu Mac.</strong> La app del Mac y la app de barra de menús cargan y ejecutan el modelo en local. Las apps de iPhone y iPad no ejecutan ningún modelo: se conectan a tu propio Mac y muestran lo que responde. Tus preguntas y sus respuestas se producen en tu Mac.</li>
+          <li><strong>Código abierto.</strong> El motor es público, así que puedes comprobar cada palabra de esto:
+            <a href="https://github.com/mabaeyens/mira-core">github.com/mabaeyens/mira-core</a>.
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Qué datos recopila Mira</h2>
+        <p>Ninguno. Mira no recopila, transmite ni vende datos personales. No hay SDK de analíticas ni un servidor mío al que enviar nada.</p>
+      </section>
+
+      <section>
+        <h2>Datos que se quedan en tus dispositivos</h2>
+        <ul>
+          <li>Tus conversaciones con Mira y los documentos que le das a leer. Viven en tu Mac.</li>
+          <li>El modelo que has descargado y tus ajustes (qué modelo, preferencias, etcétera).</li>
+          <li>En un iPhone o iPad, una lista de tus conversaciones (títulos y fechas, no los mensajes), una copia temporal de las conversaciones que has abierto para que aparezcan rápido (se queda en ese dispositivo, no se sincroniza y el sistema puede borrarla) y la conexión que guardaste: el nombre y la dirección de tu Mac. El token de emparejamiento que demuestra que el teléfono puede hablar con tu Mac se guarda en el Llavero del dispositivo.</li>
+        </ul>
+        <p>La lista de conversaciones, el nombre y la dirección de la conexión guardada y tus preferencias se sincronizan entre tus dispositivos únicamente a través de <strong>tu propio</strong> iCloud, bajo tu Apple ID, nunca conmigo. El token de emparejamiento viaja entre tus dispositivos solo a través del Llavero de iCloud, que tiene cifrado de extremo a extremo, así que ni yo ni Apple podemos leerlo; con el Llavero de iCloud desactivado, el token se queda en ese dispositivo y el otro necesita emparejarse de nuevo. Los mensajes en sí no se guardan en iCloud. Cualquiera que pueda iniciar sesión con ese Apple ID puede leer la lista, como con cualquier dato de iCloud, así que protégelo con una contraseña segura y verificación en dos pasos. En un Mac, Mira Desktop guarda su token solo en el Llavero de ese Mac. Puedes desconectar un dispositivo en cualquier momento creando un nuevo token de emparejamiento en tu Mac, lo que deja sin acceso a todos los dispositivos emparejados antes.</p>
+      </section>
+
+      <section>
+        <h2>Cómo hablan entre sí tus dispositivos</h2>
+        <p>Las apps de iPhone y iPad llegan a tu Mac por HTTPS, a través de tu propia red <a href="https://tailscale.com">Tailscale</a>, o por tu red local. Cada petición lleva el token de emparejamiento que generó tu Mac, y el tráfico va de dispositivo a dispositivo, nunca por un servidor mío. Tailscale es un servicio aparte con su propia política de privacidad. Mira le pide a Tailscale un certificado HTTPS para el nombre de tu Mac; ese intercambio es entre tu Mac y Tailscale.</p>
+      </section>
+
+      <section>
+        <h2>Para qué piden permiso las apps</h2>
+        <ul>
+          <li><strong>Cámara.</strong> Para escanear el código QR que empareja tu teléfono con tu Mac. La imagen no se guarda ni se envía a ningún sitio.</li>
+          <li><strong>Micrófono y reconocimiento de voz.</strong> Solo si dictas un mensaje. El dictado usa el reconocimiento de voz de Apple, en tu dispositivo cuando tu idioma lo admite; si no, Apple puede procesar el audio, bajo sus condiciones. Yo nunca recibo el audio.</li>
+          <li><strong>Fotos.</strong> Solo para las imágenes que eliges adjuntar. Van a tu Mac, no a mí.</li>
+          <li><strong>Red local.</strong> Para encontrar tu Mac cuando está en la misma red.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>La única otra actividad de red</h2>
+        <p>Mira no hace llamadas de red por su cuenta, con estas excepciones sinceras. Cada una va directamente al servicio indicado, nunca por un servidor mío:</p>
+        <ol>
+          <li><strong>Descargar un modelo.</strong> La primera vez que usas un modelo que aún no está en tu Mac, Mira lo descarga de su servidor (por ejemplo, Hugging Face). La descarga va a ese servidor. Una vez en tu Mac, ejecutarlo no necesita red en absoluto.</li>
+          <li><strong>Buscar o leer en la web.</strong> Cuando una pregunta necesita información actual, o le pides a Mira que lea un enlace, Mira puede decidir buscar en la web o descargar una página. Tu Mac la pide entonces directamente al buscador o al sitio (por ejemplo, DuckDuckGo o Brave), y las palabras de esa búsqueda van a ese proveedor. Una conversación que no necesita nada actual no hace esas llamadas.</li>
+          <li><strong>Actualizaciones.</strong> La app de barra de menús consulta en GitHub si hay una versión nueva y la descarga de allí. GitHub ve la petición, como en cualquier descarga.</li>
+          <li><strong>Documentos que añades.</strong> Los archivos que le indicas a Mira se leen e indexan en tu Mac. Su contenido no se sube a ningún sitio.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Privacidad de los menores</h2>
+        <p>Mira no recopila datos de nadie, tampoco de menores.</p>
+      </section>
+
+      <section>
+        <h2>Cambios</h2>
+        <p>Si esta política cambia alguna vez, la actualización llegará aquí y al repositorio público, y ambos se mantendrán sincronizados.</p>
+      </section>
+
+      <section>
+        <h2>Contacto</h2>
+        <p>¿Dudas o inquietudes? La forma más rápida de contactar conmigo es la <a href="{{url:mira-support}}">página de soporte</a>. También puedes abrir una discusión en
+          <a href="https://github.com/mabaeyens/mira-core/discussions">github.com/mabaeyens/mira-core</a>.
+        </p>
+      </section>
+    
+  </div>
+</div>
