@@ -1,10 +1,11 @@
 # Backlog
 
 ## Pending
-- **LinkedIn export:** when Shares.csv arrives, diff every post page against the LinkedIn text and fix last-minute edits (post 01 is a draft, 11 is not vFINAL).
+- **Chasing 80 sources:** `llama.cpp #25198` returns 404 on GitHub (check the number); DISCO has no verified citation (shares the SpecDec++ entry). Citations name only the first author plus et al.
+- **Spanish articles, open wording:** "verificar/modelo objetivo" vs "adivinar/comprobar" in Mac pequeño, "vara de medir" vs "referencia", and two numerically odd phrases left untouched ("un quinto más rápido" for 60 to 70 tok/s; "se reducen a la mitad" vs about a tenth of the weights). Ask a Spanish-speaking ML reader to sanity-check the terminology.
+- **Other repos:** check which have docs worth presenting on the site.
 - **Cleanup needing approval:** delete the unused legacy images (`assets/ios_*.PNG`, `ipados_*.PNG`, `macos_*.png`) and the old `style.css` files once aura/cpp stops depending on them.
 - **Mira shots label:** the site shows "Qwen3.6-35B-A3B" while the shipped app says "Sample model"; recheck after the next Mira release.
-- **Home page, Vera tile:** still shows a code snippet where a screenshot could go.
 - **Spanish pages:** not visually checked for the new screenshot sections; /humanize pass and a review of the Spanish legal translations are still open.
 
 - **Pebble page: eyeball it in a browser once deployed.** The Sky and Cityscape rails and the 1:1 screenshot sizing (200px wide, so a narrow phone shows one shot at a time) were never viewed rendered. The 720x320 Sky, Cityscape and LCD listing banners are unused; add a hero or card slot only if wanted.
@@ -16,6 +17,8 @@
 - **Restore TestFlight buttons** (nav, hero CTA, credits) once Apple external review approves the URL; consider a waitlist CTA (Buttondown, GDPR-friendly) as a pre-launch alternative.
 
 ## Done (one-liners; full detail in git history)
+- [2026-11-23] Articles: Spanish pass with proper technical terms (borrador, verificación, tasa de aceptación), chart labels wrapped and verified in both languages, green-box overflow fixed on iPhone, tap-to-zoom hint and pannable overlay on every article chart, source links in the text jump to full citations at the bottom, subheader carries full date, original language and AI-translation note.
+- [2026-11-23] Every link highlights on hover (logo, back link, CV, article links, buttons). Posts translated to English with LinkedIn dates, post 18 and the Anthropic extension post added. Asset URLs carry a content hash (`?v=`) so phones never keep stale CSS/JS.
 - [2026-11-23] Screenshots: Mira and Vera light/dark pairs (Mac, iPad, iPhone) switch with the site theme; every screenshot opens in a click/tap zoom (`assets/zoom.js`). Converters in `build/mira_shots.py` and `build/vera_shots.py`.
 - [2026-11-23] Vera links the App Store listing (not TestFlight) on the site and in `mabaeyens`; Mira beta link updated to `crTWN4kN`.
 - [2026-11-22] Dark mode (system preference plus nav toggle) with a redrawn night sky; sky filter clipping fixed; post images float at the right edge on narrow screens (38vw).
@@ -43,6 +46,7 @@
 
 ## Notes
 
+- Charts: headless Chrome with desktop fonts cannot see iPhone's wider mono font; shorten labels with margin and check the live site in the iOS simulator (`xcrun simctl openurl`). `build/build.py` `PUBDATE`/`ORIGINAL` drive the article subheader; `build/src` stays the source of truth.
 - Pebble lives on `/aura/pebble`, not on `/aura`: new Pebble items get a section there (copy, buttons, rail), and `/aura` only carries the teaser card and one footer link. The screenshots stay in `aura/assets/shots/pebble/`. Aura LCD's copy deliberately never names Casio ("80s-inspired LCD", "classic digital watch"); the store listing in aura-pebble still does.
 - Design direction: the whole site (since 2026-09-05) is the "night bento" look, serif display over a cool near-black with a light sibling, tiles that show the apps, honest copy. The homepage has it in `home.css`; every other page gets it from the shared `style.css`. The old "field manual" system (warm charcoal, grain, Lora + Inter) is gone.
 - Hero demo content is pulled verbatim (trimmed) from real non-sensitive conversations in `~/.local/share/mira/conversations.db` (black holes, Madrid weather, Apple Silicon brief, palindrome). Only the RAG source-chip scores/snippets are representative; prompts/thinking/answers are real.

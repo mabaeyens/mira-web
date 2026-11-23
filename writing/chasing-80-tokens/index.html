@@ -21,8 +21,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/inner.css">
-<link rel="stylesheet" href="/assets/dark.css">
+<link rel="stylesheet" href="/assets/inner.css?v=ef13298b">
+<link rel="stylesheet" href="/assets/dark.css?v=1c15e1fb">
 </head>
 <body>
 <div class="bar solid"><div class="wrap">
@@ -247,6 +247,9 @@
 .art .ref{display:grid;grid-template-columns:118px 1fr;gap:16px;padding:12px 0;border-bottom:1px solid var(--line)}
 .art .ref .id{font-family:var(--mono);color:var(--verify);font-size:13px}
 .art .ref .what{color:var(--ink-2)}
+.art .ref:target{background:rgba(228,117,106,.16)}
+.art .ref .full{display:block;margin-top:6px;font-size:12.5px;color:var(--ink-3)}
+.art .ref{scroll-margin-top:80px}
 .art .ref .what b{color:var(--ink);font-weight:600}
 .art footer{padding:48px 0 80px;color:var(--ink-3);font-size:13px;font-family:var(--mono)}
 .art .s-draft{fill:var(--draft)}
@@ -305,7 +308,7 @@
   </div>
   <div class="spine">
     <p class="lead">Speculative decoding buys speed by guessing several tokens cheaply, then checking them all in a single expensive pass. The trick only works because on this hardware, checking four tokens costs almost exactly what checking one does.</p>
-    <p>The classic setup (Leviathan et al., <span class="mono">2211.17192</span>) uses a small draft model beside a big one. <b>Self-speculative</b> decoding drops the second model: a lightweight <b>MTP head</b> bolted onto the backbone does the drafting, in the DeepSeek-V3 style. The head predicts token <span class="mono">t+1</span> from the backbone's own hidden state, then chains: each draft feeds the next.</p>
+    <p>The classic setup (Leviathan et al., <span class="mono">2211.17192</span>) uses a small draft model beside a big one. <b>Self-speculative</b> decoding drops the second model: a lightweight <b>MTP head</b> bolted onto the backbone does the drafting, in the <a class="cite" href="#ref-deepseek">DeepSeek-V3</a> style. The head predicts token <span class="mono">t+1</span> from the backbone's own hidden state, then chains: each draft feeds the next.</p>
   </div>
 
   <figure class="fig wide">
@@ -500,7 +503,7 @@
         <text x="20" y="284" class="glyph-lab" font-size="11">dense matmuls: flat &middot; expert gather: the one cost that scales with the chain</text>
       </svg>
       </div>
-      <figcaption><b>The MoE tax.</b> Each verified token routes to its own 8 of 256 experts. The distinct experts across the whole verify batch (the <span class="chip draft">union</span>) grows with <span class="mono">M</span>, so the expert gather is the one term that scales with chain length. MoESD (<span class="mono">2505.19645</span>) measures this union at <span class="mono">1.25&ndash;1.42&times;</span> the single-token set for batch-1 speculation. That ratio is the honest ceiling on how much a MoE can gain here.</figcaption>
+      <figcaption><b>The MoE tax.</b> Each verified token routes to its own 8 of 256 experts. The distinct experts across the whole verify batch (the <span class="chip draft">union</span>) grows with <span class="mono">M</span>, so the expert gather is the one term that scales with chain length. MoESD (<a class="cite mono" href="#ref-moesd">2505.19645</a>) measures this union at <span class="mono">1.25&ndash;1.42&times;</span> the single-token set for batch-1 speculation. That ratio is the honest ceiling on how much a MoE can gain here.</figcaption>
     </figure>
   </div>
 
@@ -595,7 +598,7 @@
   </div>
   <div class="spine">
     <p class="lead">Drafting deeper wins more tokens per cycle only until the added draft cost and falling accept rate stop paying. A per-sequence controller finds that peak instead of guessing it.</p>
-    <p>It maximizes <code>score(d) = E[tokens](d) / time(d)</code>, using an EMA of the conditional accept rate at each depth and the measured per-depth cost. Depth 0 is a <b>park</b> (decode normally, no speculation); a global <b>hand-back</b> drops the whole sequence to stock decode when MTP is a net loss. This objective subsumes the published heuristics (SpecDec++, DISCO, llama.cpp's <span class="mono">p_min</span>): they all approximate the same expected-tokens-per-unit-time argmax.</p>
+    <p>It maximizes <code>score(d) = E[tokens](d) / time(d)</code>, using an EMA of the conditional accept rate at each depth and the measured per-depth cost. Depth 0 is a <b>park</b> (decode normally, no speculation); a global <b>hand-back</b> drops the whole sequence to stock decode when MTP is a net loss. This objective subsumes the published heuristics (<a class="cite" href="#ref-specdecpp">SpecDec++</a>, <a class="cite" href="#ref-specdecpp">DISCO</a>, llama.cpp's <a class="cite mono" href="#ref-pmin">p_min</a>): they all approximate the same expected-tokens-per-unit-time argmax.</p>
   </div>
 
   <div class="fig">
@@ -768,7 +771,7 @@
   <!-- frequency-remap arc -->
   <div class="spine" style="margin-top:44px">
     <h3>The increment that vindicated the mechanism but stayed marginal: frequency-remap</h3>
-    <p>The reduced-vocab lever leans on an assumption: the model's hot tokens sit at low ids. They mostly do, thanks to Qwen3's byte-level merges, but not perfectly. So the natural refinement is to stop projecting the <em>first</em> N rows and instead project the N <em>most-frequently-emitted</em> rows, mapped back through an id table. Same projection cost as a contiguous slice, but every column is now a token the model actually uses, so a narrow N should hold the accept rate that the contiguous slice only keeps at a much wider 131072. This is FastMTP's vocab-compression idea (<span class="mono">2509.18362</span>) applied to the draft head.</p>
+    <p>The reduced-vocab lever leans on an assumption: the model's hot tokens sit at low ids. They mostly do, thanks to Qwen3's byte-level merges, but not perfectly. So the natural refinement is to stop projecting the <em>first</em> N rows and instead project the N <em>most-frequently-emitted</em> rows, mapped back through an id table. Same projection cost as a contiguous slice, but every column is now a token the model actually uses, so a narrow N should hold the accept rate that the contiguous slice only keeps at a much wider 131072. This is FastMTP's vocab-compression idea (<a class="cite mono" href="#ref-fastmtp">2509.18362</a>) applied to the draft head.</p>
     <p>The first map was built from Mira's chat history, and it <span style="color:var(--bad)">refuted itself</span>. It scored beautifully on the corpus it was trained on and came apart on held-out prompts, roughly <span class="mono">9%</span> of true tokens uncovered: textbook train-on-test. The fix was a broader map, built from chat plus the model's own eval generations (<span class="mono">13,712</span> distinct emitted ids) and held out from the bench prompts. On that map the mechanism is genuinely real.</p>
   </div>
 
@@ -825,7 +828,7 @@
     <h2>Why not a draft tree?</h2>
   </div>
   <div class="spine">
-    <p class="lead">EAGLE-2/3 win by drafting a branching tree of candidates instead of a single chain. On this model that move is rejected, for two structural reasons the diagram makes concrete.</p>
+    <p class="lead"><a class="cite" href="#ref-eagle2">EAGLE-2</a>/<a class="cite" href="#ref-eagle3">3</a> win by drafting a branching tree of candidates instead of a single chain. On this model that move is rejected, for two structural reasons the diagram makes concrete.</p>
   </div>
 
   <div class="fig">
@@ -894,7 +897,7 @@
   </div>
   <div class="spine">
     <p class="lead">The other way to go faster is to make the head guess better, so more drafts survive. We already ran that experiment to its end, and it hit a capacity ceiling.</p>
-    <p>We built the FastMTP recipe (<span class="mono">2509.18362</span>) twice: a single-step self-distilled head fine-tune, and a multi-step recursive version that carries the head's own hidden state forward, which is the HASS exposure-bias fix (<span class="mono">2408.15766</span>). On the fixed dense head the ceiling was hard: <span class="mono">+2</span> points at depth 3 only, with depth 1 and 2 immovable. A stronger head plateauing is what makes retraining the weaker MoE head low expected value. So we pivoted from the accept lever to the cost lever in section 05, and it worked.</p>
+    <p>We built the FastMTP recipe (<a class="cite mono" href="#ref-fastmtp">2509.18362</a>) twice: a single-step self-distilled head fine-tune, and a multi-step recursive version that carries the head's own hidden state forward, which is the HASS exposure-bias fix (<a class="cite mono" href="#ref-hass">2408.15766</a>). On the fixed dense head the ceiling was hard: <span class="mono">+2</span> points at depth 3 only, with depth 1 and 2 immovable. A stronger head plateauing is what makes retraining the weaker MoE head low expected value. So we pivoted from the accept lever to the cost lever in section 05, and it worked.</p>
     <p>The MoE-specific accept ideas in the literature do not rescue it either, for reasons specific to a resident 32GB deployment:</p>
   </div>
   <div class="fig spine" style="padding:6px 0;border:0;box-shadow:none;background:transparent">
@@ -937,7 +940,7 @@
     </div>
   </div>
   <div class="spine">
-    <p>The invariant <code>emit = argmax(full-vocab&nbsp;verify)</code> holds by construction. But changing the draft changes which batch <em>widths</em> the verify runs at, and on M5 the batched attention numerics (<span class="mono">mlx#3897</span>, <span class="mono">mlx#3860</span>, both closed won't-fix, so we always run <code>MLX_ENABLE_TF32=0</code>) resolve argmax ties slightly differently at different widths. That is the same non-determinism that already makes batch-1 and batch-4 diverge in production. We verified by reading divergent outputs side by side that they are equal quality, not regressions.</p>
+    <p>The invariant <code>emit = argmax(full-vocab&nbsp;verify)</code> holds by construction. But changing the draft changes which batch <em>widths</em> the verify runs at, and on M5 the batched attention numerics (<a class="cite mono" href="#ref-mlx">mlx#3897</a>, <a class="cite mono" href="#ref-mlx">mlx#3860</a>, both closed won't-fix, so we always run <code>MLX_ENABLE_TF32=0</code>) resolve argmax ties slightly differently at different widths. That is the same non-determinism that already makes batch-1 and batch-4 diverge in production. We verified by reading divergent outputs side by side that they are equal quality, not regressions.</p>
   </div>
 
   <div class="fig">
@@ -1070,7 +1073,7 @@
     </div>
     <div class="lev">
       <h4>Accept via head retrain</h4>
-      <p class="why">Exhausted <em>only on the dense head</em> , FastMTP and HASS both plateaued there. The MoE head, at <span class="mono">0.83</span> accept, was never retrained, and a weaker head can hold more headroom, not less. The distill harness is already built, so the probe is a training run, not new code. The one lever here with compounding headroom toward 80.</p>
+      <p class="why">Exhausted <em>only on the dense head</em> , <a class="cite" href="#ref-fastmtp">FastMTP</a> and <a class="cite" href="#ref-hass">HASS</a> both plateaued there. The MoE head, at <span class="mono">0.83</span> accept, was never retrained, and a weaker head can hold more headroom, not less. The distill harness is already built, so the probe is a training run, not new code. The one lever here with compounding headroom toward 80.</p>
       <div class="meta"><span class="pill open">open &middot; MoE head unproven</span><span class="chip good">compounding</span></div>
     </div>
     <div class="lev rej">
@@ -1158,19 +1161,19 @@
     <h2>What each reference decided</h2>
   </div>
   <div class="refs">
-    <div class="ref"><span class="id">2211.17192</span><span class="what"><b>Leviathan et&nbsp;al.</b> , speculative decoding foundations: draft, verify, accept the matching prefix. The frame for the whole cycle.</span></div>
-    <div class="ref"><span class="id">DeepSeek-V3</span><span class="what"><b>MTP head</b> , the single-head, linear-chain self-speculative design we implement, rather than a separate draft model.</span></div>
-    <div class="ref"><span class="id">2509.18362</span><span class="what"><b>FastMTP</b> , self-distilled head fine-tune and draft-vocab compression. We built the fine-tune (it plateaued) and shipped the contiguous-vocab idea (it won); its frequency-remap variant tested real but marginal.</span></div>
-    <div class="ref"><span class="id">2408.15766</span><span class="what"><b>HASS</b> , carry the head's own hidden forward to fix exposure bias. Built into the multi-step retrain; still hit the ceiling.</span></div>
-    <div class="ref"><span class="id">2406.16858</span><span class="what"><b>EAGLE-2</b> , dynamic draft trees. The technique we deliberately rejected for this hybrid MoE (section 06).</span></div>
-    <div class="ref"><span class="id">2503.01840</span><span class="what"><b>EAGLE-3</b> , training-time test and richer trees. Same rejection reasoning: linear state does not fork cheaply.</span></div>
-    <div class="ref"><span class="id">2505.19645</span><span class="what"><b>MoESD</b> , measured the batch-1 expert-union ratio at 1.25&ndash;1.42&times;. This is the honest ceiling on MoE speculative gains.</span></div>
-    <div class="ref"><span class="id">2608.02989</span><span class="what"><b>AcceptMoE</b> , verifier expert-set shrink for 1.29&times;. Rejected: risks the losslessness invariant on a resident model.</span></div>
-    <div class="ref"><span class="id">2607.24434</span><span class="what"><b>DraftExpert</b> , 1.45&times; by hiding expert-offload latency. Not applicable: our experts are resident.</span></div>
-    <div class="ref"><span class="id">2605.00342</span><span class="what"><b>EVICT</b> , MoE expert eviction on Qwen3-30B-A3B. A memory-pressure tool; this deployment is not expert-memory bound.</span></div>
-    <div class="ref"><span class="id">SpecDec++ / DISCO</span><span class="what"><b>Controller objectives</b> , adaptive draft-length heuristics our <code>score(d)</code> subsumes as approximations of expected tokens per unit time.</span></div>
-    <div class="ref"><span class="id">llama.cpp #25198</span><span class="what"><b>p_min</b> , a confidence-gated stop rule, another special case of the same argmax the controller solves directly.</span></div>
-    <div class="ref"><span class="id">mlx#3897 / #3860</span><span class="what"><b>M5 batched attention</b> , batched-verify numerics differ by width (closed won't-fix). The reason we run <code>MLX_ENABLE_TF32=0</code> and why losslessness is not byte-identity.</span></div>
+    <div class="ref" id="ref-leviathan"><span class="id"><a href="https://arxiv.org/abs/2211.17192">2211.17192</a></span><span class="what"><b>Leviathan et&nbsp;al.</b> , speculative decoding foundations: draft, verify, accept the matching prefix. The frame for the whole cycle.<span class="full">Yaniv Leviathan et&nbsp;al. (2022), &ldquo;Fast Inference from Transformers via Speculative Decoding&rdquo;.</span></span></div>
+    <div class="ref" id="ref-deepseek"><span class="id"><a href="https://arxiv.org/abs/2412.19437">DeepSeek-V3</a></span><span class="what"><b>MTP head</b> , the single-head, linear-chain self-speculative design we implement, rather than a separate draft model.<span class="full">DeepSeek-AI (2024), &ldquo;DeepSeek-V3 Technical Report&rdquo;. arXiv:2412.19437.</span></span></div>
+    <div class="ref" id="ref-fastmtp"><span class="id"><a href="https://arxiv.org/abs/2509.18362">2509.18362</a></span><span class="what"><b>FastMTP</b> , self-distilled head fine-tune and draft-vocab compression. We built the fine-tune (it plateaued) and shipped the contiguous-vocab idea (it won); its frequency-remap variant tested real but marginal.<span class="full">Yuxuan Cai et&nbsp;al. (2025), &ldquo;FastMTP: Accelerating LLM Inference with Enhanced Multi-Token Prediction&rdquo;.</span></span></div>
+    <div class="ref" id="ref-hass"><span class="id"><a href="https://arxiv.org/abs/2408.15766">2408.15766</a></span><span class="what"><b>HASS</b> , carry the head's own hidden forward to fix exposure bias. Built into the multi-step retrain; still hit the ceiling.<span class="full">Lefan Zhang et&nbsp;al. (2024), &ldquo;Learning Harmonized Representations for Speculative Sampling&rdquo; (HASS).</span></span></div>
+    <div class="ref" id="ref-eagle2"><span class="id"><a href="https://arxiv.org/abs/2406.16858">2406.16858</a></span><span class="what"><b>EAGLE-2</b> , dynamic draft trees. The technique we deliberately rejected for this hybrid MoE (section 06).<span class="full">Yuhui Li et&nbsp;al. (2024), &ldquo;EAGLE-2: Faster Inference of Language Models with Dynamic Draft Trees&rdquo;.</span></span></div>
+    <div class="ref" id="ref-eagle3"><span class="id"><a href="https://arxiv.org/abs/2503.01840">2503.01840</a></span><span class="what"><b>EAGLE-3</b> , training-time test and richer trees. Same rejection reasoning: linear state does not fork cheaply.<span class="full">Yuhui Li et&nbsp;al. (2025), &ldquo;EAGLE-3: Scaling up Inference Acceleration of Large Language Models via Training-Time Test&rdquo;.</span></span></div>
+    <div class="ref" id="ref-moesd"><span class="id"><a href="https://arxiv.org/abs/2505.19645">2505.19645</a></span><span class="what"><b>MoESD</b> , measured the batch-1 expert-union ratio at 1.25&ndash;1.42&times;. This is the honest ceiling on MoE speculative gains.<span class="full">Zongle Huang et&nbsp;al. (2025), &ldquo;MoESD: Unveil Speculative Decoding&rsquo;s Potential for Accelerating Sparse MoE&rdquo;.</span></span></div>
+    <div class="ref" id="ref-acceptmoe"><span class="id"><a href="https://arxiv.org/abs/2608.02989">2608.02989</a></span><span class="what"><b>AcceptMoE</b> , verifier expert-set shrink for 1.29&times;. Rejected: risks the losslessness invariant on a resident model.<span class="full">Shuang Liang et&nbsp;al. (2026), &ldquo;AcceptMoE: Commitment-Weighted Self-Sizing Verifier Expert Sets for Efficient MoE Speculative Decoding&rdquo;.</span></span></div>
+    <div class="ref" id="ref-draftexpert"><span class="id"><a href="https://arxiv.org/abs/2607.24434">2607.24434</a></span><span class="what"><b>DraftExpert</b> , 1.45&times; by hiding expert-offload latency. Not applicable: our experts are resident.<span class="full">Dengke Han (2026), &ldquo;DraftExpert: Expansion-Aware Self-Speculative Decoding for End-Device MoE Inference&rdquo;.</span></span></div>
+    <div class="ref" id="ref-evict"><span class="id"><a href="https://arxiv.org/abs/2605.00342">2605.00342</a></span><span class="what"><b>EVICT</b> , MoE expert eviction on Qwen3-30B-A3B. A memory-pressure tool; this deployment is not expert-memory bound.<span class="full">Lehan Pan et&nbsp;al. (2026), &ldquo;Making Every Verified Token Count: Adaptive Verification for MoE Speculative Decoding&rdquo; (EVICT).</span></span></div>
+    <div class="ref" id="ref-specdecpp"><span class="id">SpecDec++ / DISCO</span><span class="what"><b>Controller objectives</b> , adaptive draft-length heuristics our <code>score(d)</code> subsumes as approximations of expected tokens per unit time.<span class="full">SpecDec++: Kaixuan Huang et&nbsp;al. (2024), &ldquo;SpecDec++: Boosting Speculative Decoding via Adaptive Candidate Lengths&rdquo;.</span></span></div>
+    <div class="ref" id="ref-pmin"><span class="id">llama.cpp #25198</span><span class="what"><b>p_min</b> , a confidence-gated stop rule, another special case of the same argmax the controller solves directly.</span></div>
+    <div class="ref" id="ref-mlx"><span class="id">mlx#3897 / #3860</span><span class="what"><b>M5 batched attention</b> , batched-verify numerics differ by width (closed won't-fix). The reason we run <code>MLX_ENABLE_TF32=0</code> and why losslessness is not byte-identity.<span class="full"><a href="https://github.com/ml-explore/mlx/issues/3897">mlx#3897</a>: &ldquo;Batched (padded/masked) attention diverges from single-sequence on M5, not on M3 Max&rdquo;. <a href="https://github.com/ml-explore/mlx/issues/3860">mlx#3860</a>: &ldquo;fp32 matmul silently defaults to TF32-class precision&rdquo;.</span></span></div>
   </div>
 </section>
 
@@ -1182,6 +1185,6 @@
 </div>
 
 <div class="wrap"><div class="foot mono" style="margin-top:50px"><span><a href="/mira/privacy/">Privacy</a> · <a href="/mira/support/">Support</a> · <a href="https://github.com/mabaeyens">GitHub</a></span></div></div>
-<script src="/assets/zoom.js" defer></script>
+<script src="/assets/zoom.js?v=0cc1493b" defer></script>
 </body>
 </html>

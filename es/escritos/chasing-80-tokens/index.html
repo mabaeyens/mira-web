@@ -21,8 +21,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/inner.css">
-<link rel="stylesheet" href="/assets/dark.css">
+<link rel="stylesheet" href="/assets/inner.css?v=ef13298b">
+<link rel="stylesheet" href="/assets/dark.css?v=1c15e1fb">
 </head>
 <body>
 <div class="bar solid"><div class="wrap">
@@ -247,6 +247,9 @@
 .art .ref{display:grid;grid-template-columns:118px 1fr;gap:16px;padding:12px 0;border-bottom:1px solid var(--line)}
 .art .ref .id{font-family:var(--mono);color:var(--verify);font-size:13px}
 .art .ref .what{color:var(--ink-2)}
+.art .ref:target{background:rgba(228,117,106,.16)}
+.art .ref .full{display:block;margin-top:6px;font-size:12.5px;color:var(--ink-3)}
+.art .ref{scroll-margin-top:80px}
 .art .ref .what b{color:var(--ink);font-weight:600}
 .art footer{padding:48px 0 80px;color:var(--ink-3);font-size:13px;font-family:var(--mono)}
 .art .s-draft{fill:var(--draft)}
@@ -305,7 +308,7 @@
   </div>
   <div class="spine">
     <p class="lead">La decodificaci&oacute;n especulativa gana velocidad adivinando varios tokens a bajo coste y comprob&aacute;ndolos todos juntos en una &uacute;nica pasada cara. El truco solo funciona porque, en este hardware, comprobar cuatro tokens cuesta casi exactamente lo mismo que comprobar uno.</p>
-    <p>El planteamiento clásico (Leviathan et al., <span class="mono">2211.17192</span>) usa un modelo borrador pequeño junto a uno grande. La decodificación <b>auto-especulativa</b> prescinde del segundo modelo: un <b>cabezal MTP</b> ligero, acoplado al backbone, genera los borradores, al estilo de DeepSeek-V3. El cabezal predice el token <span class="mono">t+1</span> a partir del estado oculto del propio backbone y luego encadena: cada borrador alimenta al siguiente.</p>
+    <p>El planteamiento clásico (Leviathan et al., <span class="mono">2211.17192</span>) usa un modelo borrador pequeño junto a uno grande. La decodificación <b>auto-especulativa</b> prescinde del segundo modelo: un <b>cabezal MTP</b> ligero, acoplado al backbone, genera los borradores, al estilo de <a class="cite" href="#ref-deepseek">DeepSeek-V3</a>. El cabezal predice el token <span class="mono">t+1</span> a partir del estado oculto del propio backbone y luego encadena: cada borrador alimenta al siguiente.</p>
   </div>
 
   <figure class="fig wide">
@@ -500,7 +503,7 @@
         <text x="20" y="284" class="glyph-lab" font-size="11">matmul densos: planos &middot; gather de expertos: el &uacute;nico coste que crece con la cadena</text>
       </svg>
       </div>
-      <figcaption><b>El impuesto del MoE.</b> Cada token verificado se enruta a sus propios 8 de 256 expertos. Los expertos distintos de todo el batch de verificaci&oacute;n (la <span class="chip draft">uni&oacute;n</span>) crecen con <span class="mono">M</span>, as&iacute; que el gather de expertos es el &uacute;nico t&eacute;rmino que crece con la longitud de la cadena. MoESD (<span class="mono">2505.19645</span>) mide esta uni&oacute;n en <span class="mono">1.25-1.42&times;</span> el conjunto de un solo token para especulaci&oacute;n con batch 1. Esa proporci&oacute;n es el techo honesto de lo que un MoE puede ganar aqu&iacute;.</figcaption>
+      <figcaption><b>El impuesto del MoE.</b> Cada token verificado se enruta a sus propios 8 de 256 expertos. Los expertos distintos de todo el batch de verificaci&oacute;n (la <span class="chip draft">uni&oacute;n</span>) crecen con <span class="mono">M</span>, as&iacute; que el gather de expertos es el &uacute;nico t&eacute;rmino que crece con la longitud de la cadena. MoESD (<a class="cite mono" href="#ref-moesd">2505.19645</a>) mide esta uni&oacute;n en <span class="mono">1.25-1.42&times;</span> el conjunto de un solo token para especulaci&oacute;n con batch 1. Esa proporci&oacute;n es el techo honesto de lo que un MoE puede ganar aqu&iacute;.</figcaption>
     </figure>
   </div>
 
@@ -595,7 +598,7 @@
   </div>
   <div class="spine">
     <p class="lead">Alargar la cadena de borradores gana más tokens por ciclo solo hasta que el coste extra del borrador y la caída de la tasa de aceptación dejan de compensar. Un controlador por secuencia encuentra ese máximo en lugar de adivinarlo.</p>
-    <p>Maximiza <code>score(d) = E[tokens](d) / time(d)</code>, usando una EMA de la tasa de aceptación condicional en cada profundidad y el coste medido por profundidad. La profundidad 0 es un <b>aparcado</b> (decodificación normal, sin especulación); un <b>traspaso</b> global devuelve toda la secuencia a la decodificación estándar cuando el MTP es una pérdida neta. Este objetivo engloba las heurísticas publicadas (SpecDec++, DISCO, el <span class="mono">p_min</span> de llama.cpp): todas aproximan el mismo argmax de tokens esperados por unidad de tiempo.</p>
+    <p>Maximiza <code>score(d) = E[tokens](d) / time(d)</code>, usando una EMA de la tasa de aceptación condicional en cada profundidad y el coste medido por profundidad. La profundidad 0 es un <b>aparcado</b> (decodificación normal, sin especulación); un <b>traspaso</b> global devuelve toda la secuencia a la decodificación estándar cuando el MTP es una pérdida neta. Este objetivo engloba las heurísticas publicadas (<a class="cite" href="#ref-specdecpp">SpecDec++</a>, <a class="cite" href="#ref-specdecpp">DISCO</a>, el <a class="cite mono" href="#ref-pmin">p_min</a> de llama.cpp): todas aproximan el mismo argmax de tokens esperados por unidad de tiempo.</p>
   </div>
 
   <div class="fig">
@@ -768,7 +771,7 @@
   <!-- frequency-remap arc -->
   <div class="spine" style="margin-top:44px">
     <h3>El incremento que validó el mecanismo pero se quedó en marginal: remap por frecuencia</h3>
-    <p>La palanca del vocabulario reducido se apoya en una suposición: los tokens más usados del modelo están en ids bajos. Casi siempre es así, gracias a las fusiones a nivel de byte de Qwen3, pero no del todo. Así que el refinamiento natural es dejar de proyectar las <em>primeras</em> N filas y proyectar en su lugar las N filas <em>emitidas con más frecuencia</em>, traducidas de vuelta a su id original mediante una tabla. Mismo coste de proyección que un bloque contiguo, pero cada columna es ahora un token que el modelo realmente usa, así que un N estrecho debería mantener la tasa de aceptación que el bloque contiguo solo conserva con un 131072 mucho más ancho. Es la idea de compresión de vocabulario de FastMTP (<span class="mono">2509.18362</span>) aplicada al cabezal borrador.</p>
+    <p>La palanca del vocabulario reducido se apoya en una suposición: los tokens más usados del modelo están en ids bajos. Casi siempre es así, gracias a las fusiones a nivel de byte de Qwen3, pero no del todo. Así que el refinamiento natural es dejar de proyectar las <em>primeras</em> N filas y proyectar en su lugar las N filas <em>emitidas con más frecuencia</em>, traducidas de vuelta a su id original mediante una tabla. Mismo coste de proyección que un bloque contiguo, pero cada columna es ahora un token que el modelo realmente usa, así que un N estrecho debería mantener la tasa de aceptación que el bloque contiguo solo conserva con un 131072 mucho más ancho. Es la idea de compresión de vocabulario de FastMTP (<a class="cite mono" href="#ref-fastmtp">2509.18362</a>) aplicada al cabezal borrador.</p>
     <p>El primer mapa se construyó con el historial de chat de Mira y <span style="color:var(--bad)">se refutó a sí mismo</span>. Puntuaba de maravilla en el corpus con el que se entrenó y se desmoronaba con prompts reservados, con cerca del <span class="mono">9%</span> de los tokens verdaderos sin cubrir: entrenar con los datos de test, de manual. La solución fue un mapa más amplio, construido con el chat más las propias generaciones de evaluación del modelo (<span class="mono">13,712</span> ids emitidos distintos) y reservado frente a los prompts del benchmark. Con ese mapa el mecanismo es genuinamente real.</p>
   </div>
 
@@ -825,7 +828,7 @@
     <h2>&iquest;Por qu&eacute; no un &aacute;rbol de borradores?</h2>
   </div>
   <div class="spine">
-    <p class="lead">EAGLE-2/3 ganan velocidad generando un árbol ramificado de candidatos en lugar de una sola cadena de borradores. En este modelo esa jugada se descarta, por dos razones estructurales que el diagrama hace concretas.</p>
+    <p class="lead"><a class="cite" href="#ref-eagle2">EAGLE-2</a>/<a class="cite" href="#ref-eagle3">3</a> ganan velocidad generando un árbol ramificado de candidatos en lugar de una sola cadena de borradores. En este modelo esa jugada se descarta, por dos razones estructurales que el diagrama hace concretas.</p>
   </div>
 
   <div class="fig">
@@ -894,7 +897,7 @@
   </div>
   <div class="spine">
     <p class="lead">La otra forma de ir más rápido es hacer que el cabezal adivine mejor, de modo que sobrevivan más borradores. Ya llevamos ese experimento hasta el final y chocó con un techo de capacidad.</p>
-    <p>Construimos dos veces la receta de FastMTP (<span class="mono">2509.18362</span>): un ajuste fino del cabezal autodestilado de un solo paso y una versión recursiva de varios pasos que arrastra el propio estado oculto del cabezal, que es la corrección del sesgo de exposición de HASS (<span class="mono">2408.15766</span>). Con el cabezal denso fijo el techo fue duro: <span class="mono">+2</span> puntos solo en profundidad 3, con las profundidades 1 y 2 inamovibles. Si un cabezal más fuerte se estanca, reentrenar el más débil del MoE tiene poco valor esperado. Así que pasamos de la palanca de la aceptación a la palanca del coste de la sección 05, y funcionó.</p>
+    <p>Construimos dos veces la receta de FastMTP (<a class="cite mono" href="#ref-fastmtp">2509.18362</a>): un ajuste fino del cabezal autodestilado de un solo paso y una versión recursiva de varios pasos que arrastra el propio estado oculto del cabezal, que es la corrección del sesgo de exposición de HASS (<a class="cite mono" href="#ref-hass">2408.15766</a>). Con el cabezal denso fijo el techo fue duro: <span class="mono">+2</span> puntos solo en profundidad 3, con las profundidades 1 y 2 inamovibles. Si un cabezal más fuerte se estanca, reentrenar el más débil del MoE tiene poco valor esperado. Así que pasamos de la palanca de la aceptación a la palanca del coste de la sección 05, y funcionó.</p>
     <p>Las ideas de aceptación específicas de MoE que hay en la literatura tampoco lo rescatan, por razones propias de un despliegue residente en 32GB:</p>
   </div>
   <div class="fig spine" style="padding:6px 0;border:0;box-shadow:none;background:transparent">
@@ -937,7 +940,7 @@
     </div>
   </div>
   <div class="spine">
-    <p>El invariante <code>emit = argmax(full-vocab&nbsp;verify)</code> se cumple por construcción. Pero cambiar el borrador cambia a qué <em>anchos</em> de batch se ejecuta la verificación, y en M5 el comportamiento numérico de la atención con batch (<span class="mono">mlx#3897</span>, <span class="mono">mlx#3860</span>, ambas cerradas sin arreglo, como won't-fix, por eso siempre ejecutamos <code>MLX_ENABLE_TF32=0</code>) resuelve los empates del argmax de forma ligeramente distinta según el ancho. Es el mismo no determinismo que ya hace que batch 1 y batch 4 diverjan en producción. Comprobamos, leyendo lado a lado las salidas divergentes, que tienen la misma calidad y no son regresiones.</p>
+    <p>El invariante <code>emit = argmax(full-vocab&nbsp;verify)</code> se cumple por construcción. Pero cambiar el borrador cambia a qué <em>anchos</em> de batch se ejecuta la verificación, y en M5 el comportamiento numérico de la atención con batch (<a class="cite mono" href="#ref-mlx">mlx#3897</a>, <a class="cite mono" href="#ref-mlx">mlx#3860</a>, ambas cerradas sin arreglo, como won't-fix, por eso siempre ejecutamos <code>MLX_ENABLE_TF32=0</code>) resuelve los empates del argmax de forma ligeramente distinta según el ancho. Es el mismo no determinismo que ya hace que batch 1 y batch 4 diverjan en producción. Comprobamos, leyendo lado a lado las salidas divergentes, que tienen la misma calidad y no son regresiones.</p>
   </div>
 
   <div class="fig">
@@ -1070,7 +1073,7 @@
     </div>
     <div class="lev">
       <h4>Aceptación mediante reentrenamiento del cabezal</h4>
-      <p class="why">Agotado <em>solo en el cabezal denso</em>: FastMTP y HASS se estancaron ahí. El cabezal del MoE, con <span class="mono">0.83</span> de aceptación, nunca se reentrenó, y un cabezal más débil puede tener más margen, no menos. El entorno de destilación ya está construido, así que la prueba es una ejecución de entrenamiento, no código nuevo. La única palanca de aquí con margen acumulativo hacia 80.</p>
+      <p class="why">Agotado <em>solo en el cabezal denso</em>: <a class="cite" href="#ref-fastmtp">FastMTP</a> y <a class="cite" href="#ref-hass">HASS</a> se estancaron ahí. El cabezal del MoE, con <span class="mono">0.83</span> de aceptación, nunca se reentrenó, y un cabezal más débil puede tener más margen, no menos. El entorno de destilación ya está construido, así que la prueba es una ejecución de entrenamiento, no código nuevo. La única palanca de aquí con margen acumulativo hacia 80.</p>
       <div class="meta"><span class="pill open">abierta &middot; cabezal MoE sin probar</span><span class="chip good">acumulativa</span></div>
     </div>
     <div class="lev rej">
@@ -1158,19 +1161,19 @@
     <h2>Qu&eacute; decidi&oacute; cada referencia</h2>
   </div>
   <div class="refs">
-    <div class="ref"><span class="id">2211.17192</span><span class="what"><b>Leviathan et&nbsp;al.</b>: fundamentos de la decodificación especulativa (borrador, verificación y aceptar el prefijo que coincide). El marco de todo el ciclo.</span></div>
-    <div class="ref"><span class="id">DeepSeek-V3</span><span class="what"><b>Cabezal MTP</b>: el diseño auto-especulativo de un solo cabezal y cadena lineal que implementamos, en lugar de un modelo borrador aparte.</span></div>
-    <div class="ref"><span class="id">2509.18362</span><span class="what"><b>FastMTP</b>: ajuste fino del cabezal autodestilado y compresión del vocabulario del borrador. Construimos el ajuste fino (se estancó) y publicamos la idea del vocabulario contiguo (ganó); su variante con remap por frecuencia salió real pero marginal.</span></div>
-    <div class="ref"><span class="id">2408.15766</span><span class="what"><b>HASS</b>: arrastrar el propio estado oculto del cabezal para corregir el sesgo de exposición. Integrado en el reentrenamiento de varios pasos; aun así chocó con el techo.</span></div>
-    <div class="ref"><span class="id">2406.16858</span><span class="what"><b>EAGLE-2</b>: árboles de borradores dinámicos. La técnica que descartamos deliberadamente para este MoE híbrido (sección 06).</span></div>
-    <div class="ref"><span class="id">2503.01840</span><span class="what"><b>EAGLE-3</b>: prueba en tiempo de entrenamiento (training-time test) y árboles más ricos. Mismo razonamiento de rechazo: el estado lineal no se bifurca barato.</span></div>
-    <div class="ref"><span class="id">2505.19645</span><span class="what"><b>MoESD</b>: midi&oacute; la proporci&oacute;n de uni&oacute;n de expertos con batch 1 en 1.25-1.42&times;. Es el techo honesto de las ganancias especulativas en MoE.</span></div>
-    <div class="ref"><span class="id">2608.02989</span><span class="what"><b>AcceptMoE</b>: reducción del conjunto de expertos del verificador para 1.29&times;. Rechazado: arriesga la garantía sin pérdidas en un modelo residente.</span></div>
-    <div class="ref"><span class="id">2607.24434</span><span class="what"><b>DraftExpert</b>: 1.45&times; ocultando la latencia del offload de expertos. No aplica: nuestros expertos est&aacute;n residentes.</span></div>
-    <div class="ref"><span class="id">2605.00342</span><span class="what"><b>EVICT</b>: expulsi&oacute;n de expertos MoE en Qwen3-30B-A3B. Una herramienta contra la presi&oacute;n de memoria; este despliegue no est&aacute; limitado por la memoria de expertos.</span></div>
-    <div class="ref"><span class="id">SpecDec++ / DISCO</span><span class="what"><b>Objetivos del controlador</b>: heurísticas adaptativas de longitud de borrador que nuestro <code>score(d)</code> engloba como aproximaciones de tokens esperados por unidad de tiempo.</span></div>
-    <div class="ref"><span class="id">llama.cpp #25198</span><span class="what"><b>p_min</b>: una regla de parada con umbral de confianza, otro caso particular del mismo argmax que el controlador resuelve directamente.</span></div>
-    <div class="ref"><span class="id">mlx#3897 / #3860</span><span class="what"><b>Atención con batch en M5</b>: el resultado numérico de la verificación con batch difiere según el ancho (cerrado como won't-fix). La razón de que ejecutemos <code>MLX_ENABLE_TF32=0</code> y de que &ldquo;sin pérdidas&rdquo; no signifique idéntico byte a byte.</span></div>
+    <div class="ref" id="ref-leviathan"><span class="id"><a href="https://arxiv.org/abs/2211.17192">2211.17192</a></span><span class="what"><b>Leviathan et&nbsp;al.</b>: fundamentos de la decodificación especulativa (borrador, verificación y aceptar el prefijo que coincide). El marco de todo el ciclo.<span class="full">Yaniv Leviathan et&nbsp;al. (2022), &ldquo;Fast Inference from Transformers via Speculative Decoding&rdquo;.</span></span></div>
+    <div class="ref" id="ref-deepseek"><span class="id"><a href="https://arxiv.org/abs/2412.19437">DeepSeek-V3</a></span><span class="what"><b>Cabezal MTP</b>: el diseño auto-especulativo de un solo cabezal y cadena lineal que implementamos, en lugar de un modelo borrador aparte.<span class="full">DeepSeek-AI (2024), &ldquo;DeepSeek-V3 Technical Report&rdquo;. arXiv:2412.19437.</span></span></div>
+    <div class="ref" id="ref-fastmtp"><span class="id"><a href="https://arxiv.org/abs/2509.18362">2509.18362</a></span><span class="what"><b>FastMTP</b>: ajuste fino del cabezal autodestilado y compresión del vocabulario del borrador. Construimos el ajuste fino (se estancó) y publicamos la idea del vocabulario contiguo (ganó); su variante con remap por frecuencia salió real pero marginal.<span class="full">Yuxuan Cai et&nbsp;al. (2025), &ldquo;FastMTP: Accelerating LLM Inference with Enhanced Multi-Token Prediction&rdquo;.</span></span></div>
+    <div class="ref" id="ref-hass"><span class="id"><a href="https://arxiv.org/abs/2408.15766">2408.15766</a></span><span class="what"><b>HASS</b>: arrastrar el propio estado oculto del cabezal para corregir el sesgo de exposición. Integrado en el reentrenamiento de varios pasos; aun así chocó con el techo.<span class="full">Lefan Zhang et&nbsp;al. (2024), &ldquo;Learning Harmonized Representations for Speculative Sampling&rdquo; (HASS).</span></span></div>
+    <div class="ref" id="ref-eagle2"><span class="id"><a href="https://arxiv.org/abs/2406.16858">2406.16858</a></span><span class="what"><b>EAGLE-2</b>: árboles de borradores dinámicos. La técnica que descartamos deliberadamente para este MoE híbrido (sección 06).<span class="full">Yuhui Li et&nbsp;al. (2024), &ldquo;EAGLE-2: Faster Inference of Language Models with Dynamic Draft Trees&rdquo;.</span></span></div>
+    <div class="ref" id="ref-eagle3"><span class="id"><a href="https://arxiv.org/abs/2503.01840">2503.01840</a></span><span class="what"><b>EAGLE-3</b>: prueba en tiempo de entrenamiento (training-time test) y árboles más ricos. Mismo razonamiento de rechazo: el estado lineal no se bifurca barato.<span class="full">Yuhui Li et&nbsp;al. (2025), &ldquo;EAGLE-3: Scaling up Inference Acceleration of Large Language Models via Training-Time Test&rdquo;.</span></span></div>
+    <div class="ref" id="ref-moesd"><span class="id"><a href="https://arxiv.org/abs/2505.19645">2505.19645</a></span><span class="what"><b>MoESD</b>: midi&oacute; la proporci&oacute;n de uni&oacute;n de expertos con batch 1 en 1.25-1.42&times;. Es el techo honesto de las ganancias especulativas en MoE.<span class="full">Zongle Huang et&nbsp;al. (2025), &ldquo;MoESD: Unveil Speculative Decoding&rsquo;s Potential for Accelerating Sparse MoE&rdquo;.</span></span></div>
+    <div class="ref" id="ref-acceptmoe"><span class="id"><a href="https://arxiv.org/abs/2608.02989">2608.02989</a></span><span class="what"><b>AcceptMoE</b>: reducción del conjunto de expertos del verificador para 1.29&times;. Rechazado: arriesga la garantía sin pérdidas en un modelo residente.<span class="full">Shuang Liang et&nbsp;al. (2026), &ldquo;AcceptMoE: Commitment-Weighted Self-Sizing Verifier Expert Sets for Efficient MoE Speculative Decoding&rdquo;.</span></span></div>
+    <div class="ref" id="ref-draftexpert"><span class="id"><a href="https://arxiv.org/abs/2607.24434">2607.24434</a></span><span class="what"><b>DraftExpert</b>: 1.45&times; ocultando la latencia del offload de expertos. No aplica: nuestros expertos est&aacute;n residentes.<span class="full">Dengke Han (2026), &ldquo;DraftExpert: Expansion-Aware Self-Speculative Decoding for End-Device MoE Inference&rdquo;.</span></span></div>
+    <div class="ref" id="ref-evict"><span class="id"><a href="https://arxiv.org/abs/2605.00342">2605.00342</a></span><span class="what"><b>EVICT</b>: expulsi&oacute;n de expertos MoE en Qwen3-30B-A3B. Una herramienta contra la presi&oacute;n de memoria; este despliegue no est&aacute; limitado por la memoria de expertos.<span class="full">Lehan Pan et&nbsp;al. (2026), &ldquo;Making Every Verified Token Count: Adaptive Verification for MoE Speculative Decoding&rdquo; (EVICT).</span></span></div>
+    <div class="ref" id="ref-specdecpp"><span class="id">SpecDec++ / DISCO</span><span class="what"><b>Objetivos del controlador</b>: heurísticas adaptativas de longitud de borrador que nuestro <code>score(d)</code> engloba como aproximaciones de tokens esperados por unidad de tiempo.<span class="full">SpecDec++: Kaixuan Huang et&nbsp;al. (2024), &ldquo;SpecDec++: Boosting Speculative Decoding via Adaptive Candidate Lengths&rdquo;.</span></span></div>
+    <div class="ref" id="ref-pmin"><span class="id">llama.cpp #25198</span><span class="what"><b>p_min</b>: una regla de parada con umbral de confianza, otro caso particular del mismo argmax que el controlador resuelve directamente.</span></div>
+    <div class="ref" id="ref-mlx"><span class="id">mlx#3897 / #3860</span><span class="what"><b>Atención con batch en M5</b>: el resultado numérico de la verificación con batch difiere según el ancho (cerrado como won't-fix). La razón de que ejecutemos <code>MLX_ENABLE_TF32=0</code> y de que &ldquo;sin pérdidas&rdquo; no signifique idéntico byte a byte.<span class="full"><a href="https://github.com/ml-explore/mlx/issues/3897">mlx#3897</a>: &ldquo;Batched (padded/masked) attention diverges from single-sequence on M5, not on M3 Max&rdquo;. <a href="https://github.com/ml-explore/mlx/issues/3860">mlx#3860</a>: &ldquo;fp32 matmul silently defaults to TF32-class precision&rdquo;.</span></span></div>
   </div>
 </section>
 
@@ -1182,6 +1185,6 @@
 </div>
 
 <div class="wrap"><div class="foot mono" style="margin-top:50px"><span><a href="/es/mira/privacidad/">Privacidad</a> · <a href="/es/mira/soporte/">Soporte</a> · <a href="https://github.com/mabaeyens">GitHub</a></span></div></div>
-<script src="/assets/zoom.js" defer></script>
+<script src="/assets/zoom.js?v=0cc1493b" defer></script>
 </body>
 </html>

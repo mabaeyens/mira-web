@@ -15,6 +15,16 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+import hashlib as _hl
+def av(name):
+    """/assets/<name>?v=<content hash>: a changed stylesheet or script gets a new URL, so phones never keep a stale copy."""
+    try:
+        h = _hl.md5(open(os.path.join(ROOT, "assets", name), "rb").read()).hexdigest()[:8]
+    except OSError:
+        return f"/assets/{name}"
+    return f"/assets/{name}?v={h}"
+
 SRC = os.path.join(ROOT, "build", "src")
 PART = os.path.join(ROOT, "build", "partials")
 SITE = "https://askmira.es"
@@ -188,7 +198,7 @@ def foot(lang, inner=False, app="mira"):
     return (f'<div class="wrap"><div class="foot mono"{st}><span>'
             f'<a href="{url(app + "-privacy", lang)}">{u["privacy"]}</a> · '
             f'<a href="{url(app + "-support", lang)}">{u["support"]}</a> · '
-            f'<a href="{GITHUB}">GitHub</a></span></div></div>\n<script src="/assets/zoom.js" defer></script>')
+            f'<a href="{GITHUB}">GitHub</a></span></div></div>\n<script src="{av('zoom.js')}" defer></script>')
 
 
 DARK_ACCENT = {"#9A6A12": "#E3A93A", "#17787D": "#46C2C8", "#1F66B8": "#6AAEF2"}
@@ -212,7 +222,7 @@ def head(key, lang):
     t, d = html.escape(title), html.escape(desc, quote=True)
     extra = ""
     if m.get("extra"):
-        extra = f'\n<link rel="stylesheet" href="/assets/{m["extra"]}">\n<style>:root{{--app:{m["accent"]};--app-dk:{DARK_ACCENT.get(m["accent"], m["accent"])}}}</style>'
+        extra = f'\n<link rel="stylesheet" href="{av(m["extra"])}">\n<style>:root{{--app:{m["accent"]};--app-dk:{DARK_ACCENT.get(m["accent"], m["accent"])}}}</style>'
     return f"""<!DOCTYPE html>
 <html lang="{u['lang']}">
 <head>
@@ -236,8 +246,8 @@ def head(key, lang):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/{m['css']}">{extra}
-<link rel="stylesheet" href="/assets/dark.css">
+<link rel="stylesheet" href="{av(m['css'])}">{extra}
+<link rel="stylesheet" href="{av('dark.css')}">
 </head>"""
 
 
