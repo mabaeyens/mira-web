@@ -89,9 +89,9 @@ html[data-theme=dark] .cl[stroke="#2FA9AF"]{stroke:#5ED6DB;filter:drop-shadow(0 
 @media (max-width:760px){.pside{margin:4px -20px 8px 14px;width:38vw}}
 
 /* Vera screenshots: the iPad set follows the site theme (which follows the system by default) */
-img.th-d{display:none}
-html[data-theme=dark] img.th-l{display:none}
-html[data-theme=dark] img.th-d{display:block}
+img.th-d,html[data-theme] .shot img.th-d{display:none}
+html[data-theme=dark] img.th-l,html[data-theme=dark] .shot img.th-l{display:none}
+html[data-theme=dark] img.th-d,html[data-theme=dark] .shot img.th-d{display:block}
 .sec h3.sub{font:500 13px var(--mono);color:var(--soft);margin:18px 0 8px}
 .sec h3.sub:first-child{margin-top:0}
 
