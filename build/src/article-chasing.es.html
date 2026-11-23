@@ -404,7 +404,7 @@
         <text x="359" y="49" text-anchor="middle" fill="#fff" class="mono" font-size="12" font-weight="600">verify 77%</text>
         <text x="10"  y="16" class="glyph-lab" font-size="10">7.0 ms</text>
         <text x="330" y="16" class="glyph-lab" font-size="10">26.1 ms</text>
-        <text x="560" y="16" class="glyph-lab" font-size="10">resolve 0.6 ms</text>
+        <text x="618" y="16" text-anchor="end" class="glyph-lab" font-size="10">resolve 0.6 ms</text>
         <text x="0"   y="86" class="glyph-lab" font-size="10.5">un ciclo = 33.75 ms</text>
       </svg>
       </div>
@@ -508,7 +508,7 @@
           <text x="280" y="248">2-3</text><text x="430" y="248">4</text><text x="540" y="248">5</text>
         </g>
         <!-- annotations -->
-        <text x="470" y="150" class="glyph-m" font-size="10.5">m&aacute;s profundo: +coste, &minus;accept</text>
+        <text x="470" y="150" class="glyph-m" font-size="10.5"><tspan x="470">m&aacute;s profundo:</tspan><tspan x="470" dy="13">+coste, &minus;accept</tspan></text>
       </svg>
       </div>
       <figcaption><b>La joroba del score.</b> El controlador mide el m&aacute;ximo en lugar de suponerlo. En este MoE cae en profundidad 2-3; la secci&oacute;n 05 muestra un intento medido de llevarlo a 4 que <em>baj&oacute;</em> el rendimiento, justo el hombro derecho descendente de esta curva.</figcaption>
@@ -542,7 +542,7 @@
       <div class="scroll">
       <svg viewBox="0 0 660 250" role="img" aria-label="La matriz de proyecci&oacute;n lm_head recortada de 248320 filas a N filas; solo se calcula la porci&oacute;n superior para los drafts, lo que reduce el coste de proyecci&oacute;n, mientras el verify sigue usando la matriz completa.">
         <!-- full matrix -->
-        <text x="70" y="30" class="glyph-lab" font-size="11">proyecci&oacute;n del draft: usa las filas [0 : N]</text>
+        <text x="70" y="15" class="glyph-lab" font-size="11"><tspan x="70">proyecci&oacute;n del draft:</tspan><tspan x="70" dy="13">usa las filas [0 : N]</tspan></text>
         <rect x="70" y="40" width="120" height="180" rx="4" class="s-surf st-ink" style="stroke-width:1.3"/>
         <!-- used slice -->
         <rect x="70" y="40" width="120" height="78" rx="4" class="s-draft" fill-opacity=".85"/>
@@ -556,7 +556,7 @@
         <text x="248" y="160" class="glyph-lab" font-size="10">la proyecci&oacute;n</text>
 
         <!-- verify full -->
-        <text x="340" y="30" class="glyph-lab" font-size="11">proyecci&oacute;n del verify: matriz completa, siempre</text>
+        <text x="340" y="15" class="glyph-lab" font-size="11"><tspan x="340">proyecci&oacute;n del verify:</tspan><tspan x="340" dy="13">matriz completa, siempre</tspan></text>
         <rect x="340" y="40" width="120" height="180" rx="4" class="s-verify" fill-opacity=".85"/>
         <text x="400" y="135" text-anchor="middle" fill="#fff" class="mono" font-size="12" font-weight="600">las 248320</text>
         <text x="340" y="238" class="glyph-lab" font-size="10">2048 &rarr; 248320</text>
@@ -616,7 +616,7 @@
         </g>
         <!-- knee marker -->
         <text x="250" y="52" text-anchor="middle" class="glyph" font-size="10.5" style="fill:var(--good)">codo gratuito &middot; 0 p&eacute;rdida de accept</text>
-        <text x="530" y="250" text-anchor="middle" class="glyph" font-size="10" style="fill:var(--bad)">pasado el codo</text>
+        <text x="530" y="240" text-anchor="middle" class="glyph" font-size="10" style="fill:var(--bad)">pasado el codo</text>
         <defs><marker id="d" markerWidth="2" markerHeight="2"></marker></defs>
         <!-- legend -->
         <g class="glyph-m" font-size="11">
@@ -757,10 +757,12 @@
         </g>
         <!-- annotations -->
         <g class="glyph" font-size="11" style="fill:var(--bad)">
-          <text x="370" y="196">&#10007; 30 capas lineales tienen que BIFURCAR el estado recurrente</text>
-          <text x="370" y="216">&nbsp;&nbsp;&nbsp;por rama: no hay copia barata como en una cach&eacute; KV</text>
-          <text x="370" y="242">&#10007; m&aacute;s tokens distintos &rarr; uni&oacute;n de expertos m&aacute;s ancha</text>
-          <text x="370" y="262">&nbsp;&nbsp;&nbsp;&rarr; el coste del verify del MoE sube m&aacute;s r&aacute;pido que con una cadena</text>
+          <text x="370" y="188">&#10007; 30 capas lineales tienen que BIFURCAR</text>
+          <text x="370" y="202">&nbsp;&nbsp;&nbsp;el estado recurrente por rama: no hay</text>
+          <text x="370" y="216">&nbsp;&nbsp;&nbsp;copia barata como en una cach&eacute; KV</text>
+          <text x="370" y="240">&#10007; m&aacute;s tokens distintos &rarr; uni&oacute;n de expertos</text>
+          <text x="370" y="254">&nbsp;&nbsp;&nbsp;m&aacute;s ancha &rarr; el coste del verify del MoE</text>
+          <text x="370" y="268">&nbsp;&nbsp;&nbsp;sube m&aacute;s r&aacute;pido que con una cadena</text>
         </g>
         <defs>
           <marker id="at" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><polygon points="0 0,7 3,0 6" fill="var(--draft)"/></marker>
@@ -868,7 +870,7 @@
   <div class="fig wide">
     <figure>
       <div class="scroll">
-      <svg viewBox="0 0 900 360" role="img" aria-label="Cascada desde la base de 71.2 tokens por segundo. El vocab reducido suma unos 4.8 hasta llegar a 76, y se compone. El frequency-remap est&aacute; probado y suma solo cerca de 1, dentro del ruido. La profundidad 4 restar&iacute;a 5, as&iacute; que se rechaza y no se acumula. La paridad con omlx est&aacute; en 77.5. La distancia de 76 al objetivo de 80 sigue abierta y sin demostrar.">
+      <svg viewBox="0 0 900 376" role="img" aria-label="Cascada desde la base de 71.2 tokens por segundo. El vocab reducido suma unos 4.8 hasta llegar a 76, y se compone. El frequency-remap est&aacute; probado y suma solo cerca de 1, dentro del ruido. La profundidad 4 restar&iacute;a 5, as&iacute; que se rechaza y no se acumula. La paridad con omlx est&aacute; en 77.5. La distancia de 76 al objetivo de 80 sigue abierta y sin demostrar.">
         <!-- value axis 68..82 ; y = 320 - (v-68)*(280/14) = 320 - (v-68)*20 -->
         <!-- gridlines -->
         <g class="s-line">
@@ -918,13 +920,13 @@
         <line x1="660" y1="160" x2="770" y2="256" style="stroke:var(--bad);stroke-width:1.6"/>
         <text x="715" y="150" text-anchor="middle" class="glyph" font-size="12" font-weight="600" style="fill:var(--bad)">&minus;5.0</text>
         <text x="715" y="342" text-anchor="middle" class="glyph-m" font-size="11">profundidad 4</text>
-        <text x="715" y="356" text-anchor="middle" class="glyph-lab" font-size="9.5" style="fill:var(--bad)">RINDE MENOS &middot; rechazada</text>
+        <text x="715" y="356" text-anchor="middle" class="glyph-lab" font-size="9.5" style="fill:var(--bad)"><tspan x="715">RINDE MENOS</tspan><tspan x="715" dy="12">rechazada</tspan></text>
 
         <!-- goal gap: open segment 76(160) -> 80(80) at far right -->
         <rect x="800" y="80" width="46" height="80" rx="4" fill="none" style="stroke:var(--draft);stroke-width:1.6;stroke-dasharray:6 5"/>
         <text x="823" y="72" text-anchor="middle" class="glyph" font-size="12" font-weight="600" style="fill:var(--draft)">+4.0</text>
         <text x="823" y="342" text-anchor="middle" class="glyph-m" font-size="10">hasta 80</text>
-        <text x="823" y="356" text-anchor="middle" class="glyph-lab" font-size="9.5" style="fill:var(--draft)">A&Uacute;N SIN DEMOSTRAR</text>
+        <text x="823" y="356" text-anchor="middle" class="glyph-lab" font-size="9.5" style="fill:var(--draft)"><tspan x="823">A&Uacute;N SIN</tspan><tspan x="823" dy="12">DEMOSTRAR</tspan></text>
         <!-- goal line -->
         <line x1="120" y1="80" x2="860" y2="80" style="stroke:var(--draft);stroke-width:1.2;stroke-dasharray:2 4"/>
       </svg>
