@@ -109,6 +109,7 @@
   .intro .lede{font-size:21px;line-height:1.5;color:#3d4150;max-width:30em}
   .intro .lede p+p{margin-top:16px}
   .meta{font:400 13px/1.9 var(--mono);color:var(--soft)}
+  .meta .me{display:block;width:200px;max-width:100%;height:auto;aspect-ratio:1;object-fit:cover;border-radius:50%;margin-bottom:22px;box-shadow:0 0 0 1px rgba(30,36,60,.12)}
   .meta b{display:block;color:var(--ink);font-weight:500}
   .meta a{color:var(--accent-text)}
   .btnrow{display:flex;gap:22px;align-items:center;margin-top:28px}
