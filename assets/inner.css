@@ -59,7 +59,6 @@
   .stage{padding:40px 0 0}
   .lead{display:flex;justify-content:space-between;color:var(--soft);margin-bottom:34px}
   p.lead{display:block}
-  .tnote{font:400 12px/1.6 var(--mono);color:var(--soft);margin:34px 0 0;padding-top:16px;border-top:1px solid var(--line)}
   .line{display:flex;align-items:flex-end;gap:26px;position:relative}
   .dev{flex:none}
   .dev .shot{background:#000;border-radius:calc(var(--px)*.45);padding:calc(var(--px)*.14);box-shadow:0 0 0 1px #c6c9d3,0 14px 30px rgba(30,36,60,.12)}
@@ -292,3 +291,11 @@
   /* footer links keep the marker highlight */
   .foot a{color:var(--ink);text-decoration:none;padding:0 2px;margin:0 -2px;background:linear-gradient(rgba(228,117,106,.32),rgba(228,117,106,.32)) 0 90%/100% .5em no-repeat}
   .foot a:hover,.foot a:focus-visible{background-image:linear-gradient(rgba(228,117,106,.5),rgba(228,117,106,.5))}
+
+  /* every link highlights on hover: logo and back link sweep like the nav, article and CV links keep the running-text band */
+  .bar .brand,.back{padding:2px 3px;margin-left:-3px;background:linear-gradient(rgba(228,117,106,.32),rgba(228,117,106,.32)) 0 88%/0% .62em no-repeat;transition:background-size .28s ease}
+  .bar .brand:hover,.bar .brand:focus-visible,.back:hover,.back:focus-visible{background-size:100% .62em;color:var(--ink)}
+  .sk .d a:any-link,.art a:any-link{color:var(--ink);text-decoration:none;border-bottom:0;padding:0 2px;margin:0 -2px;background:linear-gradient(rgba(228,117,106,.30),rgba(228,117,106,.30)) 0 88%/100% .62em no-repeat;transition:background-color .2s}
+  .sk .d a:any-link:hover,.art a:any-link:hover{background-image:linear-gradient(rgba(228,117,106,.5),rgba(228,117,106,.5))}
+  .btn{transition:filter .2s}.btn:hover,.btn:focus-visible{filter:brightness(1.14)}
+  @media (prefers-reduced-motion:reduce){.bar .brand,.back,.btn{transition:none}}

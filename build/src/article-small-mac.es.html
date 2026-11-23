@@ -159,7 +159,7 @@
         <rect x="440" y="46" width="200" height="120" rx="10" class="s-verify" fill-opacity=".16" style="stroke:var(--verify);stroke-width:1.6"/>
         <text x="540" y="98" text-anchor="middle" class="glyph" font-size="13" font-weight="600" style="fill:var(--verify)">GPU</text>
         <text x="540" y="120" text-anchor="middle" class="glyph-m" font-size="11">puede hacer las cuentas</text>
-        <text x="540" y="136" text-anchor="middle" class="glyph-m" font-size="11">más rápido de lo que le llegan</text>
+        <text x="540" y="136" text-anchor="middle" class="glyph-m" font-size="11">más rápido de lo que<tspan x="540" dy="16">le llegan los datos</tspan></text>
       </svg>
       </div>
       <figcaption><b>El apretón.</b> El chip se queda parado esperando a que los números lleguen por una tubería demasiado estrecha. Leer el modelo entero, una vez por palabra, es el impuesto que el resto de la historia intenta esquivar.</figcaption>
@@ -174,11 +174,11 @@
   <p class="lead">Te descargas un modelo, le apuntas un servidor estándar y funciona. Incluso cabe un modelo capaz en este Mac de 32&nbsp;GB. Pero de fábrica va a paso de tortuga, a unos <b>8 tokens por segundo</b>, tan lento que llamarlo asistente útil es estirar mucho el concepto. Y de vez en cuando se descontrola, se repite o se va por las ramas. Convertir &ldquo;funciona&rdquo; en &ldquo;da gusto usarlo&rdquo; es un oficio.</p>
   <p>Por suerte es un oficio con una caja de herramientas enorme y pública. Casi cada semana los investigadores publican trucos nuevos de velocidad. Vienen en dos tamaños aproximados:</p>
   <p><b>Las victorias universales.</b> Un puñado de ideas mejora casi todo a la vez: empezar a responder antes, escribir la respuesta más rápido y hacerlo con más estabilidad y precisión. Esas simplemente se aplican.</p>
-  <p><b>La cola larga.</b> Después todo es una paliza de retoques de un uno por ciento aquí y otro allá, y cuanto más profundizas más especializado se vuelve, hasta que acabas escribiendo a mano código a medida para el chip gráfico. Como mis vacaciones no eran infinitas, la regla era sencilla: <b>ir primero a por las palancas más grandes.</b></p>
+  <p><b>La cola larga.</b> Después todo se reduce a una larga tanda de retoques de un uno por ciento aquí y otro allá, y cuanto más profundizas más especializado se vuelve, hasta que acabas escribiendo a mano código a medida para el chip gráfico. Como mis vacaciones no eran infinitas, la regla era sencilla: <b>ir primero a por las palancas más grandes.</b></p>
 
   <div class="aside">
     <div class="atag">Una palabra que seguiré usando</div>
-    <p>Aquí la velocidad se mide en <b>tokens por segundo</b>. Un token es un trozo de texto, más o menos una palabra corta o parte de una. Más tokens por segundo significa que la respuesta aparece antes en pantalla. Todo lo que sigue es, al final, una pelea por ese único número, sin dejar que las respuestas empeoren.</p>
+    <p>Aquí la velocidad se mide en <b>tokens por segundo</b>. Un token es un trozo de texto, más o menos una palabra corta o parte de una. Más tokens por segundo significa que la respuesta aparece antes en pantalla. Todo lo que sigue es, al final, una carrera por ese único número sin que las respuestas empeoren.</p>
   </div>
 </section>
 
@@ -189,8 +189,8 @@
   <p class="lead">La palanca más grande es una decisión que tomas antes de cualquier ingeniería ingeniosa: <em>qué tipo de modelo</em> ejecutar. Aquí es donde los viajes a la despensa se reducen a la mitad.</p>
   <p>Aquel modelo lento de hace un momento era un modelo <b>denso</b>: usa todos sus pesos para cada palabra. Cada viaje a la despensa trae el inventario entero. Un modelo más reciente de <b>mezcla de expertos</b> (Mixture of Experts, MoE para abreviar) está formado por muchos pequeños especialistas, y para cada palabra despierta solo a un puñado.</p>
   <p>El modelo por defecto de Mira tiene unos 35 000 millones de pesos, pero toca solo unos 3000 millones por palabra. Como todo nuestro problema era <em>leer pesos</em>, leer más o menos una décima parte es una ventaja enorme, y llega casi gratis: el modelo se entrenó para enviar cada palabra a los especialistas adecuados, así que las respuestas siguen siendo igual de buenas.</p>
-  <p>Ese único cambio, de un modelo denso a una mezcla de expertos, es lo que llevó a Mira de aquellos dolorosos <b>8 tokens por segundo a casi 60</b>. Una sola decisión, un salto de siete veces y la mayor victoria de toda la historia. Todo lo que viene después es pelear por el último tramo.</p>
-  <p>Nada de esto fue ir de compras en teoría: trabajé con una lista corta real en este único Mac. Gemma&nbsp;4 de 31B, luego una Gemma de mezcla de expertos (26B-A4B), luego Ministral&nbsp;3. El que más me impresionó por pura calidad de respuesta fue un <b>Qwen3.8 denso de 27B</b>, pero es exactamente el lento de antes: respuestas maravillosas, a esos 8 y pico tokens por segundo. El modelo que por fin juntó buenas respuestas con velocidad de verdad es el de mezcla de expertos <b>Qwen3.6, 35B en total con solo unos 3B despiertos por palabra</b>, y nada de lo que le he echado desde entonces lo ha desbancado del primer puesto. Ahora espero a la versión actualizada de Qwen3.8 con mezcla de expertos para ver si por fin puede.</p>
+  <p>Ese único cambio, de un modelo denso a una mezcla de expertos, es lo que llevó a Mira de aquellos dolorosos <b>8 tokens por segundo a casi 60</b>. Una sola decisión, un salto de siete veces y la mayor victoria de toda la historia. Todo lo que viene después consiste en arañar el último tramo.</p>
+  <p>Nada de esto fue teoría: trabajé con una lista corta real en este único Mac. Gemma&nbsp;4 de 31B, luego una Gemma de mezcla de expertos (26B-A4B), luego Ministral&nbsp;3. El que más me impresionó por pura calidad de respuesta fue un <b>Qwen3.8 denso de 27B</b>, pero es exactamente el lento de antes: respuestas maravillosas, a esos 8 y pico tokens por segundo. El modelo que por fin juntó buenas respuestas con velocidad de verdad es el de mezcla de expertos <b>Qwen3.6, 35B en total con solo unos 3B despiertos por palabra</b>, y nada de lo que le he echado desde entonces lo ha desbancado del primer puesto. Ahora espero a la versión actualizada de Qwen3.8 con mezcla de expertos para ver si por fin puede.</p>
 
   <div class="fig">
     <figure>
@@ -210,7 +210,7 @@
 
         <!-- moe -->
         <text x="20" y="164" class="glyph" font-size="12" font-weight="600">MEZCLA DE EXPERTOS</text>
-        <text x="20" y="182" class="glyph-m" font-size="11">unos pocos especialistas por palabra</text>
+        <text x="20" y="182" class="glyph-m" font-size="11"><tspan x="20">unos pocos especialistas</tspan><tspan x="20" dy="14">por palabra</tspan></text>
         <g class="s-dim" fill-opacity=".35">
           <circle cx="250" cy="170" r="9"/><circle cx="288" cy="170" r="9"/><circle cx="326" cy="170" r="9"/><circle cx="364" cy="170" r="9"/>
           <circle cx="402" cy="170" r="9"/><circle cx="440" cy="170" r="9"/><circle cx="478" cy="170" r="9"/><circle cx="516" cy="170" r="9"/>
@@ -229,7 +229,7 @@
   <div class="verdicts">
     <div class="vc">
       <div class="tag na">no aplica</div>
-      <div class="txt"><b>El offloading de expertos</b> es una idea de MoE relacionada: dejar a los especialistas dormidos en el disco en lugar de en memoria. Solo ayuda cuando el modelo es demasiado grande para caber. En un Mac donde ya cabe todo, mandar expertos al disco solo añade viajes lentos, así que sirve para ejecutar un modelo <em>más grande</em>, nunca para ejecutar este más rápido. No aplica, y lo dejé en paz.</div>
+      <div class="txt"><b>Descargar expertos al disco (offloading)</b> es una idea de MoE relacionada: dejar a los especialistas dormidos en el disco en lugar de en memoria. Solo ayuda cuando el modelo es demasiado grande para caber. En un Mac donde ya cabe todo, mandar expertos al disco solo añade viajes lentos, así que sirve para ejecutar un modelo <em>más grande</em>, nunca para ejecutar este más rápido. No aplica, y lo dejé en paz.</div>
     </div>
   </div>
 </section>
@@ -239,13 +239,13 @@
   <span class="eyebrow">04 &middot; La gran palanca</span>
   <h2>Adivina unas cuantas palabras y compruébalas todas de golpe</h2>
   <p class="lead">Lo normal es que el modelo escriba una palabra, se vuelva a leer, escriba la siguiente, y así sucesivamente: un caro viaje a la despensa por palabra. El truco que más cambió las cosas se llama <b>decodificación especulativa</b>, y la idea tiene su guasa.</p>
-  <p>Acopla al modelo un predictor diminuto y barato. Déjalo <b>adivinar</b> las siguientes palabras en un instante. Después deja que el modelo de verdad las <b>compruebe</b> todas en una <em>única</em> lectura, y aquí está la magia: en este hardware, comprobar cuatro intentos cuesta casi lo mismo que comprobar uno. Lo caro era el viaje a la despensa, y un solo viaje cubre los cuatro. Te quedas con cada intento con el que el modelo real está de acuerdo, corriges gratis el primero que falla, y vuelta a empezar.</p>
-  <p>Digamos que el modelo va por la mitad de una frase: <em>&ldquo;Para hacer una tortilla, primero casca unos cuantos&hellip;&rdquo;</em> El predictor barato suelta de golpe las siguientes palabras, <span class="mono">huevos</span>, <span class="mono">en</span>, <span class="mono">el</span>. El modelo real comprueba toda esa ráfaga en una sola lectura, da por buenas <span class="mono">huevos</span> y <span class="mono">en</span>, y sobrescribe la última con su propia elección. Tres palabras consideradas, una lectura cara, dos de ellas conservadas.</p>
+  <p>Acopla al modelo un modelo borrador diminuto y barato. Déjalo <b>adivinar</b> las siguientes palabras en un instante. Después deja que el modelo de verdad las <b>compruebe</b> todas en una <em>única</em> lectura, y aquí está la magia: en este hardware, comprobar cuatro intentos cuesta casi lo mismo que comprobar uno. Lo caro era el viaje a la despensa, y un solo viaje cubre los cuatro. Te quedas con cada intento con el que el modelo real coincide, corriges gratis el primero que falla, y vuelta a empezar.</p>
+  <p>Digamos que el modelo va por la mitad de una frase: <em>&ldquo;Para hacer una tortilla, primero casca unos cuantos&hellip;&rdquo;</em> El borrador suelta de golpe las siguientes palabras, <span class="mono">huevos</span>, <span class="mono">en</span>, <span class="mono">el</span>. El modelo real comprueba toda esa ráfaga en una sola lectura, da por buenas <span class="mono">huevos</span> y <span class="mono">en</span>, y sobrescribe la última con su propia elección. Tres palabras consideradas, una lectura cara, dos de ellas conservadas.</p>
 
   <div class="fig">
     <figure>
       <div class="scroll">
-      <svg viewBox="0 0 660 312" role="img" aria-label="El modelo está escribiendo la frase 'Para hacer una tortilla, primero casca unos cuantos'. Un predictor barato adivina las tres palabras siguientes: huevos, en, el. Una lectura del modelo real las comprueba las tres a la vez. Conserva huevos y en, y sobrescribe el último intento con su propia palabra, un.">
+      <svg viewBox="0 0 660 312" role="img" aria-label="El modelo está escribiendo la frase 'Para hacer una tortilla, primero casca unos cuantos'. Un modelo borrador barato adivina las tres palabras siguientes: huevos, en, el. Una lectura del modelo real las comprueba las tres a la vez. Conserva huevos y en, y sobrescribe el último intento con su propia palabra, un.">
         <!-- context sentence -->
         <text x="20" y="24" class="glyph-lab" font-size="11">el modelo escribe esto, palabra a palabra:</text>
         <rect x="20" y="36" width="620" height="36" rx="8" class="s-surf st-ink" style="stroke-width:1.2"/>
@@ -253,7 +253,7 @@
 
         <!-- step 1: guess -->
         <text x="20" y="118" class="glyph" font-size="12" font-weight="600" style="fill:var(--draft)">1 &middot; ADIVINAR</text>
-        <text x="20" y="136" class="glyph-m" font-size="10.5">predictor barato, al instante</text>
+        <text x="20" y="136" class="glyph-m" font-size="10.5">modelo borrador, al instante</text>
         <g>
           <rect x="230" y="98" width="120" height="40" rx="8" class="st-draft" style="stroke-width:2" fill="var(--draft-wash)"/>
           <text x="290" y="123" text-anchor="middle" class="glyph" font-weight="600">huevos</text>
@@ -271,7 +271,7 @@
 
         <!-- step 3: keep -->
         <text x="20" y="272" class="glyph" font-size="12" font-weight="600" style="fill:var(--good)">3 &middot; CONSERVAR</text>
-        <text x="20" y="290" class="glyph-m" font-size="10.5">acierta &rarr; se queda &middot; falla &rarr; arreglo gratis</text>
+        <text x="20" y="290" class="glyph-m" font-size="10.5"><tspan x="20">acierta: se queda</tspan><tspan x="20" dy="13">falla: arreglo gratis</tspan></text>
         <rect x="230" y="252" width="256" height="40" rx="8" class="s-good" fill-opacity=".16" style="stroke:var(--good);stroke-width:1.5"/>
         <text x="358" y="277" text-anchor="middle" class="glyph" font-weight="600" style="fill:var(--good)">huevos &middot; en &nbsp;conservadas</text>
         <rect x="502" y="252" width="120" height="40" rx="8" class="st-ink" style="stroke-width:1.3;stroke-dasharray:4 3" fill="none"/>
@@ -284,14 +284,14 @@
         <defs><marker id="a" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><polygon points="0 0,6 3,0 6" fill="var(--ink-3)"/></marker></defs>
       </svg>
       </div>
-      <figcaption><b>Adivinar, comprobar, conservar.</b> El predictor adivinó <span class="mono">huevos en el</span>; el modelo conservó <span class="mono">huevos</span> y <span class="mono">en</span> y cambió el último intento por su propia palabra, lo que da <em>&ldquo;casca unos cuantos huevos en un bol&rdquo;</em>. Dos palabras salieron de una sola lectura cara, e incluso el intento equivocado costó apenas una pizca de velocidad, nunca una respuesta peor.</figcaption>
+      <figcaption><b>Adivinar, comprobar, conservar.</b> El borrador adivinó <span class="mono">huevos en el</span>; el modelo conservó <span class="mono">huevos</span> y <span class="mono">en</span> y cambió el último intento por su propia palabra, lo que da <em>&ldquo;casca unos cuantos huevos en un bol&rdquo;</em>. Dos palabras salieron de una sola lectura cara, e incluso el intento equivocado costó apenas una pizca de velocidad, nunca una respuesta peor.</figcaption>
     </figure>
   </div>
 
   <div class="aside">
     <div class="atag">Por qué esto es seguro, y qué significa de verdad &ldquo;sin pérdidas&rdquo;</div>
     <p>La última palabra la tiene siempre <b>la elección del propio modelo real</b>. Un mal intento simplemente se descarta y cuesta un poco de velocidad; nunca puede meter en la respuesta una palabra que el modelo no habría elegido por sí mismo. Así que la técnica es <b>sin pérdidas</b> en un sentido preciso: las <em>decisiones</em> son exactamente las que el modelo habría tomado de todos modos.</p>
-    <p>No promete <em>texto idéntico byte a byte</em>. En el fondo, comprobar varias palabras a la vez altera algunos desempates numéricos, así que la redacción exacta puede variar un pelo. Comparé las respuestas que divergían una al lado de otra: misma calidad, solo a veces parafraseada. Y para estar seguro de que no me estaba engañando, repetí una parte de un examen estándar de razonamiento con el truco activado y desactivado. Las puntuaciones se mantuvieron.</p>
+    <p>No promete <em>texto idéntico byte a byte</em>. Por dentro, comprobar varias palabras a la vez altera algunos desempates numéricos, así que la redacción exacta puede variar un pelo. Comparé lado a lado las respuestas que divergían: misma calidad, solo a veces parafraseada. Y para estar seguro de que no me estaba engañando, repetí una parte de un examen estándar de razonamiento con el truco activado y desactivado. Las puntuaciones se mantuvieron.</p>
   </div>
 
   <p>El resultado: la decodificación pasó de unos <b>60</b> tokens por segundo a algo más de <b>70</b>. Un quinto más rápido, con las respuestas intactas. Es una victoria universal justo del tipo que conviene aplicar primero.</p>
@@ -301,26 +301,26 @@
 <section>
   <span class="eyebrow">05 &middot; La vara de medir</span>
   <h2>El estándar contra el que me mido</h2>
-  <p class="lead">No hago esto en el vacío. Hay otro motor, <b>oMLX</b>, en el que me he apoyado desde los primeros tiempos, cuando ejecutar estos modelos en un Mac apenas funcionaba.</p>
+  <p class="lead">No hago esto en el vacío. Hay otro motor, <b><a class="ext" href="https://github.com/jundot/omlx">oMLX</a></b>, en el que me he apoyado desde los primeros tiempos, cuando ejecutar estos modelos en un Mac apenas funcionaba.</p>
   <p>Ha madurado mucho. Incluso desarrolló su propia forma de <b>comprimir</b> el modelo, su propio formato de cuantización. Eso importa porque una buena compresión mantiene las respuestas afiladas mientras hace el modelo <em>más pequeño de leer</em> (es decir, usa menos RAM), y leer es todo nuestro cuello de botella, así que la calidad sale prácticamente gratis. Durante mucho tiempo Mira funcionó sobre motores de otros, y oMLX era el rápido. Por eso es mi patrón de referencia: unos <b>77,5</b> tokens por segundo en el mismo Mac pequeño.</p>
-  <p>El objetivo honesto era igualarlo con el motor propio de Mira, y luego ver si podía pasarlo por poco. Sabía de antemano que el último tramo no saldría gratis. Por los <b>80</b> tokens por segundo, cada gramo extra de velocidad empieza a costarte algo: más intentos fallidos, o respuestas algo peores. La pregunta interesante era dónde estaba realmente ese muro.</p>
+  <p>El objetivo honesto era igualarlo con el motor propio de Mira, y luego ver si podía pasarlo por poco. Sabía de antemano que el último tramo no saldría gratis. Hacia los <b>80</b> tokens por segundo, cada gramo extra de velocidad empieza a costarte algo: más intentos fallidos, o respuestas algo peores. La pregunta interesante era dónde estaba realmente ese muro.</p>
 </section>
 
 <!-- ============ 6. THE GRIND ============ -->
 <section>
   <span class="eyebrow">06 &middot; La cola larga</span>
-  <h2>Después se convierte en una paliza de pequeñas palancas</h2>
+  <h2>Después todo son pequeñas palancas, una tras otra</h2>
   <p class="lead">Con las grandes victorias ya en el bolsillo, entras en la parte sin glamour: muchas ideas pequeñas, cada una de las cuales vale un uno o un dos por ciento. Algunas compensan, otras salen mal sin hacer ruido, y otras simplemente no dan lo que creo que prometía la teoría (¡yo también estoy aprendiendo!).</p>
 
   <h3>La que funcionó: adivinar desde una lista más corta</h3>
-  <p>El pequeño predictor consideraba el vocabulario entero del modelo, cientos de miles de fragmentos de palabra posibles, solo para elegir uno. Pero las palabras que de verdad necesita son casi siempre las comunes. Así que lo dejé adivinar solo con la porción más común del vocabulario. Intentos más baratos, sin pérdida de calidad, y cerró la brecha: el motor propio de Mira llegó a unos <b>76</b>, a la par de oMLX.</p>
+  <p>El modelo borrador consideraba el vocabulario entero del modelo, cientos de miles de fragmentos de palabra posibles, solo para elegir uno. Pero las palabras que de verdad necesita son casi siempre las comunes. Así que lo dejé adivinar solo con la porción más común del vocabulario. Intentos más baratos, sin pérdida de calidad, y cerró la brecha: el motor propio de Mira llegó a unos <b>76</b>, a la par de oMLX.</p>
 
   <div class="scoreline">
     <div class="cell c-base"><div class="lab">Denso</div><div class="val">8,5<small>&nbsp;t/s</small></div></div>
     <div class="cell c-moe"><div class="lab">MoE</div><div class="val">59,5<small>&nbsp;t/s</small></div></div>
     <div class="cell c-fine"><div class="lab">+ adivinar y comprobar</div><div class="val">71,2<small>&nbsp;t/s</small></div></div>
     <div class="cell c-fine"><div class="lab">+ lista más corta</div><div class="val">76,0<small>&nbsp;t/s</small></div></div>
-    <div class="cell c-omlx"><div class="lab">oMLX, la vara</div><div class="val">77,5<small>&nbsp;t/s</small></div></div>
+    <div class="cell c-omlx"><div class="lab">oMLX, la referencia</div><div class="val">77,5<small>&nbsp;t/s</small></div></div>
   </div>
 
   <h3>Las que no salieron bien</h3>
@@ -329,7 +329,7 @@
   <div class="verdicts">
     <div class="vc">
       <div class="tag no">pérdida neta</div>
-      <div class="txt"><b>Adivinar más lejos.</b> Si adivinar tres palabras por delante ayuda, seguro que adivinar más ayuda más, ¿no? Medido, fue más lento. Cuanto más lejos adivinas, más veces fallas, y los intentos desperdiciados cuestan más de lo que ahorra una racha de suerte ocasional.</div>
+      <div class="txt"><b>Adivinar más lejos.</b> Si adivinar tres palabras por delante ayuda, seguro que adivinar más ayuda más, ¿no? Al medirlo, fue más lento. Cuanto más lejos adivinas, más veces fallas, y los intentos desperdiciados cuestan más de lo que ahorra una racha de suerte ocasional.</div>
     </div>
     <div class="vc">
       <div class="tag meh">rinde poco</div>
@@ -341,7 +341,7 @@
     </div>
   </div>
 
-  <p>Esa es la forma de la cola larga: un montón de apuestas pequeñas en las que la disciplina no consiste en ser ingenioso, sino en estar dispuesto a <em>medir</em> y tirar las que no se ganan su sitio.</p>
+  <p>Esa es la forma de la cola larga: una larga serie de apuestas pequeñas en las que la disciplina no consiste en ser ingenioso, sino en estar dispuesto a <em>medir</em> y descartar las que no se ganan su sitio.</p>
 </section>
 
 <!-- ============ 7. CLOSE ============ -->
@@ -350,14 +350,11 @@
   <h2>Un Mac pequeño, defendiéndose</h2>
   <p class="lead">El marcador: de unos 8 tokens por segundo apenas utilizables, a casi 60 en el momento en que el modelo pasó a ser una mezcla de expertos, hasta quedar a la par del motor rápido que llevo años admirando, todo en el mismo Mac de 32&nbsp;GB y con las respuestas igual de buenas. Los ochenta se pueden alcanzar, pero solo pagando en calidad o precisión, así que paré donde el intercambio dejó de merecer la pena.</p>
   <p>Y aquí va la nota de honestidad. Esto es un hobby. No es mi trabajo, y si soy sincero no es de verdad el trabajo de nadie, es mi idea un poco rara de unas vacaciones divertidas. Pero precisamente por eso la limitación es el sentido de todo. Una máquina pequeña te obliga a entender de verdad adónde va cada milisegundo, en lugar de resolver el problema alquilando un ordenador más grande. La necesidad de verdad es la madre de la invención, y hay una cantidad enorme de cosas con las que jugar.</p>
-  <p>Si algo de esto te ha dado curiosidad por los números reales, los gráficos y la investigación en la que se apoya, hay un análisis mucho más profundo que va palanca por palanca.</p>
+  <p>Si algo de esto te ha dado curiosidad por los números reales, los gráficos y la investigación en la que se apoya, hay un análisis mucho más profundo que va palanca por palanca. La inmersión técnica, con todos los gráficos y citas, está en <a class="ext" href="{{url:article-chasing}}">la guía completa</a>.</p>
 </section>
 
 <footer>
-  <div>
-    Escrito de vacaciones, por diversión, sobre Mira, un asistente de IA privado que funciona por completo en un solo Mac.<br>
-    El análisis a fondo, con todos los gráficos y citas, está en <a href="{{url:article-chasing}}">la explicación completa</a>.
-  </div>
+  <div></div>
 </footer>
 
 </div>

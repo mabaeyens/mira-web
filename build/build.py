@@ -244,22 +244,49 @@ def head(key, lang):
 # Articles and posts: the language each was first written in. The other language is an AI translation.
 ORIGINAL = {k: "es" for k in PAGES if k.startswith("post-")}
 ORIGINAL.update({"article-small-mac": "en", "article-chasing": "en"})
-LANGNAME = {"en": {"en": "English", "es": "Spanish"}, "es": {"en": "inglés", "es": "español"}}
+# Full publication date of each article or post (LinkedIn publish date for the posts).
+PUBDATE = {
+    "post-qlik-llm": (2026, 3, 20), "post-strawberry": (2026, 3, 26), "post-kasparov": (2026, 3, 31),
+    "post-datos": (2026, 4, 7), "post-promesas": (2026, 4, 21), "post-programar": (2026, 4, 27),
+    "post-modelos": (2026, 5, 5), "post-herramientas": (2026, 5, 12), "post-mira-launch": (2026, 7, 10),
+    "post-anthropic-extension": (2026, 9, 18), "post-mcp-qlik": (2026, 11, 21),
+    "article-small-mac": (2026, 8, 19), "article-chasing": (2026, 8, 19),
+}
+MONTHS = {
+    "en": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+    "es": ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"],
+}
+LANGNAME = {"en": {"en": "English", "es": "Spanish"}, "es": {"en": "ingl&eacute;s", "es": "espa&ntilde;ol"}}
 
 
-def tnote(key, lang):
+def pmeta(key, lang, body):
+    """Subheader under the title: full date, where it was first published, original language, AI translation."""
     orig = ORIGINAL.get(key)
-    if not orig:
-        return ""
+    if not orig or key not in PUBDATE:
+        return body
+    y, m, d = PUBDATE[key]
+    li = re.search(r'<a href="([^"]+)">LinkedIn</a>', body)
+    parts = []
     if lang == "en":
-        text = f"Originally written in {LANGNAME['en'][orig]}"
+        parts.append(f"{d} {MONTHS['en'][m - 1]} {y}")
+        if li:
+            parts.append(f'First published on <a href="{li.group(1)}">LinkedIn</a>')
+        else:
+            parts.append("Technical article")
+        parts.append(f"Originally written in {LANGNAME['en'][orig]}")
         if orig != lang:
-            text += " &middot; Translated to English with AI"
+            parts.append("Translated to English with AI")
     else:
-        text = f"Escrito originalmente en {LANGNAME['es'][orig]}"
+        parts.append(f"{d} de {MONTHS['es'][m - 1]} de {y}")
+        if li:
+            parts.append(f'Publicado antes en <a href="{li.group(1)}">LinkedIn</a>')
+        else:
+            parts.append("Art&iacute;culo t&eacute;cnico")
+        parts.append(f"Escrito originalmente en {LANGNAME['es'][orig]}")
         if orig != lang:
-            text += " &middot; Traducido al espa&ntilde;ol con IA"
-    return f'<div class="wrap"><p class="tnote mono">{text}</p></div>\n'
+            parts.append("Traducido al espa&ntilde;ol con IA")
+    line = '<div class="pmeta mono">' + " &middot; ".join(parts) + "</div>"
+    return re.sub(r'<div class="pmeta mono">.*?</div>', lambda _: line, body, count=1, flags=re.S)
 
 
 def render(key, lang):
@@ -268,10 +295,11 @@ def render(key, lang):
     body = body.replace("{{sky}}", read(os.path.join(PART, "sky.html")))
     body = body.replace("{{sky_inner}}", read(os.path.join(PART, "sky_inner.html")))
     body = re.sub(r"\{\{url:([a-z-]+)\}\}", lambda mm: url(mm.group(1), lang), body)
+    body = pmeta(key, lang, body)
     left = re.findall(r"\{\{[^}]*\}\}", body)
     if left:
         sys.exit(f"{key}.{lang}: unresolved placeholders {left}")
-    return head(key, lang) + "\n<body>\n" + nav(lang, key, META[key]["current"], META[key]["css"] != "home.css") + "\n" + body + "\n" + tnote(key, lang) + foot(lang, META[key]["css"] != "home.css", META[key].get("app", "mira")) + "\n</body>\n</html>\n"
+    return head(key, lang) + "\n<body>\n" + nav(lang, key, META[key]["current"], META[key]["css"] != "home.css") + "\n" + body + "\n" + foot(lang, META[key]["css"] != "home.css", META[key].get("app", "mira")) + "\n</body>\n</html>\n"
 
 
 def out_path(path):

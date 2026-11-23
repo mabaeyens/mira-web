@@ -208,3 +208,7 @@
   /* footer links keep the marker highlight */
   .foot a{color:var(--ink);text-decoration:none;padding:0 2px;margin:0 -2px;background:linear-gradient(rgba(228,117,106,.32),rgba(228,117,106,.32)) 0 90%/100% .5em no-repeat}
   .foot a:hover,.foot a:focus-visible{background-image:linear-gradient(rgba(228,117,106,.5),rgba(228,117,106,.5))}
+
+  .bar .brand{padding:2px 3px;margin-left:-3px;background:linear-gradient(rgba(228,117,106,.32),rgba(228,117,106,.32)) 0 88%/0% .62em no-repeat;transition:background-size .28s ease}
+  .bar .brand:hover,.bar .brand:focus-visible{background-size:100% .62em}
+  .btn{transition:filter .2s}.btn:hover,.btn:focus-visible{filter:brightness(1.14)}

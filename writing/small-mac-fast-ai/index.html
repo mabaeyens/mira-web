@@ -115,7 +115,7 @@
   <div class="wrap pbw">
   <a class="back" href="/writing/">&larr; Writing</a>
   <h1 class="ph1">Making a small Mac keep up with a big AI</h1>
-  <div class="pmeta mono">Aug 2026 · In English · Technical article</div>
+  <div class="pmeta mono">19 August 2026 &middot; Technical article &middot; Originally written in English</div>
   </div>
 </div>
 <style>
@@ -412,7 +412,7 @@
 <section>
   <span class="eyebrow">05 &middot; The bar to beat</span>
   <h2>The standard I measure against</h2>
-  <p class="lead">I am not doing this in a vacuum. There is another engine, <b>oMLX</b>, that I have leaned on since the early days when running these models on a Mac barely worked at all.</p>
+  <p class="lead">I am not doing this in a vacuum. There is another engine, <b><a class="ext" href="https://github.com/jundot/omlx">oMLX</a></b>, that I have leaned on since the early days when running these models on a Mac barely worked at all.</p>
   <p>It has matured a lot. It even grew its own way of <b>compressing</b> the model, its own quantization format. That matters because a good compression keeps the answers sharp while making the model <em>smaller to read</em> (that is, it uses less RAM), and reading is our whole bottleneck, so the quality comes essentially for free. For a long time Mira ran on top of other people's engines, and oMLX was the fast one. So it is my gold standard: about <b>77.5</b> tokens per second on the same little Mac.</p>
   <p>The honest target was to match it with Mira's own engine, and then see if I could nudge past it. I knew going in that the last stretch would not be free. Somewhere near <b>80</b> tokens per second, every extra bit of speed starts costing you something: either more wrong guesses, or slightly worse answers. The interesting question was where that wall actually sits.</p>
 </section>
@@ -461,20 +461,16 @@
   <h2>A small Mac, holding its own</h2>
   <p class="lead">The scoreboard: from a barely-usable 8 tokens per second, to nearly 60 the moment the model became a Mixture of Experts, to level with the fast engine I have admired for years, all on the same 32&nbsp;GB Mac and with the answers just as good. Eighty is reachable, but only by paying in quality or accuracy, so I stopped where the trade stopped being worth it.</p>
   <p>And here is the honest footnote. This is a hobby. It is not my job, and if I am being truthful it is not really anyone's job, it is my slightly odd idea of a fun holiday. But that is exactly why the constraint is the point. A small machine forces you to actually understand where every millisecond goes, instead of solving the problem by renting a bigger computer. Necessity really is the mother of invention, and there is an enormous amount out there to play with.</p>
-  <p>If any of this made you curious about the actual numbers, charts, and the research it draws on, there is a much deeper write-up that goes lever by lever.</p>
+  <p>If any of this made you curious about the actual numbers, charts, and the research it draws on, there is a much deeper write-up that goes lever by lever. The deep-dive with every chart and citation lives in <a class="ext" href="/writing/chasing-80-tokens/">the full explainer</a>.</p>
 </section>
 
 <footer>
-  <div>
-    Written on holiday, for fun, about Mira , a private AI assistant that runs entirely on one Mac.<br>
-    The deep-dive with every chart and citation lives in <a href="/writing/chasing-80-tokens/">the full explainer</a>.
-  </div>
+  <div></div>
 </footer>
 
 </div>
 </div>
 
-<div class="wrap"><p class="tnote mono">Originally written in English</p></div>
 <div class="wrap"><div class="foot mono" style="margin-top:50px"><span><a href="/mira/privacy/">Privacy</a> · <a href="/mira/support/">Support</a> · <a href="https://github.com/mabaeyens">GitHub</a></span></div></div>
 <script src="/assets/zoom.js" defer></script>
 </body>
