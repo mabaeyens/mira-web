@@ -69,7 +69,7 @@
   @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
   @media (prefers-reduced-motion:reduce){.cl,.sun{animation:none}.cl{opacity:.9}}
   /* hero: a live dithered pixel field with a pixel-art Mira star */
-  .hero{position:relative;height:720px;overflow:hidden}
+  .hero{position:relative;height:clamp(540px,80vh,720px);overflow:hidden}
   #field{position:absolute;inset:0;width:100%;height:100%;display:block}
   .hero .wrap{height:100%;display:flex;flex-direction:column;justify-content:center;pointer-events:none}
   h1{font-stretch:125%;font-weight:700;font-size:clamp(44px,6.6vw,96px);line-height:.96;letter-spacing:-.035em;max-width:8.6em;margin-top:40px}
@@ -193,6 +193,9 @@
   /* sky stays behind the headline and copy */
   .sky{z-index:0}
   .hero .wrap{z-index:1}
+  /* a halo in the page colour keeps drifting clouds from striking through the copy */
+  .hero h1,.hero p{text-shadow:0 0 6px #F1F2F5,0 0 14px #F1F2F5,0 0 26px #F1F2F5}
+  html[data-theme=dark] .hero h1,html[data-theme=dark] .hero p{text-shadow:0 0 6px #121419,0 0 14px #121419,0 0 26px #121419}
 
   /* floor pixels share the wall's grid: the screen starts one bezel in from the left edge */
   .floor{background-position:calc(var(--px)*.35) 0}
