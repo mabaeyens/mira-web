@@ -122,14 +122,14 @@ UI = {
     "en": {
         "lang": "en", "apps": "Apps", "writing": "Writing", "about": "About",
         "mira_t": "AI assistant that runs on your own Mac", "mira_b": "In beta",
-        "vera_t": "Markdown editor for your git repos", "vera_b": "In beta",
+        "vera_t": "Markdown editor for your git repos", "vera_b": "App Store",
         "aura_t": "Weather for Spain, from AEMET data", "aura_b": "App Store",
         "privacy": "Privacy", "support": "Support", "theme": "Switch light or dark theme", "locale": "en_US",
     },
     "es": {
         "lang": "es", "apps": "Apps", "writing": "Escritos", "about": "Sobre mí",
         "mira_t": "Asistente de IA que corre en tu propio Mac", "mira_b": "En beta",
-        "vera_t": "Editor de Markdown para tus repos git", "vera_b": "En beta",
+        "vera_t": "Editor de Markdown para tus repos git", "vera_b": "App Store",
         "aura_t": "El tiempo en España, con datos de AEMET", "aura_b": "App Store",
         "privacy": "Privacidad", "support": "Soporte", "theme": "Cambiar tema claro u oscuro", "locale": "es_ES",
     },
