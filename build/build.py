@@ -26,6 +26,7 @@ PAGES = {
     "about": {"en": "/about/", "es": "/es/sobre-mi/"},
     "writing": {"en": "/writing/", "es": "/es/escritos/"},
     "post-mcp-qlik": {"en": "/writing/mcp-qlik/", "es": "/es/escritos/mcp-qlik/"},
+    "post-anthropic-extension": {"en": "/writing/anthropic-extension/", "es": "/es/escritos/anthropic-extension/"},
     "article-small-mac": {"en": "/writing/small-mac-fast-ai/", "es": "/es/escritos/small-mac-fast-ai/"},
     "article-chasing": {"en": "/writing/chasing-80-tokens/", "es": "/es/escritos/chasing-80-tokens/"},
     "post-programar": {"en": "/writing/programar/", "es": "/es/escritos/programar/"},
@@ -73,23 +74,25 @@ META["writing"] = {
 }
 META["post-programar"] = {
     "css": "inner.css", "current": "writing",
-    "en": ("He vuelto a programar después de 18 años", "My first program was in BASIC in the late 80s. Eighteen years later I started coding again. Post in Spanish."),
+    "en": ('I am programming again after 18 years', 'My first program was in BASIC in the late 80s, and Claude Code finally got me back to programming after years away.'),
     "es": ("He vuelto a programar después de 18 años", "Mi primer programa fue en BASIC a finales de los 80. Dieciocho años después volví a programar."),
 }
 
-META["post-datos"] = dict(META["post-programar"], en=("¡Mis datos son públicos!", "Hay una frase que escucho mucho: \"es que mis datos no pueden salir de aquí\"."), es=("¡Mis datos son públicos!", "Hay una frase que escucho mucho: \"es que mis datos no pueden salir de aquí\"."))
-META["post-strawberry"] = dict(META["post-programar"], en=("Las fresas y la IA: las r en strawberry", "¿Cuántas R hay en \"strawberry\"?"), es=("Las fresas y la IA: las r en strawberry", "¿Cuántas R hay en \"strawberry\"?"))
-META["post-kasparov"] = dict(META["post-programar"], en=("La IA no es nueva. Solo es nueva para todos a la vez", "En mayo de 1997, Deep Blue venció a Kasparov. Un evento fascinante. Recorté la noticia y la pegué en la portada del Manual de Referencia de C++ de McGraw-H"), es=("La IA no es nueva. Solo es nueva para todos a la vez", "En mayo de 1997, Deep Blue venció a Kasparov. Un evento fascinante. Recorté la noticia y la pegué en la portada del Manual de Referencia de C++ de McGraw-H"))
-META["post-qlik-llm"] = dict(META["post-programar"], en=("Muchos clientes on-prem me preguntan lo mismo: \"¿Cuándo llega la IA a Qlik Sense on Windows?\"", "La respuesta corta: no va a llegar. No como en Cloud. La capacidad de cómputo que requiere es imposible de reproducir on-prem."), es=("Muchos clientes on-prem me preguntan lo mismo: \"¿Cuándo llega la IA a Qlik Sense on Windows?\"", "La respuesta corta: no va a llegar. No como en Cloud. La capacidad de cómputo que requiere es imposible de reproducir on-prem."))
-META["post-promesas"] = dict(META["post-programar"], en=("Promesas y resultados", "En el primer trimestre de 2026, el sector tecnológico dejó en la calle a 80.000 personas, principalmente en EEUU. La razón oficial, en la mayoría de los ca"), es=("Promesas y resultados", "En el primer trimestre de 2026, el sector tecnológico dejó en la calle a 80.000 personas, principalmente en EEUU. La razón oficial, en la mayoría de los ca"))
-META["post-modelos"] = dict(META["post-programar"], en=("Los modelos no son el problema", "Llevo semanas construyendo un agente en local y varias herramientas para que me ayude a programar y con tareas diarias. El modelo razona, genera código, ma"), es=("Los modelos no son el problema", "Llevo semanas construyendo un agente en local y varias herramientas para que me ayude a programar y con tareas diarias. El modelo razona, genera código, ma"))
-META["post-herramientas"] = dict(META["post-programar"], en=("Herramientas", "Llevo varios posts hablando de mi proyecto. Ese proyecto tiene nombre: Mira. Viene de una necesidad concreta: una IA que me acompañe donde yo esté, que cor"), es=("Herramientas", "Llevo varios posts hablando de mi proyecto. Ese proyecto tiene nombre: Mira. Viene de una necesidad concreta: una IA que me acompañe donde yo esté, que cor"))
-META["post-mira-launch"] = dict(META["post-programar"], en=("Hace unas semanas le puse nombre a mi proyecto: Mira", "¿Qué es Mira? Mi visión de cómo poner en marcha tu IA local en tu propio hardware, con control total del entorno. Mira es mayormente Python. Las apps son S"), es=("Hace unas semanas le puse nombre a mi proyecto: Mira", "¿Qué es Mira? Mi visión de cómo poner en marcha tu IA local en tu propio hardware, con control total del entorno. Mira es mayormente Python. Las apps son S"))
+META["post-datos"] = dict(META["post-programar"], en=('My data is public!', 'I keep hearing "my data cannot leave here", and it is almost never true: your email, contracts and sales team already live on someone else\'s servers.'), es=('¡Mis datos son públicos!', 'Hay una frase que escucho mucho: "es que mis datos no pueden salir de aquí".'))
+META["post-strawberry"] = dict(META["post-programar"], en=("Strawberries and AI: the r's in strawberry", 'How many R\'s are there in "strawberry"? Most LLMs got it wrong, and the AI is doing exactly what it was designed to do.'), es=('Las fresas y la IA: las r en strawberry', '¿Cuántas R hay en "strawberry"?'))
+META["post-kasparov"] = dict(META["post-programar"], en=('AI is not new. It is just new for everyone at once', 'When Deep Blue beat Kasparov in 1997 I found it inevitable, and almost thirty years later the conversation about AI has barely changed.'), es=('La IA no es nueva. Solo es nueva para todos a la vez', 'En mayo de 1997, Deep Blue venció a Kasparov. Un evento fascinante. Recorté la noticia y la pegué en la portada del Manual de Referencia de C++ de McGraw-H'))
+META["post-qlik-llm"] = dict(META["post-programar"], en=('Many on-prem customers ask me the same thing: "When does AI come to Qlik Sense on Windows?"', 'The short answer: it is not coming, not like in Cloud, because the compute it requires is impossible to reproduce on-prem.'), es=('Muchos clientes on-prem me preguntan lo mismo: "¿Cuándo llega la IA a Qlik Sense on Windows?"', 'La respuesta corta: no va a llegar. No como en Cloud. La capacidad de cómputo que requiere es imposible de reproducir on-prem.'))
+META["post-promesas"] = dict(META["post-programar"], en=('Promises and results', 'In Q1 2026 tech laid off 80,000 people citing AI, yet most AI projects still fail to deliver the promised return.'), es=('Promesas y resultados', 'En el primer trimestre de 2026, el sector tecnológico dejó en la calle a 80.000 personas, principalmente en EEUU. La razón oficial, en la mayoría de los ca'))
+META["post-modelos"] = dict(META["post-programar"], en=('The models are not the problem', 'The model is the starting point, not the destination: what decides whether something works is the ecosystem you build around it.'), es=('Los modelos no son el problema', 'Llevo semanas construyendo un agente en local y varias herramientas para que me ayude a programar y con tareas diarias. El modelo razona, genera código, ma'))
+META["post-herramientas"] = dict(META["post-programar"], en=('Tools', 'Mira is the local AI I build on top of a model: web search, RAG, a web interface and mobile access, so my data never leaves my laptop.'), es=('Herramientas', 'Llevo varios posts hablando de mi proyecto. Ese proyecto tiene nombre: Mira. Viene de una necesidad concreta: una IA que me acompañe donde yo esté, que cor'))
+META["post-mira-launch"] = dict(META["post-programar"], en=('A few weeks ago I named my project: Mira', 'Mira is my vision of running your own local AI on your own hardware, with full control of the environment, open and free.'), es=('Hace unas semanas le puse nombre a mi proyecto: Mira', '¿Qué es Mira? Mi visión de cómo poner en marcha tu IA local en tu propio hardware, con control total del entorno. Mira es mayormente Python. Las apps son S'))
 
-META["post-mcp-qlik"] = dict(META["post-programar"], en=("Servidor MCP para Qlik Sense on-prem", "El valor de la IA está en integrarla con las herramientas que utilizamos cada día, y una que uso a diario, claro, es Qlik Sense."), es=("Servidor MCP para Qlik Sense on-prem", "El valor de la IA está en integrarla con las herramientas que utilizamos cada día, y una que uso a diario, claro, es Qlik Sense."))
+META["post-mcp-qlik"] = dict(META["post-programar"], en=('MCP server for on-prem Qlik Sense', 'I built my own MCP server so an LLM can help me with Qlik Sense: reading is free, and any change needs my approval first.'), es=('Servidor MCP para Qlik Sense on-prem', 'El valor de la IA está en integrarla con las herramientas que utilizamos cada día, y una que uso a diario, claro, es Qlik Sense.'))
 
-META["article-small-mac"] = dict(META["post-programar"], en=("Making a small Mac keep up with a big AI", "Mira is a private AI assistant that runs entirely on one Mac. Over the holidays I tried to make it faster without making it dumber."), es=("Making a small Mac keep up with a big AI", "Mira is a private AI assistant that runs entirely on one Mac. Over the holidays I tried to make it faster without making it dumber."))
-META["article-chasing"] = dict(META["post-programar"], en=("Chasing 80 tok/s", "A field guide to native multi-token prediction on a mixture-of-experts model, and an honest ledger of where the speed is still hiding."), es=("Chasing 80 tok/s", "A field guide to native multi-token prediction on a mixture-of-experts model, and an honest ledger of where the speed is still hiding."))
+META["post-anthropic-extension"] = dict(META["post-programar"], en=('When does AI come to Qlik Sense on Windows? Today.', 'It is still impossible to reproduce on-prem what the cloud does with its compute, but I spent months making it work somehow and today I am publishing the result.'), es=('¿Cuándo llega la IA a Qlik Sense on Windows? Hoy.', 'Una extensión de Qlik Sense on-prem que abre un asistente de IA sobre los datos de tus apps, con modelos cloud o locales.'))
+
+META["article-small-mac"] = dict(META["post-programar"], en=("Making a small Mac keep up with a big AI", "Mira is a private AI assistant that runs entirely on one Mac. Over the holidays I tried to make it faster without making it dumber."), es=('Que un Mac pequeño aguante el ritmo de una IA grande', 'Cómo hice que Mira, mi asistente de IA privado, vaya más rápido en un Mac de 32 GB sin perder calidad: un modelo MoE, decodificación especulativa y mucha medición.'))
+META["article-chasing"] = dict(META["post-programar"], en=("Chasing 80 tok/s", "A field guide to native multi-token prediction on a mixture-of-experts model, and an honest ledger of where the speed is still hiding."), es=('A por los 80 tok/s', 'Guía de campo sobre la predicción multi-token nativa en un modelo MoE y un registro honesto de dónde sigue escondida la velocidad hasta los 80 tok/s.'))
 
 def app_meta(app, accent, en, es):
     return {"css": "inner.css", "extra": "app.css", "accent": accent, "app": app, "current": "apps", "en": en, "es": es}
@@ -238,6 +241,27 @@ def head(key, lang):
 </head>"""
 
 
+# Articles and posts: the language each was first written in. The other language is an AI translation.
+ORIGINAL = {k: "es" for k in PAGES if k.startswith("post-")}
+ORIGINAL.update({"article-small-mac": "en", "article-chasing": "en"})
+LANGNAME = {"en": {"en": "English", "es": "Spanish"}, "es": {"en": "inglés", "es": "español"}}
+
+
+def tnote(key, lang):
+    orig = ORIGINAL.get(key)
+    if not orig:
+        return ""
+    if lang == "en":
+        text = f"Originally written in {LANGNAME['en'][orig]}"
+        if orig != lang:
+            text += " &middot; Translated to English with AI"
+    else:
+        text = f"Escrito originalmente en {LANGNAME['es'][orig]}"
+        if orig != lang:
+            text += " &middot; Traducido al espa&ntilde;ol con IA"
+    return f'<div class="wrap"><p class="tnote mono">{text}</p></div>\n'
+
+
 def render(key, lang):
     body = read(os.path.join(SRC, f"{key}.{lang}.html"))
     body = body.replace("{{sky_defs}}", read(os.path.join(PART, "sky_defs.html")))
@@ -247,7 +271,7 @@ def render(key, lang):
     left = re.findall(r"\{\{[^}]*\}\}", body)
     if left:
         sys.exit(f"{key}.{lang}: unresolved placeholders {left}")
-    return head(key, lang) + "\n<body>\n" + nav(lang, key, META[key]["current"], META[key]["css"] != "home.css") + "\n" + body + "\n" + foot(lang, META[key]["css"] != "home.css", META[key].get("app", "mira")) + "\n</body>\n</html>\n"
+    return head(key, lang) + "\n<body>\n" + nav(lang, key, META[key]["current"], META[key]["css"] != "home.css") + "\n" + body + "\n" + tnote(key, lang) + foot(lang, META[key]["css"] != "home.css", META[key].get("app", "mira")) + "\n</body>\n</html>\n"
 
 
 def out_path(path):

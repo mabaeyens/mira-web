@@ -58,6 +58,8 @@
   /* lineup */
   .stage{padding:40px 0 0}
   .lead{display:flex;justify-content:space-between;color:var(--soft);margin-bottom:34px}
+  p.lead{display:block}
+  .tnote{font:400 12px/1.6 var(--mono);color:var(--soft);margin:34px 0 0;padding-top:16px;border-top:1px solid var(--line)}
   .line{display:flex;align-items:flex-end;gap:26px;position:relative}
   .dev{flex:none}
   .dev .shot{background:#000;border-radius:calc(var(--px)*.45);padding:calc(var(--px)*.14);box-shadow:0 0 0 1px #c6c9d3,0 14px 30px rgba(30,36,60,.12)}

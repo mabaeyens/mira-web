@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¿Cuándo llega la IA a Qlik Sense on Windows? Hoy.</title>
+<meta name="description" content="Una extensión de Qlik Sense on-prem que abre un asistente de IA sobre los datos de tus apps, con modelos cloud o locales.">
+<link rel="canonical" href="https://askmira.es/es/escritos/anthropic-extension/">
+<link rel="alternate" hreflang="en" href="https://askmira.es/writing/anthropic-extension/"><link rel="alternate" hreflang="es" href="https://askmira.es/es/escritos/anthropic-extension/"><link rel="alternate" hreflang="x-default" href="https://askmira.es/writing/anthropic-extension/">
+<meta property="og:title" content="¿Cuándo llega la IA a Qlik Sense on Windows? Hoy.">
+<meta property="og:description" content="Una extensión de Qlik Sense on-prem que abre un asistente de IA sobre los datos de tus apps, con modelos cloud o locales.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://askmira.es/es/escritos/anthropic-extension/">
+<meta property="og:locale" content="es_ES">
+<meta property="og:image" content="https://askmira.es/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#F1F2F5">
+<script>(function(){var d=document.documentElement,t;try{t=localStorage.getItem('mira-theme')}catch(e){}if(t!=='dark'&&t!=='light')t=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';d.setAttribute('data-theme',t);window.miraTheme=function(){var n=d.getAttribute('data-theme')==='dark'?'light':'dark';d.setAttribute('data-theme',n);try{localStorage.setItem('mira-theme',n)}catch(e){}var m=document.querySelector('meta[name=theme-color]');if(m)m.content=n==='dark'?'#121419':'#F1F2F5'}})()</script>
+<link rel="icon" href="/assets/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="/assets/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/inner.css">
+<link rel="stylesheet" href="/assets/dark.css">
+</head>
+<body>
+<div class="bar solid"><div class="wrap">
+  <a class="brand" href="/es/">askmira.es</a>
+  <nav aria-label="Principal">
+    <div class="dd-wrap">
+      <a href="/es/#apps" class="dd-t">Apps <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M2 3.5l3 3 3-3"/></svg></a>
+      <div class="dd">
+        <a class="dd-i" href="/es/mira/"><img src="/assets/icon.png" alt=""><span><b style="color:var(--mira-s)">Mira</b><i>Asistente de IA que corre en tu propio Mac</i></span><em>En beta</em></a>
+        <a class="dd-i" href="/es/vera/"><img src="/vera/assets/icon.png" alt=""><span><b style="color:var(--vera-s)">Vera</b><i>Editor de Markdown para tus repos git</i></span><em>App Store</em></a>
+        <a class="dd-i" href="/es/aura/"><img src="/aura/assets/icon.png" alt=""><span><b style="color:var(--aura-s)">Aura</b><i>El tiempo en España, con datos de AEMET</i></span><em>App Store</em></a>
+      </div>
+    </div>
+    <a href="/es/escritos/" class="cur" aria-current="page">Escritos</a><a href="/es/sobre-mi/">Sobre mí</a><a href="https://github.com/mabaeyens">GitHub</a><span class="lang"><a href="/writing/anthropic-extension/" hreflang="en" lang="en">EN</a> / <b>ES</b></span><button class="tt" type="button" onclick="miraTheme()" aria-label="Cambiar tema claro u oscuro" title="Cambiar tema claro u oscuro"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="M10 3a7 7 0 0 1 0 14z" fill="currentColor"/></svg></button>
+  </nav>
+</div></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <filter id="pen" x="-20%" y="-40%" width="140%" height="180%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3.2"/></filter>
+  <radialGradient id="sg"><stop offset="0" stop-color="#F4BE50" stop-opacity=".42"/><stop offset=".45" stop-color="#F4BE50" stop-opacity=".14"/><stop offset="1" stop-color="#F4BE50" stop-opacity="0"/></radialGradient>
+  </defs></svg>
+<div class="pband">
+<div class="sky" aria-hidden="true">
+    <svg class="sun" viewBox="0 0 160 160" fill="rgba(244,190,80,.30)" stroke="#E9A93A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)">
+      <circle class="glow" cx="80" cy="80" r="80" fill="url(#sg)" stroke="none"/>
+      <path d="M80 8 C82 52 96 66 152 80 C96 94 82 108 80 152 C78 108 64 94 8 80 C64 66 78 52 80 8 Z"/>
+      <path d="M128 118 C129 128 133 131 142 132 C133 133 129 136 128 146 C127 136 123 133 114 132 C123 131 127 128 128 118 Z"/>
+    </svg>
+    <svg class="cl c1" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M22 74 C8 74 4 56 19 52 C16 35 35 27 48 36 C54 17 83 13 95 30 C107 19 132 23 136 40 C155 32 177 43 172 59 C191 59 201 74 184 76 Z"/><path d="M58 63 C78 67 98 65 118 60"/></svg>
+    <svg class="cl c2" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M26 76 C10 76 8 58 24 55 C24 38 42 32 54 40 C62 22 90 22 100 38 C116 30 138 38 138 52 C158 50 172 64 160 76 Z"/><path d="M52 66 C70 69 88 68 104 64"/></svg>
+    <svg class="cl c3" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M18 72 C6 72 4 58 16 55 C16 42 30 37 40 43 C46 28 68 27 77 40 C88 33 106 38 106 50 C122 50 130 62 120 72 Z"/></svg>
+    <svg class="cl c4" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M22 74 C8 74 4 56 19 52 C16 35 35 27 48 36 C54 17 83 13 95 30 C107 19 132 23 136 40 C155 32 177 43 172 59 C191 59 201 74 184 76 Z"/><path d="M58 63 C78 67 98 65 118 60"/></svg>
+    <svg class="cl v1" viewBox="0 0 120 56" fill="none" stroke="#2FA9AF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><g class="bob"><path d="M36 10 C26 18 20 24 14 30 C22 36 28 41 38 49"/><path d="M71 7 C66 20 61 34 52 50"/><path d="M84 10 C94 18 100 24 106 30 C98 36 92 41 82 49"/></g></svg>
+    <svg class="cl c7" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M22 74 C8 74 4 56 19 52 C16 35 35 27 48 36 C54 17 83 13 95 30 C107 19 132 23 136 40 C155 32 177 43 172 59 C191 59 201 74 184 76 Z"/><path d="M58 63 C78 67 98 65 118 60"/></svg>
+    <svg class="cl c8" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M26 76 C10 76 8 58 24 55 C24 38 42 32 54 40 C62 22 90 22 100 38 C116 30 138 38 138 52 C158 50 172 64 160 76 Z"/><path d="M52 66 C70 69 88 68 104 64"/></svg>
+    <svg class="cl c9" viewBox="0 0 220 96" fill="none" stroke="#8D97B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><path d="M18 72 C6 72 4 58 16 55 C16 42 30 37 40 43 C46 28 68 27 77 40 C88 33 106 38 106 50 C122 50 130 62 120 72 Z"/></svg>
+    <svg class="cl v4" viewBox="0 0 120 56" fill="none" stroke="#2FA9AF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><g class="bob"><path d="M36 10 C26 18 20 24 14 30 C22 36 28 41 38 49"/><path d="M71 7 C66 20 61 34 52 50"/><path d="M84 10 C94 18 100 24 106 30 C98 36 92 41 82 49"/></g></svg>
+    <svg class="cl v3" viewBox="0 0 120 56" fill="none" stroke="#2FA9AF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><g class="bob"><path d="M36 10 C26 18 20 24 14 30 C22 36 28 41 38 49"/><path d="M71 7 C66 20 61 34 52 50"/><path d="M84 10 C94 18 100 24 106 30 C98 36 92 41 82 49"/></g></svg>
+    <svg class="cl v2" viewBox="0 0 120 56" fill="none" stroke="#2FA9AF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#pen)"><g class="bob"><path d="M36 10 C26 18 20 24 14 30 C22 36 28 41 38 49"/><path d="M71 7 C66 20 61 34 52 50"/><path d="M84 10 C94 18 100 24 106 30 C98 36 92 41 82 49"/></g></svg>
+    <div class="nt" aria-hidden="true">
+    <svg class="sp" style="left:45.5%;top:54.1%;width:10px;height:10px;--d:4.3s;--dl:-0.9s" viewBox="-7 -7 14 14" fill="rgba(240,226,176,.55)" stroke="#F0E2B0" stroke-width="1" stroke-linejoin="round" filter="url(#pen)"><path d="M0 -6 C.5 -1.8 1.8 -.5 6 0 C1.8 .5 .5 1.8 0 6 C-.5 1.8 -1.8 .5 -6 0 C-1.8 -.5 -.5 -1.8 0 -6Z"/></svg>
+    <svg class="sp" style="left:20.9%;top:75.1%;width:10px;height:10px;--d:5.0s;--dl:-1.2s" viewBox="-7 -7 14 14" fill="rgba(240,226,176,.55)" stroke="#F0E2B0" stroke-width="1" stroke-linejoin="round" filter="url(#pen)"><path d="M0 -6 C.5 -1.8 1.8 -.5 6 0 C1.8 .5 .5 1.8 0 6 C-.5 1.8 -1.8 .5 -6 0 C-1.8 -.5 -.5 -1.8 0 -6Z"/></svg>
+    <svg class="sp" style="left:11.8%;top:32.1%;width:6px;height:6px;--d:4.7s;--dl:-0.7s" viewBox="-7 -7 14 14" fill="rgba(240,226,176,.55)" stroke="#F0E2B0" stroke-width="1" stroke-linejoin="round" filter="url(#pen)"><path d="M0 -6 C.5 -1.8 1.8 -.5 6 0 C1.8 .5 .5 1.8 0 6 C-.5 1.8 -1.8 .5 -6 0 C-1.8 -.5 -.5 -1.8 0 -6Z"/></svg>
+    <svg class="sp" style="left:62.6%;top:57.2%;width:16px;height:16px;--d:6.4s;--dl:-2.1s" viewBox="-7 -7 14 14" fill="rgba(240,226,176,.55)" stroke="#F0E2B0" stroke-width="1" stroke-linejoin="round" filter="url(#pen)"><path d="M0 -6 C.5 -1.8 1.8 -.5 6 0 C1.8 .5 .5 1.8 0 6 C-.5 1.8 -1.8 .5 -6 0 C-1.8 -.5 -.5 -1.8 0 -6Z"/></svg>
+    <svg class="sp" style="left:60.9%;top:19.5%;width:6px;height:6px;--d:5.8s;--dl:-5.6s" viewBox="-7 -7 14 14" fill="rgba(240,226,176,.55)" stroke="#F0E2B0" stroke-width="1" stroke-linejoin="round" filter="url(#pen)"><path d="M0 -6 C.5 -1.8 1.8 -.5 6 0 C1.8 .5 .5 1.8 0 6 C-.5 1.8 -1.8 .5 -6 0 C-1.8 -.5 -.5 -1.8 0 -6Z"/></svg>
+    <svg class="sp" style="left:6.4%;top:81.6%;width:6px;height:6px;--d:5.6s;--dl:-4.0s" viewBox="-7 -7 14 14" fill="rgba(240,226,176,.55)" stroke="#F0E2B0" stroke-width="1" stroke-linejoin="round" filter="url(#pen)"><path d="M0 -6 C.5 -1.8 1.8 -.5 6 0 C1.8 .5 .5 1.8 0 6 C-.5 1.8 -1.8 .5 -6 0 C-1.8 -.5 -.5 -1.8 0 -6Z"/></svg>
+    <svg class="sp" style="left:25.0%;top:31.3%;width:6px;height:6px;--d:5.1s;--dl:-3.3s" viewBox="-7 -7 14 14" fill="rgba(240,226,176,.55)" stroke="#F0E2B0" stroke-width="1" stroke-linejoin="round" filter="url(#pen)"><path d="M0 -6 C.5 -1.8 1.8 -.5 6 0 C1.8 .5 .5 1.8 0 6 C-.5 1.8 -1.8 .5 -6 0 C-1.8 -.5 -.5 -1.8 0 -6Z"/></svg>
+    <svg class="sp" style="left:29.1%;top:91.8%;width:9px;height:9px;--d:5.3s;--dl:-4.1s" viewBox="-7 -7 14 14" fill="rgba(240,226,176,.55)" stroke="#F0E2B0" stroke-width="1" stroke-linejoin="round" filter="url(#pen)"><path d="M0 -6 C.5 -1.8 1.8 -.5 6 0 C1.8 .5 .5 1.8 0 6 C-.5 1.8 -1.8 .5 -6 0 C-1.8 -.5 -.5 -1.8 0 -6Z"/></svg>
+    <svg class="sp" style="left:9.6%;top:71.9%;width:10px;height:10px;--d:2.9s;--dl:-4.3s" viewBox="-7 -7 14 14" fill="rgba(240,226,176,.55)" stroke="#F0E2B0" stroke-width="1" stroke-linejoin="round" filter="url(#pen)"><path d="M0 -6 C.5 -1.8 1.8 -.5 6 0 C1.8 .5 .5 1.8 0 6 C-.5 1.8 -1.8 .5 -6 0 C-1.8 -.5 -.5 -1.8 0 -6Z"/></svg>
+    <svg class="sp" style="left:9.3%;top:7.5%;width:6px;height:6px;--d:3.4s;--dl:-0.4s" viewBox="-7 -7 14 14" fill="rgba(240,226,176,.55)" stroke="#F0E2B0" stroke-width="1" stroke-linejoin="round" filter="url(#pen)"><path d="M0 -6 C.5 -1.8 1.8 -.5 6 0 C1.8 .5 .5 1.8 0 6 C-.5 1.8 -1.8 .5 -6 0 C-1.8 -.5 -.5 -1.8 0 -6Z"/></svg>
+    <svg class="sp" style="left:69.6%;top:42.1%;width:7px;height:7px;--d:5.6s;--dl:-4.4s" viewBox="-7 -7 14 14" fill="rgba(240,226,176,.55)" stroke="#F0E2B0" stroke-width="1" stroke-linejoin="round" filter="url(#pen)"><path d="M0 -6 C.5 -1.8 1.8 -.5 6 0 C1.8 .5 .5 1.8 0 6 C-.5 1.8 -1.8 .5 -6 0 C-1.8 -.5 -.5 -1.8 0 -6Z"/></svg>
+    <svg class="sp" style="left:93.6%;top:71.2%;width:9px;height:9px;--d:3.0s;--dl:-1.8s" viewBox="-7 -7 14 14" fill="rgba(240,226,176,.55)" stroke="#F0E2B0" stroke-width="1" stroke-linejoin="round" filter="url(#pen)"><path d="M0 -6 C.5 -1.8 1.8 -.5 6 0 C1.8 .5 .5 1.8 0 6 C-.5 1.8 -1.8 .5 -6 0 C-1.8 -.5 -.5 -1.8 0 -6Z"/></svg>
+    <svg class="sp" style="left:4.0%;top:46.0%;width:10px;height:10px;--d:3.2s;--dl:-2.6s" viewBox="-7 -7 14 14" fill="rgba(240,226,176,.55)" stroke="#F0E2B0" stroke-width="1" stroke-linejoin="round" filter="url(#pen)"><path d="M0 -6 C.5 -1.8 1.8 -.5 6 0 C1.8 .5 .5 1.8 0 6 C-.5 1.8 -1.8 .5 -6 0 C-1.8 -.5 -.5 -1.8 0 -6Z"/></svg>
+    <svg class="sp" style="left:45.1%;top:22.4%;width:7px;height:7px;--d:4.2s;--dl:-3.7s" viewBox="-7 -7 14 14" fill="rgba(240,226,176,.55)" stroke="#F0E2B0" stroke-width="1" stroke-linejoin="round" filter="url(#pen)"><path d="M0 -6 C.5 -1.8 1.8 -.5 6 0 C1.8 .5 .5 1.8 0 6 C-.5 1.8 -1.8 .5 -6 0 C-1.8 -.5 -.5 -1.8 0 -6Z"/></svg>
+    <svg class="sp" style="left:40.1%;top:91.1%;width:6px;height:6px;--d:3.6s;--dl:-0.2s" viewBox="-7 -7 14 14" fill="rgba(240,226,176,.55)" stroke="#F0E2B0" stroke-width="1" stroke-linejoin="round" filter="url(#pen)"><path d="M0 -6 C.5 -1.8 1.8 -.5 6 0 C1.8 .5 .5 1.8 0 6 C-.5 1.8 -1.8 .5 -6 0 C-1.8 -.5 -.5 -1.8 0 -6Z"/></svg>
+    <svg class="sp" style="left:78.5%;top:32.2%;width:9px;height:9px;--d:3.3s;--dl:-3.6s" viewBox="-7 -7 14 14" fill="rgba(240,226,176,.55)" stroke="#F0E2B0" stroke-width="1" stroke-linejoin="round" filter="url(#pen)"><path d="M0 -6 C.5 -1.8 1.8 -.5 6 0 C1.8 .5 .5 1.8 0 6 C-.5 1.8 -1.8 .5 -6 0 C-1.8 -.5 -.5 -1.8 0 -6Z"/></svg>
+    <svg class="sp" style="left:83.3%;top:61.2%;width:6px;height:6px;--d:2.7s;--dl:-5.1s" viewBox="-7 -7 14 14" fill="rgba(240,226,176,.55)" stroke="#F0E2B0" stroke-width="1" stroke-linejoin="round" filter="url(#pen)"><path d="M0 -6 C.5 -1.8 1.8 -.5 6 0 C1.8 .5 .5 1.8 0 6 C-.5 1.8 -1.8 .5 -6 0 C-1.8 -.5 -.5 -1.8 0 -6Z"/></svg>
+    <svg class="sp" style="left:44.5%;top:6.8%;width:8px;height:8px;--d:5.8s;--dl:-3.7s" viewBox="-7 -7 14 14" fill="rgba(240,226,176,.55)" stroke="#F0E2B0" stroke-width="1" stroke-linejoin="round" filter="url(#pen)"><path d="M0 -6 C.5 -1.8 1.8 -.5 6 0 C1.8 .5 .5 1.8 0 6 C-.5 1.8 -1.8 .5 -6 0 C-1.8 -.5 -.5 -1.8 0 -6Z"/></svg>
+    <svg class="sp" style="left:10.0%;top:24.0%;width:7px;height:7px;--d:2.6s;--dl:-3.8s" viewBox="-7 -7 14 14" fill="rgba(240,226,176,.55)" stroke="#F0E2B0" stroke-width="1" stroke-linejoin="round" filter="url(#pen)"><path d="M0 -6 C.5 -1.8 1.8 -.5 6 0 C1.8 .5 .5 1.8 0 6 C-.5 1.8 -1.8 .5 -6 0 C-1.8 -.5 -.5 -1.8 0 -6Z"/></svg>
+    <svg class="sp" style="left:58.2%;top:77.6%;width:11px;height:11px;--d:6.0s;--dl:-4.9s" viewBox="-7 -7 14 14" fill="rgba(240,226,176,.55)" stroke="#F0E2B0" stroke-width="1" stroke-linejoin="round" filter="url(#pen)"><path d="M0 -6 C.5 -1.8 1.8 -.5 6 0 C1.8 .5 .5 1.8 0 6 C-.5 1.8 -1.8 .5 -6 0 C-1.8 -.5 -.5 -1.8 0 -6Z"/></svg>
+    <svg class="sp" style="left:17.5%;top:84.1%;width:7px;height:7px;--d:5.4s;--dl:-5.0s" viewBox="-7 -7 14 14" fill="rgba(240,226,176,.55)" stroke="#F0E2B0" stroke-width="1" stroke-linejoin="round" filter="url(#pen)"><path d="M0 -6 C.5 -1.8 1.8 -.5 6 0 C1.8 .5 .5 1.8 0 6 C-.5 1.8 -1.8 .5 -6 0 C-1.8 -.5 -.5 -1.8 0 -6Z"/></svg>
+    <svg class="sp" style="left:7.5%;top:15.4%;width:8px;height:8px;--d:3.5s;--dl:-1.8s" viewBox="-7 -7 14 14" fill="rgba(240,226,176,.55)" stroke="#F0E2B0" stroke-width="1" stroke-linejoin="round" filter="url(#pen)"><path d="M0 -6 C.5 -1.8 1.8 -.5 6 0 C1.8 .5 .5 1.8 0 6 C-.5 1.8 -1.8 .5 -6 0 C-1.8 -.5 -.5 -1.8 0 -6Z"/></svg>
+    <i class="dt" style="left:26.7%;top:78.1%;--d:6.0s;--dl:-5.7s"></i>
+    <i class="dt" style="left:18.8%;top:68.8%;--d:3.3s;--dl:-6.2s"></i>
+    <i class="dt" style="left:55.7%;top:80.7%;--d:6.1s;--dl:-5.8s"></i>
+    <i class="dt" style="left:90.1%;top:22.4%;--d:3.1s;--dl:-5.8s"></i>
+    <i class="dt" style="left:44.8%;top:9.4%;--d:3.9s;--dl:-5.0s"></i>
+    <i class="dt" style="left:56.9%;top:15.8%;--d:4.8s;--dl:-0.9s"></i>
+    <i class="dt" style="left:96.1%;top:63.1%;--d:6.5s;--dl:-3.3s"></i>
+    <i class="dt" style="left:15.5%;top:7.2%;--d:3.1s;--dl:-0.7s"></i>
+    <i class="dt" style="left:69.3%;top:90.6%;--d:3.1s;--dl:-2.9s"></i>
+    <i class="dt" style="left:48.3%;top:69.7%;--d:4.6s;--dl:-0.0s"></i>
+    <i class="dt" style="left:9.2%;top:53.1%;--d:6.7s;--dl:-0.8s"></i>
+    <i class="dt" style="left:72.8%;top:67.3%;--d:7.0s;--dl:-0.7s"></i>
+    <i class="dt" style="left:35.8%;top:65.7%;--d:7.5s;--dl:-1.0s"></i>
+    <i class="dt" style="left:42.0%;top:75.1%;--d:7.3s;--dl:-3.4s"></i>
+    <i class="dt" style="left:62.0%;top:38.4%;--d:5.9s;--dl:-3.1s"></i>
+    <i class="dt" style="left:9.7%;top:61.5%;--d:8.0s;--dl:-1.0s"></i>
+    <i class="dt" style="left:71.9%;top:39.0%;--d:6.7s;--dl:-3.4s"></i>
+    <i class="dt" style="left:44.3%;top:79.5%;--d:3.4s;--dl:-2.0s"></i>
+    <i class="dt" style="left:4.9%;top:58.1%;--d:5.4s;--dl:-6.2s"></i>
+    <i class="dt" style="left:69.0%;top:48.8%;--d:6.1s;--dl:-0.6s"></i>
+    <i class="dt" style="left:26.6%;top:5.0%;--d:4.5s;--dl:-2.6s"></i>
+    <i class="dt" style="left:21.4%;top:19.3%;--d:7.5s;--dl:-2.7s"></i>
+    <i class="dt" style="left:44.4%;top:84.3%;--d:4.6s;--dl:-2.7s"></i>
+    <i class="dt" style="left:21.1%;top:42.8%;--d:7.0s;--dl:-0.7s"></i>
+    <i class="dt" style="left:86.5%;top:38.6%;--d:5.9s;--dl:-5.5s"></i>
+    <i class="dt" style="left:15.1%;top:48.7%;--d:7.2s;--dl:-1.2s"></i>
+    </div>
+  </div>
+  <div class="wrap pbw">
+  <a class="back" href="/es/escritos/">&larr; Escritos</a>
+  <h1 class="ph1">&iquest;Cu&aacute;ndo llega la IA a Qlik Sense on Windows? Hoy.</h1>
+  <div class="pmeta mono">Sep 2026 · Publicado antes en <a href="https://lnkd.in/p/eEERk_Cz">LinkedIn</a></div>
+  </div>
+</div>
+<div class="pbody">
+<div class="wrap page" style="padding-top:10px">
+  <article class="prose" lang="es">
+      <p><b>&iquest;Cu&aacute;ndo llega la IA a Qlik Sense on Windows?</b></p>
+      <p>Hoy.</p>
+      <p>Sigue siendo imposible reproducir on-prem lo que la nube consigue con sus capacidades de c&oacute;mputo. Pero en un <a class="ext" href="/es/escritos/qlik-llm/">post anterior</a> cont&eacute; que hab&iacute;a pasado meses trabajando en poder hacerlo funcionar de alguna forma y hoy publico el resultado.</p>
+      <p><b>&iquest;C&oacute;mo?</b></p>
+      <p>Con una <a class="ext" href="https://github.com/mabaeyens/AnthropicExtension">extensi&oacute;n</a> sencilla de instalar que abre un asistente IA con el que puedes realizar preguntas sobre los datos de tus aplicaciones de Qlik Sense, tanto con modelos cloud (en mi caso, Claude) como con modelos locales.</p>
+      <p><b>&iquest;Modelos locales?</b></p>
+      <p>S&iacute;. Uno de los miedos sobre estas nuevas tecnolog&iacute;as es qui&eacute;n termina teniendo acceso a los datos y por tanto a tu negocio. Con un modelo local, la respuesta es muy sencilla: solo t&uacute;.</p>
+      <p><b>&iquest;C&oacute;mo est&aacute; hecha esta extensi&oacute;n?</b></p>
+      <p>Utilizando las APIs p&uacute;blicas y documentadas de Qlik Sense.</p>
+      <p>Puesto que trabajo mucho m&aacute;s con Claude de Anthropic que cualquier otro proveedor de modelos cloud, el c&oacute;digo est&aacute; preparado para utilizar una clave API de Anthropic y directamente lanzar preguntas a Haiku, Sonnet u Opus. Esta API es compatible con OpenAI y otros modelos tambi&eacute;n.</p>
+      <p>En local, he utilizado ollama como servidor por simplicidad y como modelos locales, utilizo Ministral 3 3B y 8B, porque todo tiene que correr en mi port&aacute;til.</p>
+      <p>Todo esto es configurable.</p>
+      <p><b>&iquest;Para qu&eacute;?</b></p>
+      <p>Como extensi&oacute;n tal cual tiene alguna utilidad: convertir la informaci&oacute;n y los gr&aacute;ficos en explicaciones entendibles para cualquiera y generar gr&aacute;ficos nuevos para tu aplicaci&oacute;n.</p>
+      <p>Como producto final seguro que quer&eacute;is realizar ajustes y adaptarla a la realidad de vuestras empresas, y ese es el objetivo: mostrar que es posible y que con imaginaci&oacute;n, todo es ponerse.</p>
+      <p><b>&iquest;Por qu&eacute;?</b></p>
+      <p>Lo que me parece valios&iacute;simo es el ejercicio de investigaci&oacute;n e integraci&oacute;n que esta extensi&oacute;n supone. Todos usamos IA en mucho de lo que hacemos (cada vez m&aacute;s), y en la integraci&oacute;n de esta nueva tecnolog&iacute;a con nuestras herramientas diarias es donde de verdad est&aacute; el valor.</p>
+      <p>Mantengo activamente esta extensi&oacute;n en tiempos libres, as&iacute; que pod&eacute;is registrar problemas en <a class="ext" href="https://github.com/mabaeyens/AnthropicExtension/issues">GitHub</a> y me pondr&eacute; con ellos (junto con m&aacute;s cosas que quiero a&ntilde;adir por mi cuenta) en alg&uacute;n momento.</p>
+      <p><b>&iquest;D&oacute;nde?</b></p>
+      <p>El repositorio con el c&oacute;digo, el ZIP de la extensi&oacute;n y la documentaci&oacute;n est&aacute;n en <a class="ext" href="https://github.com/mabaeyens/AnthropicExtension">github.com/mabaeyens/AnthropicExtension</a>.</p>
+      <p>Esto no es magia, se&ntilde;ores.</p>
+  </article>
+</div>
+</div>
+
+<div class="wrap"><p class="tnote mono">Escrito originalmente en español</p></div>
+<div class="wrap"><div class="foot mono" style="margin-top:50px"><span><a href="/es/mira/privacidad/">Privacidad</a> · <a href="/es/mira/soporte/">Soporte</a> · <a href="https://github.com/mabaeyens">GitHub</a></span></div></div>
+<script src="/assets/zoom.js" defer></script>
+</body>
+</html>

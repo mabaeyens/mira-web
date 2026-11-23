@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Making a small Mac keep up with a big AI</title>
-<meta name="description" content="Mira is a private AI assistant that runs entirely on one Mac. Over the holidays I tried to make it faster without making it dumber.">
+<title>Que un Mac pequeño aguante el ritmo de una IA grande</title>
+<meta name="description" content="Cómo hice que Mira, mi asistente de IA privado, vaya más rápido en un Mac de 32 GB sin perder calidad: un modelo MoE, decodificación especulativa y mucha medición.">
 <link rel="canonical" href="https://askmira.es/es/escritos/small-mac-fast-ai/">
 <link rel="alternate" hreflang="en" href="https://askmira.es/writing/small-mac-fast-ai/"><link rel="alternate" hreflang="es" href="https://askmira.es/es/escritos/small-mac-fast-ai/"><link rel="alternate" hreflang="x-default" href="https://askmira.es/writing/small-mac-fast-ai/">
-<meta property="og:title" content="Making a small Mac keep up with a big AI">
-<meta property="og:description" content="Mira is a private AI assistant that runs entirely on one Mac. Over the holidays I tried to make it faster without making it dumber.">
+<meta property="og:title" content="Que un Mac pequeño aguante el ritmo de una IA grande">
+<meta property="og:description" content="Cómo hice que Mira, mi asistente de IA privado, vaya más rápido en un Mac de 32 GB sin perder calidad: un modelo MoE, decodificación especulativa y mucha medición.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://askmira.es/es/escritos/small-mac-fast-ai/">
 <meta property="og:locale" content="es_ES">
@@ -114,8 +114,8 @@
   </div>
   <div class="wrap pbw">
   <a class="back" href="/es/escritos/">&larr; Escritos</a>
-  <h1 class="ph1">Making a small Mac keep up with a big AI</h1>
-  <div class="pmeta mono">Aug 2026 · En inglés · Technical article</div>
+  <h1 class="ph1">Que un Mac pequeño aguante el ritmo de una IA grande</h1>
+  <div class="pmeta mono">Ago 2026 · Art&iacute;culo t&eacute;cnico, escrito en ingl&eacute;s</div>
   </div>
 </div>
 <style>
@@ -232,96 +232,96 @@
 <div class="aw">
 
 <header class="ahero">
-  <span class="kicker"><span class="dot"></span>A holiday side-quest</span>
-  <p class="dek">Mira is a private AI assistant that runs entirely on one Mac. Over the holidays I tried to make it faster without making it dumber. Here is the whole story, no machine-learning degree required.</p>
-  <p class="byline">Written for friends who use AI every day and build other things for a living.</p>
+  <span class="kicker"><span class="dot"></span>Un proyecto paralelo de vacaciones</span>
+  <p class="dek">Mira es un asistente de IA privado que funciona por completo en un solo Mac. Durante las vacaciones intenté hacerlo más rápido sin volverlo más tonto. Esta es la historia completa, explicada desde cero.</p>
+  <p class="byline">Escrito para amigos que usan IA todos los días y se ganan la vida construyendo otras cosas.</p>
 </header>
 
 <!-- ============ 1. THE SQUEEZE ============ -->
 <section>
-  <span class="eyebrow">01 &middot; The machine</span>
-  <h2>A fast engine on a narrow road</h2>
-  <p class="lead">Everything here runs on a single 32&nbsp;GB Mac. No cloud, no data centre. The graphics chip is genuinely fast at doing sums. That is not the part that holds us back.</p>
-  <p>To write one word, the AI model has to read its own <em>weights</em>, the billions of numbers it learned during training, out of memory and into the chip. The chip can multiply those numbers far quicker than the memory can hand them over. So the real limit is not how fast it can think, it is how fast it can <b>read</b>.</p>
+  <span class="eyebrow">01 &middot; La máquina</span>
+  <h2>Un motor rápido en una carretera estrecha</h2>
+  <p class="lead">Todo esto funciona en un único Mac de 32&nbsp;GB. El chip gráfico es realmente rápido haciendo cuentas, pero las cuentas no son lo que se lleva el tiempo.</p>
+  <p>Para escribir una sola palabra, el modelo de IA tiene que leer sus propios <em>pesos</em>, los miles de millones de números que aprendió durante el entrenamiento, desde la memoria hasta el chip. El chip puede multiplicar esos números mucho más deprisa de lo que la memoria puede entregárselos. Así que el límite real no es lo rápido que puede pensar, sino lo rápido que puede <b>leer</b>.</p>
 
   <div class="aside">
-    <div class="atag">The one idea the rest of this hangs on</div>
-    <p>Picture a chef who can chop at superhuman speed but has to walk to the pantry for every single ingredient. The chopping is never the problem. The walking is. Speeding up this kind of AI is almost entirely about <b>walking to the pantry less</b>, or coming back with more each trip.</p>
-    <p>The proper name for the limit is <b>memory bandwidth</b>. Almost every trick below is a different way of respecting it.</p>
+    <div class="atag">La idea de la que cuelga todo lo demás</div>
+    <p>Imagina un cocinero que corta a una velocidad sobrehumana, pero que tiene que ir a la despensa a por cada ingrediente. Cortar nunca es el problema. Ir y venir, sí. Acelerar este tipo de IA consiste casi por completo en <b>ir menos veces a la despensa</b>, o en volver con más cosas en cada viaje.</p>
+    <p>El nombre técnico de ese límite es <b>ancho de banda de memoria</b>. Casi todos los trucos que siguen son una forma distinta de respetarlo.</p>
   </div>
 
   <div class="fig">
     <figure>
       <div class="scroll">
-      <svg viewBox="0 0 660 210" role="img" aria-label="A large block of model weights in memory connected by a narrow pipe to a fast GPU; the narrow pipe, labelled memory bandwidth, is the bottleneck, and every word written means reading the whole model once.">
-        <text x="20" y="26" class="glyph-lab" font-size="11">to write ONE word, read the whole model out of memory</text>
+      <svg viewBox="0 0 660 210" role="img" aria-label="Un gran bloque de pesos del modelo en memoria conectado por una tubería estrecha a una GPU rápida. La tubería estrecha, llamada ancho de banda de memoria, es el cuello de botella, y cada palabra escrita exige leer el modelo entero una vez.">
+        <text x="20" y="26" class="glyph-lab" font-size="11">para escribir UNA palabra, hay que leer todo el modelo de la memoria</text>
         <!-- memory block -->
         <rect x="20" y="46" width="200" height="120" rx="10" class="s-surf st-ink" style="stroke-width:1.4"/>
-        <text x="120" y="98" text-anchor="middle" class="glyph" font-size="13" font-weight="600">MODEL WEIGHTS</text>
-        <text x="120" y="120" text-anchor="middle" class="glyph-m" font-size="11">tens of billions</text>
-        <text x="120" y="136" text-anchor="middle" class="glyph-m" font-size="11">of numbers, in memory</text>
+        <text x="120" y="98" text-anchor="middle" class="glyph" font-size="13" font-weight="600">PESOS DEL MODELO</text>
+        <text x="120" y="120" text-anchor="middle" class="glyph-m" font-size="11">decenas de miles de millones</text>
+        <text x="120" y="136" text-anchor="middle" class="glyph-m" font-size="11">de números, en memoria</text>
         <!-- narrow pipe -->
         <path d="M220 96 H430" class="st-ink" style="stroke-width:3" fill="none"/>
         <path d="M220 116 H430" class="st-ink" style="stroke-width:3" fill="none"/>
         <rect x="250" y="96" width="150" height="20" class="s-draft" fill-opacity=".7"/>
-        <text x="325" y="80" text-anchor="middle" class="glyph" font-size="11" font-weight="600" style="fill:var(--draft)">narrow pipe</text>
-        <text x="325" y="140" text-anchor="middle" class="glyph-lab" font-size="10.5">memory bandwidth = the bottleneck</text>
+        <text x="325" y="80" text-anchor="middle" class="glyph" font-size="11" font-weight="600" style="fill:var(--draft)">tubería estrecha</text>
+        <text x="325" y="140" text-anchor="middle" class="glyph-lab" font-size="10.5">ancho de banda de memoria = el cuello de botella</text>
         <!-- gpu -->
         <rect x="440" y="46" width="200" height="120" rx="10" class="s-verify" fill-opacity=".16" style="stroke:var(--verify);stroke-width:1.6"/>
         <text x="540" y="98" text-anchor="middle" class="glyph" font-size="13" font-weight="600" style="fill:var(--verify)">GPU</text>
-        <text x="540" y="120" text-anchor="middle" class="glyph-m" font-size="11">can do the maths</text>
-        <text x="540" y="136" text-anchor="middle" class="glyph-m" font-size="11">faster than it is fed</text>
+        <text x="540" y="120" text-anchor="middle" class="glyph-m" font-size="11">puede hacer las cuentas</text>
+        <text x="540" y="136" text-anchor="middle" class="glyph-m" font-size="11">más rápido de lo que le llegan</text>
       </svg>
       </div>
-      <figcaption><b>The squeeze.</b> The chip sits idle waiting for numbers to arrive down a pipe that is too narrow. Reading the whole model, once per word, is the tax we spend the rest of the story trying to dodge.</figcaption>
+      <figcaption><b>El apretón.</b> El chip se queda parado esperando a que los números lleguen por una tubería demasiado estrecha. Leer el modelo entero, una vez por palabra, es el impuesto que el resto de la historia intenta esquivar.</figcaption>
     </figure>
   </div>
 </section>
 
 <!-- ============ 2. OUT OF THE BOX ============ -->
 <section>
-  <span class="eyebrow">02 &middot; The starting point</span>
-  <h2>Out of the box, it is only okay</h2>
-  <p class="lead">Download a model, point a standard server at it, and it works. A capable model even fits on this 32&nbsp;GB Mac. But out of the box it crawls, at roughly <b>8 tokens per second</b>, slow enough that calling it a useful assistant is a real stretch. And now and then it wobbles, repeating itself or drifting off. Turning &ldquo;it runs&rdquo; into &ldquo;it feels good&rdquo; is a craft.</p>
-  <p>Luckily it is a craft with a huge, public toolbox. Researchers publish new speed tricks most weeks. They come in two rough sizes:</p>
-  <p><b>The universal wins.</b> A handful of ideas make almost everything better at once: faster to start answering, faster to type the answer out, and steadier and more accurate while doing it. You just take these.</p>
-  <p><b>The long tail.</b> After that, it is a grind of one-percent-here, one-percent-there tweaks, and the deeper you go the more specialised it gets, until you are writing custom code for the graphics chip by hand. Since my holiday was not infinite, the rule was simple: <b>chase the biggest levers first.</b></p>
+  <span class="eyebrow">02 &middot; El punto de partida</span>
+  <h2>De fábrica, solo cumple</h2>
+  <p class="lead">Te descargas un modelo, le apuntas un servidor estándar y funciona. Incluso cabe un modelo capaz en este Mac de 32&nbsp;GB. Pero de fábrica va a paso de tortuga, a unos <b>8 tokens por segundo</b>, tan lento que llamarlo asistente útil es estirar mucho el concepto. Y de vez en cuando se descontrola, se repite o se va por las ramas. Convertir &ldquo;funciona&rdquo; en &ldquo;da gusto usarlo&rdquo; es un oficio.</p>
+  <p>Por suerte es un oficio con una caja de herramientas enorme y pública. Casi cada semana los investigadores publican trucos nuevos de velocidad. Vienen en dos tamaños aproximados:</p>
+  <p><b>Las victorias universales.</b> Un puñado de ideas mejora casi todo a la vez: empezar a responder antes, escribir la respuesta más rápido y hacerlo con más estabilidad y precisión. Esas simplemente se aplican.</p>
+  <p><b>La cola larga.</b> Después todo es una paliza de retoques de un uno por ciento aquí y otro allá, y cuanto más profundizas más especializado se vuelve, hasta que acabas escribiendo a mano código a medida para el chip gráfico. Como mis vacaciones no eran infinitas, la regla era sencilla: <b>ir primero a por las palancas más grandes.</b></p>
 
   <div class="aside">
-    <div class="atag">A word I will keep using</div>
-    <p>Speed here is measured in <b>tokens per second</b>. A token is a chunk of text, very roughly a short word or part of one. More tokens per second means the answer appears on screen faster. Everything below is, in the end, a fight over that one number, without letting the answers get worse.</p>
+    <div class="atag">Una palabra que seguiré usando</div>
+    <p>Aquí la velocidad se mide en <b>tokens por segundo</b>. Un token es un trozo de texto, más o menos una palabra corta o parte de una. Más tokens por segundo significa que la respuesta aparece antes en pantalla. Todo lo que sigue es, al final, una pelea por ese único número, sin dejar que las respuestas empeoren.</p>
   </div>
 </section>
 
 <!-- ============ 3. DENSE VS MOE ============ -->
 <section>
-  <span class="eyebrow">03 &middot; The model you pick</span>
-  <h2>Don't wake the whole staff for every question</h2>
-  <p class="lead">The biggest lever is a choice you make before any clever engineering: <em>which kind of model</em> to run. This is where the pantry trips get cut in half.</p>
-  <p>That slow model from a moment ago was a <b>dense</b> one: it uses every one of its weights for every single word. Every trip to the pantry fetches the entire inventory. A newer <b>Mixture of Experts</b> model, MoE for short, is built from many small specialists, and for each word it wakes only a handful of them.</p>
-  <p>Mira's default model has about 35 billion weights but touches only around 3 billion per word. Since our whole problem was <em>reading weights</em>, reading roughly a tenth of them is an enormous head start, and it comes nearly free: the model was trained to route each word to the right specialists, so the answers stay just as good.</p>
-  <p>That one switch, from a dense model to a Mixture of Experts, is what took Mira from those painful <b>8 tokens per second to nearly 60</b>. A single decision, a seven-fold jump, and the biggest single win in the whole story. Everything after this is fighting for the last stretch.</p>
-  <p>None of that was theoretical shopping; I worked through a real shortlist on this one Mac. Gemma&nbsp;4 at 31B, then a mixture-of-experts Gemma (26B-A4B), then Ministral&nbsp;3. The one that most impressed me on sheer answer quality was a <b>dense Qwen3.8 at 27B</b>, but it is exactly the crawler above: wonderful replies, at those 8-odd tokens per second. The model that finally paired good answers with real speed is the mixture-of-experts <b>Qwen3.6, 35B in total with only about 3B awake per word</b>, and nothing I have thrown at it since has knocked it off the top spot. I am now waiting on the updated Qwen3.8 mixture-of-experts to see whether it finally can.</p>
+  <span class="eyebrow">03 &middot; El modelo que eliges</span>
+  <h2>No despiertes a toda la plantilla para cada pregunta</h2>
+  <p class="lead">La palanca más grande es una decisión que tomas antes de cualquier ingeniería ingeniosa: <em>qué tipo de modelo</em> ejecutar. Aquí es donde los viajes a la despensa se reducen a la mitad.</p>
+  <p>Aquel modelo lento de hace un momento era un modelo <b>denso</b>: usa todos sus pesos para cada palabra. Cada viaje a la despensa trae el inventario entero. Un modelo más reciente de <b>mezcla de expertos</b> (Mixture of Experts, MoE para abreviar) está formado por muchos pequeños especialistas, y para cada palabra despierta solo a un puñado.</p>
+  <p>El modelo por defecto de Mira tiene unos 35 000 millones de pesos, pero toca solo unos 3000 millones por palabra. Como todo nuestro problema era <em>leer pesos</em>, leer más o menos una décima parte es una ventaja enorme, y llega casi gratis: el modelo se entrenó para enviar cada palabra a los especialistas adecuados, así que las respuestas siguen siendo igual de buenas.</p>
+  <p>Ese único cambio, de un modelo denso a una mezcla de expertos, es lo que llevó a Mira de aquellos dolorosos <b>8 tokens por segundo a casi 60</b>. Una sola decisión, un salto de siete veces y la mayor victoria de toda la historia. Todo lo que viene después es pelear por el último tramo.</p>
+  <p>Nada de esto fue ir de compras en teoría: trabajé con una lista corta real en este único Mac. Gemma&nbsp;4 de 31B, luego una Gemma de mezcla de expertos (26B-A4B), luego Ministral&nbsp;3. El que más me impresionó por pura calidad de respuesta fue un <b>Qwen3.8 denso de 27B</b>, pero es exactamente el lento de antes: respuestas maravillosas, a esos 8 y pico tokens por segundo. El modelo que por fin juntó buenas respuestas con velocidad de verdad es el de mezcla de expertos <b>Qwen3.6, 35B en total con solo unos 3B despiertos por palabra</b>, y nada de lo que le he echado desde entonces lo ha desbancado del primer puesto. Ahora espero a la versión actualizada de Qwen3.8 con mezcla de expertos para ver si por fin puede.</p>
 
   <div class="fig">
     <figure>
       <div class="scroll">
-      <svg viewBox="0 0 660 240" role="img" aria-label="Two rows of expert circles. In the dense row every circle is lit for each word. In the MoE row only a few circles are lit, showing that only a handful of specialists are used per word.">
+      <svg viewBox="0 0 660 240" role="img" aria-label="Dos filas de círculos que representan expertos. En la fila densa, todos los círculos se iluminan para cada palabra. En la fila MoE solo se iluminan unos pocos, lo que muestra que por palabra solo se usa un puñado de especialistas.">
         <!-- dense -->
-        <text x="20" y="46" class="glyph" font-size="12" font-weight="600">DENSE</text>
-        <text x="20" y="64" class="glyph-m" font-size="11">every weight, every word</text>
+        <text x="20" y="46" class="glyph" font-size="12" font-weight="600">DENSO</text>
+        <text x="20" y="64" class="glyph-m" font-size="11">todos los pesos, cada palabra</text>
         <g class="s-verify">
           <circle cx="250" cy="52" r="9"/><circle cx="288" cy="52" r="9"/><circle cx="326" cy="52" r="9"/><circle cx="364" cy="52" r="9"/>
           <circle cx="402" cy="52" r="9"/><circle cx="440" cy="52" r="9"/><circle cx="478" cy="52" r="9"/><circle cx="516" cy="52" r="9"/>
           <circle cx="554" cy="52" r="9"/><circle cx="592" cy="52" r="9"/><circle cx="630" cy="52" r="9"/>
         </g>
-        <text x="480" y="92" text-anchor="middle" class="glyph-lab" font-size="10.5">all lit &middot; a full pantry trip every time</text>
+        <text x="480" y="92" text-anchor="middle" class="glyph-lab" font-size="10.5">todos encendidos &middot; un viaje completo a la despensa cada vez</text>
 
         <line x1="20" y1="120" x2="640" y2="120" class="s-line"/>
 
         <!-- moe -->
-        <text x="20" y="164" class="glyph" font-size="12" font-weight="600">MIXTURE OF EXPERTS</text>
-        <text x="20" y="182" class="glyph-m" font-size="11">a few specialists per word</text>
+        <text x="20" y="164" class="glyph" font-size="12" font-weight="600">MEZCLA DE EXPERTOS</text>
+        <text x="20" y="182" class="glyph-m" font-size="11">unos pocos especialistas por palabra</text>
         <g class="s-dim" fill-opacity=".35">
           <circle cx="250" cy="170" r="9"/><circle cx="288" cy="170" r="9"/><circle cx="326" cy="170" r="9"/><circle cx="364" cy="170" r="9"/>
           <circle cx="402" cy="170" r="9"/><circle cx="440" cy="170" r="9"/><circle cx="478" cy="170" r="9"/><circle cx="516" cy="170" r="9"/>
@@ -330,63 +330,63 @@
         <g class="s-good">
           <circle cx="326" cy="170" r="9"/><circle cx="440" cy="170" r="9"/><circle cx="592" cy="170" r="9"/>
         </g>
-        <text x="480" y="210" text-anchor="middle" class="glyph-lab" font-size="10.5">only the green few wake up &middot; a fraction of the reading</text>
+        <text x="480" y="210" text-anchor="middle" class="glyph-lab" font-size="10.5">solo despiertan los verdes &middot; una fracción de la lectura</text>
       </svg>
       </div>
-      <figcaption><b>Dense vs Mixture of Experts.</b> Same intelligence on tap, a fraction of the memory read per word. This is the model you <em>pick</em>, not a trick you apply, and it is the foundation everything else is built on.</figcaption>
+      <figcaption><b>Denso frente a mezcla de expertos.</b> La misma inteligencia disponible, con una fracción de la memoria leída por palabra. Este es el modelo que <em>eliges</em>, no un truco que aplicas, y es la base sobre la que se construye todo lo demás.</figcaption>
     </figure>
   </div>
 
   <div class="verdicts">
     <div class="vc">
-      <div class="tag na">not here</div>
-      <div class="txt"><b>Expert offloading</b> is a related MoE idea: keep the sleeping specialists on the disk instead of in memory. It only helps when the model is too big to fit at all. On a Mac where everything already fits, pushing experts to disk just adds slow trips, so it is a way to run a <em>bigger</em> model, never a way to run this one faster. Not applicable, and I left it alone.</div>
+      <div class="tag na">no aplica</div>
+      <div class="txt"><b>El offloading de expertos</b> es una idea de MoE relacionada: dejar a los especialistas dormidos en el disco en lugar de en memoria. Solo ayuda cuando el modelo es demasiado grande para caber. En un Mac donde ya cabe todo, mandar expertos al disco solo añade viajes lentos, así que sirve para ejecutar un modelo <em>más grande</em>, nunca para ejecutar este más rápido. No aplica, y lo dejé en paz.</div>
     </div>
   </div>
 </section>
 
 <!-- ============ 4. GUESS THEN CHECK ============ -->
 <section>
-  <span class="eyebrow">04 &middot; The big lever</span>
-  <h2>Guess a few words, then check them all at once</h2>
-  <p class="lead">Normally the model writes one word, reads itself again, writes the next, and so on: one expensive pantry trip per word. The trick that changed the most is called <b>speculative decoding</b>, and the idea is almost cheeky.</p>
-  <p>Bolt a tiny, cheap predictor onto the model. Let it <b>guess</b> the next few words in a flash. Then let the real model <b>check</b> all of those guesses in a <em>single</em> read, and here is the magic: on this hardware, checking four guesses costs almost the same as checking one. The expensive part was the trip to the pantry, and one trip covers all four. Keep every guess the real model agrees with, fix the first wrong one for free, and repeat.</p>
-  <p>Say the model is halfway through a sentence: <em>&ldquo;To make an omelette, first crack a few&hellip;&rdquo;</em> The cheap predictor blurts out the next few words in one go, <span class="mono">eggs</span>, <span class="mono">into</span>, <span class="mono">the</span>. The real model checks that whole burst in a single read, agrees with <span class="mono">eggs</span> and <span class="mono">into</span>, and overwrites the last one with its own choice. Three words considered, one expensive read, two of them kept.</p>
+  <span class="eyebrow">04 &middot; La gran palanca</span>
+  <h2>Adivina unas cuantas palabras y compruébalas todas de golpe</h2>
+  <p class="lead">Lo normal es que el modelo escriba una palabra, se vuelva a leer, escriba la siguiente, y así sucesivamente: un caro viaje a la despensa por palabra. El truco que más cambió las cosas se llama <b>decodificación especulativa</b>, y la idea tiene su guasa.</p>
+  <p>Acopla al modelo un predictor diminuto y barato. Déjalo <b>adivinar</b> las siguientes palabras en un instante. Después deja que el modelo de verdad las <b>compruebe</b> todas en una <em>única</em> lectura, y aquí está la magia: en este hardware, comprobar cuatro intentos cuesta casi lo mismo que comprobar uno. Lo caro era el viaje a la despensa, y un solo viaje cubre los cuatro. Te quedas con cada intento con el que el modelo real está de acuerdo, corriges gratis el primero que falla, y vuelta a empezar.</p>
+  <p>Digamos que el modelo va por la mitad de una frase: <em>&ldquo;Para hacer una tortilla, primero casca unos cuantos&hellip;&rdquo;</em> El predictor barato suelta de golpe las siguientes palabras, <span class="mono">huevos</span>, <span class="mono">en</span>, <span class="mono">el</span>. El modelo real comprueba toda esa ráfaga en una sola lectura, da por buenas <span class="mono">huevos</span> y <span class="mono">en</span>, y sobrescribe la última con su propia elección. Tres palabras consideradas, una lectura cara, dos de ellas conservadas.</p>
 
   <div class="fig">
     <figure>
       <div class="scroll">
-      <svg viewBox="0 0 660 312" role="img" aria-label="The model is writing the sentence 'To make an omelette, first crack a few'. A cheap predictor guesses the next three words: eggs, into, the. One read by the real model checks all three at once. It keeps eggs and into and overwrites the last guess with its own word, a.">
+      <svg viewBox="0 0 660 312" role="img" aria-label="El modelo está escribiendo la frase 'Para hacer una tortilla, primero casca unos cuantos'. Un predictor barato adivina las tres palabras siguientes: huevos, en, el. Una lectura del modelo real las comprueba las tres a la vez. Conserva huevos y en, y sobrescribe el último intento con su propia palabra, un.">
         <!-- context sentence -->
-        <text x="20" y="24" class="glyph-lab" font-size="11">the model is writing this, one word at a time:</text>
+        <text x="20" y="24" class="glyph-lab" font-size="11">el modelo escribe esto, palabra a palabra:</text>
         <rect x="20" y="36" width="620" height="36" rx="8" class="s-surf st-ink" style="stroke-width:1.2"/>
-        <text x="36" y="59" class="glyph" font-size="13">To make an omelette, first crack a few <tspan class="s-dim" font-weight="600">? ? ?</tspan></text>
+        <text x="36" y="59" class="glyph" font-size="13">Para hacer una tortilla, primero casca unos cuantos <tspan class="s-dim" font-weight="600">? ? ?</tspan></text>
 
         <!-- step 1: guess -->
-        <text x="20" y="118" class="glyph" font-size="12" font-weight="600" style="fill:var(--draft)">1 &middot; GUESS</text>
-        <text x="20" y="136" class="glyph-m" font-size="10.5">cheap predictor, instant</text>
+        <text x="20" y="118" class="glyph" font-size="12" font-weight="600" style="fill:var(--draft)">1 &middot; ADIVINAR</text>
+        <text x="20" y="136" class="glyph-m" font-size="10.5">predictor barato, al instante</text>
         <g>
           <rect x="230" y="98" width="120" height="40" rx="8" class="st-draft" style="stroke-width:2" fill="var(--draft-wash)"/>
-          <text x="290" y="123" text-anchor="middle" class="glyph" font-weight="600">eggs</text>
+          <text x="290" y="123" text-anchor="middle" class="glyph" font-weight="600">huevos</text>
           <rect x="366" y="98" width="120" height="40" rx="8" class="st-draft" style="stroke-width:2" fill="var(--draft-wash)"/>
-          <text x="426" y="123" text-anchor="middle" class="glyph" font-weight="600">into</text>
+          <text x="426" y="123" text-anchor="middle" class="glyph" font-weight="600">en</text>
           <rect x="502" y="98" width="120" height="40" rx="8" class="st-draft" style="stroke-width:2" fill="var(--draft-wash)"/>
-          <text x="562" y="123" text-anchor="middle" class="glyph" font-weight="600">the</text>
+          <text x="562" y="123" text-anchor="middle" class="glyph" font-weight="600">el</text>
         </g>
 
         <!-- step 2: check -->
-        <text x="20" y="194" class="glyph" font-size="12" font-weight="600" style="fill:var(--verify)">2 &middot; CHECK</text>
-        <text x="20" y="212" class="glyph-m" font-size="10.5">real model, ONE read</text>
+        <text x="20" y="194" class="glyph" font-size="12" font-weight="600" style="fill:var(--verify)">2 &middot; COMPROBAR</text>
+        <text x="20" y="212" class="glyph-m" font-size="10.5">modelo real, UNA lectura</text>
         <rect x="230" y="174" width="392" height="44" rx="10" class="st-verify" style="stroke-width:2" fill="var(--verify-wash)"/>
-        <text x="426" y="201" text-anchor="middle" class="glyph" font-weight="600" style="fill:var(--verify)">one trip checks all three at once</text>
+        <text x="426" y="201" text-anchor="middle" class="glyph" font-weight="600" style="fill:var(--verify)">un viaje comprueba las tres a la vez</text>
 
         <!-- step 3: keep -->
-        <text x="20" y="272" class="glyph" font-size="12" font-weight="600" style="fill:var(--good)">3 &middot; KEEP</text>
-        <text x="20" y="290" class="glyph-m" font-size="10.5">agree &rarr; keep &middot; wrong &rarr; free fix</text>
+        <text x="20" y="272" class="glyph" font-size="12" font-weight="600" style="fill:var(--good)">3 &middot; CONSERVAR</text>
+        <text x="20" y="290" class="glyph-m" font-size="10.5">acierta &rarr; se queda &middot; falla &rarr; arreglo gratis</text>
         <rect x="230" y="252" width="256" height="40" rx="8" class="s-good" fill-opacity=".16" style="stroke:var(--good);stroke-width:1.5"/>
-        <text x="358" y="277" text-anchor="middle" class="glyph" font-weight="600" style="fill:var(--good)">eggs &middot; into &nbsp;kept</text>
+        <text x="358" y="277" text-anchor="middle" class="glyph" font-weight="600" style="fill:var(--good)">huevos &middot; en &nbsp;conservadas</text>
         <rect x="502" y="252" width="120" height="40" rx="8" class="st-ink" style="stroke-width:1.3;stroke-dasharray:4 3" fill="none"/>
-        <text x="562" y="277" text-anchor="middle" class="glyph-m" font-size="12">the &rarr; a</text>
+        <text x="562" y="277" text-anchor="middle" class="glyph-m" font-size="12">el &rarr; un</text>
 
         <!-- arrows -->
         <g class="s-line" style="stroke:var(--ink-3);stroke-width:1.3" fill="none" marker-end="url(#a)">
@@ -395,85 +395,86 @@
         <defs><marker id="a" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><polygon points="0 0,6 3,0 6" fill="var(--ink-3)"/></marker></defs>
       </svg>
       </div>
-      <figcaption><b>Guess, check, keep.</b> The predictor guessed <span class="mono">eggs into the</span>; the model kept <span class="mono">eggs</span> and <span class="mono">into</span> and swapped the last guess for its own word, giving <em>&ldquo;crack a few eggs into a bowl&rdquo;</em>. Two words landed from a single expensive read, and even the wrong guess cost only a sliver of speed, never a worse answer.</figcaption>
+      <figcaption><b>Adivinar, comprobar, conservar.</b> El predictor adivinó <span class="mono">huevos en el</span>; el modelo conservó <span class="mono">huevos</span> y <span class="mono">en</span> y cambió el último intento por su propia palabra, lo que da <em>&ldquo;casca unos cuantos huevos en un bol&rdquo;</em>. Dos palabras salieron de una sola lectura cara, e incluso el intento equivocado costó apenas una pizca de velocidad, nunca una respuesta peor.</figcaption>
     </figure>
   </div>
 
   <div class="aside">
-    <div class="atag">Why this is safe, and what &ldquo;lossless&rdquo; really means</div>
-    <p>The final say is always the <b>real model's own pick</b>. A bad guess just gets thrown away and costs a little speed; it can never put a word in the answer that the model would not have chosen itself. So the technique is <b>lossless</b> in a precise sense: the <em>decisions</em> are exactly the ones the model would have made anyway.</p>
-    <p>It does not promise <em>byte-for-byte identical text</em>. Deep down, checking several words at once nudges some numerical tie-breaks, so the exact wording can shift a hair. I checked the diverging answers side by side: same quality, just occasionally paraphrased. And to be sure I was not fooling myself, I re-ran a slice of a standard reasoning exam with the trick on and off. The scores held.</p>
+    <div class="atag">Por qué esto es seguro, y qué significa de verdad &ldquo;sin pérdidas&rdquo;</div>
+    <p>La última palabra la tiene siempre <b>la elección del propio modelo real</b>. Un mal intento simplemente se descarta y cuesta un poco de velocidad; nunca puede meter en la respuesta una palabra que el modelo no habría elegido por sí mismo. Así que la técnica es <b>sin pérdidas</b> en un sentido preciso: las <em>decisiones</em> son exactamente las que el modelo habría tomado de todos modos.</p>
+    <p>No promete <em>texto idéntico byte a byte</em>. En el fondo, comprobar varias palabras a la vez altera algunos desempates numéricos, así que la redacción exacta puede variar un pelo. Comparé las respuestas que divergían una al lado de otra: misma calidad, solo a veces parafraseada. Y para estar seguro de que no me estaba engañando, repetí una parte de un examen estándar de razonamiento con el truco activado y desactivado. Las puntuaciones se mantuvieron.</p>
   </div>
 
-  <p>The payoff: decoding went from around <b>60</b> tokens per second to just over <b>70</b>. About a fifth faster, with the answers unchanged. That is a universal win of exactly the kind worth taking first.</p>
+  <p>El resultado: la decodificación pasó de unos <b>60</b> tokens por segundo a algo más de <b>70</b>. Un quinto más rápido, con las respuestas intactas. Es una victoria universal justo del tipo que conviene aplicar primero.</p>
 </section>
 
 <!-- ============ 5. THE BAR ============ -->
 <section>
-  <span class="eyebrow">05 &middot; The bar to beat</span>
-  <h2>The standard I measure against</h2>
-  <p class="lead">I am not doing this in a vacuum. There is another engine, <b>oMLX</b>, that I have leaned on since the early days when running these models on a Mac barely worked at all.</p>
-  <p>It has matured a lot. It even grew its own way of <b>compressing</b> the model, its own quantization format. That matters because a good compression keeps the answers sharp while making the model <em>smaller to read</em> (that is, it uses less RAM), and reading is our whole bottleneck, so the quality comes essentially for free. For a long time Mira ran on top of other people's engines, and oMLX was the fast one. So it is my gold standard: about <b>77.5</b> tokens per second on the same little Mac.</p>
-  <p>The honest target was to match it with Mira's own engine, and then see if I could nudge past it. I knew going in that the last stretch would not be free. Somewhere near <b>80</b> tokens per second, every extra bit of speed starts costing you something: either more wrong guesses, or slightly worse answers. The interesting question was where that wall actually sits.</p>
+  <span class="eyebrow">05 &middot; La vara de medir</span>
+  <h2>El estándar contra el que me mido</h2>
+  <p class="lead">No hago esto en el vacío. Hay otro motor, <b>oMLX</b>, en el que me he apoyado desde los primeros tiempos, cuando ejecutar estos modelos en un Mac apenas funcionaba.</p>
+  <p>Ha madurado mucho. Incluso desarrolló su propia forma de <b>comprimir</b> el modelo, su propio formato de cuantización. Eso importa porque una buena compresión mantiene las respuestas afiladas mientras hace el modelo <em>más pequeño de leer</em> (es decir, usa menos RAM), y leer es todo nuestro cuello de botella, así que la calidad sale prácticamente gratis. Durante mucho tiempo Mira funcionó sobre motores de otros, y oMLX era el rápido. Por eso es mi patrón de referencia: unos <b>77,5</b> tokens por segundo en el mismo Mac pequeño.</p>
+  <p>El objetivo honesto era igualarlo con el motor propio de Mira, y luego ver si podía pasarlo por poco. Sabía de antemano que el último tramo no saldría gratis. Por los <b>80</b> tokens por segundo, cada gramo extra de velocidad empieza a costarte algo: más intentos fallidos, o respuestas algo peores. La pregunta interesante era dónde estaba realmente ese muro.</p>
 </section>
 
 <!-- ============ 6. THE GRIND ============ -->
 <section>
-  <span class="eyebrow">06 &middot; The long tail</span>
-  <h2>Then it becomes a grind of small levers</h2>
-  <p class="lead">With the big wins banked, you enter the part with no glamour: lots of small ideas, each worth a percent or two. Some pay off, some quietly backfire, and some just do not deliver what I think the theory promised (I'm here learning too!).</p>
+  <span class="eyebrow">06 &middot; La cola larga</span>
+  <h2>Después se convierte en una paliza de pequeñas palancas</h2>
+  <p class="lead">Con las grandes victorias ya en el bolsillo, entras en la parte sin glamour: muchas ideas pequeñas, cada una de las cuales vale un uno o un dos por ciento. Algunas compensan, otras salen mal sin hacer ruido, y otras simplemente no dan lo que creo que prometía la teoría (¡yo también estoy aprendiendo!).</p>
 
-  <h3>The one that worked: guess from a shorter list</h3>
-  <p>The little predictor was considering the model's entire vocabulary, hundreds of thousands of possible word-pieces, just to pick one. But the words it actually needs are nearly always the common ones. So I let it guess from only the most common slice of the vocabulary. Cheaper guesses, no loss in quality, and it closed the gap: Mira's own engine reached about <b>76</b>, level with oMLX.</p>
+  <h3>La que funcionó: adivinar desde una lista más corta</h3>
+  <p>El pequeño predictor consideraba el vocabulario entero del modelo, cientos de miles de fragmentos de palabra posibles, solo para elegir uno. Pero las palabras que de verdad necesita son casi siempre las comunes. Así que lo dejé adivinar solo con la porción más común del vocabulario. Intentos más baratos, sin pérdida de calidad, y cerró la brecha: el motor propio de Mira llegó a unos <b>76</b>, a la par de oMLX.</p>
 
   <div class="scoreline">
-    <div class="cell c-base"><div class="lab">Dense</div><div class="val">8.5<small>&nbsp;t/s</small></div></div>
-    <div class="cell c-moe"><div class="lab">MoE</div><div class="val">59.5<small>&nbsp;t/s</small></div></div>
-    <div class="cell c-fine"><div class="lab">+ guess &amp; check</div><div class="val">71.2<small>&nbsp;t/s</small></div></div>
-    <div class="cell c-fine"><div class="lab">+ shorter list</div><div class="val">76.0<small>&nbsp;t/s</small></div></div>
-    <div class="cell c-omlx"><div class="lab">oMLX, the bar</div><div class="val">77.5<small>&nbsp;t/s</small></div></div>
+    <div class="cell c-base"><div class="lab">Denso</div><div class="val">8,5<small>&nbsp;t/s</small></div></div>
+    <div class="cell c-moe"><div class="lab">MoE</div><div class="val">59,5<small>&nbsp;t/s</small></div></div>
+    <div class="cell c-fine"><div class="lab">+ adivinar y comprobar</div><div class="val">71,2<small>&nbsp;t/s</small></div></div>
+    <div class="cell c-fine"><div class="lab">+ lista más corta</div><div class="val">76,0<small>&nbsp;t/s</small></div></div>
+    <div class="cell c-omlx"><div class="lab">oMLX, la vara</div><div class="val">77,5<small>&nbsp;t/s</small></div></div>
   </div>
 
-  <h3>The ones that did not pan out</h3>
-  <p>Not every idea survives contact with a measurement, and the honest part of the story is the ideas I dropped:</p>
+  <h3>Las que no salieron bien</h3>
+  <p>No toda idea sobrevive al contacto con una medición, y la parte honesta de la historia son las ideas que descarté:</p>
 
   <div class="verdicts">
     <div class="vc">
-      <div class="tag no">net loss</div>
-      <div class="txt"><b>Guess deeper.</b> If guessing three words ahead helps, surely guessing more helps more? Measured, it was slower. The further ahead you guess, the more often you are wrong, and the wasted guesses cost more than the occasional lucky streak saves.</div>
+      <div class="tag no">pérdida neta</div>
+      <div class="txt"><b>Adivinar más lejos.</b> Si adivinar tres palabras por delante ayuda, seguro que adivinar más ayuda más, ¿no? Medido, fue más lento. Cuanto más lejos adivinas, más veces fallas, y los intentos desperdiciados cuestan más de lo que ahorra una racha de suerte ocasional.</div>
     </div>
     <div class="vc">
-      <div class="tag meh">under-delivered</div>
-      <div class="txt"><b>A hand-written GPU routine.</b> I wrote custom code for the graphics chip to speed up the checking step. It worked, and it barely moved the needle at Mira's scale. Hand-writing chip code is the very bottom of the toolbox, and at this size the payoff was not there. Worth knowing for certain rather than assuming.</div>
+      <div class="tag meh">rinde poco</div>
+      <div class="txt"><b>Una rutina de GPU escrita a mano.</b> Escribí código a medida para el chip gráfico para acelerar el paso de comprobación. Funcionó, y apenas movió la aguja a la escala de Mira. Escribir código de chip a mano es el fondo absoluto de la caja de herramientas, y a este tamaño la recompensa no estaba. Merece la pena saberlo con certeza en lugar de suponerlo.</div>
     </div>
     <div class="vc">
-      <div class="tag no">below the bar</div>
-      <div class="txt"><b>DFlash.</b> Another published speed technique I tried earlier. It simply did not clear the threshold that would make it worth carrying, so it did not make the cut.</div>
+      <div class="tag no">no llega</div>
+      <div class="txt"><b>DFlash.</b> Otra técnica de velocidad publicada que probé antes. Simplemente no superó el umbral que la haría digna de llevarla encima, así que no entró.</div>
     </div>
   </div>
 
-  <p>That is the shape of the long tail: a pile of small bets where the discipline is not being clever, it is being willing to <em>measure</em> and throw away the ones that do not earn their place.</p>
+  <p>Esa es la forma de la cola larga: un montón de apuestas pequeñas en las que la disciplina no consiste en ser ingenioso, sino en estar dispuesto a <em>medir</em> y tirar las que no se ganan su sitio.</p>
 </section>
 
 <!-- ============ 7. CLOSE ============ -->
 <section>
-  <span class="eyebrow">07 &middot; Where it landed</span>
-  <h2>A small Mac, holding its own</h2>
-  <p class="lead">The scoreboard: from a barely-usable 8 tokens per second, to nearly 60 the moment the model became a Mixture of Experts, to level with the fast engine I have admired for years, all on the same 32&nbsp;GB Mac and with the answers just as good. Eighty is reachable, but only by paying in quality or accuracy, so I stopped where the trade stopped being worth it.</p>
-  <p>And here is the honest footnote. This is a hobby. It is not my job, and if I am being truthful it is not really anyone's job, it is my slightly odd idea of a fun holiday. But that is exactly why the constraint is the point. A small machine forces you to actually understand where every millisecond goes, instead of solving the problem by renting a bigger computer. Necessity really is the mother of invention, and there is an enormous amount out there to play with.</p>
-  <p>If any of this made you curious about the actual numbers, charts, and the research it draws on, there is a much deeper write-up that goes lever by lever.</p>
+  <span class="eyebrow">07 &middot; Dónde acabó</span>
+  <h2>Un Mac pequeño, defendiéndose</h2>
+  <p class="lead">El marcador: de unos 8 tokens por segundo apenas utilizables, a casi 60 en el momento en que el modelo pasó a ser una mezcla de expertos, hasta quedar a la par del motor rápido que llevo años admirando, todo en el mismo Mac de 32&nbsp;GB y con las respuestas igual de buenas. Los ochenta se pueden alcanzar, pero solo pagando en calidad o precisión, así que paré donde el intercambio dejó de merecer la pena.</p>
+  <p>Y aquí va la nota de honestidad. Esto es un hobby. No es mi trabajo, y si soy sincero no es de verdad el trabajo de nadie, es mi idea un poco rara de unas vacaciones divertidas. Pero precisamente por eso la limitación es el sentido de todo. Una máquina pequeña te obliga a entender de verdad adónde va cada milisegundo, en lugar de resolver el problema alquilando un ordenador más grande. La necesidad de verdad es la madre de la invención, y hay una cantidad enorme de cosas con las que jugar.</p>
+  <p>Si algo de esto te ha dado curiosidad por los números reales, los gráficos y la investigación en la que se apoya, hay un análisis mucho más profundo que va palanca por palanca.</p>
 </section>
 
 <footer>
   <div>
-    Written on holiday, for fun, about Mira , a private AI assistant that runs entirely on one Mac.<br>
-    The deep-dive with every chart and citation lives in <a href="/es/escritos/chasing-80-tokens/">the full explainer</a>.
+    Escrito de vacaciones, por diversión, sobre Mira, un asistente de IA privado que funciona por completo en un solo Mac.<br>
+    El análisis a fondo, con todos los gráficos y citas, está en <a href="/es/escritos/chasing-80-tokens/">la explicación completa</a>.
   </div>
 </footer>
 
 </div>
 </div>
 
+<div class="wrap"><p class="tnote mono">Escrito originalmente en inglés &middot; Traducido al espa&ntilde;ol con IA</p></div>
 <div class="wrap"><div class="foot mono" style="margin-top:50px"><span><a href="/es/mira/privacidad/">Privacidad</a> · <a href="/es/mira/soporte/">Soporte</a> · <a href="https://github.com/mabaeyens">GitHub</a></span></div></div>
 <script src="/assets/zoom.js" defer></script>
 </body>

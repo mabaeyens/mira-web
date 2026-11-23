@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Herramientas</title>
-<meta name="description" content="Llevo varios posts hablando de mi proyecto. Ese proyecto tiene nombre: Mira. Viene de una necesidad concreta: una IA que me acompañe donde yo esté, que cor">
+<title>Tools</title>
+<meta name="description" content="Mira is the local AI I build on top of a model: web search, RAG, a web interface and mobile access, so my data never leaves my laptop.">
 <link rel="canonical" href="https://askmira.es/writing/herramientas/">
 <link rel="alternate" hreflang="en" href="https://askmira.es/writing/herramientas/"><link rel="alternate" hreflang="es" href="https://askmira.es/es/escritos/herramientas/"><link rel="alternate" hreflang="x-default" href="https://askmira.es/writing/herramientas/">
-<meta property="og:title" content="Herramientas">
-<meta property="og:description" content="Llevo varios posts hablando de mi proyecto. Ese proyecto tiene nombre: Mira. Viene de una necesidad concreta: una IA que me acompañe donde yo esté, que cor">
+<meta property="og:title" content="Tools">
+<meta property="og:description" content="Mira is the local AI I build on top of a model: web search, RAG, a web interface and mobile access, so my data never leaves my laptop.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://askmira.es/writing/herramientas/">
 <meta property="og:locale" content="en_US">
@@ -114,28 +114,29 @@
   </div>
   <div class="wrap pbw">
   <a class="back" href="/writing/">&larr; Writing</a>
-  <h1 class="ph1">Herramientas</h1>
-  <div class="pmeta mono">May 2026 · In Spanish · First published on <a href="https://www.linkedin.com/posts/mabaeyens_herramientas-llevo-varios-posts-hablando-share-7459201724331806721-lrnI">LinkedIn</a></div>
+  <h1 class="ph1">Tools</h1>
+  <div class="pmeta mono">May 2026 · First published on <a href="https://www.linkedin.com/posts/mabaeyens_herramientas-llevo-varios-posts-hablando-share-7459201724331806721-lrnI">LinkedIn</a>, in Spanish</div>
   </div>
 </div>
 <div class="pbody">
 <div class="wrap page" style="padding-top:10px">
-  <article class="prose" lang="es">
-      <p>Llevo varios posts hablando de mi proyecto. Ese proyecto tiene nombre: Mira.<br>Viene de una necesidad concreta: una IA que me acompañe donde yo esté, que corra en hardware que ya tengo, que trabaje con mis propios diseños y ficheros y que no me cueste un ojo de la cara. Sin servicios de terceros, sin que mis datos salgan de mi portátil. Uso un Mac. He probado varias opciones, y viendo que ollama tiene ventajas claras en Apple Silicon, y Gemma 4 es un modelo reciente que apunta alto, éste es mi punto de partida.</p>
-      <p>Poner el modelo en marcha no tiene ningún mérito. Lo descargas, ejecutas en línea de comando, y en menos de diez minutos tienes inferencia local. Sin coste por consulta. El modelo razona, responde, mantiene contexto, hasta que le pido que me ayude a optimizar su ejecución para el hardware que tiene debajo.</p>
-      <p>Mi Mac salió en noviembre de 2024, pero la fecha de corte del modelo es abril de 2024. Es decir, para el modelo, mi portátil no existe. No es un fallo de diseño, es la naturaleza del entrenamiento: un corpus con fecha de cierre, y todo lo que ocurre después tampoco existe. El primer problema real no era el modelo, era su acceso a más información.</p>
-      <p>La primera respuesta: añadir búsqueda web. Así, el modelo puede consultar lo que no sabe. Funciona para las especificaciones de mi máquina, funciona para noticias recientes, pero encontrar una página no es lo mismo que leerla. Añado entonces descarga de contenido. Ahora puede acceder al texto completo, no solo al titular. Mira ya me recomienda ajustes de configuración conforme a mi portátil real.</p>
-      <p>Siguiente problema: tengo documentos propios, especificaciones en Markdown, que el modelo no puede ver salvo que los copie y pegue uno a uno. Añado RAG. Si puede buscar en la web, puede buscar en mis ficheros. El mismo principio, otra fuente.</p>
-      <p>La línea de comando por defecto no es práctica para el uso diario. Desarrollo una interfaz web, todo en local. El siguiente paso es el móvil, para acceder desde cualquier sitio.</p>
-      <p>Mira no es el modelo. Es lo que construyo encima.</p>
-      <p>El servidor está en GitHub, abierto. Las apps móviles en otro: no soy programador, el código funciona pero no garantizo que sea bueno. Y a saber lo que quiero hacer con esto en el futuro.</p>
-      <p>Hoy uso Mira para revisar especificaciones y código antes de pasárselo a Claude. Ahorro tokens, no necesito hardware dedicado, el portátil me vale. El objetivo siempre ha sido tener el entorno más útil, en cualquier sitio, sobre lo que ya tengo.</p>
-      <p>Lo que viene ahora es que este entorno trabaje sin esperar a que yo lo active.</p>
+  <article class="prose" lang="en">
+      <p>I have been talking about my project for several posts now. That project has a name: Mira.<br>It comes from a specific need: an AI that goes with me wherever I am, that runs on hardware I already have, that works with my own designs and files and that does not cost an arm and a leg. No third-party services, no data leaving my laptop. I use a Mac. I have tried several options, and since ollama has clear advantages on Apple Silicon, and Gemma 4 is a recent model that aims high, this is my starting point.</p>
+      <p>Getting the model running is no achievement. You download it, run it from the command line, and in under ten minutes you have local inference. No cost per query. The model reasons, answers, keeps context, until I ask it to help me optimise its execution for the hardware underneath.</p>
+      <p>My Mac came out in November 2024, but the model's cutoff date is April 2024. So for the model, my laptop does not exist. It is not a design flaw, it is the nature of training: a corpus with a closing date, and everything that happens after does not exist either. The first real problem was not the model, it was its access to more information.</p>
+      <p>The first answer: add web search. That way, the model can look up what it does not know. It works for my machine's specs, it works for recent news, but finding a page is not the same as reading it. So I add content download. Now it can access the full text, not just the headline. Mira now recommends configuration tweaks that fit my real laptop.</p>
+      <p>Next problem: I have my own documents, specs in Markdown, that the model cannot see unless I copy and paste them one by one. I add RAG. If it can search the web, it can search my files. Same principle, another source.</p>
+      <p>The default command line is not practical for daily use. I build a web interface, all local. The next step is mobile, to access it from anywhere.</p>
+      <p>Mira is not the model. It is what I build on top.</p>
+      <p>The server is on GitHub, open. The mobile apps are in another repo: I am not a programmer, the code works but I do not guarantee it is good. And who knows what I will want to do with this in the future.</p>
+      <p>Today I use Mira to review specs and code before handing them to Claude. I save tokens, I do not need dedicated hardware, the laptop is enough. The goal has always been to have the most useful environment, anywhere, on what I already have.</p>
+      <p>What comes next is making this environment work without waiting for me to switch it on.</p>
       <p><a class="ext" href="https://lnkd.in/eqedBA58">https://lnkd.in/eqedBA58</a></p>
   </article>
 </div>
 </div>
 
+<div class="wrap"><p class="tnote mono">Originally written in Spanish &middot; Translated to English with AI</p></div>
 <div class="wrap"><div class="foot mono" style="margin-top:50px"><span><a href="/mira/privacy/">Privacy</a> · <a href="/mira/support/">Support</a> · <a href="https://github.com/mabaeyens">GitHub</a></span></div></div>
 <script src="/assets/zoom.js" defer></script>
 </body>

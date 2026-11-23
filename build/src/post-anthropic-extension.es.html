@@ -1,0 +1,36 @@
+{{sky_defs}}
+<div class="pband">
+{{sky_inner}}
+  <div class="wrap pbw">
+  <a class="back" href="{{url:writing}}">&larr; Escritos</a>
+  <h1 class="ph1">&iquest;Cu&aacute;ndo llega la IA a Qlik Sense on Windows? Hoy.</h1>
+  <div class="pmeta mono">Sep 2026 · Publicado antes en <a href="https://lnkd.in/p/eEERk_Cz">LinkedIn</a></div>
+  </div>
+</div>
+<div class="pbody">
+<div class="wrap page" style="padding-top:10px">
+  <article class="prose" lang="es">
+      <p><b>&iquest;Cu&aacute;ndo llega la IA a Qlik Sense on Windows?</b></p>
+      <p>Hoy.</p>
+      <p>Sigue siendo imposible reproducir on-prem lo que la nube consigue con sus capacidades de c&oacute;mputo. Pero en un <a class="ext" href="{{url:post-qlik-llm}}">post anterior</a> cont&eacute; que hab&iacute;a pasado meses trabajando en poder hacerlo funcionar de alguna forma y hoy publico el resultado.</p>
+      <p><b>&iquest;C&oacute;mo?</b></p>
+      <p>Con una <a class="ext" href="https://github.com/mabaeyens/AnthropicExtension">extensi&oacute;n</a> sencilla de instalar que abre un asistente IA con el que puedes realizar preguntas sobre los datos de tus aplicaciones de Qlik Sense, tanto con modelos cloud (en mi caso, Claude) como con modelos locales.</p>
+      <p><b>&iquest;Modelos locales?</b></p>
+      <p>S&iacute;. Uno de los miedos sobre estas nuevas tecnolog&iacute;as es qui&eacute;n termina teniendo acceso a los datos y por tanto a tu negocio. Con un modelo local, la respuesta es muy sencilla: solo t&uacute;.</p>
+      <p><b>&iquest;C&oacute;mo est&aacute; hecha esta extensi&oacute;n?</b></p>
+      <p>Utilizando las APIs p&uacute;blicas y documentadas de Qlik Sense.</p>
+      <p>Puesto que trabajo mucho m&aacute;s con Claude de Anthropic que cualquier otro proveedor de modelos cloud, el c&oacute;digo est&aacute; preparado para utilizar una clave API de Anthropic y directamente lanzar preguntas a Haiku, Sonnet u Opus. Esta API es compatible con OpenAI y otros modelos tambi&eacute;n.</p>
+      <p>En local, he utilizado ollama como servidor por simplicidad y como modelos locales, utilizo Ministral 3 3B y 8B, porque todo tiene que correr en mi port&aacute;til.</p>
+      <p>Todo esto es configurable.</p>
+      <p><b>&iquest;Para qu&eacute;?</b></p>
+      <p>Como extensi&oacute;n tal cual tiene alguna utilidad: convertir la informaci&oacute;n y los gr&aacute;ficos en explicaciones entendibles para cualquiera y generar gr&aacute;ficos nuevos para tu aplicaci&oacute;n.</p>
+      <p>Como producto final seguro que quer&eacute;is realizar ajustes y adaptarla a la realidad de vuestras empresas, y ese es el objetivo: mostrar que es posible y que con imaginaci&oacute;n, todo es ponerse.</p>
+      <p><b>&iquest;Por qu&eacute;?</b></p>
+      <p>Lo que me parece valios&iacute;simo es el ejercicio de investigaci&oacute;n e integraci&oacute;n que esta extensi&oacute;n supone. Todos usamos IA en mucho de lo que hacemos (cada vez m&aacute;s), y en la integraci&oacute;n de esta nueva tecnolog&iacute;a con nuestras herramientas diarias es donde de verdad est&aacute; el valor.</p>
+      <p>Mantengo activamente esta extensi&oacute;n en tiempos libres, as&iacute; que pod&eacute;is registrar problemas en <a class="ext" href="https://github.com/mabaeyens/AnthropicExtension/issues">GitHub</a> y me pondr&eacute; con ellos (junto con m&aacute;s cosas que quiero a&ntilde;adir por mi cuenta) en alg&uacute;n momento.</p>
+      <p><b>&iquest;D&oacute;nde?</b></p>
+      <p>El repositorio con el c&oacute;digo, el ZIP de la extensi&oacute;n y la documentaci&oacute;n est&aacute;n en <a class="ext" href="https://github.com/mabaeyens/AnthropicExtension">github.com/mabaeyens/AnthropicExtension</a>.</p>
+      <p>Esto no es magia, se&ntilde;ores.</p>
+  </article>
+</div>
+</div>

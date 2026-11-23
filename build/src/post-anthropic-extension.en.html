@@ -1,0 +1,36 @@
+{{sky_defs}}
+<div class="pband">
+{{sky_inner}}
+  <div class="wrap pbw">
+  <a class="back" href="{{url:writing}}">&larr; Writing</a>
+  <h1 class="ph1">When does AI come to Qlik Sense on Windows? Today.</h1>
+  <div class="pmeta mono">Sep 2026 · First published on <a href="https://lnkd.in/p/eEERk_Cz">LinkedIn</a>, in Spanish</div>
+  </div>
+</div>
+<div class="pbody">
+<div class="wrap page" style="padding-top:10px">
+  <article class="prose" lang="en">
+      <p><b>When does AI come to Qlik Sense on Windows?</b></p>
+      <p>Today.</p>
+      <p>It is still impossible to reproduce on-prem what the cloud achieves with its compute capacity. But in an <a class="ext" href="{{url:post-qlik-llm}}">earlier post</a> I said I had spent months working on getting it to run somehow, and today I am publishing the result.</p>
+      <p><b>How?</b></p>
+      <p>With an <a class="ext" href="https://github.com/mabaeyens/AnthropicExtension">extension</a> that is easy to install and opens an AI assistant where you can ask questions about the data in your Qlik Sense apps, with cloud models (in my case, Claude) or with local models.</p>
+      <p><b>Local models?</b></p>
+      <p>Yes. One of the fears about these new technologies is who ends up with access to the data, and therefore to your business. With a local model, the answer is simple: only you.</p>
+      <p><b>How is this extension built?</b></p>
+      <p>Using Qlik Sense's public, documented APIs.</p>
+      <p>Since I work with Anthropic's Claude much more than with any other cloud model provider, the code is set up to use an Anthropic API key and send questions straight to Haiku, Sonnet or Opus. This API is compatible with OpenAI and other models too.</p>
+      <p>Locally, I used ollama as the server for simplicity, and Ministral 3 3B and 8B as local models, because everything has to run on my laptop.</p>
+      <p>All of this is configurable.</p>
+      <p><b>What for?</b></p>
+      <p>As it stands, the extension is useful for something: turning information and charts into explanations anyone can understand, and generating new charts for your app.</p>
+      <p>As a final product, I am sure you will want to tweak it and adapt it to the reality of your companies, and that is the point: to show it is possible, and that with a little imagination, it is just a matter of getting started.</p>
+      <p><b>Why?</b></p>
+      <p>What I find most valuable is the research and integration exercise this extension represents. We all use AI in a lot of what we do (more and more), and the real value is in integrating this new technology with our everyday tools.</p>
+      <p>I actively maintain this extension in my spare time, so you can file issues on <a class="ext" href="https://github.com/mabaeyens/AnthropicExtension/issues">GitHub</a> and I will get to them (along with more things I want to add on my own) at some point.</p>
+      <p><b>Where?</b></p>
+      <p>The repository with the code, the extension ZIP and the documentation are at <a class="ext" href="https://github.com/mabaeyens/AnthropicExtension">github.com/mabaeyens/AnthropicExtension</a>.</p>
+      <p>This is not magic, gentlemen.</p>
+  </article>
+</div>
+</div>
