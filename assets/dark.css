@@ -103,3 +103,12 @@ html[data-theme=dark] img.th-d,html[data-theme=dark] .shot img.th-d{display:bloc
 .zm.full img{max-width:none;max-height:none;cursor:zoom-out}
 .zm .zx{position:fixed;top:14px;right:16px;width:40px;height:40px;border:0;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;font:400 26px/1 sans-serif;cursor:pointer}
 html.zm-on{overflow:hidden}
+/* chart zoom: the overlay scrolls, the chart keeps the article's own colours via the .art wrapper */
+.zm.chart{display:block;text-align:center}
+.zm .zchart{display:inline-block;width:max-content;max-width:none;margin:48px auto 24px;padding:18px;background:var(--surface,#fff);border:1px solid var(--line,#d3dae3);border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);cursor:zoom-out;text-align:left}
+.zm .zchart svg{display:block;height:auto}
+.zm.chart img{display:none}
+.art .fig{position:relative}
+.zhint{display:flex;width:max-content;margin:0 0 10px auto;align-items:center;gap:6px;padding:5px 10px;border:1px solid var(--line);border-radius:999px;background:var(--surface-2);color:var(--ink-2);font:500 11px/1 var(--mono);cursor:zoom-in;opacity:.92}
+.zhint:hover,.zhint:focus-visible{color:var(--ink);border-color:var(--ink-3)}
+@media (hover:hover) and (min-width:900px){.zhint{opacity:.7}.zhint:hover{opacity:1}}
