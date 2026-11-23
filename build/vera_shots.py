@@ -4,7 +4,7 @@ iPad 2752x2064 -> 1600 wide, iPhone 1320x2868 -> 960 wide. Keeps the 01..05 numb
 import os, subprocess
 SRC = os.path.expanduser("~/Projects/vera-apps/AppStore/website")
 OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "assets/shots/vera")
-SETS = {"ipad-landscape-light": ("ipad-light", 1600), "ipad-landscape-dark": ("ipad-dark", 1600), "iphone-light": ("iphone", 960)}
+SETS = {"ipad-landscape-light": ("ipad-light", 1600), "ipad-landscape-dark": ("ipad-dark", 1600), "iphone-light": ("iphone-light", 960), "iphone-dark": ("iphone-dark", 960)}
 for folder, (prefix, w) in SETS.items():
     for f in sorted(os.listdir(os.path.join(SRC, folder))):
         if not f.endswith(".png"): continue
