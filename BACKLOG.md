@@ -1,6 +1,11 @@
 # Backlog
 
 ## Pending
+- **LinkedIn export:** when Shares.csv arrives, diff every post page against the LinkedIn text and fix last-minute edits (post 01 is a draft, 11 is not vFINAL).
+- **Cleanup needing approval:** delete the unused legacy images (`assets/ios_*.PNG`, `ipados_*.PNG`, `macos_*.png`) and the old `style.css` files once aura/cpp stops depending on them.
+- **Mira shots label:** the site shows "Qwen3.6-35B-A3B" while the shipped app says "Sample model"; recheck after the next Mira release.
+- **Home page, Vera tile:** still shows a code snippet where a screenshot could go.
+- **Spanish pages:** not visually checked for the new screenshot sections; /humanize pass and a review of the Spanish legal translations are still open.
 
 - **Pebble page: eyeball it in a browser once deployed.** The Sky and Cityscape rails and the 1:1 screenshot sizing (200px wide, so a narrow phone shows one shot at a time) were never viewed rendered. The 720x320 Sky, Cityscape and LCD listing banners are unused; add a hero or card slot only if wanted.
 - **AnthropicExtension on askmira.es — decide whether it gets a homepage.** Made public 2026-09-18. Two mockups built (canvas: https://claude.ai/artifact/Wxxz8677HmP666Gmena2vj): Option A adds it as a fourth bento tile alongside Mira/Vera/Aura; Option B leaves the homepage untouched and gives it a smaller, clearly-tagged "Enterprise" card below the fold linking to its own `/extension` page. Leaning Option B — it's a Qlik Sense extension that needs a hosted proxy and an Anthropic API key, which breaks the site's "no account, no server of mine" pitch if treated as a peer app. Still deciding; no page built yet either way.
@@ -11,6 +16,10 @@
 - **Restore TestFlight buttons** (nav, hero CTA, credits) once Apple external review approves the URL; consider a waitlist CTA (Buttondown, GDPR-friendly) as a pre-launch alternative.
 
 ## Done (one-liners; full detail in git history)
+- [2026-11-23] Screenshots: Mira and Vera light/dark pairs (Mac, iPad, iPhone) switch with the site theme; every screenshot opens in a click/tap zoom (`assets/zoom.js`). Converters in `build/mira_shots.py` and `build/vera_shots.py`.
+- [2026-11-23] Vera links the App Store listing (not TestFlight) on the site and in `mabaeyens`; Mira beta link updated to `crTWN4kN`.
+- [2026-11-22] Dark mode (system preference plus nav toggle) with a redrawn night sky; sky filter clipping fixed; post images float at the right edge on narrow screens (38vw).
+- [2026-11-22] Redesign merged to main: EN/ES pages from one builder, CV PDFs, writing posts and two re-templated articles.
 
 - [2026-10-17] Pebble screenshots: Essential rail refreshed (Sunset swapped for Dusk, old `lcd-*` shots removed) and every `.shot-pebble` image now shows 1:1 at the native 200×228 with square corners and `image-rendering: pixelated` (the Apple Watch rounded frame is gone). Aura LCD shots refreshed three times to the 1.2, 1.4 and colourful store sets, with captions and settings copy updated to match.
 - [2026-10-17] `/aura/pebble`: replaced the Aura Weather watchapp section with Aura Sky Weather and Aura Cityscape Weather (a section each, five shots each from aura-pebble `docs/store`, Pebble appstore and source buttons, EN/ES). Deleted the nine `weather-*.png` shots; the hero, meta, footer and `/aura` teaser now say two weather watchapps. The 720x320 listing banners are unused.
@@ -39,3 +48,4 @@
 - Hero demo content is pulled verbatim (trimmed) from real non-sensitive conversations in `~/.local/share/mira/conversations.db` (black holes, Madrid weather, Apple Silicon brief, palindrome). Only the RAG source-chip scores/snippets are representative; prompts/thinking/answers are real.
 - Mira's SwiftUI app palette matches the site's CSS `:root` tokens (bg `#1C1917`, accent `#D09268`, muted `#A8A29E`, surface `#232120`, border `#57534E`), so no new colors are needed.
 - The homepage loads only `home.css` (self-contained tokens, header, hero, stream, bento, principles, footer). `/mira`, `/vera` and `/aura` load the shared `style.css` plus their own sheet; the two sheets share token values by hand, so a palette or font change has to be made in both. Tailwind is gone from the repo (files deleted 2026-09-05).
+- Screenshot pairs: the `.th-l` / `.th-d` images switch on `html[data-theme]` (see `assets/dark.css`). Source PNGs from the simulators can carry a stale EXIF orientation tag with upright pixels; the converters strip it first.
