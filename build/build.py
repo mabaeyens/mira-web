@@ -185,7 +185,7 @@ def foot(lang, inner=False, app="mira"):
     return (f'<div class="wrap"><div class="foot mono"{st}><span>'
             f'<a href="{url(app + "-privacy", lang)}">{u["privacy"]}</a> · '
             f'<a href="{url(app + "-support", lang)}">{u["support"]}</a> · '
-            f'<a href="{GITHUB}">GitHub</a></span></div></div>')
+            f'<a href="{GITHUB}">GitHub</a></span></div></div>\n<script src="/assets/zoom.js" defer></script>')
 
 
 DARK_ACCENT = {"#9A6A12": "#E3A93A", "#17787D": "#46C2C8", "#1F66B8": "#6AAEF2"}

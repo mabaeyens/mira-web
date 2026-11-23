@@ -94,3 +94,12 @@ html[data-theme=dark] .shot2 img.th-l{display:none}
 html[data-theme=dark] .shot2 img.th-d{display:block}
 .sec h3.sub{font:500 13px var(--mono);color:var(--soft);margin:18px 0 8px}
 .sec h3.sub:first-child{margin-top:0}
+
+/* screenshot zoom (assets/zoom.js) */
+.zm{position:fixed;inset:0;z-index:100;background:rgba(10,12,16,.88);display:flex;align-items:center;justify-content:center;overflow:auto;padding:24px;cursor:zoom-out}
+.zm[hidden]{display:none}
+.zm img{max-width:100%;max-height:100%;width:auto;height:auto;margin:auto;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.5);cursor:zoom-in;image-rendering:auto}
+.zm.full{display:block;text-align:center}
+.zm.full img{max-width:none;max-height:none;cursor:zoom-out}
+.zm .zx{position:fixed;top:14px;right:16px;width:40px;height:40px;border:0;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;font:400 26px/1 sans-serif;cursor:pointer}
+html.zm-on{overflow:hidden}
