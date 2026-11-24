@@ -14,9 +14,12 @@
 - **Aura Android — capture an annotated AEMET-key guide** so Support has a real Android walkthrough (gear → Ajustes → AEMET key), matching the iPhone one. Only a text note exists today.
 - **Aura CPP — art generation (the last parked piece).** The four pages are live on ASC with promo text + a keyword plan; what's parked is the screenshots. GPT Image 2 generates only the text-free living-sky backgrounds (6 tuned prompts); real screenshots + headlines are composited by code. Locked to planning only until I say go (cost is real); EN+ES adds no extra generations. Full detail in the gitignored `notes/aura-custom-product-page.md`; keyword follow-up tracked in aura-apps.
 - **Vera — screenshots + `og.png`** (spec `specs/02`). `vera/index.html` still has the `TODO(assets)` marker and `vera/assets/og.png` doesn't exist yet (social cards show a broken image). Needs assets, then wire in a simple `.mac-shadow` image row.
-- **Restore TestFlight buttons** (nav, hero CTA, credits) once Apple external review approves the URL; consider a waitlist CTA (Buttondown, GDPR-friendly) as a pre-launch alternative.
+- **Restore TestFlight buttons** in the nav and credits (the Mira and Vera hero CTAs and support pages already carry their TestFlight links); consider a waitlist CTA (Buttondown, GDPR-friendly) as a pre-launch alternative.
+- **Vera Mac button:** it points at the v1.3.4 beta release page and is labeled beta. When 1.3.4 goes stable, switch it back to `/releases/latest` and drop the label.
 
 ## Done (one-liners; full detail in git history)
+- [2026-11-24] Sky: the Mira star sits behind the clouds and birds; clouds and birds have a soft fill (clouds blue, birds one backing shape spanning both wings), tuned for light and dark.
+- [2026-11-24] Vera: TestFlight beta link (`AyS6RfM8`) on the Vera page and support page; Mac download labeled beta and linked to the v1.3.4 release page, EN and ES. Mira TestFlight link (`crTWN4kN`) confirmed.
 - [2026-11-23] Articles: Spanish pass with proper technical terms (borrador, verificación, tasa de aceptación), chart labels wrapped and verified in both languages, green-box overflow fixed on iPhone, tap-to-zoom hint and pannable overlay on every article chart, source links in the text jump to full citations at the bottom, subheader carries full date, original language and AI-translation note.
 - [2026-11-23] Every link highlights on hover (logo, back link, CV, article links, buttons). Posts translated to English with LinkedIn dates, post 18 and the Anthropic extension post added. Asset URLs carry a content hash (`?v=`) so phones never keep stale CSS/JS.
 - [2026-11-23] Screenshots: Mira and Vera light/dark pairs (Mac, iPad, iPhone) switch with the site theme; every screenshot opens in a click/tap zoom (`assets/zoom.js`). Converters in `build/mira_shots.py` and `build/vera_shots.py`.
@@ -45,6 +48,9 @@
 - [2026-06-14] Promoted the "field-manual" redesign live; replaced the Tailwind CDN with a vendored/purged `assets/tailwind.css`; responsive mobile/tablet fixes; hero panel replays four real Mira conversations (thinking / sources / RAG / code, live tok/s, reduced-motion safe).
 
 ## Notes
+
+- Commits carry no `Co-Authored-By` or other attribution line (the global `attribution` setting is now blank).
+- The `build/` sources are the truth: edit `build/src` and `build/partials`, then run `python3 build/build.py`. The CSS in `assets/` is edited directly, and the rebuild rehashes the asset URLs on every page, so a CSS change touches about 50 files.
 
 - Charts: headless Chrome with desktop fonts cannot see iPhone's wider mono font; shorten labels with margin and check the live site in the iOS simulator (`xcrun simctl openurl`). `build/build.py` `PUBDATE`/`ORIGINAL` drive the article subheader; `build/src` stays the source of truth.
 - Pebble lives on `/aura/pebble`, not on `/aura`: new Pebble items get a section there (copy, buttons, rail), and `/aura` only carries the teaser card and one footer link. The screenshots stay in `aura/assets/shots/pebble/`. Aura LCD's copy deliberately never names Casio ("80s-inspired LCD", "classic digital watch"); the store listing in aura-pebble still does.
