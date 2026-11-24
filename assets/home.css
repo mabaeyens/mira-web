@@ -122,10 +122,10 @@
   .rules li{counter-increment:n;display:grid;grid-template-columns:44px 1fr;padding:15px 0;border-top:1px solid var(--line);font-size:19px}
   .rules li::before{content:counter(n,decimal-leading-zero);font:400 12px var(--mono);color:var(--soft);padding-top:7px}
   .foot{border-top:1px solid var(--line);padding:22px 0 50px;display:flex;gap:28px;color:var(--soft)}
-  /* evenly spread: six lanes across the whole sky, same-lane objects half a cycle apart; the star sits in front of the clouds */
+  /* evenly spread: six lanes across the whole sky, same-lane objects half a cycle apart; the star sits behind the clouds and birds, like the sun */
   @keyframes drift2{0%{transform:translateX(0);opacity:0}8%{opacity:.9}86%{opacity:.9}100%{transform:translateX(68vw);opacity:0}}
   .cl{left:18%!important;z-index:1;animation-name:drift2!important;animation-duration:170s!important;animation-delay:calc(var(--p)*-170s - var(--t,0s))!important}
-  .sun{z-index:3!important;fill:#F4DFB6!important}
+  .sun{z-index:0!important;fill:#F4DFB6!important}
   .c1{top:10%!important;--p:0}    .v1{top:10%!important;--p:.5}
   .c9{top:20%!important;width:120px;--p:.25} .v4{top:20%!important;width:70px;--p:.75}
   .c3{top:34%!important;--p:.1}  .c7{top:34%!important;--p:.6}

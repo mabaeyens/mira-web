@@ -151,7 +151,7 @@
   @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
   @keyframes drift2{0%{transform:translateX(0);opacity:0}8%{opacity:.9}86%{opacity:.9}100%{transform:translateX(68vw);opacity:0}}
   .cl{left:18%!important;z-index:1;animation-name:drift2!important;animation-duration:170s!important;animation-delay:calc(var(--p)*-170s - var(--t,0s))!important}
-  .sun{z-index:3!important;fill:#F4DFB6!important}
+  .sun{z-index:0!important;fill:#F4DFB6!important}
   .c1{top:10%!important;--p:0}    .v1{top:10%!important;--p:.5}
   .c9{top:20%!important;width:120px;--p:.25} .v4{top:20%!important;width:70px;--p:.75}
   .c3{top:34%!important;--p:.1}  .c7{top:34%!important;--p:.6}
