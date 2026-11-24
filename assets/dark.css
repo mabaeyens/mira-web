@@ -78,8 +78,8 @@ html[data-theme=dark] .sun{fill:rgba(244,190,80,.20)!important;stroke:#F6CB63}
 .sun .glow{display:none}
 /* halo removed: the star stays a plain outline with a faint fill */
 /* clouds catch the moonlight; birds are brighter teal */
-html[data-theme=dark] .cl[stroke="#8D97B0"]{stroke:#7F8BB0;fill:rgba(150,165,215,.07)}
-html[data-theme=dark] .cl[stroke="#2FA9AF"]{stroke:#5ED6DB;filter:drop-shadow(0 0 6px rgba(94,214,219,.35)) url(#pen)}
+html[data-theme=dark] .cl[stroke="#8D97B0"]{stroke:#7F8BB0;fill:rgba(34,40,58,.82)}
+html[data-theme=dark] .cl[stroke="#2FA9AF"]{stroke:#5ED6DB;fill:rgba(22,52,60,.8);filter:drop-shadow(0 0 6px rgba(94,214,219,.35)) url(#pen)}
 
 /* narrow screens: the post image stays at the right edge and the text wraps beside it */
 @media (max-width:1300px){
