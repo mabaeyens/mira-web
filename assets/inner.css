@@ -151,7 +151,7 @@
   @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
   @keyframes drift2{0%{transform:translateX(0);opacity:0}8%{opacity:.9}86%{opacity:.9}100%{transform:translateX(68vw);opacity:0}}
   .cl{left:18%!important;z-index:1;animation-name:drift2!important;animation-duration:170s!important;animation-delay:calc(var(--p)*-170s - var(--t,0s))!important}
-  .cl[stroke="#8D97B0"]{fill:rgba(241,242,245,.82)} /* soft fill so the star is dimmed behind clouds */
+  .cl[stroke="#8D97B0"]{fill:rgba(206,224,247,.85)} /* soft fill so the star is dimmed behind clouds */
   .cl[stroke="#2FA9AF"] .bf{fill:rgba(214,238,240,.8)} /* and behind the birds */
   .sun{z-index:0!important;fill:#F4DFB6!important}
   .c1{top:10%!important;--p:0}    .v1{top:10%!important;--p:.5}

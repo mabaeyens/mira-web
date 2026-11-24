@@ -78,7 +78,7 @@ html[data-theme=dark] .sun{fill:rgba(244,190,80,.20)!important;stroke:#F6CB63}
 .sun .glow{display:none}
 /* halo removed: the star stays a plain outline with a faint fill */
 /* clouds catch the moonlight; birds are brighter teal */
-html[data-theme=dark] .cl[stroke="#8D97B0"]{stroke:#7F8BB0;fill:rgba(34,40,58,.82)}
+html[data-theme=dark] .cl[stroke="#8D97B0"]{stroke:#7F8BB0;fill:rgba(30,46,86,.85)}
 html[data-theme=dark] .cl[stroke="#2FA9AF"] .bf{fill:rgba(22,52,60,.8)}
 html[data-theme=dark] .cl[stroke="#2FA9AF"]{stroke:#5ED6DB;filter:drop-shadow(0 0 6px rgba(94,214,219,.35)) url(#pen)}
 
