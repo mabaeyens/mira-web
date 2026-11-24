@@ -34,7 +34,7 @@
     .pband{height:340px!important}
   }
 
-.pbw h1.ph1{font-size:clamp(34px,4.6vw,64px)!important;max-width:15em;line-height:1}.strip2{padding-bottom:22px}@media (max-width:760px){.pbw h1.ph1{font-size:32px!important}}
+.pbw h1.ph1{font-size:clamp(34px,4.6vw,64px)!important;max-width:17.5em;line-height:1}.strip2{padding-bottom:22px}@media (max-width:760px){.pbw h1.ph1{font-size:32px!important}}
 .cap p .lnk{font:inherit;display:inline;margin:0}
   .menubar span:first-child{color:var(--app)}
   /* Pebble screenshots are 200x228 pixel art */
