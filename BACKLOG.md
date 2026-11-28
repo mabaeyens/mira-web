@@ -15,9 +15,11 @@
 - **Aura CPP — art generation (the last parked piece).** The four pages are live on ASC with promo text + a keyword plan; what's parked is the screenshots. GPT Image 2 generates only the text-free living-sky backgrounds (6 tuned prompts); real screenshots + headlines are composited by code. Locked to planning only until I say go (cost is real); EN+ES adds no extra generations. Full detail in the gitignored `notes/aura-custom-product-page.md`; keyword follow-up tracked in aura-apps.
 - **Vera — screenshots + `og.png`** (spec `specs/02`). `vera/index.html` still has the `TODO(assets)` marker and `vera/assets/og.png` doesn't exist yet (social cards show a broken image). Needs assets, then wire in a simple `.mac-shadow` image row.
 - **Restore TestFlight buttons** in the nav and credits (the Mira and Vera hero CTAs and support pages already carry their TestFlight links); consider a waitlist CTA (Buttondown, GDPR-friendly) as a pre-launch alternative.
-- **Vera Mac button:** it points at the v1.3.4 beta release page and is labeled beta. When 1.3.4 goes stable, switch it back to `/releases/latest` and drop the label.
+- **Vera Mac button:** it points at the v1.4.0 beta release page and is labeled beta. When Vera 1.4.0 goes stable, switch it back to `/releases/latest` and drop the label. Each new beta needs the link moved to its release page.
 
 ## Done (one-liners; full detail in git history)
+- [2026-11-25] Vera Mac beta button moved to the v1.4.0 release page (EN and ES, Vera and support pages).
+- [2026-11-24] Product page heroes (Mira, Vera, Aura): the eyebrow starts at the same height whatever the title wraps to (`.ph1` reserves three lines; title width 17.5em, balanced wrapping). Checked in headless Chrome and the user's Safari.
 - [2026-11-24] Sky: the Mira star sits behind the clouds and birds; clouds and birds have a soft fill (clouds blue, birds one backing shape spanning both wings), tuned for light and dark.
 - [2026-11-24] Vera: TestFlight beta link (`AyS6RfM8`) on the Vera page and support page; Mac download labeled beta and linked to the v1.3.4 release page, EN and ES. Mira TestFlight link (`crTWN4kN`) confirmed.
 - [2026-11-23] Articles: Spanish pass with proper technical terms (borrador, verificación, tasa de aceptación), chart labels wrapped and verified in both languages, green-box overflow fixed on iPhone, tap-to-zoom hint and pannable overlay on every article chart, source links in the text jump to full citations at the bottom, subheader carries full date, original language and AI-translation note.
